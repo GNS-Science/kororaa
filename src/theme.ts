@@ -8,8 +8,14 @@ const theme = createTheme({
     secondary: {
       main: '#7f7f7f',
     },
-    background: {
-      default: '#d9d9d9',
+    info: {
+      main: '#d9d9d9',
+    },
+  },
+  typography: {
+    h5: {
+      fontWeight: 700,
+      fontSize: '1.2rem',
     },
   },
 });
