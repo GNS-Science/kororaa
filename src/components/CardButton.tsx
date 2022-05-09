@@ -2,10 +2,14 @@ import React from 'react';
 import { styled } from '@mui/material';
 import { Card, CardContent, CardMedia, CardActions, Typography, Button } from '@mui/material';
 
-const StyledCard = styled(Card)({
+const StyledCard = styled(Card)(({ theme }) => ({
   width: '45%',
   height: '40%',
-});
+  [theme.breakpoints.down('md')]: {
+    width: '80%',
+    margin: 30,
+  },
+}));
 
 interface CardButtonProps {
   title: string;

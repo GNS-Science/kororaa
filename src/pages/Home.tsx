@@ -1,6 +1,7 @@
 import React from 'react';
 import { Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
+import { Box } from '@mui/material';
 
 import CardButton from '../components/CardButton';
 
@@ -21,7 +22,7 @@ const InfoContainer = styled('div')({
   padding: '4rem',
 });
 
-const CardButtonsContainer = styled('div')({
+const CardButtonsContainer = styled(Box)(({ theme }) => ({
   width: '100%',
   maxWidth: 1300,
   height: 1100,
@@ -30,7 +31,13 @@ const CardButtonsContainer = styled('div')({
   flexWrap: 'wrap',
   flexDirection: 'row',
   justifyContent: 'space-around',
-});
+  [theme.breakpoints.down('md')]: {
+    flexDirection: 'column',
+    height: 'auto',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+}));
 
 const Home: React.FC = () => {
   return (
