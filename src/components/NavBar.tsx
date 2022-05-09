@@ -14,7 +14,7 @@ const NavBarContainer = styled('div')(({ theme }) => ({
 
 const LinkItems = styled('div')({
   height: '85%',
-  width: '70%',
+  width: '60%',
   display: 'flex',
   flexDirection: 'row',
   justifyContent: 'space-around',
@@ -27,7 +27,6 @@ const NavBar: React.FC = () => {
       <NavBarContainer>
         <img src="/GNS.png" />
         <LinkItems>
-          <Typography variant="h5">Home</Typography>
           <Typography variant="h5">Hazard Curves</Typography>
           <Typography variant="h5">Hazard Maps</Typography>
           <Typography variant="h5">Rupture Sets</Typography>
