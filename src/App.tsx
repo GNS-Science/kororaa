@@ -1,7 +1,6 @@
 import React from 'react';
 import './App.css';
 import ReactDOM from 'react-dom';
-import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@emotion/react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
