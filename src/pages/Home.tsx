@@ -24,7 +24,7 @@ const InfoContainer = styled('div')({
 const CardButtonsContainer = styled('div')({
   width: '100%',
   maxWidth: 1300,
-  height: '100vh',
+  height: 1100,
   padding: 10,
   display: 'flex',
   flexWrap: 'wrap',
