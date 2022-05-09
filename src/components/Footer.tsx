@@ -14,10 +14,10 @@ const FooterContainer = styled('div')(({ theme }) => ({
   justifyContent: 'space-between',
 }));
 
-const FooterLinkItems = styled('div')(({ theme }) => ({
+const FooterLinkItems = styled('div')({
   display: 'flex',
   flexDirection: 'column',
-}));
+});
 
 const Footer: React.FC = () => {
   return (

@@ -1,13 +1,11 @@
 import React from 'react';
 import { styled } from '@mui/material/styles';
-import { flexbox, height } from '@mui/system';
-import { Link, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 
 const NavBarContainer = styled('div')(({ theme }) => ({
   backgroundColor: theme.palette.info.main,
   height: 120,
   borderBottom: `10px solid ${theme.palette.primary.main}`,
-  display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-around',
 }));
