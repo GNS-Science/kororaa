@@ -1,9 +1,9 @@
 import React from 'react';
 import { styled } from '@mui/material/styles';
 import { Typography } from '@mui/material';
+import PartnersLogos from './PartnersLogos';
 
 const FooterContainer = styled('div')(({ theme }) => ({
-  backgroundColor: theme.palette.info.main,
   padding: 40,
   height: 250,
   position: 'relative',
@@ -27,7 +27,7 @@ const Footer: React.FC = () => {
         <Typography>Contact Information</Typography>
         <Typography>About</Typography>
       </FooterLinkItems>
-      <img src="/partners.png" />
+      <PartnersLogos />
     </FooterContainer>
   );
 };
