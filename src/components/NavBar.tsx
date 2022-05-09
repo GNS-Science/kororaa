@@ -6,6 +6,7 @@ const NavBarContainer = styled('div')(({ theme }) => ({
   backgroundColor: theme.palette.info.main,
   height: 120,
   borderBottom: `10px solid ${theme.palette.primary.main}`,
+  display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-around',
 }));
