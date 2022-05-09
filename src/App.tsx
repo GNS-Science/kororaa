@@ -4,15 +4,23 @@ import ReactDOM from 'react-dom';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@emotion/react';
-import NavBar from './components/NavBar';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+
 import theme from './theme';
+import NavBar from './components/NavBar';
 import Footer from './components/Footer';
+import Home from './pages/Home';
 
 function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline>
         <NavBar />
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Home />} />
+          </Routes>
+        </BrowserRouter>
         <Footer />
       </CssBaseline>
     </ThemeProvider>
