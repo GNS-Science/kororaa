@@ -1,6 +1,6 @@
 import React from 'react';
 import { styled } from '@mui/material/styles';
-import { autocompleteClasses, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import PartnersLogos from './PartnersLogos';
 
 const FooterContainer = styled('div')(({ theme }) => ({
