@@ -11,9 +11,10 @@ const StyledModal = styled(Modal)({
 
 const Paper = styled('div')(({ theme }) => ({
   position: 'absolute',
-  width: '80%',
-  backgroundColor: theme.palette.background.paper,
+  width: '60%',
+  backgroundColor: theme.palette.info.main,
   padding: theme.spacing(2, 4, 5),
+  border: 'none',
 }));
 
 interface DisclaimerLayerProps {
@@ -36,11 +37,12 @@ const DisclaimerLayer: React.FC<DisclaimerLayerProps> = ({ children }: Disclaime
     <>
       <StyledModal open={open} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
         <Paper>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            Text in a modal
+          <Typography id="modal-modal-title" variant="h5" component="h2">
+            Disclaimer
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+            This output has been prepared by the Institute of Geological and Nuclear Sciences Limited (GNS Science). GNS Science accepts no responsibility for any use of of or reliance on any contents
+            of this output by any person, on any ground, for any loss, damage or expense arising from such use or reliance.
           </Typography>
           <Button onClick={handleAccept}>Accept</Button>
         </Paper>
