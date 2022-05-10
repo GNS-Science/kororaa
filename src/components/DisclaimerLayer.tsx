@@ -21,13 +21,14 @@ interface DisclaimerLayerProps {
 }
 
 const DisclaimerLayer: React.FC<DisclaimerLayerProps> = ({ children }: DisclaimerLayerProps) => {
+  const currentDisclaimerVersion = process.env.REACT_APP_DISCLAIMER_VERSION as string;
+
   const { disclaimerVersion, setDisclaimerVersion } = useContext(LocalStorageContext);
 
-  const [open, setOpen] = useState<boolean>(disclaimerVersion !== process.env.REACT_APP_DISCLAIMER_VERSION);
+  const [open, setOpen] = useState<boolean>(disclaimerVersion !== currentDisclaimerVersion);
 
   const handleAccept = () => {
-    console.log(process.env.REACT_APP_DISCLAIMER_VERSION);
-    setDisclaimerVersion('hello');
+    setDisclaimerVersion(currentDisclaimerVersion);
     setOpen(false);
   };
 

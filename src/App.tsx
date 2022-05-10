@@ -20,15 +20,15 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline>
         <NavBar />
-        <DisclaimerLayer>
-          <BrowserRouter>
-            <LocalStorageProvider value={{ disclaimerVersion, setDisclaimerVersion }}>
+        <BrowserRouter>
+          <LocalStorageProvider value={{ disclaimerVersion, setDisclaimerVersion }}>
+            <DisclaimerLayer>
               <Routes>
                 <Route path="/" element={<Home />} />
               </Routes>
-            </LocalStorageProvider>
-          </BrowserRouter>
-        </DisclaimerLayer>
+            </DisclaimerLayer>
+          </LocalStorageProvider>
+        </BrowserRouter>
         <Footer />
       </CssBaseline>
     </ThemeProvider>
