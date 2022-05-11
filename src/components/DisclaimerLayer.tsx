@@ -1,7 +1,6 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { styled } from '@mui/material/styles';
 import { Button, Modal, Typography } from '@mui/material';
-import LocalStorageContext from '../contexts/localStorage';
 
 const StyledModal = styled(Modal)({
   display: 'flex',
@@ -23,13 +22,12 @@ interface DisclaimerLayerProps {
 
 const DisclaimerLayer: React.FC<DisclaimerLayerProps> = ({ children }: DisclaimerLayerProps) => {
   const currentDisclaimerVersion = process.env.REACT_APP_DISCLAIMER_VERSION as string;
+  const localStorageDisclaimerVersion = localStorage.getItem('disclaimer-version');
 
-  const { disclaimerVersion, setDisclaimerVersion } = useContext(LocalStorageContext);
-
-  const [open, setOpen] = useState<boolean>(disclaimerVersion !== currentDisclaimerVersion);
+  const [open, setOpen] = useState<boolean>(localStorageDisclaimerVersion !== currentDisclaimerVersion);
 
   const handleAccept = () => {
-    setDisclaimerVersion(currentDisclaimerVersion);
+    localStorage.setItem('disclaimer-version', currentDisclaimerVersion);
     setOpen(false);
   };
 
