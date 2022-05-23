@@ -3,7 +3,7 @@ import { Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { Box } from '@mui/material';
 
-import CardButton from '../components/CardButton';
+import MenuCard from '../components/MenuCard';
 
 const HomeContainer = styled('div')({
   width: '100%',
@@ -47,10 +47,10 @@ const Home: React.FC = () => {
         <Typography>Welcome to the New Zealand NSHM . This is the 2022 revision to the model. Here’s a link back to the explaination and background info on the model</Typography>
       </InfoContainer>
       <CardButtonsContainer>
-        <CardButton title="Hazard Curves" text="Hazard Curves to view" img="/hazardCurves.png" />
-        <CardButton title="Hazard Maps" text="Hazard Maps to view" img="/hazardMaps.png" />
-        <CardButton title="Rupture Sets" text="Rupture Sets to view" img="/ruptureSets.png" />
-        <CardButton title="Model Information, Reports, and Input Files" text="More Information" img="/info.jpg" />
+        <MenuCard title="Hazard Curves" text="Hazard Curves to view" img="/hazardCurves.png" />
+        <MenuCard title="Hazard Maps" text="Hazard Maps to view" img="/hazardMaps.png" />
+        <MenuCard title="Rupture Sets" text="Rupture Sets to view" img="/ruptureSets.png" />
+        <MenuCard title="Model Information, Reports, and Input Files" text="More Information" img="/info.jpg" />
       </CardButtonsContainer>
     </HomeContainer>
   );

@@ -11,13 +11,13 @@ const StyledCard = styled(Card)(({ theme }) => ({
   },
 }));
 
-interface CardButtonProps {
+interface MenuCardProps {
   title: string;
   text: string;
   img: string;
 }
 
-const CardButton: React.FC<CardButtonProps> = ({ title, text, img }: CardButtonProps) => {
+const MenuCard: React.FC<MenuCardProps> = ({ title, text, img }: MenuCardProps) => {
   return (
     <StyledCard>
       <CardContent>
@@ -32,4 +32,4 @@ const CardButton: React.FC<CardButtonProps> = ({ title, text, img }: CardButtonP
   );
 };
 
-export default CardButton;
+export default MenuCard;
