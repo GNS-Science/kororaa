@@ -39,8 +39,8 @@ const DisclaimerLayer: React.FC<DisclaimerLayerProps> = ({ children }: Disclaime
             Disclaimer
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            This output has been prepared by the Institute of Geological and Nuclear Sciences Limited (GNS Science). GNS Science accepts no responsibility for any use of of or reliance on any contents
-            of this output by any person, on any ground, for any loss, damage or expense arising from such use or reliance.
+            This output has been prepared by the Institute of Geological and Nuclear Sciences Limited (GNS Science). GNS Science accepts no responsibility for any use of or reliance on any contents of
+            this output by any person, on any ground, for any loss, damage or expense arising from such use or reliance.
           </Typography>
           <Button onClick={handleAccept}>Accept</Button>
         </Paper>
