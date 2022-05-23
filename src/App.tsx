@@ -1,23 +1,30 @@
 import React from 'react';
-import './App.css';
-import ReactDOM from 'react-dom';
-import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
+import { ThemeProvider } from '@emotion/react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+
+import './App.css';
+import theme from './theme';
+import NavBar from './components/NavBar';
+import Footer from './components/Footer';
+import Home from './pages/Home';
+import DisclaimerLayer from './components/DisclaimerLayer';
 
 function App() {
   return (
-    <CssBaseline>
-      <div className="App">
-        <header className="App-header">
-          <p>
-            Edit <code>src/App.tsx</code> and save to reload.
-          </p>
-          <a className="App-link" href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
-            Learn React
-          </a>
-        </header>
-      </div>
-    </CssBaseline>
+    <ThemeProvider theme={theme}>
+      <CssBaseline>
+        <NavBar />
+        <BrowserRouter>
+          <DisclaimerLayer>
+            <Routes>
+              <Route path="/" element={<Home />} />
+            </Routes>
+          </DisclaimerLayer>
+        </BrowserRouter>
+        <Footer />
+      </CssBaseline>
+    </ThemeProvider>
   );
 }
 
