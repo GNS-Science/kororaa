@@ -1,4 +1,4 @@
-interface HazardChartsMockData {
+export interface HazardChartsMockData {
   colum_headers: string[];
   column_types: string[];
   rows: string[][];

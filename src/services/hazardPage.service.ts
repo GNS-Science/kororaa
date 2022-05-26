@@ -1,5 +1,7 @@
-import { HazardData } from '../constants/hazardChartsData';
 import * as mathjs from 'mathjs';
+
+import { HazardData } from '../constants/hazardChartsData';
+import { HazardChartsMockData } from '../constants/hazardChartsMockData';
 
 interface XY {
   x: number;
@@ -7,44 +9,32 @@ interface XY {
 }
 
 interface HazardCurvesOptions {
-  forecastTimes: string[];
-  backgroundSeismicity: string[];
-  PGA: string[];
-  gmpe: string[];
-  locations: string[];
+  vs30: string[];
+  spectralPeriod: string[];
 }
 
-export const getHazardTableOptions = (hazardChartsData: HazardData): HazardCurvesOptions => {
-  const rows = hazardChartsData.node.rows;
+export const getHazardTableOptions = (hazardChartsData: HazardChartsMockData): HazardCurvesOptions => {
+  const rows = hazardChartsData.rows;
 
-  const forecastTimes = new Set<string>();
-  const bgSeismicity = new Set<string>();
-  const pga = new Set<string>();
-  const gmpe = new Set<string>();
-  const locations = new Set<string>();
+  const vs30 = new Set<string>();
+  const spectralPeriod = new Set<string>();
 
   rows?.map((row) => {
     if (row) {
-      row[0] !== null && forecastTimes.add(row[0]);
-      row[1] !== null && bgSeismicity.add(row[1]);
-      row[2] !== null && pga.add(row[2] === '0.0' ? 'PGA' : row[2]);
-      row[3] !== null && gmpe.add(row[3]);
-      row[4] !== null && locations.add(row[4]);
+      row[0] !== null && vs30.add(row[2]);
+      row[2] !== null && spectralPeriod.add(row[3] === '0' ? 'PGA' : row[3]);
     }
   });
 
-  const pgaArray = Array.from(pga);
-  const pgaWithSeconds: string[] = [];
-  pgaArray.map((value) => {
-    value === 'PGA' ? pgaWithSeconds.push('PGA') : pgaWithSeconds.push(`${value}s`);
+  const spectralPeriodArray = Array.from(spectralPeriod);
+  const spectralPeriodWithSeconds: string[] = [];
+  spectralPeriodArray.forEach((value) => {
+    value === 'PGA' ? spectralPeriodWithSeconds.push('PGA') : spectralPeriodWithSeconds.push(`${value}s`);
   });
 
   return {
-    forecastTimes: Array.from(forecastTimes),
-    backgroundSeismicity: Array.from(bgSeismicity),
-    PGA: pgaWithSeconds,
-    gmpe: Array.from(gmpe),
-    locations: Array.from(locations),
+    vs30: Array.from(vs30),
+    spectralPeriod: spectralPeriodWithSeconds,
   };
 };
 
