@@ -2,13 +2,12 @@ import React, { useState } from 'react';
 import { SelectControl } from '@gns-science/toshi-nest';
 import { Button, Input, FormControl, InputLabel, FormHelperText } from '@mui/material';
 
-import VerticalControlsBar from '../common/VerticalControlsBar';
+import VerticalControlsBar from '../../components/common/VerticalControlsBar';
 import { getHazardTableOptions } from '../../services/hazardPage.service';
 import { hazardChartsData } from '../../constants/hazardChartsData';
 
 const HazardChartsControls: React.FC = () => {
   const [PGA, setPGA] = useState<string>('');
-  const ariaLabel = { 'aria-label': 'description' };
   const hazardPageOption = getHazardTableOptions(hazardChartsData);
 
   const handleChange = (event: React.ChangeEvent) => {

@@ -3,7 +3,7 @@ import { Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { Box } from '@mui/material';
 
-import MenuCard from '../components/MenuCard';
+import MenuCard from './MenuCard';
 
 const HomeContainer = styled('div')({
   width: '100%',

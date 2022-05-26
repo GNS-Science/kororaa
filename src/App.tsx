@@ -5,11 +5,11 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import './App.css';
 import theme from './theme';
-import NavBar from './components/NavBar';
-import Footer from './components/Footer';
-import Home from './pages/Home';
-import DisclaimerLayer from './components/DisclaimerLayer';
-import HazardChartsPage from './components/hazardCharts/HazardChartsPage';
+import NavBar from './components/common/NavBar';
+import Footer from './components/common/Footer';
+import Home from './views/home/Home';
+import DisclaimerLayer from './views/home/DisclaimerLayer';
+import HazardChartsPage from './views/hazardCharts/HazardChartsPage';
 
 function App() {
   return (
