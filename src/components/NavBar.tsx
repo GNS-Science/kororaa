@@ -1,6 +1,6 @@
 import React from 'react';
 import { styled } from '@mui/material/styles';
-import { AppBar, Typography, Container, Toolbar, IconButton, Box, Menu, MenuItem } from '@mui/material';
+import { AppBar, Typography, Container, Toolbar, IconButton, Box, Menu, MenuItem, Link } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 
 const StyledAppBar = styled(AppBar)(({ theme }) => ({
@@ -27,13 +27,21 @@ const NavBar: React.FC = () => {
     setAnchorElNav(null);
   };
 
-  const pages = ['Hazard Curves', 'Hazard Maps', 'Rupture Sets', 'Info & Input Files', 'Help'];
+  const pages = [
+    { name: 'Hazard Curves', path: '/HazardCurves' },
+    { name: 'Hazard Maps', path: '/HazardMaps' },
+    { name: 'Rupture Sets', path: '/RuptureSets' },
+    { name: 'Info & Input Files', path: '/info' },
+    { name: 'Help', path: '/help' },
+  ];
 
   return (
     <StyledAppBar position="static">
       <Container maxWidth="xl">
         <StyledToolbar disableGutters>
-          <img src="/GNS.png" />
+          <Link href="/">
+            <img src="/NSHM.png" />
+          </Link>
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton size="large" aria-label="account of current user" aria-controls="menu-appbar" aria-haspopup="true" onClick={handleOpenNavMenu} color="inherit">
               <MenuIcon />
@@ -57,9 +65,11 @@ const NavBar: React.FC = () => {
               }}
             >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
+                <MenuItem key={page.name} onClick={handleCloseNavMenu}>
                   <Typography variant="h5" textAlign="center">
-                    {page}
+                    <Link href={page.path} underline="none" color="black">
+                      {page.name}
+                    </Link>
                   </Typography>
                 </MenuItem>
               ))}
@@ -67,12 +77,16 @@ const NavBar: React.FC = () => {
           </Box>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
-              <MenuItem key={page} onClick={handleCloseNavMenu}>
-                <Typography variant="h5">{page}</Typography>
+              <MenuItem key={page.name} onClick={handleCloseNavMenu}>
+                <Typography variant="h5">
+                  <Link href={page.path} underline="none" color="black">
+                    {page.name}
+                  </Link>
+                </Typography>
               </MenuItem>
             ))}
           </Box>
-          <img src="/NSHM.png" />
+          <img src="/GNS.png" />
         </StyledToolbar>
       </Container>
     </StyledAppBar>
