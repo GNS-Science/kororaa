@@ -9,7 +9,7 @@ import NavBar from './components/NavBar';
 import Footer from './components/Footer';
 import Home from './pages/Home';
 import DisclaimerLayer from './components/DisclaimerLayer';
-import HazardChartsView from './pages/HazardChartsView';
+import HazardChartsPage from './components/hazardCharts/HazardChartsPage';
 
 function App() {
   return (
@@ -19,7 +19,7 @@ function App() {
         <BrowserRouter>
           <DisclaimerLayer>
             <Routes>
-              <Route path="/HazardCurves" element={<HazardChartsView />} />
+              <Route path="/HazardCurves" element={<HazardChartsPage />} />
               <Route path="/" element={<Home />} />
             </Routes>
           </DisclaimerLayer>
