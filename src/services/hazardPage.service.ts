@@ -86,7 +86,7 @@ export const filterData = (data: HazardData, location: string, pgaValue: string,
 export const getSpectralAccelerationData = (pgaValues: string[], xValue: number, filteredCurves: Record<string, XY[]>): XY[] => {
   const dataSet: XY[] = [];
 
-  pgaValues.map((value) => {
+  pgaValues.forEach((value) => {
     try {
       let p1: number[] = [];
       let p2: number[] = [];
