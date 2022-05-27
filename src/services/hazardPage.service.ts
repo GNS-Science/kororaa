@@ -19,22 +19,16 @@ export const getHazardTableOptions = (hazardChartsData: HazardChartsMockData): H
   const vs30 = new Set<string>();
   const spectralPeriod = new Set<string>();
 
-  rows?.map((row) => {
+  rows?.forEach((row) => {
     if (row) {
       row[0] !== null && vs30.add(row[2]);
-      row[2] !== null && spectralPeriod.add(row[3] === '0' ? 'PGA' : row[3]);
+      row[2] !== null && spectralPeriod.add(row[3] === '0' ? 'PGA' : `${row[3]}s`);
     }
-  });
-
-  const spectralPeriodArray = Array.from(spectralPeriod);
-  const spectralPeriodWithSeconds: string[] = [];
-  spectralPeriodArray.forEach((value) => {
-    value === 'PGA' ? spectralPeriodWithSeconds.push('PGA') : spectralPeriodWithSeconds.push(`${value}s`);
   });
 
   return {
     vs30: Array.from(vs30),
-    spectralPeriod: spectralPeriodWithSeconds,
+    spectralPeriod: Array.from(spectralPeriod),
   };
 };
 
@@ -47,12 +41,14 @@ export const getCurve = (hazardChartsData: HazardChartsMockData, HazardCurvesSel
 
   rows.forEach((row) => {
     if (row) {
-      if (row[0] === lat && row[1] === lon && row[2] === vs30 && row[3] === spectralPeriodParsed) {
+      row[0] === lat &&
+        row[1] === lon &&
+        row[2] === vs30 &&
+        row[3] === spectralPeriodParsed &&
         curve.push({
           x: parseFloat(row[4]),
           y: parseFloat(row[5]),
         });
-      }
     }
   });
 
