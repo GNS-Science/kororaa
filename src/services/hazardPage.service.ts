@@ -1,7 +1,7 @@
 import * as mathjs from 'mathjs';
 
-import { HazardData } from '../constants/hazardChartsData';
 import { HazardChartsMockData } from '../constants/hazardChartsMockData';
+import { HazardCurvesSelections } from '../views/hazardCharts/hazardCharts.types';
 
 interface XY {
   x: number;
@@ -38,39 +38,37 @@ export const getHazardTableOptions = (hazardChartsData: HazardChartsMockData): H
   };
 };
 
-export const filterMultipleCurves = (pgaValues: string[], data: HazardData, location: string, forecastTime: string, gmpe: string, backgroundSeismicity: string): Record<string, XY[]> => {
-  const filteredCurves: Record<string, XY[]> = {};
+export const getCurve = (hazardChartsData: HazardChartsMockData, HazardCurvesSelections: HazardCurvesSelections): Record<string, XY[]> => {
+  const { lat, lon, vs30, spectralPeriod } = HazardCurvesSelections;
+  const rows = hazardChartsData.rows;
+  const spectralPeriodParsed = spectralPeriod === 'PGA' ? '0' : spectralPeriod.split('s')[0];
 
-  pgaValues.map((pgaValue) => {
-    const pga = pgaValue === 'PGA' ? '0.0' : pgaValue;
-    const curve = filterData(data, location, pga, forecastTime, gmpe, backgroundSeismicity);
-    filteredCurves[pgaValue] = curve;
-  });
+  const curve: XY[] = [];
 
-  return filteredCurves;
-};
-
-export const filterData = (data: HazardData, location: string, pgaValue: string, forecastTime: string, gmpe: string, backgroundSeismisity: string): XY[] => {
-  const xy: XY[] = [];
-  const rows = data?.node?.rows;
-  const pga = pgaValue.replace('s', '');
-
-  const filtered = rows?.filter((item) => {
-    if (item && item[0] === forecastTime && item[1] === backgroundSeismisity && item[2] === pga && item[3] === gmpe && item[4] === location) return true;
-  });
-
-  filtered?.map((item) => {
-    if (item) {
-      const slicedArray = item.slice(7, 9);
-      const object = {
-        x: parseFloat(slicedArray[0]),
-        y: parseFloat(slicedArray[1]),
-      };
-      xy.push(object);
+  rows.forEach((row) => {
+    if (row) {
+      if (row[0] === lat && row[1] === lon && row[2] === vs30 && row[3] === spectralPeriodParsed) {
+        curve.push({
+          x: parseFloat(row[4]),
+          y: parseFloat(row[5]),
+        });
+      }
     }
   });
 
-  return xy;
+  const curveObject: Record<string, XY[]> = {};
+  curveObject[spectralPeriod] = curve;
+
+  return curveObject;
+};
+
+export const getColor = (curve: Record<string, XY[]>): Record<string, string> => {
+  const color: Record<string, string> = {};
+  for (const key in curve) {
+    color[key] = '#000000';
+  }
+
+  return color;
 };
 
 export const getSpectralAccelerationData = (pgaValues: string[], xValue: number, filteredCurves: Record<string, XY[]>): XY[] => {
