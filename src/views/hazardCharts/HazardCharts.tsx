@@ -2,51 +2,40 @@ import React from 'react';
 import { Box } from '@mui/material';
 import { ResponsiveHazardCurves, SpectralAccelerationChartResponsive } from '@gns-science/toshi-nest';
 
-import { getHazardTableOptions, filterMultipleCurves, getSpectralAccelerationData } from '../../services/hazardPage.service';
-import { HazardData } from '../../constants/hazardChartsData';
+import { getHazardTableOptions, getColor, getCurves, getSpectralAccelerationData } from '../../services/hazardPage.service';
+import { HazardCurvesSelections } from './hazardCharts.types';
+import { HazardChartsMockData } from '../../constants/hazardChartsMockData';
 
 interface HazardChartsProps {
-  data: HazardData;
+  data: HazardChartsMockData;
+  selections: HazardCurvesSelections;
 }
 
-const HazardCharts: React.FC<HazardChartsProps> = ({ data }: HazardChartsProps) => {
+const HazardCharts: React.FC<HazardChartsProps> = ({ data, selections }: HazardChartsProps) => {
   const hazardPageOption = getHazardTableOptions(data);
 
-  const allCurves = filterMultipleCurves(
-    hazardPageOption.PGA,
-    data,
-    hazardPageOption.locations[0],
-    hazardPageOption.forecastTimes[0],
-    hazardPageOption.gmpe[0],
-    hazardPageOption.backgroundSeismicity[0],
-  );
+  const curve = getCurves(data, selections, [selections.spectralPeriod]);
+  const color = getColor(curve);
 
-  const SAdata = getSpectralAccelerationData(hazardPageOption.PGA, 0.02, allCurves);
+  const allCurves = getCurves(data, selections, hazardPageOption.spectralPeriod);
+
+  const SAdata = getSpectralAccelerationData(hazardPageOption.spectralPeriod, selections.POE, allCurves);
 
   const scalesConfig = {
     x: { type: 'log', domain: [1e-3, 10] },
     y: { type: 'log', domain: [1e-5, 1] },
   };
 
-  const colors = {
-    PGA: '#000000',
-  };
   return (
     <Box sx={{ paddingLeft: 20, paddingRight: 20, width: '100%', border: 'solid black 1px' }}>
       <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
-        <ResponsiveHazardCurves
-          curves={{ PGA: allCurves.PGA }}
-          scalesConfig={scalesConfig}
-          colors={colors}
-          heading={'Responsive Hazard Curves'}
-          subHeading={'subHeading'}
-          gridNumTicks={10}
-          POE={'2%'}
-        />
+        <ResponsiveHazardCurves curves={curve} scalesConfig={scalesConfig} colors={color} heading={'Responsive Hazard Curves'} subHeading={'subHeading'} gridNumTicks={10} POE={selections.POE} />
       </div>
-      <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
-        <SpectralAccelerationChartResponsive data={SAdata} heading={'Spectral Acceleration Chart Responsive'} subHeading={'subHeading'} />
-      </div>
+      {selections.POE !== 'None' && (
+        <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+          <SpectralAccelerationChartResponsive data={SAdata} heading={'Spectral Acceleration Chart Responsive'} subHeading={'subHeading'} />
+        </div>
+      )}
     </Box>
   );
 };

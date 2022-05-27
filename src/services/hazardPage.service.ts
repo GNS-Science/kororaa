@@ -32,8 +32,8 @@ export const getHazardTableOptions = (hazardChartsData: HazardChartsMockData): H
   };
 };
 
-export const getCurve = (hazardChartsData: HazardChartsMockData, HazardCurvesSelections: HazardCurvesSelections): Record<string, XY[]> => {
-  const { lat, lon, vs30, spectralPeriod } = HazardCurvesSelections;
+const getCurve = (hazardChartsData: HazardChartsMockData, HazardCurvesSelections: HazardCurvesSelections, spectralPeriod: string): XY[] => {
+  const { lat, lon, vs30 } = HazardCurvesSelections;
   const rows = hazardChartsData.rows;
   const spectralPeriodParsed = spectralPeriod === 'PGA' ? '0' : spectralPeriod.split('s')[0];
 
@@ -52,10 +52,17 @@ export const getCurve = (hazardChartsData: HazardChartsMockData, HazardCurvesSel
     }
   });
 
-  const curveObject: Record<string, XY[]> = {};
-  curveObject[spectralPeriod] = curve;
+  return curve;
+};
 
-  return curveObject;
+export const getCurves = (data: HazardChartsMockData, selections: HazardCurvesSelections, spectralPeriods: string[]): Record<string, XY[]> => {
+  const curves: Record<string, XY[]> = {};
+
+  spectralPeriods.forEach((spectralPeriod) => {
+    curves[spectralPeriod] = getCurve(data, selections, spectralPeriod);
+  });
+
+  return curves;
 };
 
 export const getColor = (curve: Record<string, XY[]>): Record<string, string> => {
@@ -67,7 +74,8 @@ export const getColor = (curve: Record<string, XY[]>): Record<string, string> =>
   return color;
 };
 
-export const getSpectralAccelerationData = (pgaValues: string[], xValue: number, filteredCurves: Record<string, XY[]>): XY[] => {
+export const getSpectralAccelerationData = (pgaValues: string[], POE: string, filteredCurves: Record<string, XY[]>): XY[] => {
+  const xValue: number = POE !== 'None' && POE === '2%' ? 0.02 : 0.1;
   const dataSet: XY[] = [];
 
   pgaValues.forEach((value) => {
