@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { SelectControl } from '@gns-science/toshi-nest';
 import { Button, Input, FormControl, InputLabel, FormHelperText } from '@mui/material';
 
-import VerticalControlsBar from '../../components/common/VerticalControlsBar';
+import CustomControlsBar from '../../components/common/CustomControlsBar';
 import { getHazardTableOptions } from '../../services/hazardPage.service';
 import { hazardChartsMockData } from '../../constants/hazardChartsMockData';
 import { HazardCurvesSelections } from './hazardCharts.types';
@@ -41,7 +41,7 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ selections,
 
   return (
     <>
-      <VerticalControlsBar>
+      <CustomControlsBar>
         <FormControl variant="standard">
           <InputLabel htmlFor="component-helper">Latitude</InputLabel>
           <Input id="component-helper" name="lat" value={lat} onChange={handleLatChange} aria-describedby="component-helper-text" />
@@ -58,7 +58,7 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ selections,
         <Button variant="contained" type="submit" onClick={handleSubmit}>
           Submit
         </Button>
-      </VerticalControlsBar>
+      </CustomControlsBar>
     </>
   );
 };

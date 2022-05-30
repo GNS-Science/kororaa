@@ -9,19 +9,22 @@ const Control = styled('span')({
 const ControlsContainer = styled('div')({
   width: '100%',
   display: 'flex',
+  justifyContent: 'center',
   alignItems: 'center',
   flexWrap: 'wrap',
   flexDirect: 'colum',
 });
 
-interface VerticalControlsBarProps {
+interface CustomControlsBarProps {
   children: React.ReactNode;
 }
-const VerticalControlsBar: React.FC<VerticalControlsBarProps> = ({ children }: VerticalControlsBarProps) => {
+
+const CustomControlsBar: React.FC<CustomControlsBarProps> = ({ children }: CustomControlsBarProps) => {
   const childrenWithMargin = React.Children.map(children, (child) => {
     return <Control>{child}</Control>;
   });
+
   return <ControlsContainer>{childrenWithMargin}</ControlsContainer>;
 };
 
-export default VerticalControlsBar;
+export default CustomControlsBar;

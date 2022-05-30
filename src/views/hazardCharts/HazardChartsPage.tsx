@@ -22,15 +22,15 @@ const HazardChartsPage: React.FC = () => {
   return (
     <>
       <Typography variant="h1" sx={{ padding: 2, width: '100%', textAlign: 'center' }}>
-        Hazard Page
+        Hazard Curves and Spectra
       </Typography>
       <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-        <Box sx={{ width: 1500, display: 'flex' }}>
-          <Box sx={{ padding: 10, width: '28%', marginBottom: '70px', border: 'solid black 1px', marginRight: '2%' }}>
+        <Box sx={{ width: 1700 }}>
+          <Box sx={{ width: '100%', marginBottom: '70px', marginRight: '2%' }}>
             <HazardChartsControls selections={hazardCurvesSelections} setSelections={setHazardCurvesSelections} />
           </Box>
           {hazardCurvesSelections.lat && hazardCurvesSelections.lon && (
-            <Box sx={{ width: '70%' }}>
+            <Box sx={{ width: '100%' }}>
               <HazardCharts data={hazardChartsMockData} selections={hazardCurvesSelections} />
               <Box sx={{ height: 70 }}>
                 <ControlsBar>

@@ -27,12 +27,12 @@ const HazardCharts: React.FC<HazardChartsProps> = ({ data, selections }: HazardC
   };
 
   return (
-    <Box sx={{ paddingLeft: 20, paddingRight: 20, width: '100%', border: 'solid black 1px' }}>
-      <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+    <Box sx={{ display: 'flex', paddingLeft: 20, paddingRight: 20, width: '100%', border: 'solid black 1px' }}>
+      <div style={{ width: '50%', display: 'flex', justifyContent: 'center' }}>
         <ResponsiveHazardCurves curves={curve} scalesConfig={scalesConfig} colors={color} heading={'Responsive Hazard Curves'} subHeading={'subHeading'} gridNumTicks={10} POE={selections.POE} />
       </div>
       {selections.POE !== 'None' && (
-        <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+        <div style={{ width: '50%', display: 'flex', justifyContent: 'center' }}>
           <SpectralAccelerationChartResponsive data={SAdata} heading={'Spectral Acceleration Chart Responsive'} subHeading={'subHeading'} />
         </div>
       )}
