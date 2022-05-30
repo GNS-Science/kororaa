@@ -4,7 +4,7 @@ import { Button, Box, Typography } from '@mui/material';
 
 import HazardCharts from './HazardCharts';
 import HazardChartsControls from './HazardChartsControls';
-import { getHazardTableOptions } from '../../services/hazardPage.service';
+import { getHazardTableOptions } from './hazardPage.service';
 import { hazardChartsMockData } from '../../constants/hazardChartsMockData';
 import { HazardCurvesSelections } from './hazardCharts.types';
 

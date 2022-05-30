@@ -3,7 +3,7 @@ import { SelectControl } from '@gns-science/toshi-nest';
 import { Button, Input, FormControl, InputLabel, FormHelperText } from '@mui/material';
 
 import CustomControlsBar from '../../components/common/CustomControlsBar';
-import { getHazardTableOptions } from '../../services/hazardPage.service';
+import { getHazardTableOptions } from './hazardPage.service';
 import { hazardChartsMockData } from '../../constants/hazardChartsMockData';
 import { HazardCurvesSelections } from './hazardCharts.types';
 

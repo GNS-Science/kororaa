@@ -1,7 +1,7 @@
 import * as mathjs from 'mathjs';
 
-import { HazardChartsMockData } from '../constants/hazardChartsMockData';
-import { HazardCurvesSelections } from '../views/hazardCharts/hazardCharts.types';
+import { HazardChartsMockData } from '../../constants/hazardChartsMockData';
+import { HazardCurvesSelections } from './hazardCharts.types';
 
 interface XY {
   x: number;

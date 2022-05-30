@@ -2,7 +2,7 @@ import React from 'react';
 import { Box } from '@mui/material';
 import { ResponsiveHazardCurves, SpectralAccelerationChartResponsive } from '@gns-science/toshi-nest';
 
-import { getHazardTableOptions, getColor, getCurves, getSpectralAccelerationData } from '../../services/hazardPage.service';
+import { getHazardTableOptions, getColor, getCurves, getSpectralAccelerationData } from './hazardPage.service';
 import { HazardCurvesSelections } from './hazardCharts.types';
 import { HazardChartsMockData } from '../../constants/hazardChartsMockData';
 
