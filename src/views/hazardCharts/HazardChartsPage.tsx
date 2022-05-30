@@ -26,13 +26,13 @@ const HazardChartsPage: React.FC = () => {
       </Typography>
       <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         <Box sx={{ width: 1700 }}>
-          <Box sx={{ width: '100%', marginBottom: '70px', marginRight: '2%' }}>
+          <Box sx={{ width: '100%', marginBottom: '20px', marginRight: '2%' }}>
             <HazardChartsControls selections={hazardCurvesSelections} setSelections={setHazardCurvesSelections} />
           </Box>
           {hazardCurvesSelections.lat && hazardCurvesSelections.lon && (
             <Box sx={{ width: '100%' }}>
               <HazardCharts data={hazardChartsMockData} selections={hazardCurvesSelections} />
-              <Box sx={{ height: 70 }}>
+              <Box sx={{ height: 70, marginTop: '20px' }}>
                 <ControlsBar>
                   <Button variant="contained">Save</Button>
                   <Button variant="contained">Print Figures</Button>

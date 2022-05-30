@@ -45,12 +45,10 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ selections,
         <FormControl variant="standard">
           <InputLabel htmlFor="component-helper">Latitude</InputLabel>
           <Input id="component-helper" name="lat" value={lat} onChange={handleLatChange} aria-describedby="component-helper-text" />
-          <FormHelperText id="component-helper-text">Decimal Degrees</FormHelperText>
         </FormControl>
         <FormControl variant="standard">
           <InputLabel htmlFor="component-helper">Longitude</InputLabel>
           <Input id="component-helper" name="lon" value={lon} onChange={handleLonChange} aria-describedby="component-helper-text" />
-          <FormHelperText id="component-helper-text">Decimal Degrees, -180:180</FormHelperText>
         </FormControl>
         <SelectControl options={hazardTableOptions.vs30} selection={vs30} setSelection={setVs30} name="Vs30" />
         <SelectControl options={hazardTableOptions.spectralPeriod} selection={spectralPeriod} setSelection={setSpectralPeriod} name="Spectral Period" />
