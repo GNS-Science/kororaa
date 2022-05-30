@@ -1,7 +1,8 @@
 import React, { useState, useRef } from 'react';
 import { ControlsBar } from '@gns-science/toshi-nest';
-import { Button, Box, Typography } from '@mui/material';
+import { Button, Box, Typography, Fab } from '@mui/material';
 import { useReactToPrint } from 'react-to-print';
+import ShareIcon from '@mui/icons-material/Share';
 
 import HazardCharts from './HazardCharts';
 import HazardChartsControls from './HazardChartsControls';
@@ -27,9 +28,14 @@ const HazardChartsPage: React.FC = () => {
 
   return (
     <>
-      <Typography variant="h1" sx={{ padding: 2, width: '100%', textAlign: 'center' }}>
-        Hazard Curves and Spectra
-      </Typography>
+      <Box sx={{ display: 'flex', justifyConten: 'center', alignItems: 'center' }}>
+        <Typography variant="h1" sx={{ padding: 2, width: '100%', textAlign: 'center' }}>
+          Hazard Curves and Spectra
+        </Typography>
+        <Fab sx={{ position: 'absolute', right: '2.5%' }} color="primary">
+          <ShareIcon />
+        </Fab>
+      </Box>
       <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         <Box sx={{ width: 1700 }}>
           <Box sx={{ width: '100%', marginBottom: '20px', marginRight: '2%' }}>
@@ -42,7 +48,6 @@ const HazardChartsPage: React.FC = () => {
               </div>
               <Box sx={{ height: 70, marginTop: '20px' }}>
                 <ControlsBar>
-                  <Button variant="contained">Save</Button>
                   <Button variant="contained" onClick={handlePrint}>
                     Print Figures
                   </Button>
