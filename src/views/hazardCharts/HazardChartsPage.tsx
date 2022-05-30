@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { ControlsBar } from '@gns-science/toshi-nest';
 import { Button, Box, Typography, Fab } from '@mui/material';
+import { styled } from '@mui/material/styles';
 import { useReactToPrint } from 'react-to-print';
 import ShareIcon from '@mui/icons-material/Share';
 
@@ -26,9 +27,24 @@ const HazardChartsPage: React.FC = () => {
     content: () => printTargetRef.current,
   });
 
+  const flexProps = {
+    display: 'flex',
+    justifyConten: 'center',
+    alignItems: 'center',
+  };
+
+  const PageContainer = styled(Box)(({ theme }) => ({
+    ...flexProps,
+    margin: '0 5% 0 5%',
+    flexDirection: 'column',
+    [theme.breakpoints.down('xl')]: {
+      margin: '0 2% 0 2%',
+    },
+  }));
+
   return (
-    <>
-      <Box sx={{ display: 'flex', justifyConten: 'center', alignItems: 'center' }}>
+    <PageContainer>
+      <Box sx={{ ...flexProps, width: '100%' }}>
         <Typography variant="h1" sx={{ padding: 2, width: '100%', textAlign: 'center' }}>
           Hazard Curves and Spectra
         </Typography>
@@ -36,29 +52,23 @@ const HazardChartsPage: React.FC = () => {
           <ShareIcon />
         </Fab>
       </Box>
-      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-        <Box sx={{ width: 1700 }}>
-          <Box sx={{ width: '100%', marginBottom: '20px', marginRight: '2%' }}>
-            <HazardChartsControls selections={hazardCurvesSelections} setSelections={setHazardCurvesSelections} />
+      <HazardChartsControls selections={hazardCurvesSelections} setSelections={setHazardCurvesSelections} />
+      {hazardCurvesSelections.lat && hazardCurvesSelections.lon && (
+        <Box sx={{ width: '100%' }}>
+          <div ref={printTargetRef}>
+            <HazardCharts data={hazardChartsMockData} selections={hazardCurvesSelections} />
+          </div>
+          <Box sx={{ height: 70, marginTop: '20px' }}>
+            <ControlsBar>
+              <Button variant="contained" onClick={handlePrint}>
+                Print Figures
+              </Button>
+              <Button variant="contained">Save Data</Button>
+            </ControlsBar>
           </Box>
-          {hazardCurvesSelections.lat && hazardCurvesSelections.lon && (
-            <Box sx={{ width: '100%' }}>
-              <div ref={printTargetRef}>
-                <HazardCharts data={hazardChartsMockData} selections={hazardCurvesSelections} />
-              </div>
-              <Box sx={{ height: 70, marginTop: '20px' }}>
-                <ControlsBar>
-                  <Button variant="contained" onClick={handlePrint}>
-                    Print Figures
-                  </Button>
-                  <Button variant="contained">Save Data</Button>
-                </ControlsBar>
-              </Box>
-            </Box>
-          )}
         </Box>
-      </Box>
-    </>
+      )}
+    </PageContainer>
   );
 };
 

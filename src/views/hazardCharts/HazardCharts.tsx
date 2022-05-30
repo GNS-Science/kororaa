@@ -1,5 +1,6 @@
 import React from 'react';
 import { Box } from '@mui/material';
+import { styled } from '@mui/material/styles';
 import { ResponsiveHazardCurves, SpectralAccelerationChartResponsive } from '@gns-science/toshi-nest';
 
 import { getHazardTableOptions, getColor, getCurves, getSpectralAccelerationData } from './hazardPage.service';
@@ -26,17 +27,34 @@ const HazardCharts: React.FC<HazardChartsProps> = ({ data, selections }: HazardC
     y: { type: 'log', domain: [1e-5, 1] },
   };
 
+  const HazardChartsContainer = styled(Box)(({ theme }) => ({
+    display: 'flex',
+    padding: '0 20 0 20',
+    width: '100%',
+    border: 'solid black 1px',
+    [theme.breakpoints.down('md')]: {
+      flexDirection: 'column',
+    },
+  }));
+
+  const ChartContainer = styled('div')(({ theme }) => ({
+    width: '50%',
+    [theme.breakpoints.down('md')]: {
+      width: '100%',
+    },
+  }));
+
   return (
-    <Box sx={{ display: 'flex', paddingLeft: 20, paddingRight: 20, width: '100%', border: 'solid black 1px' }}>
-      <div style={{ width: '50%', display: 'flex', justifyContent: 'center' }}>
+    <HazardChartsContainer>
+      <ChartContainer>
         <ResponsiveHazardCurves curves={curve} scalesConfig={scalesConfig} colors={color} heading={'Responsive Hazard Curves'} subHeading={'subHeading'} gridNumTicks={10} POE={selections.POE} />
-      </div>
+      </ChartContainer>
       {selections.POE !== 'None' && (
-        <div style={{ width: '50%', display: 'flex', justifyContent: 'center' }}>
+        <ChartContainer>
           <SpectralAccelerationChartResponsive data={SAdata} heading={'Spectral Acceleration Chart Responsive'} subHeading={'subHeading'} />
-        </div>
+        </ChartContainer>
       )}
-    </Box>
+    </HazardChartsContainer>
   );
 };
 

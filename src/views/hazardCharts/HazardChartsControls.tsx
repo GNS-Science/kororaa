@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { SelectControl } from '@gns-science/toshi-nest';
-import { Button, Input, FormControl, InputLabel, FormHelperText } from '@mui/material';
+import { Button, Input, FormControl, InputLabel, Box } from '@mui/material';
 
 import CustomControlsBar from '../../components/common/CustomControlsBar';
 import { getHazardTableOptions } from './hazardPage.service';
@@ -40,7 +40,7 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ selections,
   };
 
   return (
-    <>
+    <Box sx={{ marginBottom: '20px' }}>
       <CustomControlsBar>
         <FormControl variant="standard">
           <InputLabel htmlFor="component-helper">Latitude</InputLabel>
@@ -57,7 +57,7 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ selections,
           Submit
         </Button>
       </CustomControlsBar>
-    </>
+    </Box>
   );
 };
 
