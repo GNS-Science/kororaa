@@ -75,7 +75,7 @@ export const getColor = (curve: Record<string, XY[]>): Record<string, string> =>
 };
 
 export const getSpectralAccelerationData = (pgaValues: string[], POE: string, filteredCurves: Record<string, XY[]>): XY[] => {
-  const xValue: number = POE !== 'None' && POE === '2%' ? 0.02 : 0.1;
+  const xValue: number = POE !== 'None' && POE === '2%' ? -Math.log(1 - 0.02) / 50 : -Math.log(1 - 0.1) / 50;
   const dataSet: XY[] = [];
 
   pgaValues.forEach((value) => {
