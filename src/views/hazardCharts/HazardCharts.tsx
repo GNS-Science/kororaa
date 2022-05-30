@@ -29,7 +29,7 @@ const HazardCharts: React.FC<HazardChartsProps> = ({ data, selections }: HazardC
 
   const HazardChartsContainer = styled(Box)(({ theme }) => ({
     display: 'flex',
-    padding: '0 20 0 20',
+    padding: 20,
     width: '100%',
     border: 'solid black 1px',
     [theme.breakpoints.down('md')]: {
