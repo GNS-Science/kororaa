@@ -1,7 +1,7 @@
 import React from 'react';
 import { styled } from '@mui/material/styles';
 
-import { partnersLogos } from '../constants/partnersLogos';
+import { partnersLogos } from '../../constants/partnersLogos';
 import { Typography } from '@mui/material';
 
 const PartnersLogosContainer = styled('div')(({ theme }) => ({
