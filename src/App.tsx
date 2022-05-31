@@ -2,6 +2,7 @@ import React from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@emotion/react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Box } from '@mui/material';
 
 import './App.css';
 import theme from './theme';
@@ -15,16 +16,20 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline>
-        <NavBar />
-        <BrowserRouter>
-          <DisclaimerLayer>
-            <Routes>
-              <Route path="/HazardCurves" element={<HazardChartsPage />} />
-              <Route path="/" element={<Home />} />
-            </Routes>
-          </DisclaimerLayer>
-        </BrowserRouter>
-        <Footer />
+        <Box sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+          <NavBar />
+          <Box sx={{ flexGrow: 1 }}>
+            <BrowserRouter>
+              <DisclaimerLayer>
+                <Routes>
+                  <Route path="/HazardCurves" element={<HazardChartsPage />} />
+                  <Route path="/" element={<Home />} />
+                </Routes>
+              </DisclaimerLayer>
+            </BrowserRouter>
+          </Box>
+          <Footer />
+        </Box>
       </CssBaseline>
     </ThemeProvider>
   );

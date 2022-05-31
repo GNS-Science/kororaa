@@ -36,60 +36,62 @@ const NavBar: React.FC = () => {
   ];
 
   return (
-    <StyledAppBar position="static">
-      <Container maxWidth="xl">
-        <StyledToolbar disableGutters>
-          <Link href="/">
-            <img src="/NSHM.png" />
-          </Link>
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-            <IconButton size="large" aria-label="account of current user" aria-controls="menu-appbar" aria-haspopup="true" onClick={handleOpenNavMenu} color="inherit">
-              <MenuIcon />
-            </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{
-                display: { xs: 'block', md: 'none' },
-              }}
-            >
+    <Box sx={{ flexShrink: 0 }}>
+      <StyledAppBar position="static">
+        <Container maxWidth="xl">
+          <StyledToolbar disableGutters>
+            <Link href="/">
+              <img src="/NSHM.png" />
+            </Link>
+            <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+              <IconButton size="large" aria-label="account of current user" aria-controls="menu-appbar" aria-haspopup="true" onClick={handleOpenNavMenu} color="inherit">
+                <MenuIcon />
+              </IconButton>
+              <Menu
+                id="menu-appbar"
+                anchorEl={anchorElNav}
+                anchorOrigin={{
+                  vertical: 'bottom',
+                  horizontal: 'left',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'left',
+                }}
+                open={Boolean(anchorElNav)}
+                onClose={handleCloseNavMenu}
+                sx={{
+                  display: { xs: 'block', md: 'none' },
+                }}
+              >
+                {pages.map((page) => (
+                  <MenuItem key={page.name} onClick={handleCloseNavMenu}>
+                    <Typography variant="h5" textAlign="center">
+                      <Link href={page.path} underline="none" color="black">
+                        {page.name}
+                      </Link>
+                    </Typography>
+                  </MenuItem>
+                ))}
+              </Menu>
+            </Box>
+            <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
               {pages.map((page) => (
                 <MenuItem key={page.name} onClick={handleCloseNavMenu}>
-                  <Typography variant="h5" textAlign="center">
+                  <Typography variant="h5">
                     <Link href={page.path} underline="none" color="black">
                       {page.name}
                     </Link>
                   </Typography>
                 </MenuItem>
               ))}
-            </Menu>
-          </Box>
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) => (
-              <MenuItem key={page.name} onClick={handleCloseNavMenu}>
-                <Typography variant="h5">
-                  <Link href={page.path} underline="none" color="black">
-                    {page.name}
-                  </Link>
-                </Typography>
-              </MenuItem>
-            ))}
-          </Box>
-          <img src="/GNS.png" />
-        </StyledToolbar>
-      </Container>
-    </StyledAppBar>
+            </Box>
+            <img src="/GNS.png" />
+          </StyledToolbar>
+        </Container>
+      </StyledAppBar>
+    </Box>
   );
 };
 

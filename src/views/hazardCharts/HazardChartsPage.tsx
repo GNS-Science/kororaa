@@ -1,14 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useMemo } from 'react';
 import { ControlsBar } from '@gns-science/toshi-nest';
-import { Button, Box, Typography } from '@mui/material';
+import { Button, Box, Typography, Fab } from '@mui/material';
+import { styled } from '@mui/material/styles';
+import { useReactToPrint } from 'react-to-print';
+import ShareIcon from '@mui/icons-material/Share';
+import { CSVLink } from 'react-csv';
 
 import HazardCharts from './HazardCharts';
 import HazardChartsControls from './HazardChartsControls';
-import { getHazardTableOptions } from '../../services/hazardPage.service';
+import { getCSVdata, getHazardTableOptions } from './hazardPage.service';
 import { hazardChartsMockData } from '../../constants/hazardChartsMockData';
 import { HazardCurvesSelections } from './hazardCharts.types';
 
 const HazardChartsPage: React.FC = () => {
+  const printTargetRef = useRef<HTMLDivElement>(null);
   const hazardTableOptions = getHazardTableOptions(hazardChartsMockData);
 
   const [hazardCurvesSelections, setHazardCurvesSelections] = useState<HazardCurvesSelections>({
@@ -19,31 +24,58 @@ const HazardChartsPage: React.FC = () => {
     POE: 'None',
   });
 
+  const CSVdata = useMemo(() => {
+    return getCSVdata(hazardTableOptions.spectralPeriod, hazardCurvesSelections, hazardChartsMockData);
+  }, [hazardCurvesSelections, hazardTableOptions.spectralPeriod]);
+
+  const handlePrint = useReactToPrint({
+    content: () => printTargetRef.current,
+  });
+
+  const flexProps = {
+    display: 'flex',
+    justifyConten: 'center',
+    alignItems: 'center',
+  };
+
+  const PageContainer = styled(Box)(({ theme }) => ({
+    ...flexProps,
+    margin: '0 5% 0 5%',
+    flexDirection: 'column',
+    [theme.breakpoints.down('xl')]: {
+      margin: '0 2% 0 2%',
+    },
+  }));
+
   return (
-    <>
-      <Typography variant="h1" sx={{ padding: 2, width: '100%', textAlign: 'center' }}>
-        Hazard Curves and Spectra
-      </Typography>
-      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-        <Box sx={{ width: 1700 }}>
-          <Box sx={{ width: '100%', marginBottom: '20px', marginRight: '2%' }}>
-            <HazardChartsControls selections={hazardCurvesSelections} setSelections={setHazardCurvesSelections} />
-          </Box>
-          {hazardCurvesSelections.lat && hazardCurvesSelections.lon && (
-            <Box sx={{ width: '100%' }}>
-              <HazardCharts data={hazardChartsMockData} selections={hazardCurvesSelections} />
-              <Box sx={{ height: 70, marginTop: '20px' }}>
-                <ControlsBar>
-                  <Button variant="contained">Save</Button>
-                  <Button variant="contained">Print Figures</Button>
-                  <Button variant="contained">Save Data</Button>
-                </ControlsBar>
-              </Box>
-            </Box>
-          )}
-        </Box>
+    <PageContainer>
+      <Box sx={{ ...flexProps, width: '100%' }}>
+        <Typography variant="h1" sx={{ padding: 2, width: '100%', textAlign: 'center' }}>
+          Hazard Curves and Spectra
+        </Typography>
+        <Fab sx={{ position: 'absolute', right: '2.5%' }} color="primary">
+          <ShareIcon />
+        </Fab>
       </Box>
-    </>
+      <HazardChartsControls selections={hazardCurvesSelections} setSelections={setHazardCurvesSelections} />
+      {hazardCurvesSelections.lat && hazardCurvesSelections.lon && (
+        <Box sx={{ width: '100%' }}>
+          <div ref={printTargetRef}>
+            <HazardCharts data={hazardChartsMockData} selections={hazardCurvesSelections} />
+          </div>
+          <Box sx={{ height: 70, marginTop: '20px' }}>
+            <ControlsBar>
+              <Button variant="contained" onClick={handlePrint}>
+                Print Figures
+              </Button>
+              <CSVLink data={CSVdata} filename="hazard-curves.csv">
+                <Button variant="contained">Save Data</Button>
+              </CSVLink>
+            </ControlsBar>
+          </Box>
+        </Box>
+      )}
+    </PageContainer>
   );
 };
 
