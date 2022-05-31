@@ -1,13 +1,14 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useMemo } from 'react';
 import { ControlsBar } from '@gns-science/toshi-nest';
 import { Button, Box, Typography, Fab } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { useReactToPrint } from 'react-to-print';
 import ShareIcon from '@mui/icons-material/Share';
+import { CSVLink } from 'react-csv';
 
 import HazardCharts from './HazardCharts';
 import HazardChartsControls from './HazardChartsControls';
-import { getHazardTableOptions } from './hazardPage.service';
+import { getCSVdata, getHazardTableOptions } from './hazardPage.service';
 import { hazardChartsMockData } from '../../constants/hazardChartsMockData';
 import { HazardCurvesSelections } from './hazardCharts.types';
 
@@ -22,6 +23,10 @@ const HazardChartsPage: React.FC = () => {
     spectralPeriod: hazardTableOptions.spectralPeriod[0],
     POE: 'None',
   });
+
+  const CSVdata = useMemo(() => {
+    return getCSVdata(hazardTableOptions.spectralPeriod, hazardCurvesSelections, hazardChartsMockData);
+  }, [hazardCurvesSelections, hazardTableOptions.spectralPeriod]);
 
   const handlePrint = useReactToPrint({
     content: () => printTargetRef.current,
@@ -63,7 +68,9 @@ const HazardChartsPage: React.FC = () => {
               <Button variant="contained" onClick={handlePrint}>
                 Print Figures
               </Button>
-              <Button variant="contained">Save Data</Button>
+              <CSVLink data={CSVdata} filename="hazard-curves.csv">
+                <Button variant="contained">Save Data</Button>
+              </CSVLink>
             </ControlsBar>
           </Box>
         </Box>
