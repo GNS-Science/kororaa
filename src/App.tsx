@@ -4,6 +4,9 @@ import { ThemeProvider } from '@emotion/react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Box } from '@mui/material';
 
+import { Environment, RelayEnvironmentProvider } from 'react-relay/hooks';
+import RelayEnvironment from './RelayEnvironment';
+
 import './App.css';
 import theme from './theme';
 import NavBar from './components/common/NavBar';
@@ -12,26 +15,34 @@ import Home from './views/home/Home';
 import DisclaimerLayer from './views/home/DisclaimerLayer';
 import HazardChartsPage from './views/hazardCharts/HazardChartsPage';
 
-function App() {
+// The Home component needs to know how to access the Relay environment, and we
+// need to specify a fallback in case it suspends:
+// - <RelayEnvironmentProvider> tells child components how to talk to the current
+//   Relay Environment instance
+// - <Suspense> specifies a fallback in case a child suspends.
+function App(props: { environment?: Environment }) {
+  const env = props.environment || RelayEnvironment;
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline>
-        <Box sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-          <NavBar />
-          <Box sx={{ flexGrow: 1 }}>
-            <BrowserRouter>
-              <DisclaimerLayer>
-                <Routes>
-                  <Route path="/HazardCurves" element={<HazardChartsPage />} />
-                  <Route path="/" element={<Home />} />
-                </Routes>
-              </DisclaimerLayer>
-            </BrowserRouter>
+    <RelayEnvironmentProvider environment={env}>
+      <ThemeProvider theme={theme}>
+        <CssBaseline>
+          <Box sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+            <NavBar />
+            <Box sx={{ flexGrow: 1 }}>
+              <BrowserRouter>
+                <DisclaimerLayer>
+                  <Routes>
+                    <Route path="/HazardCurves" element={<HazardChartsPage />} />
+                    <Route path="/" element={<Home />} />
+                  </Routes>
+                </DisclaimerLayer>
+              </BrowserRouter>
+            </Box>
+            <Footer />
           </Box>
-          <Footer />
-        </Box>
-      </CssBaseline>
-    </ThemeProvider>
+        </CssBaseline>
+      </ThemeProvider>
+    </RelayEnvironmentProvider>
   );
 }
 
