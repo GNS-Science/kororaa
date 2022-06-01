@@ -11,6 +11,7 @@ import Footer from './components/common/Footer';
 import Home from './views/home/Home';
 import DisclaimerLayer from './views/home/DisclaimerLayer';
 import HazardChartsPage from './views/hazardCharts/HazardChartsPage';
+import RuptureSetsPage from './views/ruptureSets/RuptureSetsPage';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
               <DisclaimerLayer>
                 <Routes>
                   <Route path="/HazardCurves" element={<HazardChartsPage />} />
+                  <Route path="/RuptureSets" element={<RuptureSetsPage />} />
                   <Route path="/" element={<Home />} />
                 </Routes>
               </DisclaimerLayer>
