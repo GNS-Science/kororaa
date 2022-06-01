@@ -2,9 +2,6 @@ import React from 'react';
 import { Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { Box } from '@mui/material';
-import { useLazyLoadQuery } from 'react-relay';
-import { HomeQuery } from './__generated__/HomeQuery.graphql';
-import { graphql } from 'babel-plugin-relay/macro';
 
 import MenuCard from './MenuCard';
 
