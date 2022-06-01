@@ -40,7 +40,7 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ selections,
   };
 
   return (
-    <Box sx={{ marginBottom: '20px' }}>
+    <Box sx={{ marginBottom: '20px', width: '100%', border: 'solid 1px black', padding: '10px' }}>
       <CustomControlsBar>
         <FormControl variant="standard">
           <InputLabel htmlFor="component-helper">Latitude</InputLabel>

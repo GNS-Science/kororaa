@@ -9,6 +9,7 @@ const Control = styled('span')({
 const ControlsContainer = styled('div')({
   width: '100%',
   display: 'flex',
+  justifyContent: 'center',
   alignItems: 'center',
   flexWrap: 'wrap',
   flexDirect: 'colum',
