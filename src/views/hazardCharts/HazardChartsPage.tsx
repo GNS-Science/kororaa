@@ -11,8 +11,14 @@ import HazardChartsControls from './HazardChartsControls';
 import { getCSVdata, getHazardTableOptions } from './hazardPage.service';
 import { hazardChartsMockData } from '../../constants/hazardChartsMockData';
 import { HazardCurvesSelections } from './hazardCharts.types';
+import { graphql } from 'babel-plugin-relay/macro';
+import { useLazyLoadQuery } from 'react-relay';
+import { HazardChartsPageQuery } from './__generated__/HazardChartsPageQuery.graphql';
 
 const HazardChartsPage: React.FC = () => {
+  const data = useLazyLoadQuery<HazardChartsPageQuery>(hazardChartsPageQuery, { hazard_model: 'TEST1', vs30s: [250], imts: ['PGA'], locs: ['ROT'], aggs: ['mean'] });
+  console.log(data);
+
   const printTargetRef = useRef<HTMLDivElement>(null);
   const hazardTableOptions = getHazardTableOptions(hazardChartsMockData);
 
@@ -80,3 +86,22 @@ const HazardChartsPage: React.FC = () => {
 };
 
 export default HazardChartsPage;
+
+export const hazardChartsPageQuery = graphql`
+  query HazardChartsPageQuery($hazard_model: String, $vs30s: [Float], $imts: [String], $locs: [String], $aggs: [String]) {
+    #about
+    hazard_curves(hazard_model: $hazard_model, vs30s: $vs30s, imts: $imts, locs: $locs, aggs: $aggs) {
+      ok
+      curves {
+        loc
+        imt
+        agg
+        vs30
+        curve {
+          levels
+          values
+        }
+      }
+    }
+  }
+`;
