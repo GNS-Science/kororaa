@@ -1,0 +1,51 @@
+schema {
+  query: QueryRoot
+}
+
+"""An object with an ID"""
+interface Node {
+  """The ID of the object."""
+  id: ID!
+}
+
+"""This is the entry point for all graphql query operations"""
+type QueryRoot {
+  node(
+    """The ID of the object"""
+    id: ID!
+  ): Node
+
+  """About this API """
+  about: String
+  hazard_curves(toshi_hazard_id: ID, imts: [String], locs: [String], aggs: [String]): ToshiHazardCurveResult
+}
+
+"""Represents one set of level and values for a hazard curve."""
+type ToshiHazardCurve {
+  """IMT levels."""
+  levels: [Float]
+
+  """Hazard values."""
+  values: [Float]
+}
+
+type ToshiHazardCurveResult {
+  ok: Boolean
+  curves: [ToshiHazardResult]
+}
+
+"""
+All the info about a given curve
+loc
+imt
+agg
+rlz
+vs30
+"""
+type ToshiHazardResult {
+  toshi_hazard_id: ID
+  loc: String
+  imt: String
+  agg: String
+  curve: ToshiHazardCurve
+}
