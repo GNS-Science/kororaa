@@ -43,9 +43,6 @@ const CardButtonsContainer = styled(Box)(({ theme }) => ({
 }));
 
 const Home: React.FC = () => {
-  const data = useLazyLoadQuery<HomeQuery>(homeQuery, {});
-  console.log('API response: ' + data);
-
   return (
     <HomeContainer>
       <InfoContainer>
@@ -63,27 +60,3 @@ const Home: React.FC = () => {
 };
 
 export default Home;
-
-export const homeQuery = graphql`
-  query HomeQuery {
-    about
-    hazard_curves(
-      toshi_hazard_id: "T3BlbnF1YWtlSGF6YXJkU29sdXRpb246MTAzMDEy"
-      # hazard_model: "TEST1"
-      imts: ["PGA", "SA(0.5)"]
-      locs: ["WLG", "AKL"] # Include lat,lon for these
-      aggs: ["mean"] #, "0.1", "0.9"]
-    ) {
-      ok
-      curves {
-        loc
-        imt
-        agg
-        curve {
-          levels
-          values
-        }
-      }
-    }
-  }
-`;
