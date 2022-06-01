@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import { SelectControl } from '@gns-science/toshi-nest';
-import { Button, Input, FormControl, InputLabel, Box } from '@mui/material';
+import { Button, Input, FormControl, InputLabel, Box, Autocomplete, TextField } from '@mui/material';
 
 import CustomControlsBar from '../../components/common/CustomControlsBar';
-import { getHazardTableOptions } from './hazardPage.service';
-import { hazardChartsMockData } from '../../constants/hazardChartsMockData';
 import { HazardCurvesSelections } from './hazardCharts.types';
+import { hazardPageOptions } from './hazardPageOptions';
 
 interface HazardChartsControlsProps {
   selections: HazardCurvesSelections;
@@ -13,28 +12,22 @@ interface HazardChartsControlsProps {
 }
 
 const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ selections, setSelections }: HazardChartsControlsProps) => {
-  const hazardTableOptions = getHazardTableOptions(hazardChartsMockData);
-
-  const [lat, setLat] = useState<string>(selections.lat);
-  const [lon, setLon] = useState<string>(selections.lon);
-  const [vs30, setVs30] = useState<string>(selections.vs30);
-  const [spectralPeriod, setSpectralPeriod] = useState<string>(selections.spectralPeriod);
+  const [latLon, setLatLon] = useState<string>('');
+  const [location, setLocation] = useState<string>('');
+  const [vs30, setVs30] = useState<number>(selections.vs30);
+  const [imt, setImt] = useState<string>(selections.imt);
   const [POE, setPOE] = useState<'None' | '2%' | '10%'>(selections.POE);
+  const [inputValue, setInputValue] = useState<string>('');
 
-  const handleLatChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setLat(event.target.value);
-  };
-
-  const handleLonChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setLon(event.target.value);
+  const handleLatLonChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setLatLon(event.target.value);
   };
 
   const handleSubmit = () => {
     setSelections({
-      lat: lat,
-      lon: lon,
+      location: location,
       vs30,
-      spectralPeriod,
+      imt,
       POE,
     });
   };
@@ -42,16 +35,27 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ selections,
   return (
     <Box sx={{ marginBottom: '20px', width: '100%', border: 'solid 1px black', padding: '10px' }}>
       <CustomControlsBar>
+        <Autocomplete
+          value={location}
+          onChange={(event: any, newValue: string | null) => {
+            setLocation(newValue as string);
+          }}
+          inputValue={inputValue}
+          onInputChange={(event, newInputValue) => {
+            setInputValue(newInputValue);
+          }}
+          options={hazardPageOptions.locations}
+          style={{ width: 500, marginLeft: 16 }}
+          renderInput={(params) => <TextField {...params} label="Locations" variant="standard" />}
+          blurOnSelect={true}
+          limitTags={1}
+        />
         <FormControl variant="standard">
-          <InputLabel htmlFor="component-helper">Latitude</InputLabel>
-          <Input id="component-helper" name="lat" value={lat} onChange={handleLatChange} aria-describedby="component-helper-text" />
+          <InputLabel htmlFor="component-helper">Lat,Lon</InputLabel>
+          <Input id="component-helper" name="lon" value={latLon} onChange={handleLatLonChange} aria-describedby="component-helper-text" />
         </FormControl>
-        <FormControl variant="standard">
-          <InputLabel htmlFor="component-helper">Longitude</InputLabel>
-          <Input id="component-helper" name="lon" value={lon} onChange={handleLonChange} aria-describedby="component-helper-text" />
-        </FormControl>
-        <SelectControl options={hazardTableOptions.vs30} selection={vs30} setSelection={setVs30} name="Vs30" />
-        <SelectControl options={hazardTableOptions.spectralPeriod} selection={spectralPeriod} setSelection={setSpectralPeriod} name="Spectral Period" />
+        <SelectControl options={hazardPageOptions.vs30s} selection={vs30} setSelection={setVs30} name="Vs30" />
+        <SelectControl options={hazardPageOptions.imts} selection={imt} setSelection={setImt} name="Spectral Period" />
         <SelectControl options={['None', '2%', '10%']} selection={POE} setSelection={setPOE} name="Probability of Exceedance" />
         <Button variant="contained" type="submit" onClick={handleSubmit}>
           Submit
