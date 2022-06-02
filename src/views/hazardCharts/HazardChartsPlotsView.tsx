@@ -30,7 +30,6 @@ const HazardChartsPlotsView: React.FC<HazardChartsPlotsViewProps> = ({ selection
     locs: [locationID],
     aggs: ['mean'],
   });
-  console.log(data);
 
   const handlePrint = useReactToPrint({
     content: () => printTargetRef.current,
@@ -43,16 +42,16 @@ const HazardChartsPlotsView: React.FC<HazardChartsPlotsViewProps> = ({ selection
   return (
     <Box sx={{ width: '100%' }}>
       <div ref={printTargetRef}>
-        <HazardCharts data={hazardChartsMockData} selections={hazardCurvesSelections} />
+        <HazardCharts data={data} selections={selections} />
       </div>
       <Box sx={{ height: 70, marginTop: '20px' }}>
         <ControlsBar>
           <Button variant="contained" onClick={handlePrint}>
             Print Figures
           </Button>
-          <CSVLink data={CSVdata} filename="hazard-curves.csv">
+          {/* <CSVLink data={CSVdata} filename="hazard-curves.csv">
             <Button variant="contained">Save Data</Button>
-          </CSVLink>
+          </CSVLink> */}
         </ControlsBar>
       </Box>
     </Box>
