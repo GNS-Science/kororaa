@@ -44,7 +44,7 @@ const Home: React.FC = () => {
     <HomeContainer>
       <InfoContainer>
         <Typography variant="h1">New Zealand National Seismic Hazard Model</Typography>
-        <Typography>Welcome to the New Zealand NSHM . This is the 2022 revision to the model. Here’s a link back to the explaination and background info on the model</Typography>
+        <Typography>Welcome to the New Zealand NSHM. This is the 2022 revision to the model. Here’s a link back to the explanation and background info on the model.</Typography>
       </InfoContainer>
       <CardButtonsContainer>
         <MenuCard title="Hazard Curves" text="Hazard Curves to view" img="/hazardCurves.png" />

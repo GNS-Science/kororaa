@@ -11,6 +11,7 @@ const FooterContainer = styled('footer')(({ theme }) => ({
   display: 'flex',
   flexDirect: 'row',
   justifyContent: 'space-between',
+  borderTop: `10px solid ${theme.palette.primary.main}`,
   [theme.breakpoints.down('md')]: {
     flexDirection: 'column',
     justifyContent: 'center',
