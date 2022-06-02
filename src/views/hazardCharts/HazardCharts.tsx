@@ -3,24 +3,21 @@ import { Box } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { ResponsiveHazardCurves, SpectralAccelerationChartResponsive } from '@gns-science/toshi-nest';
 
-import { getHazardTableOptions, getColor, getCurves, getSpectralAccelerationData } from './hazardPage.service';
 import { HazardCurvesSelections } from './hazardCharts.types';
-import { HazardChartsMockData } from '../../constants/hazardChartsMockData';
+import { HazardChartsPlotsViewQuery$data } from './__generated__/HazardChartsPlotsViewQuery.graphql';
+import { getAllCurves, getColor, getCurve, getSpectralAccelerationData } from './hazardPage.service';
+import { hazardPageOptions } from './hazardPageOptions';
 
 interface HazardChartsProps {
-  data: HazardChartsMockData;
+  data: HazardChartsPlotsViewQuery$data;
   selections: HazardCurvesSelections;
 }
 
 const HazardCharts: React.FC<HazardChartsProps> = ({ data, selections }: HazardChartsProps) => {
-  const hazardPageOption = getHazardTableOptions(data);
-
-  const curve = getCurves(data, selections, [selections.spectralPeriod]);
+  const allCurves = getAllCurves(data);
+  const curve = getCurve(allCurves, selections.imt);
   const color = getColor(curve);
-
-  const allCurves = getCurves(data, selections, hazardPageOption.spectralPeriod);
-
-  const SAdata = getSpectralAccelerationData(hazardPageOption.spectralPeriod, selections.POE, allCurves);
+  const SAdata = getSpectralAccelerationData(hazardPageOptions.imts, selections.POE, allCurves);
 
   const scalesConfig = {
     x: { type: 'log', domain: [1e-3, 10] },
@@ -37,7 +34,7 @@ const HazardCharts: React.FC<HazardChartsProps> = ({ data, selections }: HazardC
     },
   }));
 
-  const ChartContainer = styled('div')(({ theme }) => ({
+  const ChartContainer = styled(Box)(({ theme }) => ({
     width: '50%',
     [theme.breakpoints.down('md')]: {
       width: '100%',
