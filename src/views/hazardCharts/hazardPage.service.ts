@@ -65,13 +65,48 @@ export const getSpectralAccelerationData = (pgaValues: string[], POE: string, fi
       });
       const point = mathjs.intersect(p1, p2, p3, p4);
       const result = [Math.exp(point[0] as number), mathjs.exp(mathjs.exp(point[1] as number))];
-      dataSet.push({ x: value === 'PGA' ? 0.01 : parseFloat(value), y: result[0] });
+      dataSet.push({ x: value === 'PGA' ? 0.01 : parseFloat(getImtValue(value)), y: result[0] });
     } catch {
-      dataSet.push({ x: value === 'PGA' ? 0.01 : parseFloat(value), y: 0 });
+      dataSet.push({ x: value === 'PGA' ? 0.01 : parseFloat(getImtValue(value)), y: 0 });
     }
   });
 
   return dataSet;
+};
+
+const getImtValue = (imt: string): string => {
+  switch (imt) {
+    case 'PGA':
+      return '0.01';
+    case 'SA(0.1)':
+      return '0.1';
+    case 'SA(0.2)':
+      return '0.2';
+    case 'SA(0.3)':
+      return '0.3';
+    case 'SA(0.4)':
+      return '0.4';
+    case 'SA(0.5)':
+      return '0.5';
+    case 'SA(0.7)':
+      return '0.7';
+    case 'SA(1.0)':
+      return '1.0';
+    case 'SA(1.5)':
+      return '1.5';
+    case 'SA(2.0)':
+      return '2.0';
+    case 'SA(3.0)':
+      return '3.0';
+    case 'SA(4.0)':
+      return '4.0';
+    case 'SA(5.0)':
+      return '5.0';
+    case 'SA(1)':
+      return '1';
+    default:
+      return '0.01';
+  }
 };
 
 // export const getCSVdata = (PGAoptions: string[], selections: HazardCurvesSelections, data: HazardChartsMockData): string[][] => {

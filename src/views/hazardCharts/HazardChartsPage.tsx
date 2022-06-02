@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Typography, Fab } from '@mui/material';
+import { Box, Typography, Fab, CircularProgress } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import ShareIcon from '@mui/icons-material/Share';
 
@@ -43,7 +43,7 @@ const HazardChartsPage: React.FC = () => {
       </Box>
       <HazardChartsControls selections={hazardCurvesSelections} setSelections={setHazardCurvesSelections} />
       {hazardCurvesSelections.location && (
-        <React.Suspense>
+        <React.Suspense fallback={<CircularProgress />}>
           <HazardChartsPlotsView selections={hazardCurvesSelections} />
         </React.Suspense>
       )}
