@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Box } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { ResponsiveHazardCurves, SpectralAccelerationChartResponsive } from '@gns-science/toshi-nest';
@@ -14,10 +14,10 @@ interface HazardChartsProps {
 }
 
 const HazardCharts: React.FC<HazardChartsProps> = ({ data, selections }: HazardChartsProps) => {
-  const allCurves = getAllCurves(data);
-  const curve = getCurve(allCurves, selections.imt);
-  const color = getColor(curve);
-  const SAdata = getSpectralAccelerationData(hazardPageOptions.imts, selections.POE, allCurves);
+  const allCurves = useMemo(() => getAllCurves(data), [data]);
+  const curve = useMemo(() => getCurve(allCurves, selections.imt), [allCurves, selections.imt]);
+  const color = useMemo(() => getColor(curve), [curve]);
+  const SAdata = useMemo(() => getSpectralAccelerationData(hazardPageOptions.imts, selections.POE, allCurves), [selections.POE, allCurves]);
 
   const scalesConfig = {
     x: { type: 'log', domain: [1e-3, 10] },
