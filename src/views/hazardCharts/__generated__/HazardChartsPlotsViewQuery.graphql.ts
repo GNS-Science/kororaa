@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d7bf1dc9d8deb3317f5c9a5c177914b6>>
+ * @generated SignedSource<<c96f425cf6860d4f0e15126a4ca9ad8d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,14 +9,14 @@
 // @ts-nocheck
 
 import { ConcreteRequest, Query } from 'relay-runtime';
-export type HazardChartsPageQuery$variables = {
+export type HazardChartsPlotsViewQuery$variables = {
   hazard_model?: string | null;
   vs30s?: ReadonlyArray<number | null> | null;
   imts?: ReadonlyArray<string | null> | null;
   locs?: ReadonlyArray<string | null> | null;
   aggs?: ReadonlyArray<string | null> | null;
 };
-export type HazardChartsPageQuery$data = {
+export type HazardChartsPlotsViewQuery$data = {
   readonly hazard_curves: {
     readonly ok: boolean | null;
     readonly curves: ReadonlyArray<{
@@ -31,9 +31,9 @@ export type HazardChartsPageQuery$data = {
     } | null> | null;
   } | null;
 };
-export type HazardChartsPageQuery = {
-  variables: HazardChartsPageQuery$variables;
-  response: HazardChartsPageQuery$data;
+export type HazardChartsPlotsViewQuery = {
+  variables: HazardChartsPlotsViewQuery$variables;
+  response: HazardChartsPlotsViewQuery$data;
 };
 
 const node: ConcreteRequest = (function(){
@@ -183,7 +183,7 @@ return {
     ],
     "kind": "Fragment",
     "metadata": null,
-    "name": "HazardChartsPageQuery",
+    "name": "HazardChartsPlotsViewQuery",
     "selections": (v5/*: any*/),
     "type": "QueryRoot",
     "abstractKey": null
@@ -198,20 +198,20 @@ return {
       (v0/*: any*/)
     ],
     "kind": "Operation",
-    "name": "HazardChartsPageQuery",
+    "name": "HazardChartsPlotsViewQuery",
     "selections": (v5/*: any*/)
   },
   "params": {
-    "cacheID": "826ceb57d014f8ca0bdc437fc3a90a9c",
+    "cacheID": "cd5f4b0eade3f9034296a92057d957fb",
     "id": null,
     "metadata": {},
-    "name": "HazardChartsPageQuery",
+    "name": "HazardChartsPlotsViewQuery",
     "operationKind": "query",
-    "text": "query HazardChartsPageQuery(\n  $hazard_model: String\n  $vs30s: [Float]\n  $imts: [String]\n  $locs: [String]\n  $aggs: [String]\n) {\n  hazard_curves(hazard_model: $hazard_model, vs30s: $vs30s, imts: $imts, locs: $locs, aggs: $aggs) {\n    ok\n    curves {\n      loc\n      imt\n      agg\n      vs30\n      curve {\n        levels\n        values\n      }\n    }\n  }\n}\n"
+    "text": "query HazardChartsPlotsViewQuery(\n  $hazard_model: String\n  $vs30s: [Float]\n  $imts: [String]\n  $locs: [String]\n  $aggs: [String]\n) {\n  hazard_curves(hazard_model: $hazard_model, vs30s: $vs30s, imts: $imts, locs: $locs, aggs: $aggs) {\n    ok\n    curves {\n      loc\n      imt\n      agg\n      vs30\n      curve {\n        levels\n        values\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "2e3883b1c4fb905c718e6a99b6cb9515";
+(node as any).hash = "b76ef06f937333b9e8a81020e574134f";
 
 export default node;
