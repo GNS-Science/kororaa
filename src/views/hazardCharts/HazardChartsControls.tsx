@@ -13,7 +13,7 @@ interface HazardChartsControlsProps {
 
 const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ selections, setSelections }: HazardChartsControlsProps) => {
   const [latLon, setLatLon] = useState<string>('');
-  const [location, setLocation] = useState<string>('');
+  const [location, setLocation] = useState<string>(selections.location);
   const [vs30, setVs30] = useState<number>(selections.vs30);
   const [imt, setImt] = useState<string>(selections.imt);
   const [POE, setPOE] = useState<'None' | '2%' | '10%'>(selections.POE);
@@ -37,7 +37,7 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ selections,
       <CustomControlsBar>
         <Autocomplete
           value={location}
-          onChange={(event: any, newValue: string | null) => {
+          onChange={(event: unknown, newValue: string | null) => {
             setLocation(newValue as string);
           }}
           inputValue={inputValue}
@@ -45,12 +45,12 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ selections,
             setInputValue(newInputValue);
           }}
           options={hazardPageOptions.locations}
-          style={{ width: 500, marginLeft: 16 }}
+          style={{ width: 200, marginLeft: 16 }}
           renderInput={(params) => <TextField {...params} label="Locations" variant="standard" />}
           blurOnSelect={true}
           limitTags={1}
         />
-        <FormControl variant="standard">
+        <FormControl sx={{ width: 200 }} variant="standard">
           <InputLabel htmlFor="component-helper">Lat,Lon</InputLabel>
           <Input id="component-helper" name="lon" value={latLon} onChange={handleLatLonChange} aria-describedby="component-helper-text" />
         </FormControl>
