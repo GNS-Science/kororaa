@@ -2,7 +2,7 @@ import * as mathjs from 'mathjs';
 
 import { HazardChartsPlotsViewQuery$data } from './__generated__/HazardChartsPlotsViewQuery.graphql';
 
-interface XY {
+export interface XY {
   x: number;
   y: number;
 }
