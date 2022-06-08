@@ -17,11 +17,14 @@ describe('For HazardChartsPage component', () => {
   it('controls and heading renders', () => {
     render(<TestRender />);
     const heading = screen.getByText('Hazard Curves and Spectra');
+    const buttons = screen.getAllByRole('button');
 
     expect(heading).toBeInTheDocument();
+    expect(buttons).toHaveLength(6);
   });
 
-  test.todo('relay makes api request as expected');
-  test.todo('controls triggers refetch as expected');
-  test.todo('print figures button with react-to-print');
+  it('MockHazardChartsPlotsView is rendered', () => {
+    render(<TestRender />);
+    expect(screen.getByText('mockHazardChartsPlotsView')).toBeInTheDocument();
+  });
 });
