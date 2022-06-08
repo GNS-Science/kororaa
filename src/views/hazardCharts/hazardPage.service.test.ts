@@ -79,7 +79,7 @@ describe('For the getAllCurves function', () => {
 describe('For the getCurve function', () => {
   it('should return an empty object if the data is empty', () => {
     const data: Record<string, hazardPageService.XY[]> = {};
-    const curve = hazardPageService.getCurve(data, 'testLoc', 'testImt', 'testAgg', 250);
+    const curve = hazardPageService.getCurve(data, '1');
 
     expect(curve).toEqual({});
   });

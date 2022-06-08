@@ -67,6 +67,7 @@
   },
   "devDependencies": {
     "@types/react-relay": "^13.0.2",
+    "@types/relay-test-utils": "^6.0.5",
     "@typescript-eslint/eslint-plugin": "^5.22.0",
     "@typescript-eslint/parser": "^5.22.0",
     "babel-plugin-relay": "^13.2.0",
