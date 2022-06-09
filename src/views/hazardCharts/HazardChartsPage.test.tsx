@@ -14,16 +14,15 @@ const TestRender = () => {
 };
 
 describe('For HazardChartsPage component', () => {
-  test.todo('controls and heading renders', async () => {
-    render(<TestRender />);
-    const heading = screen.getByText('Hazard Curves and Spectra');
-    const buttons = screen.getAllByRole('button');
-    const charts = await screen.findByRole('plotsView');
-
-    expect(heading).toBeInTheDocument();
-    expect(buttons).toHaveLength(6);
-    expect(charts).toBeInTheDocument();
-  });
+  // test.todo('controls and heading renders', async () => {
+  // render(<TestRender />);
+  // const heading = screen.getByText('Hazard Curves and Spectra');
+  // const buttons = screen.getAllByRole('button');
+  // const charts = await screen.findByRole('plotsView');
+  // expect(heading).toBeInTheDocument();
+  // expect(buttons).toHaveLength(6);
+  // expect(charts).toBeInTheDocument();
+  // });
 
   test.todo('User can see heading and a list of controls, a query is automatically loaded, and the Hazard Charts with ');
   test.todo('The hazard curve is rendered on load');
