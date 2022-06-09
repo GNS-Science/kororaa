@@ -79,8 +79,9 @@
     "get-graphql-schema": "^2.1.2",
     "husky": "^8.0.0",
     "lint-staged": "^12.4.1",
+    "msw": "^0.42.1",
     "prettier": "^2.6.2",
     "relay-compiler": "^13.2.0",
-    "relay-test-utils": "^11.0.2"
+    "relay-test-utils": "^13.2.0"
   }
 }

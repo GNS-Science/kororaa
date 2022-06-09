@@ -40,7 +40,7 @@ const HazardChartsPlotsView: React.FC<HazardChartsPlotsViewProps> = ({ selection
   // }, [hazardCurvesSelections, hazardTableOptions.spectralPeriod]);
 
   return (
-    <Box sx={{ width: '100%' }}>
+    <Box role="plotsView" sx={{ width: '100%' }}>
       <div ref={printTargetRef}>
         <HazardCharts data={data} selections={selections} />
       </div>
