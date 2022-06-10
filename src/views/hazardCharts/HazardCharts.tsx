@@ -44,11 +44,11 @@ const HazardCharts: React.FC<HazardChartsProps> = ({ data, selections }: HazardC
   return (
     <HazardChartsContainer>
       <ChartContainer>
-        <ResponsiveHazardCurves curves={curve} scalesConfig={scalesConfig} colors={color} heading={'Responsive Hazard Curves'} subHeading={'subHeading'} gridNumTicks={10} POE={selections.POE} />
+        <ResponsiveHazardCurves curves={curve} scalesConfig={scalesConfig} colors={color} heading={'Hazard Curve'} subHeading={'subHeading'} gridNumTicks={10} POE={selections.POE} />
       </ChartContainer>
       {selections.POE !== 'None' && (
         <ChartContainer>
-          <SpectralAccelerationChartResponsive data={SAdata} heading={'Spectral Acceleration Chart Responsive'} subHeading={'subHeading'} />
+          <SpectralAccelerationChartResponsive data={SAdata} heading={'Spectral Acceleration'} subHeading={'subHeading'} />
         </ChartContainer>
       )}
     </HazardChartsContainer>

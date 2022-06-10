@@ -1,13 +1,8 @@
 import { graphql } from 'msw';
+import { hazardChartsPlotsViewMockData } from './mockData/HazardChartsPlotsViewMockData';
 
 export const handlers = [
-  graphql.query('*', (req, res, ctx) => {
-    console.log('handler called', req);
-    throw 'SOMETHING WENT WRONG';
-    return res(
-      ctx.data({
-        hazare_curves: null,
-      }),
-    );
+  graphql.query('HazardChartsPlotsViewQuery', (req, res, ctx) => {
+    return res(ctx.data(hazardChartsPlotsViewMockData));
   }),
 ];
