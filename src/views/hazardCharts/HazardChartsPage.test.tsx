@@ -15,6 +15,7 @@ const TestRender = () => {
 };
 
 describe('For HazardChartsPage component', () => {
+  test.todo('to do');
   //   it('User can see heading and a list of controls, a query is automatically loaded, with hazard curve showing, and spectra curve not showing', async () => {
   //     render(<TestRender />);
   //     const heading = screen.getByRole('heading');
