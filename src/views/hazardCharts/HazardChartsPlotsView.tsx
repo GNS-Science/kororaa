@@ -38,7 +38,7 @@ const HazardChartsPlotsView: React.FC<HazardChartsPlotsViewProps> = ({ selection
 
   const CSVdata = useMemo(() => {
     return getCSVdata(hazardPageOptions.imts, selections, data);
-  }, [selections, hazardPageOptions.imts]);
+  }, [data, selections]);
 
   return (
     <Box role="plotsView" sx={{ width: '100%' }}>
