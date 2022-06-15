@@ -10,6 +10,7 @@ import { HazardChartsPlotsViewQuery } from './__generated__/HazardChartsPlotsVie
 import { HazardCurvesSelections } from './hazardCharts.types';
 import { hazardPageOptions, hazardPageLocations } from './hazardPageOptions';
 import HazardCharts from './HazardCharts';
+import { getCSVdata } from './hazardPage.service';
 
 interface HazardChartsPlotsViewProps {
   selections: HazardCurvesSelections;
@@ -35,9 +36,9 @@ const HazardChartsPlotsView: React.FC<HazardChartsPlotsViewProps> = ({ selection
     content: () => printTargetRef.current,
   });
 
-  // const CSVdata = useMemo(() => {
-  //   return getCSVdata(hazardTableOptions.spectralPeriod, hazardCurvesSelections, hazardChartsMockData);
-  // }, [hazardCurvesSelections, hazardTableOptions.spectralPeriod]);
+  const CSVdata = useMemo(() => {
+    return getCSVdata(hazardPageOptions.imts, selections, data);
+  }, [selections, hazardPageOptions.imts]);
 
   return (
     <Box role="plotsView" sx={{ width: '100%' }}>
@@ -49,9 +50,9 @@ const HazardChartsPlotsView: React.FC<HazardChartsPlotsViewProps> = ({ selection
           <Button variant="contained" onClick={handlePrint}>
             Print Figures
           </Button>
-          {/* <CSVLink data={CSVdata} filename="hazard-curves.csv">
+          <CSVLink data={CSVdata} filename="hazard-curves.csv">
             <Button variant="contained">Save Data</Button>
-          </CSVLink> */}
+          </CSVLink>
         </ControlsBar>
       </Box>
     </Box>

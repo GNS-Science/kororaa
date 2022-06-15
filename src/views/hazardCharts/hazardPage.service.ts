@@ -1,4 +1,5 @@
 import * as mathjs from 'mathjs';
+import { HazardCurvesSelections } from './hazardCharts.types';
 
 import { HazardChartsPlotsViewQuery$data } from './__generated__/HazardChartsPlotsViewQuery.graphql';
 
@@ -109,26 +110,26 @@ const getImtValue = (imt: string): string => {
   }
 };
 
-// export const getCSVdata = (PGAoptions: string[], selections: HazardCurvesSelections, data: HazardChartsMockData): string[][] => {
-//   const allCurves = getCurves(data, selections, PGAoptions);
-//   const CSVdata: string[][] = [];
-//   CSVdata[0] = getCSVheadings(PGAoptions);
+export const getCSVdata = (PGAoptions: string[], selections: HazardCurvesSelections, data: HazardChartsPlotsViewQuery$data): string[][] => {
+  const allCurves = getAllCurves(data);
+  const CSVdata: string[][] = [];
+  CSVdata[0] = getCSVheadings(PGAoptions);
 
-//   allCurves.PGA.map((xy) => {
-//     const row: string[] = [];
-//     row.push(xy.x.toExponential());
+  allCurves.PGA.map((xy) => {
+    const row: string[] = [];
+    row.push(xy.x.toExponential());
 
-//     for (const key in allCurves) {
-//       const position = CSVdata[0].findIndex((acceleration) => acceleration.includes(key));
-//       const currentPoint = allCurves[key].find((curve) => curve.x === xy.x);
-//       row.splice(position, 0, (currentPoint?.y as number).toExponential());
-//     }
+    for (const key in allCurves) {
+      const position = CSVdata[0].findIndex((acceleration) => acceleration.includes(key));
+      const currentPoint = allCurves[key].find((curve) => curve.x === xy.x);
+      row.splice(position, 0, (currentPoint?.y as number).toExponential());
+    }
 
-//     CSVdata.push(row);
-//   });
+    CSVdata.push(row);
+  });
 
-//   return CSVdata;
-// };
+  return CSVdata;
+};
 
 const getCSVheadings = (PGAoptions: string[]): string[] => {
   const headings: string[] = [];
