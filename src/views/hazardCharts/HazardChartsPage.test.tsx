@@ -24,33 +24,10 @@ describe('For HazardChartsPage component', () => {
     const spectraCurveHeading = screen.queryByText(/Spectral Acceleration/);
     const PGAtext = await screen.findAllByText('PGA');
 
-    // const curve = container.querySelector("[role='curve']") as SVGElement;
-    // console.log(curve);
-
     expect(heading).toBeInTheDocument();
     expect(buttons).toHaveLength(6);
     expect(charts).toBeInTheDocument();
     expect(spectraCurveHeading).not.toBeInTheDocument();
     expect(PGAtext).toHaveLength(2);
   });
-
-  //   it('if the user selects POE = 2%, a poe line is drawn on the hazard curve, an a spectra curve displays', async () => {
-  //     render(<TestRender />);
-  //     const poeSelect = screen.getByDisplayValue('None');
-  //     const submitButton = screen.getByText('Submit');
-  //     fireEvent.change(poeSelect, { target: { value: '2%' } });
-  //     userEvent.click(submitButton);
-  //     expect(await screen.findByText(/PoE 2%/)).toBeInTheDocument();
-  //     expect(await screen.findByText('Hazard Curve')).toBeInTheDocument();
-  //     expect(await screen.findByText('Spectral Acceleration')).toBeInTheDocument();
-  //   });
-
-  //   it('if the user selects spectral period = SA(0.1), a curve is drawn with legend item SA(0.1)', async () => {
-  //     render(<TestRender />);
-  //     const spectralPeriodSelect = screen.getByDisplayValue('PGA');
-  //     const submitButton = screen.getByText('Submit');
-  //     fireEvent.change(spectralPeriodSelect, { target: { value: 'SA(0.1)' } });
-  //     userEvent.click(submitButton);
-  //     expect(await screen.findByText('SA(0.1)')).toBeInTheDocument();
-  //   });
 });
