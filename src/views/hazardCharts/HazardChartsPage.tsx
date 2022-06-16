@@ -1,35 +1,19 @@
-import React, { useState, useRef, useMemo } from 'react';
-import { ControlsBar } from '@gns-science/toshi-nest';
-import { Button, Box, Typography, Fab } from '@mui/material';
+import React, { useState } from 'react';
+import { Box, Typography, Fab, CircularProgress } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import { useReactToPrint } from 'react-to-print';
 import ShareIcon from '@mui/icons-material/Share';
-import { CSVLink } from 'react-csv';
 
-import HazardCharts from './HazardCharts';
 import HazardChartsControls from './HazardChartsControls';
-import { getCSVdata, getHazardTableOptions } from './hazardPage.service';
-import { hazardChartsMockData } from '../../constants/hazardChartsMockData';
 import { HazardCurvesSelections } from './hazardCharts.types';
+import { hazardPageOptions } from './hazardPageOptions';
+import HazardChartsPlotsView from './HazardChartsPlotsView';
 
 const HazardChartsPage: React.FC = () => {
-  const printTargetRef = useRef<HTMLDivElement>(null);
-  const hazardTableOptions = getHazardTableOptions(hazardChartsMockData);
-
   const [hazardCurvesSelections, setHazardCurvesSelections] = useState<HazardCurvesSelections>({
-    lat: '',
-    lon: '',
-    vs30: hazardTableOptions.vs30[0],
-    spectralPeriod: hazardTableOptions.spectralPeriod[0],
+    location: 'Wellington',
+    vs30: hazardPageOptions.vs30s[0],
+    imt: hazardPageOptions.imts[0],
     POE: 'None',
-  });
-
-  const CSVdata = useMemo(() => {
-    return getCSVdata(hazardTableOptions.spectralPeriod, hazardCurvesSelections, hazardChartsMockData);
-  }, [hazardCurvesSelections, hazardTableOptions.spectralPeriod]);
-
-  const handlePrint = useReactToPrint({
-    content: () => printTargetRef.current,
   });
 
   const flexProps = {
@@ -58,22 +42,10 @@ const HazardChartsPage: React.FC = () => {
         </Fab>
       </Box>
       <HazardChartsControls selections={hazardCurvesSelections} setSelections={setHazardCurvesSelections} />
-      {hazardCurvesSelections.lat && hazardCurvesSelections.lon && (
-        <Box sx={{ width: '100%' }}>
-          <div ref={printTargetRef}>
-            <HazardCharts data={hazardChartsMockData} selections={hazardCurvesSelections} />
-          </div>
-          <Box sx={{ height: 70, marginTop: '20px' }}>
-            <ControlsBar>
-              <Button variant="contained" onClick={handlePrint}>
-                Print Figures
-              </Button>
-              <CSVLink data={CSVdata} filename="hazard-curves.csv">
-                <Button variant="contained">Save Data</Button>
-              </CSVLink>
-            </ControlsBar>
-          </Box>
-        </Box>
+      {hazardCurvesSelections.location && (
+        <React.Suspense fallback={<CircularProgress />}>
+          <HazardChartsPlotsView selections={hazardCurvesSelections} />
+        </React.Suspense>
       )}
     </PageContainer>
   );
