@@ -56,7 +56,7 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ selections,
         </FormControl>
         <SelectControl options={hazardPageOptions.vs30s} selection={vs30} setSelection={setVs30} name="Vs30" />
         <SelectControl options={hazardPageOptions.imts} selection={imt} setSelection={setImt} name="Spectral Period" />
-        <SelectControl options={['None', '2%', '10%']} selection={POE} setSelection={setPOE} name="Probability of Exceedance in 50 Years" />
+        <SelectControl options={['None', '2%', '10%']} selection={POE} setSelection={setPOE} name="Probability of Exceedance (50 Yrs)" />
         <Button variant="contained" type="submit" onClick={handleSubmit}>
           Submit
         </Button>
