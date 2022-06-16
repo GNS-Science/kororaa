@@ -50,9 +50,9 @@ const HazardChartsPlotsView: React.FC<HazardChartsPlotsViewProps> = ({ selection
           <Button variant="contained" onClick={handlePrint}>
             Print Figures
           </Button>
-          {/* <CSVLink data={CSVdata} filename="hazard-curves.csv">
+          <CSVLink data={CSVdata} filename="hazard-curves.csv">
             <Button variant="contained">Save Data</Button>
-          </CSVLink> */}
+          </CSVLink>
         </ControlsBar>
       </Box>
     </Box>
