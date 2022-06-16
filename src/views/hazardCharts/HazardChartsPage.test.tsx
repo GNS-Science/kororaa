@@ -31,6 +31,7 @@ describe('For HazardChartsPage component', () => {
     expect(buttons).toHaveLength(6);
     expect(charts).toBeInTheDocument();
     expect(spectraCurveHeading).not.toBeInTheDocument();
+    //Expect 2 instances of the string "PGA", because one would be in the select control, and the other the legend label
     expect(PGAtext).toHaveLength(2);
   });
 });
