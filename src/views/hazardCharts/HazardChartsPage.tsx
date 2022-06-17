@@ -12,7 +12,7 @@ const HazardChartsPage: React.FC = () => {
   const [hazardCurvesSelections, setHazardCurvesSelections] = useState<HazardCurvesSelections>({
     location: 'Wellington',
     vs30: hazardPageOptions.vs30s[0],
-    imt: hazardPageOptions.imts[0],
+    imts: [hazardPageOptions.imts[0]],
     POE: 'None',
   });
 

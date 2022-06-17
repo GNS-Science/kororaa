@@ -5,7 +5,7 @@ import { ResponsiveHazardCurves, SpectralAccelerationChartResponsive } from '@gn
 
 import { HazardCurvesSelections } from './hazardCharts.types';
 import { HazardChartsPlotsViewQuery$data } from './__generated__/HazardChartsPlotsViewQuery.graphql';
-import { getAllCurves, getColor, getCurve, getSpectralAccelerationData } from './hazardPage.service';
+import { getAllCurves, getColor, getCurves, getSpectralAccelerationData } from './hazardPage.service';
 import { hazardPageOptions } from './hazardPageOptions';
 
 interface HazardChartsProps {
@@ -15,7 +15,7 @@ interface HazardChartsProps {
 
 const HazardCharts: React.FC<HazardChartsProps> = ({ data, selections }: HazardChartsProps) => {
   const allCurves = useMemo(() => getAllCurves(data), [data]);
-  const curve = useMemo(() => getCurve(allCurves, selections.imt), [allCurves, selections.imt]);
+  const curve = useMemo(() => getCurves(allCurves, selections.imts), [allCurves, selections.imts]);
   const color = useMemo(() => getColor(curve), [curve]);
   const SAdata = useMemo(() => getSpectralAccelerationData(hazardPageOptions.imts, selections.POE, allCurves), [selections.POE, allCurves]);
 

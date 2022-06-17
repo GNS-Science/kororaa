@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { SelectControl } from '@gns-science/toshi-nest';
+import { SelectControl, MultiSelect } from '@gns-science/toshi-nest';
 import { Button, Input, FormControl, InputLabel, Box, Autocomplete, TextField } from '@mui/material';
 
 import CustomControlsBar from '../../components/common/CustomControlsBar';
@@ -15,7 +15,7 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ selections,
   const [latLon, setLatLon] = useState<string>('');
   const [location, setLocation] = useState<string>(selections.location);
   const [vs30, setVs30] = useState<number>(selections.vs30);
-  const [imt, setImt] = useState<string>(selections.imt);
+  const [imts, setImts] = useState<string[]>(selections.imts);
   const [POE, setPOE] = useState<'None' | '2%' | '10%'>(selections.POE);
   const [inputValue, setInputValue] = useState<string>('');
 
@@ -27,7 +27,7 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ selections,
     setSelections({
       location: location,
       vs30,
-      imt,
+      imts,
       POE,
     });
   };
@@ -55,7 +55,7 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ selections,
           <Input id="component-helper" name="lon" value={latLon} onChange={handleLatLonChange} aria-describedby="component-helper-text" />
         </FormControl>
         <SelectControl options={hazardPageOptions.vs30s} selection={vs30} setSelection={setVs30} name="Vs30" />
-        <SelectControl options={hazardPageOptions.imts} selection={imt} setSelection={setImt} name="Spectral Period" />
+        <MultiSelect options={hazardPageOptions.imts} selection={imts} setSelection={setImts} name="Spectral Period" />
         <SelectControl options={['None', '2%', '10%']} selection={POE} setSelection={setPOE} name="Probability of Exceedance (50 Yrs)" />
         <Button variant="contained" type="submit" onClick={handleSubmit}>
           Submit

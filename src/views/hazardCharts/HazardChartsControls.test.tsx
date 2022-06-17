@@ -10,7 +10,7 @@ const mockSetSelections = jest.fn();
 const mockSelections: HazardCurvesSelections = {
   location: 'Wellington',
   vs30: hazardPageOptions.vs30s[0],
-  imt: hazardPageOptions.imts[0],
+  imts: [hazardPageOptions.imts[0]],
   POE: 'None',
 };
 
@@ -24,7 +24,7 @@ test('Controls renders correctly', () => {
   expect(screen.getByLabelText('Lat,Lon')).toBeInTheDocument();
   expect(screen.getByDisplayValue(mockSelections.location)).toBeInTheDocument();
   expect(screen.getByDisplayValue(mockSelections.vs30)).toBeInTheDocument();
-  expect(screen.getByDisplayValue(mockSelections.imt)).toBeInTheDocument();
+  expect(screen.getByDisplayValue(mockSelections.imts[0])).toBeInTheDocument();
   expect(screen.getByDisplayValue(mockSelections.POE)).toBeInTheDocument();
 });
 
@@ -57,13 +57,13 @@ test('When the spectral period value changes, the new value is displayed', async
   render(<Wrapper />);
 
   const buttons = screen.getAllByRole('button');
-  const imtSelect = buttons.find((button) => button.innerHTML.includes(mockSelections.imt.toString()));
+  const imtSelect = buttons.find((button) => button.innerHTML.includes(mockSelections.imts[0].toString()));
   const nextImtOption = hazardPageOptions.imts[1].toString();
 
   imtSelect && fireEvent.mouseDown(imtSelect);
   fireEvent.click(await screen.findByText(nextImtOption));
 
-  expect(imtSelect).toContainHTML(nextImtOption);
+  expect(imtSelect).toContainHTML('Multiple selected');
 });
 
 test('When the submit button is clicked, mockSetSelections is called with the current selection values', () => {
@@ -92,7 +92,7 @@ test('When vs30 value is changed, and then the submit button is clicked, mockSet
   const newSelections: HazardCurvesSelections = {
     location: mockSelections.location,
     vs30: hazardPageOptions.vs30s[1],
-    imt: mockSelections.imt,
+    imts: mockSelections.imts,
     POE: 'None',
   };
 
