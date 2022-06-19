@@ -31,9 +31,13 @@ export const getAllCurves = (data: HazardChartsPlotsViewQuery$data): Record<stri
   return curves;
 };
 
-export const getCurve = (curve: Record<string, XY[]>, imt: string): Record<string, XY[]> => {
+export const getCurves = (curve: Record<string, XY[]>, imts: string[]): Record<string, XY[]> => {
   const newCurve: Record<string, XY[]> = {};
-  newCurve[imt] = curve[imt];
+
+  imts.forEach((imt) => {
+    newCurve[imt] = curve[imt];
+  });
+
   return newCurve;
 };
 
