@@ -50,7 +50,7 @@ const HazardCharts: React.FC<HazardChartsProps> = ({ data, selections }: HazardC
           scalesConfig={scalesConfig}
           colors={color}
           heading={'Hazard Curves'}
-          subHeading={`${selections.imt}`}
+          subHeading={`${selections.imts}`}
           gridNumTicks={10}
           POE={selections.POE}
         />
