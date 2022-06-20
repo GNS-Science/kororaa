@@ -11,7 +11,7 @@ const mockSelections: HazardCurvesSelections = {
   location: 'Wellington',
   vs30: hazardPageOptions.vs30s[0],
   imt: hazardPageOptions.imts[0],
-  POE: 'None',
+  poe: undefined,
 };
 
 const TestRender = () => {
