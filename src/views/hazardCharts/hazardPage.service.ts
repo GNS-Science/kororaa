@@ -46,31 +46,33 @@ export const getColor = (curve: Record<string, XY[]>): Record<string, string> =>
   return color;
 };
 
-export const getSpectralAccelerationData = (pgaValues: string[], POE: string, filteredCurves: Record<string, XY[]>): XY[] => {
-  const xValue: number = POE !== 'None' && POE === '2%' ? -Math.log(1 - 0.02) / 50 : -Math.log(1 - 0.1) / 50;
+export const getSpectralAccelerationData = (pgaValues: string[], poe: number | undefined, filteredCurves: Record<string, XY[]>): XY[] => {
   const dataSet: XY[] = [];
+  if (poe) {
+    const xValue: number = -Math.log(1 - poe) / 50;
 
-  pgaValues.forEach((value) => {
-    try {
-      let p1: number[] = [];
-      let p2: number[] = [];
-      const p3 = [Math.log(2e-3), Math.log(xValue)];
-      const p4 = [Math.log(10), Math.log(xValue)];
+    pgaValues.forEach((value) => {
+      try {
+        let p1: number[] = [];
+        let p2: number[] = [];
+        const p3 = [Math.log(2e-3), Math.log(xValue)];
+        const p4 = [Math.log(10), Math.log(xValue)];
 
-      filteredCurves[value].find((xy, i) => {
-        if (xy.y <= xValue) {
-          p1 = [Math.log(xy.x), Math.log(xy.y)];
-          p2 = [Math.log(filteredCurves[value][i - 1].x), Math.log(filteredCurves[value][i - 1].y)];
-          return true;
-        }
-      });
-      const point = mathjs.intersect(p1, p2, p3, p4);
-      const result = [Math.exp(point[0] as number), mathjs.exp(mathjs.exp(point[1] as number))];
-      dataSet.push({ x: value === 'PGA' ? 0.01 : parseFloat(getImtValue(value)), y: result[0] });
-    } catch {
-      dataSet.push({ x: value === 'PGA' ? 0.01 : parseFloat(getImtValue(value)), y: 0 });
-    }
-  });
+        filteredCurves[value].find((xy, i) => {
+          if (xy.y <= xValue) {
+            p1 = [Math.log(xy.x), Math.log(xy.y)];
+            p2 = [Math.log(filteredCurves[value][i - 1].x), Math.log(filteredCurves[value][i - 1].y)];
+            return true;
+          }
+        });
+        const point = mathjs.intersect(p1, p2, p3, p4);
+        const result = [Math.exp(point[0] as number), mathjs.exp(mathjs.exp(point[1] as number))];
+        dataSet.push({ x: value === 'PGA' ? 0.01 : parseFloat(getImtValue(value)), y: result[0] });
+      } catch {
+        dataSet.push({ x: value === 'PGA' ? 0.01 : parseFloat(getImtValue(value)), y: 0 });
+      }
+    });
+  }
 
   return dataSet;
 };

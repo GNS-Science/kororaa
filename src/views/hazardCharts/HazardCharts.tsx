@@ -17,7 +17,7 @@ const HazardCharts: React.FC<HazardChartsProps> = ({ data, selections }: HazardC
   const allCurves = useMemo(() => getAllCurves(data), [data]);
   const curve = useMemo(() => getCurve(allCurves, selections.imt), [allCurves, selections.imt]);
   const color = useMemo(() => getColor(curve), [curve]);
-  const SAdata = useMemo(() => getSpectralAccelerationData(hazardPageOptions.imts, selections.POE, allCurves), [selections.POE, allCurves]);
+  const SAdata = useMemo(() => getSpectralAccelerationData(hazardPageOptions.imts, selections.poe, allCurves), [selections.poe, allCurves]);
 
   const scalesConfig = {
     x: { type: 'log', domain: [1e-3, 10] },
@@ -52,12 +52,12 @@ const HazardCharts: React.FC<HazardChartsProps> = ({ data, selections }: HazardC
           heading={'Hazard Curves'}
           subHeading={`${selections.imt}`}
           gridNumTicks={10}
-          POE={selections.POE}
+          POE={'None'}
         />
       </ChartContainer>
-      {selections.POE !== 'None' && (
+      {selections.poe && (
         <ChartContainer>
-          <SpectralAccelerationChartResponsive testId="sa-chart" data={SAdata} heading={'Spectral Acceleration Chart'} subHeading={`${selections.POE} in 50 years`} />
+          <SpectralAccelerationChartResponsive testId="sa-chart" data={SAdata} heading={'Spectral Acceleration Chart'} subHeading={`${selections.poe} in 50 years`} />
         </ChartContainer>
       )}
     </HazardChartsContainer>

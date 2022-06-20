@@ -16,7 +16,6 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ selections,
   const [location, setLocation] = useState<string>(selections.location);
   const [vs30, setVs30] = useState<number>(selections.vs30);
   const [imt, setImt] = useState<string>(selections.imt);
-  const [POE, setPOE] = useState<'None' | '2%' | '10%'>(selections.POE);
   const [poe, setPoe] = useState<number | undefined>(undefined);
   const [inputValue, setInputValue] = useState<string>('');
 
@@ -70,10 +69,9 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ selections,
         </FormControl>
         <SelectControl options={hazardPageOptions.vs30s} selection={vs30} setSelection={setVs30} name="Vs30" />
         <SelectControl options={hazardPageOptions.imts} selection={imt} setSelection={setImt} name="Spectral Period" />
-        <SelectControl options={['None', '2%', '10%']} selection={POE} setSelection={setPOE} name="Probability of Exceedance (50 Yrs)" />
         <FormControl sx={{ width: 200 }} variant="standard">
           <InputLabel htmlFor="component-helper">Probabilty of Exceedance (50 Yrs)</InputLabel>
-          <Input id="component-helper" name="poe" onChange={handlePoeChange} aria-describedby="component-helper-text" />
+          <Input id="component-helper" name="poe" value={poe} onChange={handlePoeChange} aria-describedby="component-helper-text" />
         </FormControl>
         <Button variant="contained" type="submit" onClick={handleSubmit}>
           Submit
