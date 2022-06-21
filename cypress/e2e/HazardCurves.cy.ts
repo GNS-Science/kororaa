@@ -12,7 +12,7 @@ describe('Hazard Curves', () => {
   });
 
   it('Displays second chart after probability of exceedence selection', () => {
-    cy.get('[id$="mui-component-select-Probability of Exceedance"]').click();
+    cy.get('[id$="mui-component-select-Probability of Exceedance (50 Yrs)"]').click();
     cy.get('[data-value="2%"]').click();
     cy.get('[type="submit"]').click();
     cy.get('[aria-label="XYChart"]').should('have.length', 2);
