@@ -1,5 +1,6 @@
 import * as mathjs from 'mathjs';
 import { HazardCurvesSelections } from './hazardCharts.types';
+import { hazardPageLocations } from './hazardPageOptions';
 
 import { HazardChartsPlotsViewQuery$data } from './__generated__/HazardChartsPlotsViewQuery.graphql';
 
@@ -141,4 +142,26 @@ const getCSVheadings = (PGAoptions: string[]): string[] => {
   });
 
   return headings;
+};
+
+export const convertLocationsToIDs = (locations: string[]): string[] => {
+  const locationIDs: string[] = [];
+
+  locations.forEach((currentLocation) => {
+    const locationObject = hazardPageLocations.find((location) => currentLocation === location.name);
+    locationObject?.id && locationIDs.push(locationObject.id);
+  });
+
+  return locationIDs;
+};
+
+export const convertIDsToLocations = (IDs: string[]): string[] => {
+  const locationNames: string[] = [];
+
+  IDs.forEach((currentID) => {
+    const locationObject = hazardPageLocations.find((location) => currentID === location.id);
+    locationObject?.name && locationNames.push(locationObject.name);
+  });
+
+  return locationNames;
 };

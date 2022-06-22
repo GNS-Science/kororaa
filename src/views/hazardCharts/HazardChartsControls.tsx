@@ -3,15 +3,20 @@ import { SelectControl } from '@gns-science/toshi-nest';
 import { Button, Input, FormControl, InputLabel, Box, Autocomplete, TextField } from '@mui/material';
 
 import CustomControlsBar from '../../components/common/CustomControlsBar';
-import { HazardCurvesSelections } from './hazardCharts.types';
+import { HazardCurvesQueryVariables, HazardCurvesSelections, HazardCurvesViewVariables } from './hazardCharts.types';
 import { hazardPageOptions } from './hazardPageOptions';
+import { convertLocationsToIDs } from './hazardPage.service';
 
 interface HazardChartsControlsProps {
+  queryVariables: HazardCurvesQueryVariables;
+  setQueryVariables: (values: HazardCurvesQueryVariables) => void;
+  viewVariables: HazardCurvesViewVariables;
+  setViewVariables: (values: HazardCurvesViewVariables) => void;
   selections: HazardCurvesSelections;
   setSelections: (values: HazardCurvesSelections) => void;
 }
 
-const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ selections, setSelections }: HazardChartsControlsProps) => {
+const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ queryVariables, setQueryVariables, viewVariables, setViewVariables, selections, setSelections }: HazardChartsControlsProps) => {
   const [latLon, setLatLon] = useState<string>('');
   const [location, setLocation] = useState<string>(selections.location);
   const [vs30, setVs30] = useState<number>(selections.vs30);
@@ -24,13 +29,34 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ selections,
     setLatLon(event.target.value);
   };
 
-  const handleSubmit = () => {
-    setSelections({
-      location: location,
-      vs30,
-      imt,
-      poe,
+  const handleQueryVariables = () => {
+    setQueryVariables({
+      ...queryVariables,
+      locs: convertLocationsToIDs([location]),
+      vs30s: [vs30],
     });
+  };
+
+  const handleViewVariables = () => {
+    setViewVariables({
+      imts: [imt],
+      poe: parsePoe(poeInput),
+    });
+  };
+
+  const handleSubmit = () => {
+    handleQueryVariables();
+    handleViewVariables();
+  };
+
+  const parsePoe = (poe: string) => {
+    const percentage = Number(poe.replace('%', ''));
+
+    if (!percentage || percentage > 100 || percentage < 0) {
+      return undefined;
+    } else {
+      return percentage / 100;
+    }
   };
 
   const handlePoeChange = (event: React.ChangeEvent<HTMLInputElement>) => {

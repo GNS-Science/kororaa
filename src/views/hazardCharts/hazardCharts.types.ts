@@ -12,3 +12,8 @@ export interface HazardCurvesQueryVariables {
   imts: string[];
   aggs: string[];
 }
+
+export interface HazardCurvesViewVariables {
+  imts: string[];
+  poe: number | undefined;
+}
