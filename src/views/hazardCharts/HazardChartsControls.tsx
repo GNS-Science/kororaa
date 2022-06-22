@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { MultiSelect } from '@gns-science/toshi-nest';
-import { Button, Input, FormControl, InputLabel, Box, Autocomplete, TextField } from '@mui/material';
+import { InputAdornment, Button, Input, FormControl, InputLabel, Box, Autocomplete, TextField } from '@mui/material';
 
 import CustomControlsBar from '../../components/common/CustomControlsBar';
 import { HazardCurvesQueryVariables, HazardCurvesViewVariables } from './hazardCharts.types';
@@ -16,7 +16,7 @@ interface HazardChartsControlsProps {
 
 const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ queryVariables, setQueryVariables, viewVariables, setViewVariables }: HazardChartsControlsProps) => {
   const getPoeInputDisplay = (poe: number | undefined): string => {
-    return poe ? `${poe * 100}%` : '';
+    return poe ? `${poe * 100}` : ' ';
   };
 
   const [latLon, setLatLon] = useState<string>('');
@@ -43,7 +43,7 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ queryVariab
   };
 
   const parsePoe = (poe: string) => {
-    const percentage = Number(poe.replace('%', ''));
+    const percentage = Number(poe);
 
     if (!percentage || percentage > 100 || percentage < 0) {
       return undefined;
@@ -80,13 +80,14 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ queryVariab
         <FormControl sx={{ width: 200 }} variant="standard">
           <InputLabel htmlFor="component-helper">Probabilty of Exceedance (50 Yrs)</InputLabel>
           <Input
-            id="component-helper"
+            id="poe-input"
             name="poe"
             value={poeInput}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
               setPoeInput(e.target.value);
             }}
             aria-describedby="component-helper-text"
+            endAdornment={<InputAdornment position="end">%</InputAdornment>}
           />
         </FormControl>
         <Button variant="contained" type="submit" onClick={handleSubmit}>

@@ -1,101 +1,146 @@
 import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
-import { HazardCurvesSelections } from '../hazardCharts.types';
-
 import HazardChartsControls from '../HazardChartsControls';
-import { hazardPageOptions } from '../hazardPageOptions';
+import { hazardPageLocations, hazardPageOptions } from '../constants/hazardPageOptions';
+import { HazardCurvesQueryVariables, HazardCurvesViewVariables } from '../hazardCharts.types';
+import { convertIDsToLocations } from '../hazardPage.service';
 
-const mockSetSelections = jest.fn();
+const mockSetQueryVariables = jest.fn();
+const mockSetViewVariables = jest.fn();
 
-const mockSelections: HazardCurvesSelections = {
-  location: 'Wellington',
-  vs30: hazardPageOptions.vs30s[0],
-  imt: hazardPageOptions.imts[0],
+const mockQueryVariables: HazardCurvesQueryVariables = {
+  hazard_model: 'TEST1',
+  vs30s: [hazardPageOptions.vs30s[0]],
+  locs: [hazardPageLocations[0].id],
+  imts: hazardPageOptions.imts,
+  aggs: ['mean'],
+};
+
+const mockViewVariables: HazardCurvesViewVariables = {
+  imts: [hazardPageOptions.imts[0]],
   poe: undefined,
 };
 
-// const Wrapper = () => {
-//   return <HazardChartsControls selections={mockSelections} setSelections={mockSetSelections} />;
-// };
+const Wrapper = () => {
+  return <HazardChartsControls queryVariables={mockQueryVariables} setQueryVariables={mockSetQueryVariables} viewVariables={mockViewVariables} setViewVariables={mockSetViewVariables} />;
+};
 
 test('Controls renders correctly', () => {
-  expect(true).toBeTruthy();
-  //   render(<Wrapper />);
+  render(<Wrapper />);
 
-  //   expect(screen.getByLabelText('Lat,Lon')).toBeInTheDocument();
-  //   expect(screen.getByDisplayValue(mockSelections.location)).toBeInTheDocument();
-  //   expect(screen.getByDisplayValue(mockSelections.vs30)).toBeInTheDocument();
-  //   expect(screen.getByDisplayValue(mockSelections.imt)).toBeInTheDocument();
-  //   // expect(screen.getByDisplayValue(mockSelections.poe)).toBeInTheDocument();
+  const locationNames = convertIDsToLocations(mockQueryVariables.locs);
+
+  expect(screen.getByLabelText('Lat,Lon')).toBeInTheDocument();
+  expect(screen.getByText(locationNames[0])).toBeInTheDocument();
+  expect(screen.getByDisplayValue(mockQueryVariables.vs30s[0])).toBeInTheDocument();
+  expect(screen.getByDisplayValue(mockViewVariables.imts[0])).toBeInTheDocument();
+  expect(screen.getByLabelText(/Probabilty of Exceedance/)).toBeInTheDocument();
 });
 
-// test('When user selects an option in the location autocomplete, the new value is displayed', async () => {
-//   render(<Wrapper />);
+test('When user selects another option in the location autocomplete, the new value is displayed', async () => {
+  render(<Wrapper />);
 
-//   const locationSelect = screen.getByRole('combobox');
-//   const nextLocationOption = hazardPageOptions.locations[1];
+  const locationSelect = screen.getByRole('combobox');
+  const nextLocationOption = hazardPageOptions.locations[1];
+  const locationNames = convertIDsToLocations(mockQueryVariables.locs);
 
-//   fireEvent.mouseDown(locationSelect);
-//   fireEvent.click(await screen.findByText(nextLocationOption));
+  fireEvent.mouseDown(locationSelect);
+  fireEvent.click(await screen.findByText(nextLocationOption));
 
-//   expect(await screen.findByDisplayValue(nextLocationOption)).toBeInTheDocument();
-// });
+  expect(await screen.findByText(locationNames[0])).toBeInTheDocument();
+  expect(await screen.findByText('+1')).toBeInTheDocument();
 
-// test('When the vs30 value changes, the new value is displayed', async () => {
-//   render(<Wrapper />);
+  fireEvent.mouseDown(locationSelect);
+  fireEvent.click(await screen.findByText(hazardPageOptions.locations[2]));
 
-//   const buttons = screen.getAllByRole('button');
-//   const vs30Select = buttons.find((button) => button.innerHTML.includes(mockSelections.vs30.toString()));
-//   const nextVs30option = hazardPageOptions.vs30s[1].toString();
+  expect(await screen.findByText('+2')).toBeInTheDocument();
+});
 
-//   vs30Select && fireEvent.mouseDown(vs30Select);
-//   fireEvent.click(await screen.findByText(nextVs30option));
+test('When the vs30 value changes, the new value is displayed', async () => {
+  render(<Wrapper />);
 
-//   expect(vs30Select).toContainHTML(nextVs30option);
-// });
+  const buttons = screen.getAllByRole('button');
+  const vs30Select = buttons.find((button) => button.innerHTML.includes(mockQueryVariables.vs30s[0].toString()));
+  const nextVs30option = hazardPageOptions.vs30s[1].toString();
 
-// test('When the spectral period value changes, the new value is displayed', async () => {
-//   render(<Wrapper />);
+  vs30Select && fireEvent.mouseDown(vs30Select);
+  fireEvent.click(await screen.findByText(nextVs30option));
 
-//   const buttons = screen.getAllByRole('button');
-//   const imtSelect = buttons.find((button) => button.innerHTML.includes(mockSelections.imt.toString()));
-//   const nextImtOption = hazardPageOptions.imts[1].toString();
+  expect(vs30Select).toContainHTML('Multiple selected');
+});
 
-//   imtSelect && fireEvent.mouseDown(imtSelect);
-//   fireEvent.click(await screen.findByText(nextImtOption));
+test('When the spectral period value changes, the new value is displayed', async () => {
+  render(<Wrapper />);
 
-//   expect(imtSelect).toContainHTML(nextImtOption);
-// });
+  const buttons = screen.getAllByRole('button');
+  const imtSelect = buttons.find((button) => button.innerHTML.includes(mockViewVariables.imts[0].toString()));
+  const nextImtOption = hazardPageOptions.imts[1].toString();
 
-// test('When the submit button is clicked, mockSetSelections is called with the current selection values', () => {
-//   render(<Wrapper />);
+  imtSelect && fireEvent.mouseDown(imtSelect);
+  fireEvent.click(await screen.findByText(nextImtOption));
 
-//   const buttons = screen.getAllByRole('button');
-//   const submitButton = buttons.find((button) => button.innerHTML.includes('Submit'));
+  expect(imtSelect).toContainHTML('Multiple selected');
+});
 
-//   submitButton && fireEvent.click(submitButton);
+test('When the submit button is clicked, mockSetSelections is called with the current selection values', () => {
+  render(<Wrapper />);
 
-//   expect(mockSetSelections).toHaveBeenCalledWith(mockSelections);
-// });
+  const buttons = screen.getAllByRole('button');
+  const submitButton = buttons.find((button) => button.innerHTML.includes('Submit'));
 
-// test('When vs30 value is changed, and then the submit button is clicked, mockSetState is called witht the new values', async () => {
-//   render(<Wrapper />);
+  submitButton && fireEvent.click(submitButton);
 
-//   const buttons = screen.getAllByRole('button');
-//   const vs30Select = buttons.find((button) => button.innerHTML.includes(mockSelections.vs30.toString()));
-//   const submitButton = buttons.find((button) => button.innerHTML.includes('Submit'));
-//   const nextVs30option = hazardPageOptions.vs30s[1].toString();
+  expect(mockSetQueryVariables).toHaveBeenCalledWith(mockQueryVariables);
+  expect(mockSetViewVariables).toHaveBeenCalledWith(mockViewVariables);
+});
 
-//   vs30Select && fireEvent.mouseDown(vs30Select);
-//   fireEvent.click(await screen.findByText(nextVs30option));
-//   submitButton && fireEvent.click(submitButton);
+test('When vs30 value is changed, and then the submit button is clicked, mockSetState is called witht the new values', async () => {
+  render(<Wrapper />);
 
-//   const newSelections: HazardCurvesSelections = {
-//     location: mockSelections.location,
-//     vs30: hazardPageOptions.vs30s[1],
-//     imt: mockSelections.imt,
-//     poe: undefined,
-//   };
+  const buttons = screen.getAllByRole('button');
+  const vs30Select = buttons.find((button) => button.innerHTML.includes(mockQueryVariables.vs30s[0].toString()));
+  const submitButton = buttons.find((button) => button.innerHTML.includes('Submit'));
+  const nextVs30option = hazardPageOptions.vs30s[1].toString();
 
-//   expect(mockSetSelections).toHaveBeenCalledWith(newSelections);
-// });
+  vs30Select && fireEvent.mouseDown(vs30Select);
+  fireEvent.click(await screen.findByText(nextVs30option));
+  submitButton && fireEvent.click(submitButton);
+
+  const newQueryVariables: HazardCurvesQueryVariables = {
+    ...mockQueryVariables,
+    vs30s: [mockQueryVariables.vs30s[0], hazardPageOptions.vs30s[1]],
+  };
+
+  expect(mockSetQueryVariables).toHaveBeenCalledWith(newQueryVariables);
+  expect(mockSetViewVariables).toHaveBeenCalledWith(mockViewVariables);
+});
+
+test('When user types in the poe input field, the value in the field updates', async () => {
+  render(<Wrapper />);
+
+  const inputs = screen.getAllByRole('textbox');
+  const poeInput = inputs.find((input) => input.id === 'poe-input');
+
+  poeInput && fireEvent.change(poeInput, { target: { value: 'test input' } });
+
+  expect(await screen.findByDisplayValue('test input')).toBeInTheDocument();
+});
+
+test('When poe value is changed to a valid number, and then the submit button is clicked, mockSetState is called with the new poe value', async () => {
+  render(<Wrapper />);
+
+  const inputs = screen.getAllByRole('textbox');
+  const poeInput = inputs.find((input) => input.id === 'poe-input');
+  const buttons = screen.getAllByRole('button');
+  const submitButton = buttons.find((button) => button.innerHTML.includes('Submit'));
+
+  poeInput && fireEvent.change(poeInput, { target: { value: '2' } });
+  submitButton && fireEvent.click(submitButton);
+
+  const newViewVariables: HazardCurvesViewVariables = {
+    ...mockViewVariables,
+    poe: 0.02,
+  };
+
+  expect(mockSetViewVariables).toHaveBeenCalledWith(newViewVariables);
+});
