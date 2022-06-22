@@ -4,7 +4,7 @@ import { Button, Input, FormControl, InputLabel, Box, Autocomplete, TextField } 
 
 import CustomControlsBar from '../../components/common/CustomControlsBar';
 import { HazardCurvesQueryVariables, HazardCurvesViewVariables } from './hazardCharts.types';
-import { hazardPageOptions } from './hazardPageOptions';
+import { hazardPageOptions } from './constants/hazardPageOptions';
 import { convertIDsToLocations, convertLocationsToIDs } from './hazardPage.service';
 
 interface HazardChartsControlsProps {

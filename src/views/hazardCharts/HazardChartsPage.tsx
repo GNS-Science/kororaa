@@ -5,7 +5,7 @@ import ShareIcon from '@mui/icons-material/Share';
 
 import HazardChartsControls from './HazardChartsControls';
 import { HazardCurvesQueryVariables, HazardCurvesViewVariables } from './hazardCharts.types';
-import { hazardPageLocations, hazardPageOptions } from './hazardPageOptions';
+import { hazardPageLocations, hazardPageOptions } from './constants/hazardPageOptions';
 import HazardChartsPlotsView from './HazardChartsPlotsView';
 
 const HazardChartsPage: React.FC = () => {

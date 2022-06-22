@@ -8,7 +8,7 @@ import { ControlsBar } from '@gns-science/toshi-nest';
 
 import { HazardChartsPlotsViewQuery } from './__generated__/HazardChartsPlotsViewQuery.graphql';
 import { HazardCurvesQueryVariables, HazardCurvesViewVariables } from './hazardCharts.types';
-import { hazardPageOptions } from './hazardPageOptions';
+import { hazardPageOptions } from './constants/hazardPageOptions';
 import HazardCharts from './HazardCharts';
 import { getCSVdata } from './hazardPage.service';
 

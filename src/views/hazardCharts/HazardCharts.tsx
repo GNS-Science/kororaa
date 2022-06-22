@@ -6,7 +6,7 @@ import { HazardCurvesResponsive, SpectralAccelerationChartResponsive } from '@gn
 import { HazardCurvesViewVariables } from './hazardCharts.types';
 import { HazardChartsPlotsViewQuery$data } from './__generated__/HazardChartsPlotsViewQuery.graphql';
 import { getAllCurves, getColor, getCurve, getSpectralAccelerationData } from './hazardPage.service';
-import { hazardPageOptions } from './hazardPageOptions';
+import { hazardPageOptions } from './constants/hazardPageOptions';
 
 interface HazardChartsProps {
   data: HazardChartsPlotsViewQuery$data;

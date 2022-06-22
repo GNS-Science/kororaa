@@ -1,5 +1,5 @@
 import * as mathjs from 'mathjs';
-import { hazardPageLocations } from './hazardPageOptions';
+import { hazardPageLocations } from './constants/hazardPageOptions';
 
 import { HazardChartsPlotsViewQuery$data } from './__generated__/HazardChartsPlotsViewQuery.graphql';
 
