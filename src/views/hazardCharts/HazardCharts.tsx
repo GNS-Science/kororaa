@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { Box } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import { ResponsiveHazardCurves, SpectralAccelerationChartResponsive } from '@gns-science/toshi-nest';
+import { HazardCurvesResponsive, SpectralAccelerationChartResponsive } from '@gns-science/toshi-nest';
 
 import { HazardCurvesSelections } from './hazardCharts.types';
 import { HazardChartsPlotsViewQuery$data } from './__generated__/HazardChartsPlotsViewQuery.graphql';
@@ -44,7 +44,7 @@ const HazardCharts: React.FC<HazardChartsProps> = ({ data, selections }: HazardC
   return (
     <HazardChartsContainer data-testid="hazardChartsContainer">
       <ChartContainer>
-        <ResponsiveHazardCurves
+        <HazardCurvesResponsive
           data-testid="hazard-curve"
           curves={curve}
           scalesConfig={scalesConfig}
@@ -52,12 +52,12 @@ const HazardCharts: React.FC<HazardChartsProps> = ({ data, selections }: HazardC
           heading={'Hazard Curves'}
           subHeading={`${selections.imt}`}
           gridNumTicks={10}
-          POE={'None'}
+          poe={selections.poe}
         />
       </ChartContainer>
       {selections.poe && (
         <ChartContainer>
-          <SpectralAccelerationChartResponsive testId="sa-chart" data={SAdata} heading={'Spectral Acceleration Chart'} subHeading={`${selections.poe} in 50 years`} />
+          <SpectralAccelerationChartResponsive testId="sa-chart" data={SAdata} heading={'Spectral Acceleration Chart'} subHeading={`${selections.poe * 100}% in 50 years`} />
         </ChartContainer>
       )}
     </HazardChartsContainer>

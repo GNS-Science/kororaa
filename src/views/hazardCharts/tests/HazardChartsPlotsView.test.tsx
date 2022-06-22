@@ -2,10 +2,10 @@ import { render, screen } from '@testing-library/react';
 import React from 'react';
 import { RelayEnvironmentProvider } from 'react-relay';
 
-import RelayEnvironment from '../../RelayEnvironment';
-import { HazardCurvesSelections } from './hazardCharts.types';
-import HazardChartsPlotsView from './HazardChartsPlotsView';
-import { hazardPageOptions } from './hazardPageOptions';
+import RelayEnvironment from '../../../RelayEnvironment';
+import { HazardCurvesSelections } from '../hazardCharts.types';
+import HazardChartsPlotsView from '../HazardChartsPlotsView';
+import { hazardPageOptions } from '../hazardPageOptions';
 
 const mockSelections: HazardCurvesSelections = {
   location: 'Wellington',

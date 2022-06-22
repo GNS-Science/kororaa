@@ -1,5 +1,5 @@
-import * as hazardPageService from './hazardPage.service';
-import { HazardChartsPlotsViewQuery$data } from './__generated__/HazardChartsPlotsViewQuery.graphql';
+import * as hazardPageService from '../hazardPage.service';
+import { HazardChartsPlotsViewQuery$data } from '../__generated__/HazardChartsPlotsViewQuery.graphql';
 
 describe('For the getAllCurves function', () => {
   it('should return an empty object if the data is empty', () => {
