@@ -4,11 +4,19 @@ import { styled } from '@mui/material/styles';
 import ShareIcon from '@mui/icons-material/Share';
 
 import HazardChartsControls from './HazardChartsControls';
-import { HazardCurvesSelections } from './hazardCharts.types';
-import { hazardPageOptions } from './hazardPageOptions';
+import { HazardCurvesQueryVariables, HazardCurvesSelections } from './hazardCharts.types';
+import { hazardPageLocations, hazardPageOptions } from './hazardPageOptions';
 import HazardChartsPlotsView from './HazardChartsPlotsView';
 
 const HazardChartsPage: React.FC = () => {
+  const [queryVariables, setQueryVariables] = useState<HazardCurvesQueryVariables>({
+    hazard_model: 'TEST1',
+    vs30s: [hazardPageOptions.vs30s[0]],
+    locs: [hazardPageLocations[0].id],
+    imts: hazardPageOptions.imts,
+    aggs: ['mean'],
+  });
+
   const [hazardCurvesSelections, setHazardCurvesSelections] = useState<HazardCurvesSelections>({
     location: 'Wellington',
     vs30: hazardPageOptions.vs30s[0],
@@ -44,7 +52,7 @@ const HazardChartsPage: React.FC = () => {
       <HazardChartsControls selections={hazardCurvesSelections} setSelections={setHazardCurvesSelections} />
       {hazardCurvesSelections.location && (
         <React.Suspense fallback={<CircularProgress />}>
-          <HazardChartsPlotsView selections={hazardCurvesSelections} />
+          <HazardChartsPlotsView queryVariables={queryVariables} selections={hazardCurvesSelections} />
         </React.Suspense>
       )}
     </PageContainer>

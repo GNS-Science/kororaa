@@ -7,16 +7,17 @@ import { CSVLink } from 'react-csv';
 import { ControlsBar } from '@gns-science/toshi-nest';
 
 import { HazardChartsPlotsViewQuery } from './__generated__/HazardChartsPlotsViewQuery.graphql';
-import { HazardCurvesSelections } from './hazardCharts.types';
+import { HazardCurvesQueryVariables, HazardCurvesSelections } from './hazardCharts.types';
 import { hazardPageOptions, hazardPageLocations } from './hazardPageOptions';
 import HazardCharts from './HazardCharts';
 import { getCSVdata } from './hazardPage.service';
 
 interface HazardChartsPlotsViewProps {
   selections: HazardCurvesSelections;
+  queryVariables: HazardCurvesQueryVariables;
 }
 
-const HazardChartsPlotsView: React.FC<HazardChartsPlotsViewProps> = ({ selections }: HazardChartsPlotsViewProps) => {
+const HazardChartsPlotsView: React.FC<HazardChartsPlotsViewProps> = ({ queryVariables, selections }: HazardChartsPlotsViewProps) => {
   const printTargetRef = useRef<HTMLDivElement>(null);
 
   const locationID = useMemo(() => {
@@ -24,13 +25,7 @@ const HazardChartsPlotsView: React.FC<HazardChartsPlotsViewProps> = ({ selection
     return locationObject ? locationObject.id : '';
   }, [selections.location]);
 
-  const data = useLazyLoadQuery<HazardChartsPlotsViewQuery>(hazardChartsPlotsViewQuery, {
-    hazard_model: 'TEST1',
-    vs30s: [selections.vs30],
-    imts: hazardPageOptions.imts,
-    locs: [locationID],
-    aggs: ['mean'],
-  });
+  const data = useLazyLoadQuery<HazardChartsPlotsViewQuery>(hazardChartsPlotsViewQuery, queryVariables);
 
   const handlePrint = useReactToPrint({
     content: () => printTargetRef.current,
