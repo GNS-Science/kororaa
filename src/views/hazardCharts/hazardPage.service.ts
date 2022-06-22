@@ -1,5 +1,4 @@
 import * as mathjs from 'mathjs';
-import { HazardCurvesSelections } from './hazardCharts.types';
 import { hazardPageLocations } from './hazardPageOptions';
 
 import { HazardChartsPlotsViewQuery$data } from './__generated__/HazardChartsPlotsViewQuery.graphql';
@@ -113,7 +112,7 @@ const getImtValue = (imt: string): string => {
   }
 };
 
-export const getCSVdata = (PGAoptions: string[], selections: HazardCurvesSelections, data: HazardChartsPlotsViewQuery$data): string[][] => {
+export const getCSVdata = (PGAoptions: string[], data: HazardChartsPlotsViewQuery$data): string[][] => {
   const allCurves = getAllCurves(data);
   const CSVdata: string[][] = [];
   CSVdata[0] = getCSVheadings(PGAoptions);

@@ -7,23 +7,18 @@ import { CSVLink } from 'react-csv';
 import { ControlsBar } from '@gns-science/toshi-nest';
 
 import { HazardChartsPlotsViewQuery } from './__generated__/HazardChartsPlotsViewQuery.graphql';
-import { HazardCurvesQueryVariables, HazardCurvesSelections } from './hazardCharts.types';
-import { hazardPageOptions, hazardPageLocations } from './hazardPageOptions';
+import { HazardCurvesQueryVariables, HazardCurvesViewVariables } from './hazardCharts.types';
+import { hazardPageOptions } from './hazardPageOptions';
 import HazardCharts from './HazardCharts';
 import { getCSVdata } from './hazardPage.service';
 
 interface HazardChartsPlotsViewProps {
-  selections: HazardCurvesSelections;
   queryVariables: HazardCurvesQueryVariables;
+  viewVariables: HazardCurvesViewVariables;
 }
 
-const HazardChartsPlotsView: React.FC<HazardChartsPlotsViewProps> = ({ queryVariables, selections }: HazardChartsPlotsViewProps) => {
+const HazardChartsPlotsView: React.FC<HazardChartsPlotsViewProps> = ({ queryVariables, viewVariables }: HazardChartsPlotsViewProps) => {
   const printTargetRef = useRef<HTMLDivElement>(null);
-
-  const locationID = useMemo(() => {
-    const locationObject = hazardPageLocations.find((locations) => locations.name === selections.location);
-    return locationObject ? locationObject.id : '';
-  }, [selections.location]);
 
   const data = useLazyLoadQuery<HazardChartsPlotsViewQuery>(hazardChartsPlotsViewQuery, queryVariables);
 
@@ -32,13 +27,13 @@ const HazardChartsPlotsView: React.FC<HazardChartsPlotsViewProps> = ({ queryVari
   });
 
   const CSVdata = useMemo(() => {
-    return getCSVdata(hazardPageOptions.imts, selections, data);
-  }, [data, selections]);
+    return getCSVdata(hazardPageOptions.imts, data);
+  }, [data]);
 
   return (
     <Box role="plotsView" sx={{ width: '100%' }}>
       <div ref={printTargetRef}>
-        <HazardCharts data={data} selections={selections} />
+        <HazardCharts data={data} viewVariables={viewVariables} />
       </div>
       <Box sx={{ height: 70, marginTop: '20px' }}>
         <ControlsBar>

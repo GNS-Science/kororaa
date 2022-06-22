@@ -48,11 +48,9 @@ const HazardChartsPage: React.FC = () => {
         </Fab>
       </Box>
       <HazardChartsControls queryVariables={queryVariables} setQueryVariables={setQueryVariables} viewVariables={viewVariables} setViewVariables={setViewVariables} />
-      {hazardCurvesSelections.location && (
-        <React.Suspense fallback={<CircularProgress />}>
-          <HazardChartsPlotsView queryVariables={queryVariables} selections={hazardCurvesSelections} />
-        </React.Suspense>
-      )}
+      <React.Suspense fallback={<CircularProgress />}>
+        <HazardChartsPlotsView queryVariables={queryVariables} viewVariables={viewVariables} />
+      </React.Suspense>
     </PageContainer>
   );
 };

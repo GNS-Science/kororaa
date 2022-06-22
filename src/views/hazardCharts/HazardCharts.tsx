@@ -3,21 +3,21 @@ import { Box } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { HazardCurvesResponsive, SpectralAccelerationChartResponsive } from '@gns-science/toshi-nest';
 
-import { HazardCurvesSelections } from './hazardCharts.types';
+import { HazardCurvesViewVariables } from './hazardCharts.types';
 import { HazardChartsPlotsViewQuery$data } from './__generated__/HazardChartsPlotsViewQuery.graphql';
 import { getAllCurves, getColor, getCurve, getSpectralAccelerationData } from './hazardPage.service';
 import { hazardPageOptions } from './hazardPageOptions';
 
 interface HazardChartsProps {
   data: HazardChartsPlotsViewQuery$data;
-  selections: HazardCurvesSelections;
+  viewVariables: HazardCurvesViewVariables;
 }
 
-const HazardCharts: React.FC<HazardChartsProps> = ({ data, selections }: HazardChartsProps) => {
+const HazardCharts: React.FC<HazardChartsProps> = ({ data, viewVariables }: HazardChartsProps) => {
   const allCurves = useMemo(() => getAllCurves(data), [data]);
-  const curve = useMemo(() => getCurve(allCurves, selections.imt), [allCurves, selections.imt]);
+  const curve = useMemo(() => getCurve(allCurves, viewVariables.imts[0]), [allCurves, viewVariables.imts]);
   const color = useMemo(() => getColor(curve), [curve]);
-  const SAdata = useMemo(() => getSpectralAccelerationData(hazardPageOptions.imts, selections.poe, allCurves), [selections.poe, allCurves]);
+  const SAdata = useMemo(() => getSpectralAccelerationData(hazardPageOptions.imts, viewVariables.poe, allCurves), [viewVariables.poe, allCurves]);
 
   const scalesConfig = {
     x: { type: 'log', domain: [1e-3, 10] },
@@ -50,14 +50,14 @@ const HazardCharts: React.FC<HazardChartsProps> = ({ data, selections }: HazardC
           scalesConfig={scalesConfig}
           colors={color}
           heading={'Hazard Curves'}
-          subHeading={`${selections.imt}`}
+          subHeading={`${viewVariables.imts[0]}`}
           gridNumTicks={10}
-          poe={selections.poe}
+          poe={viewVariables.poe}
         />
       </ChartContainer>
-      {selections.poe && (
+      {viewVariables.poe && (
         <ChartContainer>
-          <SpectralAccelerationChartResponsive testId="sa-chart" data={SAdata} heading={'Spectral Acceleration Chart'} subHeading={`${selections.poe * 100}% in 50 years`} />
+          <SpectralAccelerationChartResponsive testId="sa-chart" data={SAdata} heading={'Spectral Acceleration Chart'} subHeading={`${viewVariables.poe * 100}% in 50 years`} />
         </ChartContainer>
       )}
     </HazardChartsContainer>
