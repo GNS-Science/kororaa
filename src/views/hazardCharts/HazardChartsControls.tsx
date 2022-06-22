@@ -66,7 +66,7 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ queryVariab
             setInputValue(newInputValue);
           }}
           options={hazardPageOptions.locations}
-          style={{ width: 200, marginLeft: 16 }}
+          style={{ width: 228, marginLeft: 16 }}
           renderInput={(params) => <TextField {...params} label="Locations" variant="standard" />}
           blurOnSelect={true}
           limitTags={1}
