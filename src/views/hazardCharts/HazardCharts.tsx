@@ -5,7 +5,7 @@ import { HazardCurvesResponsive, SpectralAccelerationChartResponsive } from '@gn
 
 import { HazardCurvesViewVariables } from './hazardCharts.types';
 import { HazardChartsPlotsViewQuery$data } from './__generated__/HazardChartsPlotsViewQuery.graphql';
-import { getAllCurves, getColor, getCurve, getSpectralAccelerationData } from './hazardPage.service';
+import { getAllCurves, getColors, getFilteredCurves, getSpectralAccelerationData } from './hazardPage.service';
 import { hazardPageOptions } from './constants/hazardPageOptions';
 
 interface HazardChartsProps {
@@ -15,8 +15,8 @@ interface HazardChartsProps {
 
 const HazardCharts: React.FC<HazardChartsProps> = ({ data, viewVariables }: HazardChartsProps) => {
   const allCurves = useMemo(() => getAllCurves(data), [data]);
-  const curve = useMemo(() => getCurve(allCurves, viewVariables.imts[0]), [allCurves, viewVariables.imts]);
-  const color = useMemo(() => getColor(curve), [curve]);
+  const filteredCurves = useMemo(() => getFilteredCurves(allCurves, viewVariables.imts[0]), [allCurves, viewVariables.imts]);
+  const colors = useMemo(() => getColors(filteredCurves), [filteredCurves]);
   const SAdata = useMemo(() => getSpectralAccelerationData(hazardPageOptions.imts, viewVariables.poe, allCurves), [viewVariables.poe, allCurves]);
 
   const scalesConfig = {
@@ -46,9 +46,9 @@ const HazardCharts: React.FC<HazardChartsProps> = ({ data, viewVariables }: Haza
       <ChartContainer>
         <HazardCurvesResponsive
           data-testid="hazard-curve"
-          curves={curve}
+          curves={filteredCurves}
           scalesConfig={scalesConfig}
-          colors={color}
+          colors={colors}
           heading={'Hazard Curves'}
           subHeading={`${viewVariables.imts[0]}`}
           gridNumTicks={10}

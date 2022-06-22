@@ -17,7 +17,7 @@ export const getAllCurves = (data: HazardChartsPlotsViewQuery$data): Record<stri
     const values = currentCurve?.curve?.values;
 
     if (imt && levels && values) {
-      const curveName = currentCurve.imt;
+      const curveName = `${currentCurve.vs30} ${currentCurve.loc} ${currentCurve.imt}`;
       const curve: XY[] = [];
 
       levels.forEach((level, index) => {
@@ -31,19 +31,25 @@ export const getAllCurves = (data: HazardChartsPlotsViewQuery$data): Record<stri
   return curves;
 };
 
-export const getCurve = (curve: Record<string, XY[]>, imt: string): Record<string, XY[]> => {
-  const newCurve: Record<string, XY[]> = {};
-  newCurve[imt] = curve[imt];
-  return newCurve;
-};
+export const getFilteredCurves = (curves: Record<string, XY[]>, imt: string): Record<string, XY[]> => {
+  const newCurves: Record<string, XY[]> = {};
 
-export const getColor = (curve: Record<string, XY[]>): Record<string, string> => {
-  const color: Record<string, string> = {};
-  for (const key in curve) {
-    color[key] = '#000000';
+  for (const key in curves) {
+    if (key.includes(imt)) {
+      newCurves[key] = curves[key];
+    }
   }
 
-  return color;
+  return newCurves;
+};
+
+export const getColors = (curve: Record<string, XY[]>): Record<string, string> => {
+  const colors: Record<string, string> = {};
+  for (const key in curve) {
+    colors[key] = '#000000';
+  }
+
+  return colors;
 };
 
 export const getSpectralAccelerationData = (pgaValues: string[], poe: number | undefined, filteredCurves: Record<string, XY[]>): XY[] => {
