@@ -1269,13 +1269,14 @@
     minimatch "^3.1.2"
     strip-json-comments "^3.1.1"
 
-"@gns-science/toshi-nest@^1.3.1":
-  version "1.3.1"
-  resolved "https://npm.pkg.github.com/download/@gns-science/toshi-nest/1.3.1/45ba22a83d5abfc026450eb96109762ce94b3e70ad79af607b4448c6bf48d410#4cad8409a173406c71536ee79c459f08dbb72642"
-  integrity sha512-uU0MyYz9gHIAeEujzva95jLvmAb6I6jL37GfT9tQw/HFJWSLw7wwT7EBD0t+dHjmmjAnW9lDRBOezdcxJJ/fXw==
+"@gns-science/toshi-nest@^1.4.1":
+  version "1.4.1"
+  resolved "https://npm.pkg.github.com/download/@gns-science/toshi-nest/1.4.1/38724fb5b0694e9ff42e7bd873d8c92d2f2136e296f744576ec1b5b7647a1725#075585159aaf5ab3936a56e2966430658182e359"
+  integrity sha512-j3UoaBxPEdlKrxeLtOP5EfRHlLUe53bvPYC0cuEqguD76G+DjAg1DILMFw7mNnL1Z9mDqkdFFX+oXMW6mwCcMg==
   dependencies:
     "@emotion/react" "^11.8.2"
     "@emotion/styled" "^11.8.1"
+    "@mui/icons-material" "^5.8.0"
     "@mui/material" "^5.5.2"
     "@visx/clip-path" "^2.1.0"
     "@visx/group" "^2.1.0"
@@ -1622,6 +1623,13 @@
   version "5.6.2"
   resolved "https://registry.yarnpkg.com/@mui/icons-material/-/icons-material-5.6.2.tgz#239c40fc5841dc7c6af7d00e4e988550de170fcd"
   integrity sha512-9QdI7axKuBAyaGz4mtdi7Uy1j73/thqFmEuxpJHxNC7O8ADEK1Da3t2veK2tgmsXsUlAHcAG63gg+GvWWeQNqQ==
+  dependencies:
+    "@babel/runtime" "^7.17.2"
+
+"@mui/icons-material@^5.8.0":
+  version "5.8.4"
+  resolved "https://registry.yarnpkg.com/@mui/icons-material/-/icons-material-5.8.4.tgz#3f2907c9f8f5ce4d754cb8fb4b68b5a1abf4d095"
+  integrity sha512-9Z/vyj2szvEhGWDvb+gG875bOGm8b8rlHBKOD1+nA3PcgC3fV6W1AU6pfOorPeBfH2X4mb9Boe97vHvaSndQvA==
   dependencies:
     "@babel/runtime" "^7.17.2"
 
