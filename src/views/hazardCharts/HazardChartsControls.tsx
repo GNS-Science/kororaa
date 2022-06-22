@@ -1,52 +1,45 @@
 import React, { useState } from 'react';
-import { SelectControl } from '@gns-science/toshi-nest';
+import { MultiSelect } from '@gns-science/toshi-nest';
 import { Button, Input, FormControl, InputLabel, Box, Autocomplete, TextField } from '@mui/material';
 
 import CustomControlsBar from '../../components/common/CustomControlsBar';
-import { HazardCurvesQueryVariables, HazardCurvesSelections, HazardCurvesViewVariables } from './hazardCharts.types';
+import { HazardCurvesQueryVariables, HazardCurvesViewVariables } from './hazardCharts.types';
 import { hazardPageOptions } from './hazardPageOptions';
-import { convertLocationsToIDs } from './hazardPage.service';
+import { convertIDsToLocations, convertLocationsToIDs } from './hazardPage.service';
 
 interface HazardChartsControlsProps {
   queryVariables: HazardCurvesQueryVariables;
   setQueryVariables: (values: HazardCurvesQueryVariables) => void;
   viewVariables: HazardCurvesViewVariables;
   setViewVariables: (values: HazardCurvesViewVariables) => void;
-  selections: HazardCurvesSelections;
-  setSelections: (values: HazardCurvesSelections) => void;
 }
 
-const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ queryVariables, setQueryVariables, viewVariables, setViewVariables, selections, setSelections }: HazardChartsControlsProps) => {
+const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ queryVariables, setQueryVariables, viewVariables, setViewVariables }: HazardChartsControlsProps) => {
+  const getPoeInputDisplay = (poe: number | undefined): string => {
+    return poe ? `${poe * 100}%` : '';
+  };
+
   const [latLon, setLatLon] = useState<string>('');
-  const [location, setLocation] = useState<string>(selections.location);
-  const [vs30, setVs30] = useState<number>(selections.vs30);
-  const [imt, setImt] = useState<string>(selections.imt);
-  const [poeInput, setPoeInput] = useState<string>('');
-  const [poe, setPoe] = useState<number | undefined>(undefined);
+  const [locations, setLocations] = useState<string[]>(convertIDsToLocations(queryVariables.locs));
+  const [vs30s, setVs30s] = useState<number[]>(queryVariables.vs30s);
+  const [imts, setImts] = useState<string[]>(viewVariables.imts);
+  const [poeInput, setPoeInput] = useState<string>(getPoeInputDisplay(viewVariables.poe));
   const [inputValue, setInputValue] = useState<string>('');
 
   const handleLatLonChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setLatLon(event.target.value);
   };
 
-  const handleQueryVariables = () => {
+  const handleSubmit = () => {
     setQueryVariables({
       ...queryVariables,
-      locs: convertLocationsToIDs([location]),
-      vs30s: [vs30],
+      locs: convertLocationsToIDs(locations),
+      vs30s,
     });
-  };
-
-  const handleViewVariables = () => {
     setViewVariables({
-      imts: [imt],
+      imts,
       poe: parsePoe(poeInput),
     });
-  };
-
-  const handleSubmit = () => {
-    handleQueryVariables();
-    handleViewVariables();
   };
 
   const parsePoe = (poe: string) => {
@@ -59,25 +52,14 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ queryVariab
     }
   };
 
-  const handlePoeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setPoeInput(event.target.value);
-    const newValue = event.target.value;
-    const percentage = Number(newValue.replace('%', ''));
-
-    if (!percentage || percentage > 100 || percentage < 0) {
-      setPoe(undefined);
-    } else {
-      setPoe(percentage / 100);
-    }
-  };
-
   return (
     <Box sx={{ marginBottom: '20px', width: '100%', border: 'solid 1px black', padding: '10px' }}>
       <CustomControlsBar>
         <Autocomplete
-          value={location}
-          onChange={(event: unknown, newValue: string | null) => {
-            setLocation(newValue as string);
+          multiple
+          value={locations}
+          onChange={(event: unknown, newValue: string[] | null) => {
+            setLocations(newValue as string[]);
           }}
           inputValue={inputValue}
           onInputChange={(event, newInputValue) => {
@@ -93,11 +75,19 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ queryVariab
           <InputLabel htmlFor="component-helper">Lat,Lon</InputLabel>
           <Input id="component-helper" name="lon" value={latLon} onChange={handleLatLonChange} aria-describedby="component-helper-text" />
         </FormControl>
-        <SelectControl options={hazardPageOptions.vs30s} selection={vs30} setSelection={setVs30} name="Vs30" />
-        <SelectControl options={hazardPageOptions.imts} selection={imt} setSelection={setImt} name="Spectral Period" />
+        <MultiSelect options={hazardPageOptions.vs30s} selection={vs30s} setSelection={setVs30s} name="Vs30" />
+        <MultiSelect options={hazardPageOptions.imts} selection={imts} setSelection={setImts} name="Spectral Period" />
         <FormControl sx={{ width: 200 }} variant="standard">
           <InputLabel htmlFor="component-helper">Probabilty of Exceedance (50 Yrs)</InputLabel>
-          <Input id="component-helper" name="poe" value={poeInput} onChange={handlePoeChange} aria-describedby="component-helper-text" />
+          <Input
+            id="component-helper"
+            name="poe"
+            value={poeInput}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              setPoeInput(e.target.value);
+            }}
+            aria-describedby="component-helper-text"
+          />
         </FormControl>
         <Button variant="contained" type="submit" onClick={handleSubmit}>
           Submit
