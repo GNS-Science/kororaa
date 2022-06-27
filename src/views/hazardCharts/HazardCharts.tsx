@@ -5,7 +5,7 @@ import { HazardCurvesResponsive, SpectralAccelerationChartResponsive } from '@gn
 
 import { HazardCurvesQueryVariables, HazardCurvesViewVariables } from './hazardCharts.types';
 import { HazardChartsPlotsViewQuery$data } from './__generated__/HazardChartsPlotsViewQuery.graphql';
-import { getAllCurves, getColors, getFilteredCurves, getSpectralAccelerationCurves, getSpectralAccelerationData } from './hazardPage.service';
+import { getAllCurves, getColors, getFilteredCurves, getSpectralAccelerationCurves } from './hazardPage.service';
 
 interface HazardChartsProps {
   data: HazardChartsPlotsViewQuery$data;
@@ -15,7 +15,7 @@ interface HazardChartsProps {
 
 const HazardCharts: React.FC<HazardChartsProps> = ({ data, viewVariables, queryVariables }: HazardChartsProps) => {
   const allCurves = useMemo(() => getAllCurves(data), [data]);
-  const filteredCurves = useMemo(() => getFilteredCurves(allCurves, viewVariables.imts[0]), [allCurves, viewVariables.imts]);
+  const filteredCurves = useMemo(() => getFilteredCurves(allCurves, viewVariables.imts), [allCurves, viewVariables.imts]);
   const colors = useMemo(() => getColors(filteredCurves), [filteredCurves]);
   const SAcurves = useMemo(() => getSpectralAccelerationCurves(allCurves, queryVariables, viewVariables.poe), [allCurves, queryVariables, viewVariables.poe]);
   const SAcurvesColors = useMemo(() => getColors(SAcurves), [SAcurves]);

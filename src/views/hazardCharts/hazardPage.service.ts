@@ -32,14 +32,16 @@ export const getAllCurves = (data: HazardChartsPlotsViewQuery$data): Record<stri
   return curves;
 };
 
-export const getFilteredCurves = (curves: Record<string, XY[]>, imt: string): Record<string, XY[]> => {
+export const getFilteredCurves = (curves: Record<string, XY[]>, imts: string[]): Record<string, XY[]> => {
   const newCurves: Record<string, XY[]> = {};
 
-  for (const key in curves) {
-    if (key.includes(imt)) {
-      newCurves[key] = curves[key];
+  imts.forEach((imt) => {
+    for (const key in curves) {
+      if (key.includes(imt)) {
+        newCurves[key] = curves[key];
+      }
     }
-  }
+  });
 
   return newCurves;
 };
