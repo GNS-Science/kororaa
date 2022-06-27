@@ -1269,10 +1269,10 @@
     minimatch "^3.1.2"
     strip-json-comments "^3.1.1"
 
-"@gns-science/toshi-nest@^1.4.1":
-  version "1.4.1"
-  resolved "https://npm.pkg.github.com/download/@gns-science/toshi-nest/1.4.1/38724fb5b0694e9ff42e7bd873d8c92d2f2136e296f744576ec1b5b7647a1725#075585159aaf5ab3936a56e2966430658182e359"
-  integrity sha512-j3UoaBxPEdlKrxeLtOP5EfRHlLUe53bvPYC0cuEqguD76G+DjAg1DILMFw7mNnL1Z9mDqkdFFX+oXMW6mwCcMg==
+"@gns-science/toshi-nest@^1.4.3":
+  version "1.4.3"
+  resolved "https://npm.pkg.github.com/download/@gns-science/toshi-nest/1.4.3/15f63f43710c903e7235daa7b43e58b41e914434ba38631910926ad5e3bc3a9a#1021caebb15becba37703ae5ae9454f15ca3ed9b"
+  integrity sha512-FcD5T9rK50lRyUqW7koJzxcaN9f5TQ4dJLa23ctEGJlJm0mo53aAp8A6204asV8exyNywYTDo60hqh/Sa9wKSw==
   dependencies:
     "@emotion/react" "^11.8.2"
     "@emotion/styled" "^11.8.1"
@@ -2549,6 +2549,11 @@
   integrity sha512-gmEaFwpj/7f/ROdtIlci1R1VYU1J4j95m8T+Tj3iBgiBFKg1foE/PSl93bBd5T9LDXNPo8UlNN6W0qwD8O5OaA==
   dependencies:
     "@types/yargs-parser" "*"
+
+"@types/yup@^0.29.14":
+  version "0.29.14"
+  resolved "https://registry.yarnpkg.com/@types/yup/-/yup-0.29.14.tgz#754f1dccedcc66fc2bbe290c27f5323b407ceb00"
+  integrity sha512-Ynb/CjHhE/Xp/4bhHmQC4U1Ox+I2OpfRYF3dnNgQqn1cHa6LK3H1wJMNPT02tSVZA6FYuXE2ITORfbnb6zBCSA==
 
 "@typescript-eslint/eslint-plugin@^5.22.0", "@typescript-eslint/eslint-plugin@^5.5.0":
   version "5.22.0"
