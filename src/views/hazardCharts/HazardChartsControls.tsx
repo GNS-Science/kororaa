@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { MultiSelect } from '@gns-science/toshi-nest';
-import { InputAdornment, Button, Input, FormControl, InputLabel, Box, Autocomplete, TextField } from '@mui/material';
+import { InputAdornment, Button, Input, FormControl, InputLabel, Box, Autocomplete, TextField, FormHelperText } from '@mui/material';
 
 import CustomControlsBar from '../../components/common/CustomControlsBar';
 import { HazardCurvesQueryVariables, HazardCurvesViewVariables } from './hazardCharts.types';
@@ -18,6 +18,7 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ queryVariab
   const getPoeInputDisplay = (poe: number | undefined): string => {
     return poe ? `${poe * 100}` : ' ';
   };
+  const poeInputRef = useRef<HTMLInputElement>(null);
 
   const [latLon, setLatLon] = useState<string>('');
   const [locations, setLocations] = useState<string[]>(convertIDsToLocations(queryVariables.locs));
@@ -25,30 +26,62 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ queryVariab
   const [imts, setImts] = useState<string[]>(viewVariables.imts);
   const [poeInput, setPoeInput] = useState<string>(getPoeInputDisplay(viewVariables.poe));
   const [inputValue, setInputValue] = useState<string>('');
+  const [poeInputError, setPoeInputError] = useState<boolean>(false);
+  const [poeInputErrorMessage, setPoeInputErrorMessage] = useState<string>('');
+
+  useEffect(() => {
+    const input = poeInputRef.current;
+    poeInputRef &&
+      input?.addEventListener('blur', () => {
+        parsePoe(poeInput);
+      });
+    return () => {
+      poeInputRef &&
+        input?.removeEventListener('blur', () => {
+          parsePoe(poeInput);
+        });
+    };
+  });
+
+  const parsePoe = (poe: string) => {
+    try {
+      validatePoeValue(poe);
+      setPoeInputError(false);
+    } catch (err) {
+      setPoeInputErrorMessage(err as string);
+      setPoeInputError(true);
+    }
+  };
 
   const handleLatLonChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setLatLon(event.target.value);
   };
 
   const handleSubmit = () => {
-    setQueryVariables({
-      ...queryVariables,
-      locs: convertLocationsToIDs(locations),
-      vs30s,
-    });
-    setViewVariables({
-      imts,
-      poe: parsePoe(poeInput),
-    });
+    try {
+      validatePoeValue(poeInput);
+      setQueryVariables({
+        ...queryVariables,
+        locs: convertLocationsToIDs(locations),
+        vs30s,
+      });
+      setViewVariables({
+        imts,
+        poe: Number(poeInput) / 100,
+      });
+    } catch (err) {
+      setPoeInputError(true);
+      setPoeInputErrorMessage(err as string);
+    }
   };
 
-  const parsePoe = (poe: string) => {
+  const validatePoeValue = (poe: string) => {
     const percentage = Number(poe);
 
-    if (!percentage || percentage > 100 || percentage < 0) {
-      return undefined;
-    } else {
-      return percentage / 100;
+    if (percentage >= 100 || percentage <= 0) {
+      throw 'NUMBER MUST BE BETWEEN 100 AND 0';
+    } else if (!percentage) {
+      throw 'NOT A NUMBER';
     }
   };
 
@@ -80,6 +113,8 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ queryVariab
         <FormControl sx={{ width: 200 }} variant="standard">
           <InputLabel htmlFor="component-helper">Probabilty of Exceedance (50 Yrs)</InputLabel>
           <Input
+            inputRef={poeInputRef}
+            error={poeInputError}
             id="poe-input"
             name="poe"
             value={poeInput}
@@ -89,6 +124,7 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ queryVariab
             aria-describedby="component-helper-text"
             endAdornment={<InputAdornment position="end">%</InputAdornment>}
           />
+          {poeInputError && <FormHelperText id="outlined-weight-helper-text">{poeInputErrorMessage}</FormHelperText>}
         </FormControl>
         <Button variant="contained" type="submit" onClick={handleSubmit}>
           Submit

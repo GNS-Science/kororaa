@@ -136,7 +136,6 @@ export const getSpectralAccelerationData = (imtValues: string[], poe: number | u
           }
         });
         const point = mathjs.intersect(p1, p2, p3, p4);
-        console.log(point);
         const result = [Math.exp(point[0] as number), mathjs.exp(mathjs.exp(point[1] as number))];
         dataSet.push({ x: imt === 'PGA' ? 0.01 : parseFloat(getImtValue(imt as string)), y: result[0] });
       } catch {
