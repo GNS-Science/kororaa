@@ -1,5 +1,6 @@
 import * as mathjs from 'mathjs';
-import { hazardPageLocations } from './constants/hazardPageOptions';
+import { hazardPageLocations, hazardPageOptions } from './constants/hazardPageOptions';
+import { HazardCurvesQueryVariables } from './hazardCharts.types';
 
 import { HazardChartsPlotsViewQuery$data } from './__generated__/HazardChartsPlotsViewQuery.graphql';
 
@@ -52,37 +53,6 @@ export const getColors = (curve: Record<string, XY[]>): Record<string, string> =
   return colors;
 };
 
-export const getSpectralAccelerationData = (pgaValues: string[], poe: number | undefined, filteredCurves: Record<string, XY[]>): XY[] => {
-  const dataSet: XY[] = [];
-  if (poe) {
-    const xValue: number = -Math.log(1 - poe) / 50;
-
-    pgaValues.forEach((value) => {
-      try {
-        let p1: number[] = [];
-        let p2: number[] = [];
-        const p3 = [Math.log(2e-3), Math.log(xValue)];
-        const p4 = [Math.log(10), Math.log(xValue)];
-
-        filteredCurves[value].find((xy, i) => {
-          if (xy.y <= xValue) {
-            p1 = [Math.log(xy.x), Math.log(xy.y)];
-            p2 = [Math.log(filteredCurves[value][i - 1].x), Math.log(filteredCurves[value][i - 1].y)];
-            return true;
-          }
-        });
-        const point = mathjs.intersect(p1, p2, p3, p4);
-        const result = [Math.exp(point[0] as number), mathjs.exp(mathjs.exp(point[1] as number))];
-        dataSet.push({ x: value === 'PGA' ? 0.01 : parseFloat(getImtValue(value)), y: result[0] });
-      } catch {
-        dataSet.push({ x: value === 'PGA' ? 0.01 : parseFloat(getImtValue(value)), y: 0 });
-      }
-    });
-  }
-
-  return dataSet;
-};
-
 const getImtValue = (imt: string): string => {
   switch (imt) {
     case 'PGA':
@@ -116,6 +86,63 @@ const getImtValue = (imt: string): string => {
     default:
       return '0.01';
   }
+};
+
+export const getSpectralAccelerationCurves = (allCurves: Record<string, XY[]>, queryVariables: HazardCurvesQueryVariables, poe: number | undefined): Record<string, XY[]> => {
+  const curves: Record<string, XY[]> = {};
+  const vs30s = queryVariables.vs30s;
+  const locations = queryVariables.locs;
+
+  poe &&
+    vs30s.forEach((vs30) => {
+      locations.forEach((location) => {
+        const curvesArray: Record<string, XY[]> = {};
+
+        for (const key in allCurves) {
+          if (key.includes(vs30.toString()) && key.includes(location)) {
+            curvesArray[key] = allCurves[key];
+          }
+        }
+
+        const curve = getSpectralAccelerationData(hazardPageOptions.imts, poe, curvesArray);
+        curves[`${vs30} ${location} ${poe * 100}%`] = curve;
+      });
+    });
+
+  return curves;
+};
+
+export const getSpectralAccelerationData = (imtValues: string[], poe: number | undefined, filteredCurves: Record<string, XY[]>): XY[] => {
+  const dataSet: XY[] = [];
+  if (poe) {
+    const xValue: number = -Math.log(1 - poe) / 50;
+
+    for (const key in filteredCurves) {
+      const imt = imtValues.find((imt) => key.includes(imt));
+
+      try {
+        let p1: number[] = [];
+        let p2: number[] = [];
+        const p3 = [Math.log(2e-3), Math.log(xValue)];
+        const p4 = [Math.log(10), Math.log(xValue)];
+
+        filteredCurves[key].find((xy, i) => {
+          if (xy.y <= xValue) {
+            p1 = [Math.log(xy.x), Math.log(xy.y)];
+            p2 = [Math.log(filteredCurves[key][i - 1].x), Math.log(filteredCurves[key][i - 1].y)];
+            return true;
+          }
+        });
+        const point = mathjs.intersect(p1, p2, p3, p4);
+        console.log(point);
+        const result = [Math.exp(point[0] as number), mathjs.exp(mathjs.exp(point[1] as number))];
+        dataSet.push({ x: imt === 'PGA' ? 0.01 : parseFloat(getImtValue(imt as string)), y: result[0] });
+      } catch {
+        dataSet.push({ x: imt === 'PGA' ? 0.01 : parseFloat(getImtValue(imt as string)), y: 0 });
+      }
+    }
+  }
+  return dataSet;
 };
 
 export const getCSVdata = (PGAoptions: string[], data: HazardChartsPlotsViewQuery$data): string[][] => {
