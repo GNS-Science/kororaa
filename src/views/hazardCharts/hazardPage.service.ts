@@ -198,3 +198,21 @@ export const convertIDsToLocations = (IDs: string[]): string[] => {
 
   return locationNames;
 };
+
+export const getPoeInputDisplay = (poe: number | undefined): string => {
+  return poe ? `${poe * 100}` : ' ';
+};
+
+export const validatePoeValue = (poe: string) => {
+  if (poe.length === 0 || poe === ' ') {
+    return;
+  }
+
+  const percentage = Number(poe);
+
+  if (percentage >= 100 || percentage <= 0) {
+    throw 'NUMBER MUST BE BETWEEN 100 AND 0';
+  } else if (!percentage) {
+    throw 'NOT A NUMBER';
+  }
+};

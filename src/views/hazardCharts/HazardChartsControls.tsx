@@ -5,7 +5,7 @@ import { InputAdornment, Button, Input, FormControl, InputLabel, Box, Autocomple
 import CustomControlsBar from '../../components/common/CustomControlsBar';
 import { HazardCurvesQueryVariables, HazardCurvesViewVariables } from './hazardCharts.types';
 import { hazardPageOptions } from './constants/hazardPageOptions';
-import { convertIDsToLocations, convertLocationsToIDs } from './hazardPage.service';
+import { convertIDsToLocations, convertLocationsToIDs, getPoeInputDisplay, validatePoeValue } from './hazardPage.service';
 
 interface HazardChartsControlsProps {
   queryVariables: HazardCurvesQueryVariables;
@@ -15,9 +15,6 @@ interface HazardChartsControlsProps {
 }
 
 const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ queryVariables, setQueryVariables, viewVariables, setViewVariables }: HazardChartsControlsProps) => {
-  const getPoeInputDisplay = (poe: number | undefined): string => {
-    return poe ? `${poe * 100}` : ' ';
-  };
   const poeInputRef = useRef<HTMLInputElement>(null);
 
   const [latLon, setLatLon] = useState<string>('');
@@ -72,16 +69,6 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ queryVariab
     } catch (err) {
       setPoeInputError(true);
       setPoeInputErrorMessage(err as string);
-    }
-  };
-
-  const validatePoeValue = (poe: string) => {
-    const percentage = Number(poe);
-
-    if (percentage >= 100 || percentage <= 0) {
-      throw 'NUMBER MUST BE BETWEEN 100 AND 0';
-    } else if (!percentage) {
-      throw 'NOT A NUMBER';
     }
   };
 
