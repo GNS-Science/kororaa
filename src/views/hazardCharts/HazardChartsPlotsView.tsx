@@ -7,17 +7,18 @@ import { CSVLink } from 'react-csv';
 import { ControlsBar } from '@gns-science/toshi-nest';
 
 import { HazardChartsPlotsViewQuery } from './__generated__/HazardChartsPlotsViewQuery.graphql';
-import { HazardCurvesQueryVariables, HazardCurvesViewVariables } from './hazardCharts.types';
+import { HazardCurvesQueryVariables } from './hazardCharts.types';
 import { hazardPageOptions } from './constants/hazardPageOptions';
 import HazardCharts from './HazardCharts';
 import { getCSVdata } from './hazardPage.service';
+import { HazardChartsPageState } from './HazardChartsPage';
 
 interface HazardChartsPlotsViewProps {
+  state: HazardChartsPageState;
   queryVariables: HazardCurvesQueryVariables;
-  viewVariables: HazardCurvesViewVariables;
 }
 
-const HazardChartsPlotsView: React.FC<HazardChartsPlotsViewProps> = ({ queryVariables, viewVariables }: HazardChartsPlotsViewProps) => {
+const HazardChartsPlotsView: React.FC<HazardChartsPlotsViewProps> = ({ state, queryVariables }: HazardChartsPlotsViewProps) => {
   const printTargetRef = useRef<HTMLDivElement>(null);
 
   const data = useLazyLoadQuery<HazardChartsPlotsViewQuery>(hazardChartsPlotsViewQuery, queryVariables);
@@ -26,23 +27,23 @@ const HazardChartsPlotsView: React.FC<HazardChartsPlotsViewProps> = ({ queryVari
     content: () => printTargetRef.current,
   });
 
-  const CSVdata = useMemo(() => {
-    return getCSVdata(hazardPageOptions.imts, data);
-  }, [data]);
+  // const CSVdata = useMemo(() => {
+  //   return getCSVdata(hazardPageOptions.imts, data);
+  // }, [data]);
 
   return (
     <Box role="plotsView" sx={{ width: '100%' }}>
       <div ref={printTargetRef}>
-        <HazardCharts data={data} viewVariables={viewVariables} />
+        <HazardCharts data={data} state={state} queryVariables={queryVariables} />
       </div>
       <Box sx={{ height: 70, marginTop: '20px' }}>
         <ControlsBar>
           <Button variant="contained" onClick={handlePrint}>
             Print Figures
           </Button>
-          <CSVLink data={CSVdata} filename="hazard-curves.csv">
+          {/* <CSVLink data={CSVdata} filename="hazard-curves.csv">
             <Button variant="contained">Save Data</Button>
-          </CSVLink>
+          </CSVLink> */}
         </ControlsBar>
       </Box>
     </Box>

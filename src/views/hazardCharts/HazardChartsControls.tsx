@@ -3,28 +3,30 @@ import { MultiSelect } from '@gns-science/toshi-nest';
 import { InputAdornment, Button, Input, FormControl, InputLabel, Box, Autocomplete, TextField, FormHelperText } from '@mui/material';
 
 import CustomControlsBar from '../../components/common/CustomControlsBar';
-import { HazardCurvesQueryVariables, HazardCurvesViewVariables } from './hazardCharts.types';
+import { HazardCurvesQueryVariables } from './hazardCharts.types';
 import { hazardPageOptions } from './constants/hazardPageOptions';
 import { convertIDsToLocations, convertLocationsToIDs, getPoeInputDisplay, validatePoeValue } from './hazardPage.service';
+import { HazardChartsPageState } from './HazardChartsPage';
+import SelectControlMultiple from '../../components/common/SelectControlMultiple';
 
 interface HazardChartsControlsProps {
+  state: HazardChartsPageState;
+  dispatch: React.Dispatch<Partial<HazardChartsPageState>>;
   queryVariables: HazardCurvesQueryVariables;
   setQueryVariables: (values: HazardCurvesQueryVariables) => void;
-  viewVariables: HazardCurvesViewVariables;
-  setViewVariables: (values: HazardCurvesViewVariables) => void;
 }
 
-const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ queryVariables, setQueryVariables, viewVariables, setViewVariables }: HazardChartsControlsProps) => {
+const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, dispatch, queryVariables, setQueryVariables }: HazardChartsControlsProps) => {
   const poeInputRef = useRef<HTMLInputElement>(null);
 
   const [latLon, setLatLon] = useState<string>('');
   const [locations, setLocations] = useState<string[]>(convertIDsToLocations(queryVariables.locs));
   const [vs30s, setVs30s] = useState<number[]>(queryVariables.vs30s);
-  const [imts, setImts] = useState<string[]>(viewVariables.imts);
-  const [poeInput, setPoeInput] = useState<string>(getPoeInputDisplay(viewVariables.poe));
+
   const [inputValue, setInputValue] = useState<string>('');
   const [poeInputError, setPoeInputError] = useState<boolean>(false);
   const [poeInputErrorMessage, setPoeInputErrorMessage] = useState<string>('');
+  const [poeInput, setPoeInput] = useState<string>(getPoeInputDisplay(state.poe));
 
   useEffect(() => {
     const input = poeInputRef.current;
@@ -44,9 +46,10 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ queryVariab
     try {
       validatePoeValue(poe);
       setPoeInputError(false);
+      dispatch({ poe: Number(poeInput) / 100 });
     } catch (err) {
-      setPoeInputErrorMessage(err as string);
       setPoeInputError(true);
+      setPoeInputErrorMessage(err as string);
     }
   };
 
@@ -57,14 +60,11 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ queryVariab
   const handleSubmit = () => {
     try {
       validatePoeValue(poeInput);
+      dispatch({ poe: Number(poeInput) / 100 });
       setQueryVariables({
         ...queryVariables,
         locs: convertLocationsToIDs(locations),
         vs30s,
-      });
-      setViewVariables({
-        imts,
-        poe: Number(poeInput) / 100,
       });
     } catch (err) {
       setPoeInputError(true);
@@ -96,7 +96,7 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ queryVariab
           <Input id="component-helper" name="lon" value={latLon} onChange={handleLatLonChange} aria-describedby="component-helper-text" />
         </FormControl>
         <MultiSelect options={hazardPageOptions.vs30s} selection={vs30s} setSelection={setVs30s} name="Vs30" />
-        <MultiSelect options={hazardPageOptions.imts} selection={imts} setSelection={setImts} name="Spectral Period" />
+        <SelectControlMultiple options={hazardPageOptions.imts} selection={state.imts} setSelection={(newValue: string[]) => dispatch({ imts: newValue })} name="Spectral Period" />
         <FormControl sx={{ width: 200 }} variant="standard">
           <InputLabel htmlFor="component-helper">Probabilty of Exceedance (50 Yrs)</InputLabel>
           <Input
