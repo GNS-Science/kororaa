@@ -46,7 +46,6 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, disp
     try {
       validatePoeValue(poe);
       setPoeInputError(false);
-      dispatch({ poe: Number(poeInput) / 100 });
     } catch (err) {
       setPoeInputError(true);
       setPoeInputErrorMessage(err as string);
