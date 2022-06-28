@@ -7,28 +7,10 @@ import HazardChartsControls from './HazardChartsControls';
 import { HazardCurvesQueryVariables } from './hazardCharts.types';
 import { hazardPageLocations, hazardPageOptions } from './constants/hazardPageOptions';
 import HazardChartsPlotsView from './HazardChartsPlotsView';
-
-export type HazardChartsPageState = {
-  locs: string[];
-  vs30s: number[];
-  imts: string[];
-  poe: number | undefined;
-};
-
-export type HazardChartsAction = {
-  type: string;
-  payload: Partial<HazardChartsPageState>;
-};
-
-const reducer = (state: HazardChartsPageState, newState: Partial<HazardChartsPageState>) => {
-  return {
-    ...state,
-    ...newState,
-  };
-};
+import { hazardPageReducer } from './hazardPageReducer';
 
 const HazardChartsPage: React.FC = () => {
-  const [state, dispatch] = useReducer(reducer, { locs: [hazardPageLocations[0].id], vs30s: [hazardPageOptions.vs30s[0]], imts: [hazardPageOptions.imts[0]], poe: undefined });
+  const [state, dispatch] = useReducer(hazardPageReducer, { locs: [hazardPageLocations[0].id], vs30s: [hazardPageOptions.vs30s[0]], imts: [hazardPageOptions.imts[0]], poe: undefined });
 
   const [queryVariables, setQueryVariables] = useState<HazardCurvesQueryVariables>({
     hazard_model: 'TEST1',

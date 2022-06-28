@@ -11,10 +11,10 @@ import { HazardCurvesQueryVariables } from './hazardCharts.types';
 import { hazardPageOptions } from './constants/hazardPageOptions';
 import HazardCharts from './HazardCharts';
 import { getCSVdata } from './hazardPage.service';
-import { HazardChartsPageState } from './HazardChartsPage';
+import { HazardPageState } from './hazardPageReducer';
 
 interface HazardChartsPlotsViewProps {
-  state: HazardChartsPageState;
+  state: HazardPageState;
   queryVariables: HazardCurvesQueryVariables;
 }
 

@@ -6,12 +6,12 @@ import CustomControlsBar from '../../components/common/CustomControlsBar';
 import { HazardCurvesQueryVariables } from './hazardCharts.types';
 import { hazardPageOptions } from './constants/hazardPageOptions';
 import { convertIDsToLocations, convertLocationsToIDs, getPoeInputDisplay, validatePoeValue } from './hazardPage.service';
-import { HazardChartsPageState } from './HazardChartsPage';
+import { HazardPageState } from './hazardPageReducer';
 import SelectControlMultiple from '../../components/common/SelectControlMultiple';
 
 interface HazardChartsControlsProps {
-  state: HazardChartsPageState;
-  dispatch: React.Dispatch<Partial<HazardChartsPageState>>;
+  state: HazardPageState;
+  dispatch: React.Dispatch<Partial<HazardPageState>>;
   queryVariables: HazardCurvesQueryVariables;
   setQueryVariables: (values: HazardCurvesQueryVariables) => void;
 }

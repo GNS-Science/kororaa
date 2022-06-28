@@ -6,11 +6,11 @@ import { HazardCurvesResponsive, SpectralAccelerationChartResponsive } from '@gn
 import { HazardCurvesQueryVariables } from './hazardCharts.types';
 import { HazardChartsPlotsViewQuery$data } from './__generated__/HazardChartsPlotsViewQuery.graphql';
 import { getAllCurves, getColors, getFilteredCurves, getSpectralAccelerationCurves } from './hazardPage.service';
-import { HazardChartsPageState } from './HazardChartsPage';
+import { HazardPageState } from './hazardPageReducer';
 
 interface HazardChartsProps {
   data: HazardChartsPlotsViewQuery$data;
-  state: HazardChartsPageState;
+  state: HazardPageState;
   queryVariables: HazardCurvesQueryVariables;
 }
 
