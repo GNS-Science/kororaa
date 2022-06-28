@@ -2,19 +2,7 @@ import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import HazardChartsControls from '../HazardChartsControls';
 import { hazardPageLocations, hazardPageOptions } from '../constants/hazardPageOptions';
-import { HazardCurvesQueryVariables } from '../hazardCharts.types';
 import { convertIDsToLocations } from '../hazardPage.service';
-
-const mockSetQueryVariables = jest.fn();
-const mockSetViewVariables = jest.fn();
-
-const mockQueryVariables: HazardCurvesQueryVariables = {
-  hazard_model: 'TEST1',
-  vs30s: [hazardPageOptions.vs30s[0]],
-  locs: [hazardPageLocations[0].id],
-  imts: hazardPageOptions.imts,
-  aggs: ['mean'],
-};
 
 // const Wrapper = () => {
 //   return <HazardChartsControls queryVariables={mockQueryVariables} setQueryVariables={mockSetQueryVariables} viewVariables={mockViewVariables} setViewVariables={mockSetViewVariables} />;

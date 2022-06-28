@@ -1,6 +1,5 @@
 import * as mathjs from 'mathjs';
 import { hazardPageLocations, hazardPageOptions } from './constants/hazardPageOptions';
-import { HazardCurvesQueryVariables } from './hazardCharts.types';
 
 import { HazardChartsPlotsViewQuery$data } from './__generated__/HazardChartsPlotsViewQuery.graphql';
 
@@ -90,10 +89,8 @@ const getImtValue = (imt: string): string => {
   }
 };
 
-export const getSpectralAccelerationCurves = (allCurves: Record<string, XY[]>, queryVariables: HazardCurvesQueryVariables, poe: number | undefined): Record<string, XY[]> => {
+export const getSpectralAccelerationCurves = (allCurves: Record<string, XY[]>, vs30s: number[], locations: string[], poe: number | undefined): Record<string, XY[]> => {
   const curves: Record<string, XY[]> = {};
-  const vs30s = queryVariables.vs30s;
-  const locations = queryVariables.locs;
 
   poe &&
     vs30s.forEach((vs30) => {

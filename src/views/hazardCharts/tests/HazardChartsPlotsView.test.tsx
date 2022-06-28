@@ -5,15 +5,6 @@ import { RelayEnvironmentProvider } from 'react-relay';
 import RelayEnvironment from '../../../RelayEnvironment';
 import HazardChartsPlotsView from '../HazardChartsPlotsView';
 import { hazardPageLocations, hazardPageOptions } from '../constants/hazardPageOptions';
-import { HazardCurvesQueryVariables } from '../hazardCharts.types';
-
-const mockQueryVariables: HazardCurvesQueryVariables = {
-  hazard_model: 'TEST1',
-  vs30s: [hazardPageOptions.vs30s[0]],
-  locs: [hazardPageLocations[0].id],
-  imts: hazardPageOptions.imts,
-  aggs: ['mean'],
-};
 
 // const TestRender = () => {
 //   return (

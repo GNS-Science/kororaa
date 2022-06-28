@@ -1,24 +1,15 @@
-import React, { useState, useReducer } from 'react';
+import React, { useReducer } from 'react';
 import { Box, Typography, Fab, CircularProgress } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import ShareIcon from '@mui/icons-material/Share';
 
 import HazardChartsControls from './HazardChartsControls';
-import { HazardCurvesQueryVariables } from './hazardCharts.types';
 import { hazardPageLocations, hazardPageOptions } from './constants/hazardPageOptions';
 import HazardChartsPlotsView from './HazardChartsPlotsView';
 import { hazardPageReducer } from './hazardPageReducer';
 
 const HazardChartsPage: React.FC = () => {
   const [state, dispatch] = useReducer(hazardPageReducer, { locs: [hazardPageLocations[0].id], vs30s: [hazardPageOptions.vs30s[0]], imts: [hazardPageOptions.imts[0]], poe: undefined });
-
-  const [queryVariables, setQueryVariables] = useState<HazardCurvesQueryVariables>({
-    hazard_model: 'TEST1',
-    vs30s: [hazardPageOptions.vs30s[0]],
-    locs: [hazardPageLocations[0].id],
-    imts: hazardPageOptions.imts,
-    aggs: ['mean'],
-  });
 
   const flexProps = {
     display: 'flex',
@@ -45,9 +36,9 @@ const HazardChartsPage: React.FC = () => {
           <ShareIcon />
         </Fab>
       </Box>
-      <HazardChartsControls state={state} dispatch={dispatch} queryVariables={queryVariables} setQueryVariables={setQueryVariables} />
+      <HazardChartsControls state={state} dispatch={dispatch} />
       <React.Suspense fallback={<CircularProgress />}>
-        <HazardChartsPlotsView state={state} queryVariables={queryVariables} />
+        <HazardChartsPlotsView state={state} />
       </React.Suspense>
     </PageContainer>
   );

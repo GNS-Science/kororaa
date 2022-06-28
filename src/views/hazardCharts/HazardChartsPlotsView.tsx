@@ -7,7 +7,6 @@ import { CSVLink } from 'react-csv';
 import { ControlsBar } from '@gns-science/toshi-nest';
 
 import { HazardChartsPlotsViewQuery } from './__generated__/HazardChartsPlotsViewQuery.graphql';
-import { HazardCurvesQueryVariables } from './hazardCharts.types';
 import { hazardPageOptions } from './constants/hazardPageOptions';
 import HazardCharts from './HazardCharts';
 import { getCSVdata } from './hazardPage.service';
@@ -15,13 +14,18 @@ import { HazardPageState } from './hazardPageReducer';
 
 interface HazardChartsPlotsViewProps {
   state: HazardPageState;
-  queryVariables: HazardCurvesQueryVariables;
 }
 
-const HazardChartsPlotsView: React.FC<HazardChartsPlotsViewProps> = ({ state, queryVariables }: HazardChartsPlotsViewProps) => {
+const HazardChartsPlotsView: React.FC<HazardChartsPlotsViewProps> = ({ state }: HazardChartsPlotsViewProps) => {
   const printTargetRef = useRef<HTMLDivElement>(null);
 
-  const data = useLazyLoadQuery<HazardChartsPlotsViewQuery>(hazardChartsPlotsViewQuery, queryVariables);
+  const data = useLazyLoadQuery<HazardChartsPlotsViewQuery>(hazardChartsPlotsViewQuery, {
+    hazard_model: 'TEST1',
+    locs: state.locs,
+    vs30s: state.vs30s,
+    imts: hazardPageOptions.imts,
+    aggs: ['mean'],
+  });
 
   const handlePrint = useReactToPrint({
     content: () => printTargetRef.current,
@@ -34,7 +38,7 @@ const HazardChartsPlotsView: React.FC<HazardChartsPlotsViewProps> = ({ state, qu
   return (
     <Box role="plotsView" sx={{ width: '100%' }}>
       <div ref={printTargetRef}>
-        <HazardCharts data={data} state={state} queryVariables={queryVariables} />
+        <HazardCharts data={data} state={state} />
       </div>
       <Box sx={{ height: 70, marginTop: '20px' }}>
         <ControlsBar>

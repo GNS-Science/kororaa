@@ -3,7 +3,6 @@ import { MultiSelect } from '@gns-science/toshi-nest';
 import { InputAdornment, Button, Input, FormControl, InputLabel, Box, Autocomplete, TextField, FormHelperText } from '@mui/material';
 
 import CustomControlsBar from '../../components/common/CustomControlsBar';
-import { HazardCurvesQueryVariables } from './hazardCharts.types';
 import { hazardPageOptions } from './constants/hazardPageOptions';
 import { convertIDsToLocations, convertLocationsToIDs, getPoeInputDisplay, validatePoeValue } from './hazardPage.service';
 import { HazardPageState } from './hazardPageReducer';
@@ -12,16 +11,14 @@ import SelectControlMultiple from '../../components/common/SelectControlMultiple
 interface HazardChartsControlsProps {
   state: HazardPageState;
   dispatch: React.Dispatch<Partial<HazardPageState>>;
-  queryVariables: HazardCurvesQueryVariables;
-  setQueryVariables: (values: HazardCurvesQueryVariables) => void;
 }
 
-const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, dispatch, queryVariables, setQueryVariables }: HazardChartsControlsProps) => {
+const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, dispatch }: HazardChartsControlsProps) => {
   const poeInputRef = useRef<HTMLInputElement>(null);
 
   const [latLon, setLatLon] = useState<string>('');
-  const [locations, setLocations] = useState<string[]>(convertIDsToLocations(queryVariables.locs));
-  const [vs30s, setVs30s] = useState<number[]>(queryVariables.vs30s);
+  const [locations, setLocations] = useState<string[]>(convertIDsToLocations(state.locs));
+  const [vs30s, setVs30s] = useState<number[]>(state.vs30s);
 
   const [inputValue, setInputValue] = useState<string>('');
   const [poeInputError, setPoeInputError] = useState<boolean>(false);
@@ -60,11 +57,11 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, disp
     try {
       validatePoeValue(poeInput);
       dispatch({ poe: Number(poeInput) / 100 });
-      setQueryVariables({
-        ...queryVariables,
-        locs: convertLocationsToIDs(locations),
-        vs30s,
-      });
+      // setQueryVariables({
+      //   ...queryVariables,
+      //   locs: convertLocationsToIDs(locations),
+      //   vs30s,
+      // });
     } catch (err) {
       setPoeInputError(true);
       setPoeInputErrorMessage(err as string);

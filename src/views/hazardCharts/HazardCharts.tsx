@@ -3,7 +3,6 @@ import { Box } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { HazardCurvesResponsive, SpectralAccelerationChartResponsive } from '@gns-science/toshi-nest';
 
-import { HazardCurvesQueryVariables } from './hazardCharts.types';
 import { HazardChartsPlotsViewQuery$data } from './__generated__/HazardChartsPlotsViewQuery.graphql';
 import { getAllCurves, getColors, getFilteredCurves, getSpectralAccelerationCurves } from './hazardPage.service';
 import { HazardPageState } from './hazardPageReducer';
@@ -11,14 +10,13 @@ import { HazardPageState } from './hazardPageReducer';
 interface HazardChartsProps {
   data: HazardChartsPlotsViewQuery$data;
   state: HazardPageState;
-  queryVariables: HazardCurvesQueryVariables;
 }
 
-const HazardCharts: React.FC<HazardChartsProps> = ({ data, state, queryVariables }: HazardChartsProps) => {
+const HazardCharts: React.FC<HazardChartsProps> = ({ data, state }: HazardChartsProps) => {
   const allCurves = useMemo(() => getAllCurves(data), [data]);
   const filteredCurves = useMemo(() => getFilteredCurves(allCurves, state.imts), [allCurves, state.imts]);
   const colors = useMemo(() => getColors(filteredCurves), [filteredCurves]);
-  const SAcurves = useMemo(() => getSpectralAccelerationCurves(allCurves, queryVariables, state.poe), [allCurves, queryVariables, state.poe]);
+  const SAcurves = useMemo(() => getSpectralAccelerationCurves(allCurves, state.vs30s, state.locs, state.poe), [allCurves, state]);
   const SAcurvesColors = useMemo(() => getColors(SAcurves), [SAcurves]);
 
   const scalesConfig = {
