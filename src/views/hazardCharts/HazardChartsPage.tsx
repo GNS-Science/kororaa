@@ -4,7 +4,7 @@ import { styled } from '@mui/material/styles';
 import ShareIcon from '@mui/icons-material/Share';
 
 import HazardChartsControls from './HazardChartsControls';
-import { HazardCurvesQueryVariables, HazardCurvesViewVariables } from './hazardCharts.types';
+import { HazardCurvesQueryVariables } from './hazardCharts.types';
 import { hazardPageLocations, hazardPageOptions } from './constants/hazardPageOptions';
 import HazardChartsPlotsView from './HazardChartsPlotsView';
 
