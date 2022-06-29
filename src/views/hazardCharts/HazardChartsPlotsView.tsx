@@ -1,4 +1,4 @@
-import React, { useMemo, useRef } from 'react';
+import React, { useRef } from 'react';
 import { graphql } from 'babel-plugin-relay/macro';
 import { useLazyLoadQuery } from 'react-relay';
 import { Box, Button } from '@mui/material';
@@ -9,7 +9,6 @@ import { ControlsBar } from '@gns-science/toshi-nest';
 import { HazardChartsPlotsViewQuery } from './__generated__/HazardChartsPlotsViewQuery.graphql';
 import { hazardPageOptions } from './constants/hazardPageOptions';
 import HazardCharts from './HazardCharts';
-import { getCSVdata } from './hazardPage.service';
 import { HazardPageState } from './hazardPageReducer';
 
 interface HazardChartsPlotsViewProps {
@@ -31,10 +30,6 @@ const HazardChartsPlotsView: React.FC<HazardChartsPlotsViewProps> = ({ state }: 
     content: () => printTargetRef.current,
   });
 
-  // const CSVdata = useMemo(() => {
-  //   return getCSVdata(hazardPageOptions.imts, data);
-  // }, [data]);
-
   return (
     <Box role="plotsView" sx={{ width: '100%' }}>
       <div ref={printTargetRef}>
@@ -45,9 +40,9 @@ const HazardChartsPlotsView: React.FC<HazardChartsPlotsViewProps> = ({ state }: 
           <Button variant="contained" onClick={handlePrint}>
             Print Figures
           </Button>
-          {/* <CSVLink data={CSVdata} filename="hazard-curves.csv">
+          <CSVLink data={[]} filename="hazard-curves.csv">
             <Button variant="contained">Save Data</Button>
-          </CSVLink> */}
+          </CSVLink>
         </ControlsBar>
       </Box>
     </Box>
