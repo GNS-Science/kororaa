@@ -17,7 +17,7 @@ export const getAllCurves = (data: HazardChartsPlotsViewQuery$data): Record<stri
     const values = currentCurve?.curve?.values;
 
     if (imt && levels && values) {
-      const curveName = `${currentCurve.vs30} ${currentCurve.loc} ${currentCurve.imt}`;
+      const curveName = `${currentCurve.vs30}m/s ${currentCurve.loc} ${currentCurve.imt}`;
       const curve: XY[] = [];
 
       levels.forEach((level, index) => {
@@ -104,7 +104,7 @@ export const getSpectralAccelerationCurves = (allCurves: Record<string, XY[]>, v
         }
 
         const curve = getSpectralAccelerationData(hazardPageOptions.imts, poe, curvesArray);
-        curves[`${vs30} ${location} ${poe * 100}%`] = curve;
+        curves[`${vs30}m/s ${location}`] = curve;
       });
     });
 
