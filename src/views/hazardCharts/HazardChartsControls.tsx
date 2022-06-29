@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState } from 'react';
 import { InputAdornment, Button, Input, FormControl, InputLabel, Box, Autocomplete, TextField, FormHelperText } from '@mui/material';
 
 import CustomControlsBar from '../../components/common/CustomControlsBar';
@@ -13,46 +13,24 @@ interface HazardChartsControlsProps {
 }
 
 const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, dispatch }: HazardChartsControlsProps) => {
-  const poeInputRef = useRef<HTMLInputElement>(null);
-
+  const [locations, setLocations] = useState<string[]>(convertIDsToLocations(state.locs));
   const [latLon, setLatLon] = useState<string>('');
+  const [vs30s, setVs30s] = useState<number[]>(state.vs30s);
+  const [imts, setImts] = useState<string[]>(state.imts);
 
   const [inputValue, setInputValue] = useState<string>('');
   const [poeInputError, setPoeInputError] = useState<boolean>(false);
   const [poeInputErrorMessage, setPoeInputErrorMessage] = useState<string>('');
   const [poeInput, setPoeInput] = useState<string>(getPoeInputDisplay(state.poe));
 
-  useEffect(() => {
-    const input = poeInputRef.current;
-    poeInputRef &&
-      input?.addEventListener('blur', () => {
-        parsePoe(poeInput);
-      });
-    return () => {
-      poeInputRef &&
-        input?.removeEventListener('blur', () => {
-          parsePoe(poeInput);
-        });
-    };
-  });
-
-  const parsePoe = (poe: string) => {
-    try {
-      validatePoeValue(poe);
-      setPoeInputError(false);
-    } catch (err) {
-      setPoeInputError(true);
-      setPoeInputErrorMessage(err as string);
-    }
-  };
-
   const handleLatLonChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setLatLon(event.target.value);
   };
+
   const handleSubmit = () => {
     try {
       validatePoeValue(poeInput);
-      dispatch({ poe: Number(poeInput) / 100 });
+      dispatch({ locs: convertLocationsToIDs(locations), vs30s, imts, poe: Number(poeInput) / 100 });
     } catch (err) {
       setPoeInputError(true);
       setPoeInputErrorMessage(err as string);
@@ -64,10 +42,9 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, disp
       <CustomControlsBar>
         <Autocomplete
           multiple
-          value={convertIDsToLocations(state.locs)}
+          value={locations}
           onChange={(event: unknown, newValue: string[] | null) => {
-            // setLocations(newValue as string[]);
-            dispatch({ locs: convertLocationsToIDs(newValue as string[]) });
+            setLocations(newValue as string[]);
           }}
           inputValue={inputValue}
           onInputChange={(event, newInputValue) => {
@@ -85,15 +62,14 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, disp
         </FormControl>
         <SelectControlMultiple
           options={numbersToStrings(hazardPageOptions.vs30s)}
-          selection={numbersToStrings(state.vs30s)}
-          setSelection={(newValue: string[]) => dispatch({ vs30s: stringsToNumbers(newValue) })}
+          selection={numbersToStrings(vs30s)}
+          setSelection={(newValue: string[]) => setVs30s(stringsToNumbers(newValue))}
           name="Vs30"
         />
-        <SelectControlMultiple options={hazardPageOptions.imts} selection={state.imts} setSelection={(newValue: string[]) => dispatch({ imts: newValue })} name="Spectral Period" />
+        <SelectControlMultiple options={hazardPageOptions.imts} selection={imts} setSelection={setImts} name="Spectral Period" />
         <FormControl sx={{ width: 200 }} variant="standard">
           <InputLabel htmlFor="component-helper">Probabilty of Exceedance (50 Yrs)</InputLabel>
           <Input
-            inputRef={poeInputRef}
             error={poeInputError}
             id="poe-input"
             name="poe"
