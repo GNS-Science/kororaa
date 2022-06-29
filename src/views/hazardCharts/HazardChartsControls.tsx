@@ -1,10 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { MultiSelect } from '@gns-science/toshi-nest';
 import { InputAdornment, Button, Input, FormControl, InputLabel, Box, Autocomplete, TextField, FormHelperText } from '@mui/material';
 
 import CustomControlsBar from '../../components/common/CustomControlsBar';
 import { hazardPageOptions } from './constants/hazardPageOptions';
-import { convertIDsToLocations, convertLocationsToIDs, getPoeInputDisplay, validatePoeValue } from './hazardPage.service';
+import { convertIDsToLocations, convertLocationsToIDs, getPoeInputDisplay, numbersToStrings, stringsToNumbers, validatePoeValue } from './hazardPage.service';
 import { HazardPageState } from './hazardPageReducer';
 import SelectControlMultiple from '../../components/common/SelectControlMultiple';
 
@@ -17,8 +16,6 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, disp
   const poeInputRef = useRef<HTMLInputElement>(null);
 
   const [latLon, setLatLon] = useState<string>('');
-  const [locations, setLocations] = useState<string[]>(convertIDsToLocations(state.locs));
-  const [vs30s, setVs30s] = useState<number[]>(state.vs30s);
 
   const [inputValue, setInputValue] = useState<string>('');
   const [poeInputError, setPoeInputError] = useState<boolean>(false);
@@ -52,16 +49,10 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, disp
   const handleLatLonChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setLatLon(event.target.value);
   };
-
   const handleSubmit = () => {
     try {
       validatePoeValue(poeInput);
       dispatch({ poe: Number(poeInput) / 100 });
-      // setQueryVariables({
-      //   ...queryVariables,
-      //   locs: convertLocationsToIDs(locations),
-      //   vs30s,
-      // });
     } catch (err) {
       setPoeInputError(true);
       setPoeInputErrorMessage(err as string);
@@ -73,16 +64,17 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, disp
       <CustomControlsBar>
         <Autocomplete
           multiple
-          value={locations}
+          value={convertIDsToLocations(state.locs)}
           onChange={(event: unknown, newValue: string[] | null) => {
-            setLocations(newValue as string[]);
+            // setLocations(newValue as string[]);
+            dispatch({ locs: convertLocationsToIDs(newValue as string[]) });
           }}
           inputValue={inputValue}
           onInputChange={(event, newInputValue) => {
             setInputValue(newInputValue);
           }}
           options={hazardPageOptions.locations}
-          style={{ width: 228, marginLeft: 16 }}
+          style={{ width: 230, marginLeft: 16 }}
           renderInput={(params) => <TextField {...params} label="Locations" variant="standard" />}
           blurOnSelect={true}
           limitTags={1}
@@ -91,7 +83,12 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, disp
           <InputLabel htmlFor="component-helper">Lat,Lon</InputLabel>
           <Input id="component-helper" name="lon" value={latLon} onChange={handleLatLonChange} aria-describedby="component-helper-text" />
         </FormControl>
-        <MultiSelect options={hazardPageOptions.vs30s} selection={vs30s} setSelection={setVs30s} name="Vs30" />
+        <SelectControlMultiple
+          options={numbersToStrings(hazardPageOptions.vs30s)}
+          selection={numbersToStrings(state.vs30s)}
+          setSelection={(newValue: string[]) => dispatch({ vs30s: stringsToNumbers(newValue) })}
+          name="Vs30"
+        />
         <SelectControlMultiple options={hazardPageOptions.imts} selection={state.imts} setSelection={(newValue: string[]) => dispatch({ imts: newValue })} name="Spectral Period" />
         <FormControl sx={{ width: 200 }} variant="standard">
           <InputLabel htmlFor="component-helper">Probabilty of Exceedance (50 Yrs)</InputLabel>

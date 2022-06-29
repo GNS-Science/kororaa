@@ -213,3 +213,11 @@ export const validatePoeValue = (poe: string) => {
     throw 'NOT A NUMBER';
   }
 };
+
+export const numbersToStrings = (values: number[]) => {
+  return values.map((value) => value.toString());
+};
+
+export const stringsToNumbers = (values: string[]) => {
+  return values.map((value) => Number(value));
+};
