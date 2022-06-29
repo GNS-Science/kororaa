@@ -30,7 +30,7 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, disp
   const handleSubmit = () => {
     try {
       validatePoeValue(poeInput);
-      dispatch({ locs: convertLocationsToIDs(locations), vs30s, imts, poe: Number(poeInput) / 100 });
+      dispatch({ locs: convertLocationsToIDs(locations), vs30s, imts, poe: poeInput.length === 0 || poeInput === ' ' ? undefined : Number(poeInput) / 100 });
     } catch (err) {
       setPoeInputError(true);
       setPoeInputErrorMessage(err as string);

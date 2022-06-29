@@ -22,16 +22,16 @@ describe('For HazardChartsPage component', () => {
     //This gap is filled by cypress testing, becauset here is a browser window the responsive charts renders as expected
     //So for now this test will test for the correct legen label only.
     const heading = screen.getByRole('heading');
-    // const buttons = screen.getAllByRole('button');
-    // const charts = await screen.findByRole('plotsView');
-    // const spectraCurveHeading = screen.queryByText(/Spectral Acceleration/);
-    // const PGAtext = await screen.findAllByText('PGA');
+    const buttons = screen.getAllByRole('button');
+    const charts = await screen.findByRole('plotsView');
+    const spectraCurveHeading = screen.queryByText(/Spectral Acceleration/);
+    const PGAtext = await screen.findAllByText(/PGA/);
 
     expect(heading).toBeInTheDocument();
-    // expect(buttons).toHaveLength(6);
-    // expect(charts).toBeInTheDocument();
-    // expect(spectraCurveHeading).not.toBeInTheDocument();
-    //Expect 2 instances of the string "PGA", because one would be in the select control, and the other the legend label
-    // expect(PGAtext).toHaveLength(2);
+    expect(buttons).toHaveLength(6);
+    expect(charts).toBeInTheDocument();
+    expect(spectraCurveHeading).not.toBeInTheDocument();
+    // Expect 2 instances of the string "PGA", because one would be in the select control, and the other the legend label
+    expect(PGAtext).toHaveLength(2);
   });
 });
