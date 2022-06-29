@@ -208,9 +208,9 @@ export const validatePoeValue = (poe: string) => {
   const percentage = Number(poe);
 
   if (percentage >= 100 || percentage <= 0) {
-    throw 'NUMBER MUST BE BETWEEN 100 AND 0';
+    throw 'Out of range 0-100';
   } else if (!percentage) {
-    throw 'NOT A NUMBER';
+    throw 'Not a number';
   }
 };
 
