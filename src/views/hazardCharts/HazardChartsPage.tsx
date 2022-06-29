@@ -1,20 +1,15 @@
-import React, { useState } from 'react';
+import React, { useReducer } from 'react';
 import { Box, Typography, Fab, CircularProgress } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import ShareIcon from '@mui/icons-material/Share';
 
 import HazardChartsControls from './HazardChartsControls';
-import { HazardCurvesSelections } from './hazardCharts.types';
-import { hazardPageOptions } from './hazardPageOptions';
+import { hazardPageLocations, hazardPageOptions } from './constants/hazardPageOptions';
 import HazardChartsPlotsView from './HazardChartsPlotsView';
+import { hazardPageReducer } from './hazardPageReducer';
 
 const HazardChartsPage: React.FC = () => {
-  const [hazardCurvesSelections, setHazardCurvesSelections] = useState<HazardCurvesSelections>({
-    location: 'Wellington',
-    vs30: hazardPageOptions.vs30s[0],
-    imt: hazardPageOptions.imts[0],
-    POE: 'None',
-  });
+  const [state, dispatch] = useReducer(hazardPageReducer, { locs: [hazardPageLocations[0].id], vs30s: [hazardPageOptions.vs30s[0]], imts: [hazardPageOptions.imts[0]], poe: undefined });
 
   const flexProps = {
     display: 'flex',
@@ -41,12 +36,10 @@ const HazardChartsPage: React.FC = () => {
           <ShareIcon />
         </Fab>
       </Box>
-      <HazardChartsControls selections={hazardCurvesSelections} setSelections={setHazardCurvesSelections} />
-      {hazardCurvesSelections.location && (
-        <React.Suspense fallback={<CircularProgress />}>
-          <HazardChartsPlotsView selections={hazardCurvesSelections} />
-        </React.Suspense>
-      )}
+      <HazardChartsControls state={state} dispatch={dispatch} />
+      <React.Suspense fallback={<CircularProgress />}>
+        <HazardChartsPlotsView state={state} />
+      </React.Suspense>
     </PageContainer>
   );
 };

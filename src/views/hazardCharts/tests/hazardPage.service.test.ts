@@ -1,5 +1,5 @@
-import * as hazardPageService from './hazardPage.service';
-import { HazardChartsPlotsViewQuery$data } from './__generated__/HazardChartsPlotsViewQuery.graphql';
+import * as hazardPageService from '../hazardPage.service';
+import { HazardChartsPlotsViewQuery$data } from '../__generated__/HazardChartsPlotsViewQuery.graphql';
 
 describe('For the getAllCurves function', () => {
   it('should return an empty object if the data is empty', () => {
@@ -67,7 +67,7 @@ describe('For the getAllCurves function', () => {
     const curves = hazardPageService.getAllCurves(data);
 
     expect(curves).toEqual({
-      '3': [
+      '250m/s testLoc 3': [
         { x: 1, y: 1 },
         { x: 2, y: 2 },
         { x: 3, y: 3 },
@@ -79,7 +79,7 @@ describe('For the getAllCurves function', () => {
 describe('For the getCurve function', () => {
   it('should return an empty object if the data is empty', () => {
     const data: Record<string, hazardPageService.XY[]> = {};
-    const curve = hazardPageService.getCurve(data, '1');
+    const curve = hazardPageService.getFilteredCurves(data, ['1']);
 
     expect(curve).toEqual({});
   });
@@ -90,7 +90,7 @@ describe('For the getCurve function', () => {
       '2': [{ x: 2, y: 2 }],
       '3': [{ x: 3, y: 3 }],
     };
-    const curve = hazardPageService.getCurve(curves, '3');
+    const curve = hazardPageService.getFilteredCurves(curves, ['3']);
 
     expect(curve).toEqual({ '3': [{ x: 3, y: 3 }] });
   });
@@ -98,7 +98,7 @@ describe('For the getCurve function', () => {
 
 describe('For the getColor function', () => {
   it('should return the color for the given imt', () => {
-    const color = hazardPageService.getColor({ '1': [{ x: 1, y: 1 }] });
+    const color = hazardPageService.getColors({ '1': [{ x: 1, y: 1 }] });
 
     expect(color).toEqual({ '1': '#000000' });
   });

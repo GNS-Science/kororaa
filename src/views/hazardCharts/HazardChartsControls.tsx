@@ -1,51 +1,57 @@
 import React, { useState } from 'react';
-import { SelectControl } from '@gns-science/toshi-nest';
-import { Button, Input, FormControl, InputLabel, Box, Autocomplete, TextField } from '@mui/material';
+import { InputAdornment, Button, Input, FormControl, InputLabel, Box, Autocomplete, TextField, FormHelperText } from '@mui/material';
 
 import CustomControlsBar from '../../components/common/CustomControlsBar';
-import { HazardCurvesSelections } from './hazardCharts.types';
-import { hazardPageOptions } from './hazardPageOptions';
+import { hazardPageOptions } from './constants/hazardPageOptions';
+import { convertIDsToLocations, convertLocationsToIDs, getPoeInputDisplay, numbersToStrings, stringsToNumbers, validatePoeValue } from './hazardPage.service';
+import { HazardPageState } from './hazardPageReducer';
+import SelectControlMultiple from '../../components/common/SelectControlMultiple';
 
 interface HazardChartsControlsProps {
-  selections: HazardCurvesSelections;
-  setSelections: (values: HazardCurvesSelections) => void;
+  state: HazardPageState;
+  dispatch: React.Dispatch<Partial<HazardPageState>>;
 }
 
-const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ selections, setSelections }: HazardChartsControlsProps) => {
+const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, dispatch }: HazardChartsControlsProps) => {
+  const [locations, setLocations] = useState<string[]>(convertIDsToLocations(state.locs));
   const [latLon, setLatLon] = useState<string>('');
-  const [location, setLocation] = useState<string>(selections.location);
-  const [vs30, setVs30] = useState<number>(selections.vs30);
-  const [imt, setImt] = useState<string>(selections.imt);
-  const [POE, setPOE] = useState<'None' | '2%' | '10%'>(selections.POE);
+  const [vs30s, setVs30s] = useState<number[]>(state.vs30s);
+  const [imts, setImts] = useState<string[]>(state.imts);
+
   const [inputValue, setInputValue] = useState<string>('');
+  const [poeInputError, setPoeInputError] = useState<boolean>(false);
+  const [poeInputErrorMessage, setPoeInputErrorMessage] = useState<string>('');
+  const [poeInput, setPoeInput] = useState<string>(getPoeInputDisplay(state.poe));
 
   const handleLatLonChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setLatLon(event.target.value);
   };
 
   const handleSubmit = () => {
-    setSelections({
-      location: location,
-      vs30,
-      imt,
-      POE,
-    });
+    try {
+      validatePoeValue(poeInput);
+      dispatch({ locs: convertLocationsToIDs(locations), vs30s, imts, poe: poeInput.length === 0 || poeInput === ' ' ? undefined : Number(poeInput) / 100 });
+    } catch (err) {
+      setPoeInputError(true);
+      setPoeInputErrorMessage(err as string);
+    }
   };
 
   return (
     <Box sx={{ marginBottom: '20px', width: '100%', border: 'solid 1px black', padding: '10px' }}>
       <CustomControlsBar>
         <Autocomplete
-          value={location}
-          onChange={(event: unknown, newValue: string | null) => {
-            setLocation(newValue as string);
+          multiple
+          value={locations}
+          onChange={(event: unknown, newValue: string[] | null) => {
+            setLocations(newValue as string[]);
           }}
           inputValue={inputValue}
           onInputChange={(event, newInputValue) => {
             setInputValue(newInputValue);
           }}
           options={hazardPageOptions.locations}
-          style={{ width: 200, marginLeft: 16 }}
+          style={{ width: 230, marginLeft: 16 }}
           renderInput={(params) => <TextField {...params} label="Locations" variant="standard" />}
           blurOnSelect={true}
           limitTags={1}
@@ -54,9 +60,28 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ selections,
           <InputLabel htmlFor="component-helper">Lat,Lon</InputLabel>
           <Input id="component-helper" name="lon" value={latLon} onChange={handleLatLonChange} aria-describedby="component-helper-text" />
         </FormControl>
-        <SelectControl options={hazardPageOptions.vs30s} selection={vs30} setSelection={setVs30} name="Vs30" />
-        <SelectControl options={hazardPageOptions.imts} selection={imt} setSelection={setImt} name="Spectral Period" />
-        <SelectControl options={['None', '2%', '10%']} selection={POE} setSelection={setPOE} name="Probability of Exceedance (50 Yrs)" />
+        <SelectControlMultiple
+          options={numbersToStrings(hazardPageOptions.vs30s)}
+          selection={numbersToStrings(vs30s)}
+          setSelection={(newValue: string[]) => setVs30s(stringsToNumbers(newValue))}
+          name="Vs30"
+        />
+        <SelectControlMultiple options={hazardPageOptions.imts} selection={imts} setSelection={setImts} name="Spectral Period" />
+        <FormControl sx={{ width: 200 }} variant="standard">
+          <InputLabel htmlFor="component-helper">Probabilty of Exceedance (50 Yrs)</InputLabel>
+          <Input
+            error={poeInputError}
+            id="poe-input"
+            name="poe"
+            value={poeInput}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              setPoeInput(e.target.value);
+            }}
+            aria-describedby="component-helper-text"
+            endAdornment={<InputAdornment position="end">%</InputAdornment>}
+          />
+          {poeInputError && <FormHelperText id="outlined-weight-helper-text">{poeInputErrorMessage}</FormHelperText>}
+        </FormControl>
         <Button variant="contained" type="submit" onClick={handleSubmit}>
           Submit
         </Button>

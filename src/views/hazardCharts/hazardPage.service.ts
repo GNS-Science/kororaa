@@ -1,5 +1,5 @@
 import * as mathjs from 'mathjs';
-import { HazardCurvesSelections } from './hazardCharts.types';
+import { hazardPageLocations, hazardPageOptions } from './constants/hazardPageOptions';
 
 import { HazardChartsPlotsViewQuery$data } from './__generated__/HazardChartsPlotsViewQuery.graphql';
 
@@ -17,7 +17,7 @@ export const getAllCurves = (data: HazardChartsPlotsViewQuery$data): Record<stri
     const values = currentCurve?.curve?.values;
 
     if (imt && levels && values) {
-      const curveName = currentCurve.imt;
+      const curveName = `${currentCurve.vs30}m/s ${currentCurve.loc} ${currentCurve.imt}`;
       const curve: XY[] = [];
 
       levels.forEach((level, index) => {
@@ -31,48 +31,27 @@ export const getAllCurves = (data: HazardChartsPlotsViewQuery$data): Record<stri
   return curves;
 };
 
-export const getCurve = (curve: Record<string, XY[]>, imt: string): Record<string, XY[]> => {
-  const newCurve: Record<string, XY[]> = {};
-  newCurve[imt] = curve[imt];
-  return newCurve;
-};
+export const getFilteredCurves = (curves: Record<string, XY[]>, imts: string[]): Record<string, XY[]> => {
+  const newCurves: Record<string, XY[]> = {};
 
-export const getColor = (curve: Record<string, XY[]>): Record<string, string> => {
-  const color: Record<string, string> = {};
-  for (const key in curve) {
-    color[key] = '#000000';
-  }
-
-  return color;
-};
-
-export const getSpectralAccelerationData = (pgaValues: string[], POE: string, filteredCurves: Record<string, XY[]>): XY[] => {
-  const xValue: number = POE !== 'None' && POE === '2%' ? -Math.log(1 - 0.02) / 50 : -Math.log(1 - 0.1) / 50;
-  const dataSet: XY[] = [];
-
-  pgaValues.forEach((value) => {
-    try {
-      let p1: number[] = [];
-      let p2: number[] = [];
-      const p3 = [Math.log(2e-3), Math.log(xValue)];
-      const p4 = [Math.log(10), Math.log(xValue)];
-
-      filteredCurves[value].find((xy, i) => {
-        if (xy.y <= xValue) {
-          p1 = [Math.log(xy.x), Math.log(xy.y)];
-          p2 = [Math.log(filteredCurves[value][i - 1].x), Math.log(filteredCurves[value][i - 1].y)];
-          return true;
-        }
-      });
-      const point = mathjs.intersect(p1, p2, p3, p4);
-      const result = [Math.exp(point[0] as number), mathjs.exp(mathjs.exp(point[1] as number))];
-      dataSet.push({ x: value === 'PGA' ? 0.01 : parseFloat(getImtValue(value)), y: result[0] });
-    } catch {
-      dataSet.push({ x: value === 'PGA' ? 0.01 : parseFloat(getImtValue(value)), y: 0 });
+  imts.forEach((imt) => {
+    for (const key in curves) {
+      if (key.includes(imt)) {
+        newCurves[key] = curves[key];
+      }
     }
   });
 
-  return dataSet;
+  return newCurves;
+};
+
+export const getColors = (curve: Record<string, XY[]>): Record<string, string> => {
+  const colors: Record<string, string> = {};
+  for (const key in curve) {
+    colors[key] = '#000000';
+  }
+
+  return colors;
 };
 
 const getImtValue = (imt: string): string => {
@@ -110,7 +89,61 @@ const getImtValue = (imt: string): string => {
   }
 };
 
-export const getCSVdata = (PGAoptions: string[], selections: HazardCurvesSelections, data: HazardChartsPlotsViewQuery$data): string[][] => {
+export const getSpectralAccelerationCurves = (allCurves: Record<string, XY[]>, vs30s: number[], locations: string[], poe: number | undefined): Record<string, XY[]> => {
+  const curves: Record<string, XY[]> = {};
+
+  poe &&
+    vs30s.forEach((vs30) => {
+      locations.forEach((location) => {
+        const curvesArray: Record<string, XY[]> = {};
+
+        for (const key in allCurves) {
+          if (key.includes(vs30.toString()) && key.includes(location)) {
+            curvesArray[key] = allCurves[key];
+          }
+        }
+
+        const curve = getSpectralAccelerationData(hazardPageOptions.imts, poe, curvesArray);
+        curves[`${vs30}m/s ${location}`] = curve;
+      });
+    });
+
+  return curves;
+};
+
+export const getSpectralAccelerationData = (imtValues: string[], poe: number | undefined, filteredCurves: Record<string, XY[]>): XY[] => {
+  const dataSet: XY[] = [];
+  if (poe) {
+    const xValue: number = -Math.log(1 - poe) / 50;
+
+    for (const key in filteredCurves) {
+      const imt = imtValues.find((imt) => key.includes(imt));
+
+      try {
+        let p1: number[] = [];
+        let p2: number[] = [];
+        const p3 = [Math.log(2e-3), Math.log(xValue)];
+        const p4 = [Math.log(10), Math.log(xValue)];
+
+        filteredCurves[key].find((xy, i) => {
+          if (xy.y <= xValue) {
+            p1 = [Math.log(xy.x), Math.log(xy.y)];
+            p2 = [Math.log(filteredCurves[key][i - 1].x), Math.log(filteredCurves[key][i - 1].y)];
+            return true;
+          }
+        });
+        const point = mathjs.intersect(p1, p2, p3, p4);
+        const result = [Math.exp(point[0] as number), mathjs.exp(mathjs.exp(point[1] as number))];
+        dataSet.push({ x: imt === 'PGA' ? 0.01 : parseFloat(getImtValue(imt as string)), y: result[0] });
+      } catch {
+        dataSet.push({ x: imt === 'PGA' ? 0.01 : parseFloat(getImtValue(imt as string)), y: 0 });
+      }
+    }
+  }
+  return dataSet;
+};
+
+export const getCSVdata = (PGAoptions: string[], data: HazardChartsPlotsViewQuery$data): string[][] => {
   const allCurves = getAllCurves(data);
   const CSVdata: string[][] = [];
   CSVdata[0] = getCSVheadings(PGAoptions);
@@ -139,4 +172,52 @@ const getCSVheadings = (PGAoptions: string[]): string[] => {
   });
 
   return headings;
+};
+
+export const convertLocationsToIDs = (locations: string[]): string[] => {
+  const locationIDs: string[] = [];
+
+  locations.forEach((currentLocation) => {
+    const locationObject = hazardPageLocations.find((location) => currentLocation === location.name);
+    locationObject?.id && locationIDs.push(locationObject.id);
+  });
+
+  return locationIDs;
+};
+
+export const convertIDsToLocations = (IDs: string[]): string[] => {
+  const locationNames: string[] = [];
+
+  IDs.forEach((currentID) => {
+    const locationObject = hazardPageLocations.find((location) => currentID === location.id);
+    locationObject?.name && locationNames.push(locationObject.name);
+  });
+
+  return locationNames;
+};
+
+export const getPoeInputDisplay = (poe: number | undefined): string => {
+  return poe ? `${poe * 100}` : ' ';
+};
+
+export const validatePoeValue = (poe: string) => {
+  if (poe.length === 0 || poe === ' ') {
+    return;
+  }
+
+  const percentage = Number(poe);
+
+  if (percentage >= 100 || percentage <= 0) {
+    throw 'Out of range 0-100';
+  } else if (!percentage) {
+    throw 'Not a number';
+  }
+};
+
+export const numbersToStrings = (values: number[]) => {
+  return values.map((value) => value.toString());
+};
+
+export const stringsToNumbers = (values: string[]) => {
+  return values.map((value) => Number(value));
 };

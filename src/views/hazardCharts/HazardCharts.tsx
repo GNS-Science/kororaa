@@ -1,23 +1,23 @@
 import React, { useMemo } from 'react';
 import { Box } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import { ResponsiveHazardCurves, SpectralAccelerationChartResponsive } from '@gns-science/toshi-nest';
+import { HazardCurvesResponsive, SpectralAccelerationChartResponsive } from '@gns-science/toshi-nest';
 
-import { HazardCurvesSelections } from './hazardCharts.types';
 import { HazardChartsPlotsViewQuery$data } from './__generated__/HazardChartsPlotsViewQuery.graphql';
-import { getAllCurves, getColor, getCurve, getSpectralAccelerationData } from './hazardPage.service';
-import { hazardPageOptions } from './hazardPageOptions';
+import { getAllCurves, getColors, getFilteredCurves, getSpectralAccelerationCurves } from './hazardPage.service';
+import { HazardPageState } from './hazardPageReducer';
 
 interface HazardChartsProps {
   data: HazardChartsPlotsViewQuery$data;
-  selections: HazardCurvesSelections;
+  state: HazardPageState;
 }
 
-const HazardCharts: React.FC<HazardChartsProps> = ({ data, selections }: HazardChartsProps) => {
+const HazardCharts: React.FC<HazardChartsProps> = ({ data, state }: HazardChartsProps) => {
   const allCurves = useMemo(() => getAllCurves(data), [data]);
-  const curve = useMemo(() => getCurve(allCurves, selections.imt), [allCurves, selections.imt]);
-  const color = useMemo(() => getColor(curve), [curve]);
-  const SAdata = useMemo(() => getSpectralAccelerationData(hazardPageOptions.imts, selections.POE, allCurves), [selections.POE, allCurves]);
+  const filteredCurves = useMemo(() => getFilteredCurves(allCurves, state.imts), [allCurves, state.imts]);
+  const colors = useMemo(() => getColors(filteredCurves), [filteredCurves]);
+  const SAcurves = useMemo(() => getSpectralAccelerationCurves(allCurves, state.vs30s, state.locs, state.poe), [allCurves, state]);
+  const SAcurvesColors = useMemo(() => getColors(SAcurves), [SAcurves]);
 
   const scalesConfig = {
     x: { type: 'log', domain: [1e-3, 10] },
@@ -44,20 +44,20 @@ const HazardCharts: React.FC<HazardChartsProps> = ({ data, selections }: HazardC
   return (
     <HazardChartsContainer data-testid="hazardChartsContainer">
       <ChartContainer>
-        <ResponsiveHazardCurves
+        <HazardCurvesResponsive
           data-testid="hazard-curve"
-          curves={curve}
+          curves={filteredCurves}
           scalesConfig={scalesConfig}
-          colors={color}
+          colors={colors}
           heading={'Hazard Curves'}
-          subHeading={`${selections.imt}`}
+          subHeading={`${state.imts[0]}`}
           gridNumTicks={10}
-          POE={selections.POE}
+          poe={state.poe}
         />
       </ChartContainer>
-      {selections.POE !== 'None' && (
+      {state.poe && (
         <ChartContainer>
-          <SpectralAccelerationChartResponsive testId="sa-chart" data={SAdata} heading={'Spectral Acceleration Chart'} subHeading={`${selections.POE} in 50 years`} />
+          <SpectralAccelerationChartResponsive testId="sa-chart" data={SAcurves} colors={SAcurvesColors} heading={'Spectral Acceleration Chart'} subHeading={`${state.poe * 100}% in 50 years`} />
         </ChartContainer>
       )}
     </HazardChartsContainer>

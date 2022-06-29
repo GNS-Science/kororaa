@@ -2,8 +2,8 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { RelayEnvironmentProvider } from 'react-relay';
 
-import HazardChartsPage from './HazardChartsPage';
-import RelayEnvironment from '../../RelayEnvironment';
+import HazardChartsPage from '../HazardChartsPage';
+import RelayEnvironment from '../../../RelayEnvironment';
 
 const TestRender = () => {
   return (
@@ -25,13 +25,13 @@ describe('For HazardChartsPage component', () => {
     const buttons = screen.getAllByRole('button');
     const charts = await screen.findByRole('plotsView');
     const spectraCurveHeading = screen.queryByText(/Spectral Acceleration/);
-    const PGAtext = await screen.findAllByText('PGA');
+    const PGAtext = await screen.findAllByText(/PGA/);
 
     expect(heading).toBeInTheDocument();
     expect(buttons).toHaveLength(6);
     expect(charts).toBeInTheDocument();
     expect(spectraCurveHeading).not.toBeInTheDocument();
-    //Expect 2 instances of the string "PGA", because one would be in the select control, and the other the legend label
+    // Expect 2 instances of the string "PGA", because one would be in the select control, and the other the legend label
     expect(PGAtext).toHaveLength(2);
   });
 });
