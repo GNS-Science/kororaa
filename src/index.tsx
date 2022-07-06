@@ -7,7 +7,7 @@ import reportWebVitals from './reportWebVitals';
 //uncommnet lines below to start msw for browser
 import { worker } from './mocks/browser';
 
-if (process.env.NODE_ENV === 'development') {
+if (process.env.NODE_ENV === 'test') {
   worker.start();
 }
 
