@@ -1,4 +1,4 @@
-export const hazardChartsPlotsViewMockData = {
+export const hazardChartsPlotsViewMockDataWLG = {
   hazard_curves: {
     ok: true,
     curves: [

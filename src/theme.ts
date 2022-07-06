@@ -18,6 +18,7 @@ const theme = createTheme({
       fontSize: '1rem',
     },
   },
+  zIndex: { modal: 120000, drawer: 110000 },
 });
 
 theme.typography.h1 = {
