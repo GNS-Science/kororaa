@@ -14,7 +14,7 @@ jobs:
       - name: create env file
         run: |
           touch .env
-          echo NODE_ENV=test >> .env
+          echo REACT_APP_MSW=test >> .env
           echo REACT_APP_DISCLAIMER_VERSION=versionOne >> .env
           echo REACT_APP_GRAPHQL_ENDPOINT=..../graphql >> .env
           echo REACT_APP_GRAPHQL_API_KEY=$##@! >> .env

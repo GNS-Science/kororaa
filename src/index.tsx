@@ -7,7 +7,7 @@ import reportWebVitals from './reportWebVitals';
 //uncommnet lines below to start msw for browser
 import { worker } from './mocks/browser';
 
-if (process.env.NODE_ENV === 'test') {
+if (process.env.REACT_APP_MSW === 'test') {
   worker.start();
 }
 
