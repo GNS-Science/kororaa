@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c96f425cf6860d4f0e15126a4ca9ad8d>>
+ * @generated SignedSource<<67ed1bfa32920ed1c567a4cbc549abfd>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -20,8 +20,9 @@ export type HazardChartsPlotsViewQuery$data = {
   readonly hazard_curves: {
     readonly ok: boolean | null;
     readonly curves: ReadonlyArray<{
-      readonly loc: string | null;
+      readonly hazard_model: string | null;
       readonly imt: string | null;
+      readonly loc: string | null;
       readonly agg: string | null;
       readonly vs30: number | null;
       readonly curve: {
@@ -116,7 +117,7 @@ v5 = [
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "loc",
+            "name": "hazard_model",
             "storageKey": null
           },
           {
@@ -124,6 +125,13 @@ v5 = [
             "args": null,
             "kind": "ScalarField",
             "name": "imt",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "loc",
             "storageKey": null
           },
           {
@@ -202,16 +210,16 @@ return {
     "selections": (v5/*: any*/)
   },
   "params": {
-    "cacheID": "cd5f4b0eade3f9034296a92057d957fb",
+    "cacheID": "9cebff00de66422a2573a2e81507fd68",
     "id": null,
     "metadata": {},
     "name": "HazardChartsPlotsViewQuery",
     "operationKind": "query",
-    "text": "query HazardChartsPlotsViewQuery(\n  $hazard_model: String\n  $vs30s: [Float]\n  $imts: [String]\n  $locs: [String]\n  $aggs: [String]\n) {\n  hazard_curves(hazard_model: $hazard_model, vs30s: $vs30s, imts: $imts, locs: $locs, aggs: $aggs) {\n    ok\n    curves {\n      loc\n      imt\n      agg\n      vs30\n      curve {\n        levels\n        values\n      }\n    }\n  }\n}\n"
+    "text": "query HazardChartsPlotsViewQuery(\n  $hazard_model: String\n  $vs30s: [Float]\n  $imts: [String]\n  $locs: [String]\n  $aggs: [String]\n) {\n  hazard_curves(hazard_model: $hazard_model, vs30s: $vs30s, imts: $imts, locs: $locs, aggs: $aggs) {\n    ok\n    curves {\n      hazard_model\n      imt\n      loc\n      agg\n      vs30\n      curve {\n        levels\n        values\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "b76ef06f937333b9e8a81020e574134f";
+(node as any).hash = "aea87fc4b1a37f050218424bafa790af";
 
 export default node;
