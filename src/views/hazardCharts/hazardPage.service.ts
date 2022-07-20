@@ -1,4 +1,5 @@
 import * as mathjs from 'mathjs';
+import { colorSet } from './constants/hazardCharts';
 import { hazardPageLocations, hazardPageOptions } from './constants/hazardPageOptions';
 
 import { HazardChartsPlotsViewQuery$data } from './__generated__/HazardChartsPlotsViewQuery.graphql';
@@ -7,6 +8,52 @@ export interface XY {
   x: number;
   y: number;
 }
+
+export interface HazardUncertaintyChart {
+  strokeSize?: number;
+  strokeOpacity?: number;
+  strokeColor?: string;
+  strokeStyle?: string;
+  data: UncertaintyDatum[];
+}
+
+export type HazardUncertaintyChartCurveGroup = Record<string, HazardUncertaintyChart>;
+
+export type HazardUncertaintyChartData = Record<string, HazardUncertaintyChartCurveGroup>;
+
+export type UncertaintyDatum = number[];
+
+export const getAllCurveGroups = (data: HazardChartsPlotsViewQuery$data): HazardUncertaintyChartData => {
+  const curveGroups: HazardUncertaintyChartData = {};
+
+  data.hazard_curves?.curves?.forEach((currentCurve) => {
+    const imt = currentCurve?.imt;
+    const levels = currentCurve?.curve?.levels;
+    const values = currentCurve?.curve?.values;
+    const agg = currentCurve?.agg;
+
+    if (imt && levels && values && agg) {
+      const curveGroupKey = `${currentCurve.vs30}m/s ${currentCurve.loc} ${currentCurve.imt}`;
+      const curveName = getAggValue(agg);
+
+      const curve: number[][] = [];
+
+      levels.forEach((level, index) => {
+        curve.push([level as number, values[index] as number]);
+      });
+
+      console.log(curve);
+
+      if (!curveGroups[curveGroupKey]) {
+        curveGroups[curveGroupKey] = { mean: { data: curve } };
+      } else {
+        curveGroups[curveGroupKey][curveName] = { data: curve };
+      }
+    }
+  });
+
+  return curveGroups;
+};
 
 export const getAllCurves = (data: HazardChartsPlotsViewQuery$data): Record<string, XY[]> => {
   const curves: Record<string, XY[]> = {};
@@ -17,7 +64,7 @@ export const getAllCurves = (data: HazardChartsPlotsViewQuery$data): Record<stri
     const values = currentCurve?.curve?.values;
 
     if (imt && levels && values) {
-      const curveName = `${currentCurve.vs30}m/s ${currentCurve.loc} ${currentCurve.imt}`;
+      const curveName = `${currentCurve.vs30}m/s ${currentCurve.loc} ${currentCurve.imt} ${currentCurve.agg}`;
       const curve: XY[] = [];
 
       levels.forEach((level, index) => {
@@ -45,6 +92,34 @@ export const getFilteredCurves = (curves: Record<string, XY[]>, imts: string[]):
   return newCurves;
 };
 
+export const getFilteredCurveGroups = (curveGroups: HazardUncertaintyChartData, imts: string[]): HazardUncertaintyChartData => {
+  const filteredCurveGroups: HazardUncertaintyChartData = {};
+
+  imts.forEach((imt) => {
+    for (const key in curveGroups) {
+      if (key.includes(imt)) {
+        filteredCurveGroups[key] = curveGroups[key];
+      }
+    }
+  });
+
+  return filteredCurveGroups;
+};
+
+export const addCurveGroupColors = (curveGroups: HazardUncertaintyChartData) => {
+  Object.keys(curveGroups).forEach((key, index) => {
+    Object.keys(curveGroups[key]).forEach((curveName) => {
+      if (curveName === 'mean') {
+        curveGroups[key][curveName]['strokeColor'] = colorSet[index][0];
+      } else {
+        curveGroups[key][curveName]['strokeColor'] = colorSet[index][0];
+      }
+    });
+  });
+
+  return curveGroups;
+};
+
 export const getColors = (curve: Record<string, XY[]>): Record<string, string> => {
   const colors: Record<string, string> = {};
   for (const key in curve) {
@@ -52,6 +127,23 @@ export const getColors = (curve: Record<string, XY[]>): Record<string, string> =
   }
 
   return colors;
+};
+
+const getAggValue = (agg: string): string => {
+  switch (agg) {
+    case 'mean':
+      return 'mean';
+    case '0.005':
+      return 'lower2';
+    case '0.1':
+      return 'lower1';
+    case '0.9':
+      return 'upper1';
+    case '0.995':
+      return 'upper2';
+    default:
+      return '';
+  }
 };
 
 const getImtValue = (imt: string): string => {
