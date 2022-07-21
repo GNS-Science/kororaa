@@ -22,8 +22,7 @@ const HazardChartsPlotsView: React.FC<HazardChartsPlotsViewProps> = ({ state }: 
     hazard_model: 'DEMO_SLT_TAG_FINAL',
     locs: state.locs,
     vs30s: state.vs30s,
-    imts: ['PGA'],
-    // hazardPageOptions.imts,
+    imts: hazardPageOptions.imts,
     aggs: ['mean', '0.005', '0.995', '0.1', '0.9'],
   });
 
