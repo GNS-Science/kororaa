@@ -4,7 +4,7 @@ import { styled } from '@mui/material/styles';
 import { SpectralAccelChartResponsive, HazardUncertaintyChartResponsive } from '@gns-science/toshi-nest';
 
 import { HazardChartsPlotsViewQuery$data } from './__generated__/HazardChartsPlotsViewQuery.graphql';
-import { getAllCurveGroups, addCurveGroupColors, getColors, getFilteredCurveGroups, getSpectralAccelerationCurvesUncertainty } from './hazardPage.service';
+import { getAllCurveGroups, addCurveGroupColors, getSAColors, getFilteredCurveGroups, getSpectralAccelerationCurvesUncertainty } from './hazardPage.service';
 import { HazardPageState } from './hazardPageReducer';
 
 interface HazardChartsProps {
@@ -17,7 +17,7 @@ const HazardCharts: React.FC<HazardChartsProps> = ({ data, state }: HazardCharts
   const filteredCurveGroups = useMemo(() => getFilteredCurveGroups(allCurveGroups, state.imts), [allCurveGroups, state.imts]);
   const curveGroupWithColors = useMemo(() => addCurveGroupColors(filteredCurveGroups), [filteredCurveGroups]);
   const SAcurvesUncertainty = useMemo(() => getSpectralAccelerationCurvesUncertainty(allCurveGroups, state.vs30s, state.locs, state.poe), [allCurveGroups, state]);
-  const SAcurvesColors = useMemo(() => getColors(SAcurvesUncertainty), [SAcurvesUncertainty]);
+  const SAcurvesColors = useMemo(() => getSAColors(SAcurvesUncertainty, filteredCurveGroups), [SAcurvesUncertainty, filteredCurveGroups]);
   const HazardChartsContainer = styled(Box)(({ theme }) => ({
     display: 'flex',
     padding: 20,

@@ -171,6 +171,20 @@ export const getSpectralAccelerationCurves = (allCurves: Record<string, XY[]>, v
   return curves;
 };
 
+export const getSAColors = (curves: Record<string, XY[]>, curveGroups: HazardUncertaintyChartData): Record<string, string> => {
+  const colors: Record<string, string> = {};
+  Object.keys(curves).forEach((key: string) => {
+    const curveGroup = Object.keys(curveGroups).find((curveGroupsKey) => curveGroupsKey.includes(key));
+
+    if (curveGroup) {
+      const strokeColor = curveGroups[curveGroup]['mean'].strokeColor ?? '#000000';
+      colors[key] = strokeColor;
+    }
+  });
+
+  return colors;
+};
+
 export const getSpectralAccelerationData = (imtValues: string[], poe: number | undefined, filteredCurves: Record<string, XY[]>): XY[] => {
   const dataSet: XY[] = [];
   if (poe) {
