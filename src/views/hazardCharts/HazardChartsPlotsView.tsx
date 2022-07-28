@@ -19,11 +19,11 @@ const HazardChartsPlotsView: React.FC<HazardChartsPlotsViewProps> = ({ state }: 
   const printTargetRef = useRef<HTMLDivElement>(null);
 
   const data = useLazyLoadQuery<HazardChartsPlotsViewQuery>(hazardChartsPlotsViewQuery, {
-    hazard_model: 'TEST1',
+    hazard_model: 'DEMO_SLT_TAG_FINAL',
     locs: state.locs,
     vs30s: state.vs30s,
     imts: hazardPageOptions.imts,
-    aggs: ['mean'],
+    aggs: ['mean', '0.005', '0.995', '0.1', '0.9'],
   });
 
   const handlePrint = useReactToPrint({
@@ -53,12 +53,12 @@ export default HazardChartsPlotsView;
 
 export const hazardChartsPlotsViewQuery = graphql`
   query HazardChartsPlotsViewQuery($hazard_model: String, $vs30s: [Float], $imts: [String], $locs: [String], $aggs: [String]) {
-    #about
     hazard_curves(hazard_model: $hazard_model, vs30s: $vs30s, imts: $imts, locs: $locs, aggs: $aggs) {
       ok
       curves {
-        loc
+        hazard_model
         imt
+        loc
         agg
         vs30
         curve {
