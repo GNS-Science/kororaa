@@ -26,6 +26,8 @@ const HazardChartsPlotsView: React.FC<HazardChartsPlotsViewProps> = ({ state }: 
     aggs: ['mean', '0.005', '0.995', '0.1', '0.9'],
   });
 
+  console.log(data);
+
   const handlePrint = useReactToPrint({
     content: () => printTargetRef.current,
   });
