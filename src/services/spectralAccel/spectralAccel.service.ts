@@ -31,7 +31,7 @@ export const getSpectralAccelUncertaintyCurves = (vs30s: number[], locations: st
           saCurveGroups[key] = {};
         }
         curveTypes.forEach((curveType) => {
-          const saCurve = getAllOfCurveType(curveType, vs30, location, data, poe);
+          const saCurve = getSpectralAccelCurve(curveType, vs30, location, data, poe);
           if (saCurve) {
             saCurveGroups[key][curveType] = { data: saCurve };
           }
@@ -41,7 +41,7 @@ export const getSpectralAccelUncertaintyCurves = (vs30s: number[], locations: st
   return saCurveGroups;
 };
 
-export const getAllOfCurveType = (curveType: string, vs30: number, location: string, data: HazardChartsPlotsViewQuery$data, poe: number) => {
+export const getSpectralAccelCurve = (curveType: string, vs30: number, location: string, data: HazardChartsPlotsViewQuery$data, poe: number) => {
   if (data.hazard_curves?.curves?.length) {
     const curves: Curves = data.hazard_curves?.curves?.filter((curve) => curve !== null && curve?.vs30 === vs30 && curve?.loc === location && getAggValue(curve?.agg as string) === curveType);
     const saCurve = calculateSpectralAccelCurve(curves, poe);
@@ -52,40 +52,38 @@ export const getAllOfCurveType = (curveType: string, vs30: number, location: str
 
 export const calculateSpectralAccelCurve = (curves: Curves, poe: number): number[][] => {
   const data: number[][] = [];
+  const yValue: number = -Math.log(1 - poe) / 50;
 
-  if (poe) {
-    const yValue: number = -Math.log(1 - poe) / 50;
+  curves.forEach((currentCurve) => {
+    if (currentCurve) {
+      const imt = hazardPageOptions.imts.find((imt) => currentCurve.imt === imt);
+      try {
+        let p1: number[] = [];
+        let p2: number[] = [];
+        const p3 = [Math.log(2e-3), Math.log(yValue)];
+        const p4 = [Math.log(10), Math.log(yValue)];
 
-    curves.forEach((currentCurve) => {
-      if (currentCurve) {
-        const imt = hazardPageOptions.imts.find((imt) => currentCurve.imt === imt);
-        try {
-          let p1: number[] = [];
-          let p2: number[] = [];
-          const p3 = [Math.log(2e-3), Math.log(yValue)];
-          const p4 = [Math.log(10), Math.log(yValue)];
+        const xArray = currentCurve?.curve?.levels ?? [];
+        const yArray = currentCurve?.curve?.values ?? [];
 
-          const xArray = currentCurve?.curve?.levels ?? [];
-          const yArray = currentCurve?.curve?.values ?? [];
-
-          xArray.length &&
-            yArray.length &&
-            yArray.find((pointY, i) => {
-              if ((pointY as number) <= yValue) {
-                p1 = [Math.log(xArray[i] as number), Math.log(pointY as number)];
-                p2 = [Math.log(xArray[i - 1] as number), Math.log(yArray[i - 1] as number)];
-                return true;
-              }
-            });
-          const point = mathjs.intersect(p1, p2, p3, p4);
-          const result = [Math.exp(point[0] as number), mathjs.exp(mathjs.exp(point[1] as number))];
-          data.push([imt === 'PGA' ? 0.01 : parseFloat(getImtValue(imt as string)), result[0]]);
-        } catch {
-          data.push([imt === 'PGA' ? 0.01 : parseFloat(getImtValue(imt as string)), 0]);
-        }
+        xArray.length &&
+          yArray.length &&
+          yArray.find((pointY, i) => {
+            if ((pointY as number) <= yValue) {
+              p1 = [Math.log(xArray[i] as number), Math.log(pointY as number)];
+              p2 = [Math.log(xArray[i - 1] as number), Math.log(yArray[i - 1] as number)];
+              return true;
+            }
+          });
+        const point = mathjs.intersect(p1, p2, p3, p4);
+        const result = [Math.exp(point[0] as number), mathjs.exp(mathjs.exp(point[1] as number))];
+        data.push([imt === 'PGA' ? 0.01 : parseFloat(getImtValue(imt as string)), result[0]]);
+      } catch {
+        data.push([imt === 'PGA' ? 0.01 : parseFloat(getImtValue(imt as string)), 0]);
       }
-    });
-  }
+    }
+  });
+
   return data;
 };
 
