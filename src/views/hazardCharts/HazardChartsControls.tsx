@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { InputAdornment, Button, Input, FormControl, InputLabel, Box, Autocomplete, TextField, FormHelperText } from '@mui/material';
+import { InputAdornment, Button, Input, FormControl, InputLabel, Box, Autocomplete, TextField, FormHelperText, FormGroup, FormControlLabel, Switch } from '@mui/material';
 
 import CustomControlsBar from '../../components/common/CustomControlsBar';
 import { hazardPageOptions } from './constants/hazardPageOptions';
@@ -85,6 +85,17 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, disp
         <Button variant="contained" type="submit" onClick={handleSubmit}>
           Submit
         </Button>
+        <FormControlLabel
+          control={
+            <Switch
+              checked={state.showUncertainty}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                dispatch({ showUncertainty: event?.target.checked });
+              }}
+            />
+          }
+          label="Uncertainty"
+        />
       </CustomControlsBar>
     </Box>
   );

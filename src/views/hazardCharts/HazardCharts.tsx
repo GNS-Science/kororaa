@@ -54,7 +54,7 @@ const HazardCharts: React.FC<HazardChartsProps> = ({ data, state }: HazardCharts
             subHeading={`${state.imts[0]}`}
             curves={curveGroupWithColors}
             poe={state.poe}
-            uncertainty={true}
+            uncertainty={state.showUncertainty}
           />
         </ChartContainer>
         {state.poe && (
@@ -73,7 +73,7 @@ const HazardCharts: React.FC<HazardChartsProps> = ({ data, state }: HazardCharts
               subHeading={`${state.poe * 100}% in 50 years`}
               curves={saCurvesWithColors}
               poe={state.poe}
-              uncertainty={true}
+              uncertainty={state.showUncertainty}
             />
           </ChartContainer>
         )}

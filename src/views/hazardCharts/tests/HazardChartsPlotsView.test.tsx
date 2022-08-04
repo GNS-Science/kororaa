@@ -12,6 +12,7 @@ const mockState: HazardPageState = {
   vs30s: [hazardPageOptions.vs30s[0]],
   imts: [hazardPageOptions.imts[0]],
   poe: undefined,
+  showUncertainty: true,
 };
 
 const TestRender = () => {
