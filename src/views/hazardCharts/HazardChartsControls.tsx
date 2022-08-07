@@ -107,19 +107,7 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, disp
               }}
             />
           }
-          label="x log/linear"
-        />
-        <FormControlLabel
-          labelPlacement="top"
-          control={
-            <Switch
-              checked={state.yScale === 'linear'}
-              onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                dispatch({ yScale: event?.target.checked ? 'linear' : 'log' });
-              }}
-            />
-          }
-          label="y log/linear"
+          label="log/linear"
         />
       </CustomControlsBar>
     </Box>

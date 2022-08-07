@@ -16,7 +16,6 @@ const HazardChartsPage: React.FC = () => {
     poe: undefined,
     showUncertainty: true,
     xScale: 'log',
-    yScale: 'log',
   });
 
   const flexProps = {
