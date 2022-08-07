@@ -15,6 +15,8 @@ const HazardChartsPage: React.FC = () => {
     imts: [hazardPageOptions.imts[0]],
     poe: undefined,
     showUncertainty: true,
+    xScale: 'log',
+    yScale: 'log',
   });
 
   const flexProps = {

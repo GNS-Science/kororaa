@@ -43,7 +43,8 @@ const HazardCharts: React.FC<HazardChartsProps> = ({ data, state }: HazardCharts
       <HazardChartsContainer data-testid="hazardChartsContainer">
         <ChartContainer>
           <GroupCurveChartResponsive
-            scaleType="log"
+            scaleType={state.xScale}
+            ySacleType={state.yScale}
             xLimits={[0.01, 10]}
             yLimits={[0.000001, 1]}
             tooltip={true}
@@ -61,10 +62,10 @@ const HazardCharts: React.FC<HazardChartsProps> = ({ data, state }: HazardCharts
             <GroupCurveChartResponsive
               testId="sa-chart"
               spectral={true}
-              scaleType="linear"
-              yScaleType="linear"
-              xLimits={[-1, 6]}
-              yLimits={[0, 4]}
+              scaleType={state.xScale}
+              yScaleType={state.yScale}
+              xLimits={[0.1, 6]}
+              yLimits={[0.1, 4]}
               tooltip={true}
               crosshair={true}
               heading="Spectral Acceleration Chart"

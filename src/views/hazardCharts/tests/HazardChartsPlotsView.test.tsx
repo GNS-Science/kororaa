@@ -13,6 +13,8 @@ const mockState: HazardPageState = {
   imts: [hazardPageOptions.imts[0]],
   poe: undefined,
   showUncertainty: true,
+  xScale: 'log',
+  yScale: 'log',
 };
 
 const TestRender = () => {
