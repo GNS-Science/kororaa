@@ -44,6 +44,8 @@ const HazardCharts: React.FC<HazardChartsProps> = ({ data, state }: HazardCharts
           <GroupCurveChartResponsive
             scaleType={state.xScale}
             ySacleType={'log'}
+            xLabel=" Acceleration (g)"
+            yLabel="Annual Probability of Exceedance"
             xLimits={[0.01, 10]}
             yLimits={[0.000001, 1]}
             tooltip={true}
@@ -62,6 +64,8 @@ const HazardCharts: React.FC<HazardChartsProps> = ({ data, state }: HazardCharts
               spectral={true}
               scaleType={'linear'}
               yScaleType={'linear'}
+              xLabel="Period [s]"
+              yLabel="Shaking Intensity [g]"
               xLimits={[0.1, 6]}
               yLimits={[0.1, 4]}
               tooltip={true}
