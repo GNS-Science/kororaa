@@ -50,6 +50,7 @@ export const getSpectralAccelCurve = (curveType: string, vs30: number, location:
   }
 };
 
+//TODO: add this function as utility method in toshi-nest as it is shared between Kororaa and TUI
 export const calculateSpectralAccelCurve = (curves: Curves, poe: number): number[][] => {
   const data: number[][] = [];
   const yValue: number = -Math.log(1 - poe) / 50;
