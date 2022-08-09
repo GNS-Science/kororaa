@@ -10,6 +10,7 @@ import { HazardChartsPlotsViewQuery } from './__generated__/HazardChartsPlotsVie
 import { hazardPageOptions } from './constants/hazardPageOptions';
 import HazardCharts from './HazardCharts';
 import { HazardPageState } from './hazardPageReducer';
+import { getLatLonFromLocationID } from '../../services/latLon/latLon.service';
 
 interface HazardChartsPlotsViewProps {
   state: HazardPageState;
@@ -18,13 +19,20 @@ interface HazardChartsPlotsViewProps {
 const HazardChartsPlotsView: React.FC<HazardChartsPlotsViewProps> = ({ state }: HazardChartsPlotsViewProps) => {
   const printTargetRef = useRef<HTMLDivElement>(null);
 
+  const getLatLonArray = (locations: string[]) => {
+    const latLonArray = locations.map((location) => getLatLonFromLocationID(location));
+    return latLonArray;
+  };
+
   const data = useLazyLoadQuery<HazardChartsPlotsViewQuery>(hazardChartsPlotsViewQuery, {
-    hazard_model: 'DEMO_SLT_TAG_FINAL',
-    locs: state.locs,
+    hazard_model: 'SLT_TAG_FINAL',
+    locs: getLatLonArray(state.locs),
     vs30s: state.vs30s,
     imts: hazardPageOptions.imts,
     aggs: ['mean', '0.005', '0.995', '0.1', '0.9'],
   });
+
+  console.log(data);
 
   const handlePrint = useReactToPrint({
     content: () => printTargetRef.current,

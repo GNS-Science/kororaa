@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { InputAdornment, Button, Input, FormControl, InputLabel, Box, Autocomplete, TextField, FormHelperText, FormGroup, FormControlLabel, Switch } from '@mui/material';
 
 import CustomControlsBar from '../../components/common/CustomControlsBar';
@@ -6,6 +6,7 @@ import { hazardPageOptions } from './constants/hazardPageOptions';
 import { convertIDsToLocations, convertLocationsToIDs, getPoeInputDisplay, numbersToStrings, stringsToNumbers, validatePoeValue } from './hazardPage.service';
 import { HazardPageState } from './hazardPageReducer';
 import SelectControlMultiple from '../../components/common/SelectControlMultiple';
+import { getLatLonFromLocationName } from '../../services/latLon/latLon.service';
 
 interface HazardChartsControlsProps {
   state: HazardPageState;
@@ -22,6 +23,12 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, disp
   const [poeInputError, setPoeInputError] = useState<boolean>(false);
   const [poeInputErrorMessage, setPoeInputErrorMessage] = useState<string>('');
   const [poeInput, setPoeInput] = useState<string>(getPoeInputDisplay(state.poe));
+
+  useEffect(() => {
+    const latLonArray = locations.map((location) => getLatLonFromLocationName(location));
+    const latLonString = latLonArray.toString();
+    setLatLon(latLonString);
+  }, [locations]);
 
   const handleLatLonChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setLatLon(event.target.value);
