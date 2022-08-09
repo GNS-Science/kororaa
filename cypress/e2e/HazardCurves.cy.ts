@@ -28,13 +28,13 @@ describe('Hazard Curves', () => {
   it('Displays second chart after probability of exceedence selection, then can deselect and chart disappears', () => {
     cy.get('input[id="poe-input"]').clear().type('10');
     cy.get('[type="submit"]').click();
-    cy.get('[aria-label="XYChart"]').should('exist');
+    cy.contains('Spectral Acceleration Chart');
     cy.get('input[id="poe-input"]').clear().type('10.5');
     cy.get('[type="submit"]').click();
-    cy.get('[aria-label="XYChart"]').should('exist');
+    cy.contains('Spectral Acceleration Chart');
     cy.get('input[id="poe-input"]').clear();
     cy.get('[type="submit"]').click();
-    cy.get('[aria-label="XYChart"]').should('not.exist');
+    cy.get('Spectral Acceleration Chart').should('not.exist');
   });
 
   it('Displays multiple curves after user selects multiple spectral periods', () => {

@@ -5,7 +5,6 @@ export type HazardPageState = {
   poe: number | undefined;
   showUncertainty: boolean;
   xScale: 'log' | 'linear';
-  yScale: 'log' | 'linear';
 };
 
 export const hazardPageReducer = (state: HazardPageState, newState: Partial<HazardPageState>) => {

@@ -12,7 +12,6 @@ const mockState: HazardPageState = {
   poe: undefined,
   showUncertainty: true,
   xScale: 'log',
-  yScale: 'log',
 };
 
 const mockSubmitStateCall = {

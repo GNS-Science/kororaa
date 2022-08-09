@@ -19,7 +19,6 @@ const HazardCharts: React.FC<HazardChartsProps> = ({ data, state }: HazardCharts
   const curveGroupWithColors = useMemo(() => addColorsToCurves(filteredCurveGroups), [filteredCurveGroups]);
   const saCurvesUncertainty = useMemo(() => getSpectralAccelUncertaintyCurves(state.vs30s, state.locs, data, state.poe), [state, data]);
   const saCurvesWithColors = useMemo(() => addColorsToCurves(saCurvesUncertainty), [saCurvesUncertainty]);
-  console.log(saCurvesWithColors);
 
   const HazardChartsContainer = styled(Box)(({ theme }) => ({
     display: 'flex',
@@ -44,7 +43,9 @@ const HazardCharts: React.FC<HazardChartsProps> = ({ data, state }: HazardCharts
         <ChartContainer>
           <GroupCurveChartResponsive
             scaleType={state.xScale}
-            ySacleType={state.yScale}
+            ySacleType={'log'}
+            xLabel=" Acceleration (g)"
+            yLabel="Annual Probability of Exceedance"
             xLimits={[0.01, 10]}
             yLimits={[0.000001, 1]}
             tooltip={true}
@@ -58,12 +59,13 @@ const HazardCharts: React.FC<HazardChartsProps> = ({ data, state }: HazardCharts
         </ChartContainer>
         {state.poe && (
           <ChartContainer>
-            {/* <SpectralAccelChartResponsive testId="sa-chart" data={SAcurvesUncertainty} colors={SAcurvesColors} heading={'Spectral Acceleration Chart'} subHeading={`${state.poe * 100}% in 50 years`} /> */}
             <GroupCurveChartResponsive
               testId="sa-chart"
               spectral={true}
-              scaleType={state.xScale}
-              yScaleType={state.yScale}
+              scaleType={'linear'}
+              yScaleType={'linear'}
+              xLabel="Period [s]"
+              yLabel="Shaking Intensity [g]"
               xLimits={[0.1, 6]}
               yLimits={[0.1, 4]}
               tooltip={true}
