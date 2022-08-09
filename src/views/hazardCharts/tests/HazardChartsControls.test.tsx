@@ -10,6 +10,15 @@ const mockState: HazardPageState = {
   vs30s: [hazardPageOptions.vs30s[0]],
   imts: [hazardPageOptions.imts[0]],
   poe: undefined,
+  showUncertainty: true,
+  xScale: 'log',
+};
+
+const mockSubmitStateCall = {
+  locs: [hazardPageLocations[0].id],
+  vs30s: [hazardPageOptions.vs30s[0]],
+  imts: [hazardPageOptions.imts[0]],
+  poe: undefined,
 };
 
 const mockDispatch = jest.fn();
@@ -83,7 +92,7 @@ test('When the submit button is clicked, mockSetSelections is called with the cu
 
   submitButton && fireEvent.click(submitButton);
 
-  expect(mockDispatch).toHaveBeenCalledWith(mockState);
+  expect(mockDispatch).toHaveBeenCalledWith(mockSubmitStateCall);
 });
 
 test('When vs30 value is changed, and then the submit button is clicked, mockSetState is called witht the new values', async () => {
@@ -98,8 +107,8 @@ test('When vs30 value is changed, and then the submit button is clicked, mockSet
   fireEvent.click(await screen.findByText(nextVs30option));
   submitButton && fireEvent.click(submitButton);
 
-  const newState: HazardPageState = {
-    ...mockState,
+  const newState = {
+    ...mockSubmitStateCall,
     vs30s: [mockState.vs30s[0], hazardPageOptions.vs30s[1]],
   };
 
@@ -128,8 +137,8 @@ test('When poe value is changed to a valid number, and then the submit button is
   poeInput && fireEvent.change(poeInput, { target: { value: '2' } });
   submitButton && fireEvent.click(submitButton);
 
-  const newState: HazardPageState = {
-    ...mockState,
+  const newState = {
+    ...mockSubmitStateCall,
     poe: 0.02,
   };
 

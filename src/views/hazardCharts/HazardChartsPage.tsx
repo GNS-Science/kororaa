@@ -9,7 +9,14 @@ import HazardChartsPlotsView from './HazardChartsPlotsView';
 import { hazardPageReducer } from './hazardPageReducer';
 
 const HazardChartsPage: React.FC = () => {
-  const [state, dispatch] = useReducer(hazardPageReducer, { locs: [hazardPageLocations[0].id], vs30s: [hazardPageOptions.vs30s[0]], imts: [hazardPageOptions.imts[0]], poe: undefined });
+  const [state, dispatch] = useReducer(hazardPageReducer, {
+    locs: [hazardPageLocations[0].id],
+    vs30s: [hazardPageOptions.vs30s[0]],
+    imts: [hazardPageOptions.imts[0]],
+    poe: undefined,
+    showUncertainty: true,
+    xScale: 'log',
+  });
 
   const flexProps = {
     display: 'flex',
