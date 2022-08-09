@@ -21,3 +21,8 @@ export const getLatLonFromLocationName = (locationName: string): string => {
   const currentLocation = hazardPageLocations.find((location) => locationName === location.name);
   return `${currentLocation?.latitude}~${currentLocation?.longitude}`;
 };
+
+export const getLatLonArray = (locations: string[]) => {
+  const latLonArray = locations.map((location) => getLatLonFromLocationID(location));
+  return latLonArray;
+};

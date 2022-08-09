@@ -3,6 +3,7 @@ import * as mathjs from 'mathjs';
 import { colorSet } from '../../views/hazardCharts/constants/hazardCharts';
 import { hazardPageOptions } from '../../views/hazardCharts/constants/hazardPageOptions';
 import { HazardChartsPlotsViewQuery$data } from '../../views/hazardCharts/__generated__/HazardChartsPlotsViewQuery.graphql';
+import { getLatLonArray } from '../latLon/latLon.service';
 
 export interface UncertaintyCurve {
   strokeSize?: number;
@@ -23,9 +24,10 @@ const curveTypes = ['upper2', 'upper1', 'mean', 'lower1', 'lower2'];
 
 export const getSpectralAccelUncertaintyCurves = (vs30s: number[], locations: string[], data: HazardChartsPlotsViewQuery$data, poe: number | undefined): UncertaintyChartData => {
   const saCurveGroups: UncertaintyChartData = {};
+  const latlon = getLatLonArray(locations);
   poe &&
     vs30s.forEach((vs30) => {
-      locations.forEach((location) => {
+      latlon.forEach((location) => {
         const key = `${vs30}m/s ${location}`;
         if (!saCurveGroups[key]) {
           saCurveGroups[key] = {};
@@ -42,6 +44,7 @@ export const getSpectralAccelUncertaintyCurves = (vs30s: number[], locations: st
 };
 
 export const getSpectralAccelCurve = (curveType: string, vs30: number, location: string, data: HazardChartsPlotsViewQuery$data, poe: number) => {
+  console.log(data);
   if (data.hazard_curves?.curves?.length) {
     const curves: Curves = data.hazard_curves?.curves?.filter((curve) => curve !== null && curve?.vs30 === vs30 && curve?.loc === location && getAggValue(curve?.agg as string) === curveType);
     const saCurve = calculateSpectralAccelCurve(curves, poe);
