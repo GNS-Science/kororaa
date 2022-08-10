@@ -1,17 +1,5 @@
 import { hazardPageLocations } from '../../views/hazardCharts/constants/hazardPageOptions';
 
-export const formatLatLon = (latlon: string): string => {
-  let formatedLatLon = '';
-
-  const latLonWithoutSpace = latlon.split(' ').join('');
-
-  if (latlon.includes(',')) {
-    formatedLatLon = latLonWithoutSpace.replace(',', '~');
-  }
-
-  return formatedLatLon;
-};
-
 export const getLatlonObject = (latlon: string | null) => {
   if (latlon) {
     const latlonArray = latlon.split('~');
