@@ -1,9 +1,11 @@
 import { hazardPageLocations } from '../../views/hazardCharts/constants/hazardPageOptions';
 
-export const getLatlonObject = (latlon: string | null) => {
+export const getLatlonObject = (latlon: string | null): string => {
   if (latlon) {
     const latlonArray = latlon.split('~');
     return `${Number(latlonArray[0])}~${Number(latlonArray[1])}`;
+  } else {
+    return '';
   }
 };
 
