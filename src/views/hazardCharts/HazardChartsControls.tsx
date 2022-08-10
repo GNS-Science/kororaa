@@ -3,8 +3,8 @@ import { InputAdornment, Button, Input, FormControl, InputLabel, Box, Autocomple
 
 import CustomControlsBar from '../../components/common/CustomControlsBar';
 import { hazardPageOptions } from './constants/hazardPageOptions';
-import { convertIDsToLocations, convertLocationsToIDs, getPoeInputDisplay, numbersToStrings, stringsToNumbers, validatePoeValue } from './hazardPage.service';
-import { HazardPageState } from './hazardPageReducer';
+import { convertIDsToLocations, convertLocationsToIDs, filterLocationNames, getPoeInputDisplay, numbersToStrings, stringsToNumbers, validatePoeValue } from './hazardPage.service';
+import { HazardPageState, LocationData } from './hazardPageReducer';
 import SelectControlMultiple from '../../components/common/SelectControlMultiple';
 import { getLatLonFromLocationName } from '../../services/latLon/latLon.service';
 
@@ -14,8 +14,9 @@ interface HazardChartsControlsProps {
 }
 
 const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, dispatch }: HazardChartsControlsProps) => {
-  const [locations, setLocations] = useState<string[]>(convertIDsToLocations(state.locs));
+  const [locations, setLocations] = useState<string[]>(filterLocationNames(state.locationData));
   const [latLon, setLatLon] = useState<string>('');
+  const [locationData, setLocationData] = useState<LocationData[]>([]);
   const [vs30s, setVs30s] = useState<number[]>(state.vs30s);
   const [imts, setImts] = useState<string[]>(state.imts);
 
@@ -37,7 +38,7 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, disp
   const handleSubmit = () => {
     try {
       validatePoeValue(poeInput);
-      dispatch({ locs: convertLocationsToIDs(locations), vs30s, imts, poe: poeInput.length === 0 || poeInput === ' ' ? undefined : Number(poeInput) / 100 });
+      dispatch({ locationData, vs30s, imts, poe: poeInput.length === 0 || poeInput === ' ' ? undefined : Number(poeInput) / 100 });
     } catch (err) {
       setPoeInputError(true);
       setPoeInputErrorMessage(err as string);

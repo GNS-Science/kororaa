@@ -2,6 +2,7 @@ import * as mathjs from 'mathjs';
 
 import { colorSet } from '../../views/hazardCharts/constants/hazardCharts';
 import { hazardPageOptions } from '../../views/hazardCharts/constants/hazardPageOptions';
+import { LocationData } from '../../views/hazardCharts/hazardPageReducer';
 import { HazardChartsPlotsViewQuery$data } from '../../views/hazardCharts/__generated__/HazardChartsPlotsViewQuery.graphql';
 import { getLatLonArray } from '../latLon/latLon.service';
 
@@ -22,9 +23,9 @@ export type Curves = NonNullable<HazardCurves['curves']>;
 
 const curveTypes = ['upper2', 'upper1', 'mean', 'lower1', 'lower2'];
 
-export const getSpectralAccelUncertaintyCurves = (vs30s: number[], locations: string[], data: HazardChartsPlotsViewQuery$data, poe: number | undefined): UncertaintyChartData => {
+export const getSpectralAccelUncertaintyCurves = (vs30s: number[], locationData: LocationData[], data: HazardChartsPlotsViewQuery$data, poe: number | undefined): UncertaintyChartData => {
   const saCurveGroups: UncertaintyChartData = {};
-  const latlon = getLatLonArray(locations);
+  const latlon = getLatLonArray(locationData);
   poe &&
     vs30s.forEach((vs30) => {
       latlon.forEach((location) => {

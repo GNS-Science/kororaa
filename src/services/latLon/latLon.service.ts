@@ -1,4 +1,5 @@
 import { hazardPageLocations } from '../../views/hazardCharts/constants/hazardPageOptions';
+import { LocationData } from '../../views/hazardCharts/hazardPageReducer';
 
 export const formatLatLon = (latlon: string): string => {
   let formatedLatLon = '';
@@ -12,9 +13,10 @@ export const formatLatLon = (latlon: string): string => {
   return formatedLatLon;
 };
 
-export const getLatLonFromLocationID = (locationId: string): string => {
+export const getLocationDataFromID = (locationId: string): LocationData => {
   const currentLocation = hazardPageLocations.find((location) => locationId === location.id);
-  return `${currentLocation?.latitude}~${currentLocation?.longitude}`;
+  const currentLocationData = { name: currentLocation?.name, lat: currentLocation?.latitude, lon: currentLocation?.longitude };
+  return currentLocationData as LocationData;
 };
 
 export const getLatLonFromLocationName = (locationName: string): string => {
@@ -22,7 +24,7 @@ export const getLatLonFromLocationName = (locationName: string): string => {
   return `${currentLocation?.latitude}~${currentLocation?.longitude}`;
 };
 
-export const getLatLonArray = (locations: string[]) => {
-  const latLonArray = locations.map((location) => getLatLonFromLocationID(location));
+export const getLatLonArray = (locations: LocationData[]) => {
+  const latLonArray = locations.map((location) => `${location.lat}~${location.lon}`);
   return latLonArray;
 };
