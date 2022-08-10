@@ -16,3 +16,10 @@ describe('FormatLatLon function formats latLon correctly', () => {
     expect(result).toBe('1~2');
   });
 });
+
+describe('getlatlonObject function', () => {
+  it('123~123', () => {
+    const result = latLonService.getLatlonObject('111.000~222.000');
+    expect(result).toStrictEqual('111~222');
+  });
+});
