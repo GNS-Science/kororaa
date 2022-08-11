@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { InputAdornment, Button, Input, FormControl, InputLabel, Box, Autocomplete, TextField, FormHelperText, FormGroup, FormControlLabel, Switch } from '@mui/material';
+import React, { useState, useEffect, useMemo } from 'react';
+import { InputAdornment, Button, Input, FormControl, InputLabel, Box, Autocomplete, TextField, FormHelperText, FormControlLabel, Switch } from '@mui/material';
 
 import CustomControlsBar from '../../components/common/CustomControlsBar';
 import { hazardPageOptions } from './constants/hazardPageOptions';
-import { convertIDsToLocations, convertLocationsToIDs, filterLocationNames, getPoeInputDisplay, numbersToStrings, stringsToNumbers, validatePoeValue } from './hazardPage.service';
+import { getPoeInputDisplay, numbersToStrings, stringsToNumbers, validatePoeValue } from './hazardPage.service';
 import { HazardPageState, LocationData } from './hazardPageReducer';
 import SelectControlMultiple from '../../components/common/SelectControlMultiple';
-import { getLatLonFromLocationName } from '../../services/latLon/latLon.service';
+import { getLatLonString, getLocationDataFromLatLonString, getLocationDataFromName, getNamesFromLocationData, validateLatLon } from '../../services/latLon/latLon.service';
 
 interface HazardChartsControlsProps {
   state: HazardPageState;
@@ -14,9 +14,9 @@ interface HazardChartsControlsProps {
 }
 
 const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, dispatch }: HazardChartsControlsProps) => {
-  const [locations, setLocations] = useState<string[]>(filterLocationNames(state.locationData));
-  const [latLon, setLatLon] = useState<string>('');
-  const [locationData, setLocationData] = useState<LocationData[]>([]);
+  const latLonString = useMemo(() => getLatLonString(state.locationData), [state.locationData]);
+  const [locationData, setLocationData] = useState<LocationData[]>(state.locationData);
+  const [latLon, setLatLon] = useState<string>(latLonString);
   const [vs30s, setVs30s] = useState<number[]>(state.vs30s);
   const [imts, setImts] = useState<string[]>(state.imts);
 
@@ -26,13 +26,37 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, disp
   const [poeInput, setPoeInput] = useState<string>(getPoeInputDisplay(state.poe));
 
   useEffect(() => {
-    const latLonArray = locations.map((location) => getLatLonFromLocationName(location));
-    const latLonString = latLonArray.toString();
+    if (validateLatLon(latLon)) {
+      const locationData: LocationData[] = getLocationDataFromLatLonString(latLon);
+      setLocationData(locationData);
+    }
+  }, [latLon]);
+
+  useEffect(() => {
+    const latLonString = getLatLonString(locationData);
     setLatLon(latLonString);
-  }, [locations]);
+  }, [locationData]);
 
   const handleLatLonChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setLatLon(event.target.value);
+  };
+
+  const handleLocationChange = (event: unknown, newValue: string[] | null) => {
+    if (newValue) {
+      const locations: LocationData[] = newValue.map((location) => {
+        return getLocationDataFromName(location);
+      });
+      const unnamedLocations = locationData.filter((location) => {
+        return location.name == null;
+      });
+      if (unnamedLocations.length > 0) {
+        unnamedLocations.forEach((location) => {
+          locations.push(location);
+        });
+      }
+      setLocationData(locations);
+      console.log('locations', locations);
+    }
   };
 
   const handleSubmit = () => {
@@ -50,10 +74,8 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, disp
       <CustomControlsBar>
         <Autocomplete
           multiple
-          value={locations}
-          onChange={(event: unknown, newValue: string[] | null) => {
-            setLocations(newValue as string[]);
-          }}
+          value={getNamesFromLocationData(locationData)}
+          onChange={handleLocationChange}
           inputValue={inputValue}
           onInputChange={(event, newInputValue) => {
             setInputValue(newInputValue);

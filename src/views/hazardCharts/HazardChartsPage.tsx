@@ -7,10 +7,11 @@ import HazardChartsControls from './HazardChartsControls';
 import { hazardPageLocations, hazardPageOptions } from './constants/hazardPageOptions';
 import HazardChartsPlotsView from './HazardChartsPlotsView';
 import { hazardPageReducer } from './hazardPageReducer';
+import { getLocationDataFromName } from '../../services/latLon/latLon.service';
 
 const HazardChartsPage: React.FC = () => {
   const [state, dispatch] = useReducer(hazardPageReducer, {
-    locs: [hazardPageLocations[0].id],
+    locationData: [getLocationDataFromName(hazardPageLocations[0].name)],
     vs30s: [hazardPageOptions.vs30s[0]],
     imts: [hazardPageOptions.imts[0]],
     poe: undefined,

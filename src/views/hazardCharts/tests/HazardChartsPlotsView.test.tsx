@@ -6,9 +6,10 @@ import RelayEnvironment from '../../../RelayEnvironment';
 import HazardChartsPlotsView from '../HazardChartsPlotsView';
 import { hazardPageLocations, hazardPageOptions } from '../constants/hazardPageOptions';
 import { HazardPageState } from '../hazardPageReducer';
+import { getLocationDataFromName } from '../../../services/latLon/latLon.service';
 
 const mockState: HazardPageState = {
-  locs: [hazardPageLocations[0].id],
+  locationData: [getLocationDataFromName(hazardPageLocations[0].id)],
   vs30s: [hazardPageOptions.vs30s[0]],
   imts: [hazardPageOptions.imts[0]],
   poe: undefined,

@@ -9,8 +9,8 @@ import { ControlsBar } from '@gns-science/toshi-nest';
 import { HazardChartsPlotsViewQuery } from './__generated__/HazardChartsPlotsViewQuery.graphql';
 import { hazardPageOptions } from './constants/hazardPageOptions';
 import HazardCharts from './HazardCharts';
-import { HazardPageState, LocationData } from './hazardPageReducer';
-import { getLocationDataFromID, getLatLonArray } from '../../services/latLon/latLon.service';
+import { HazardPageState } from './hazardPageReducer';
+import { getLatLonArray } from '../../services/latLon/latLon.service';
 
 interface HazardChartsPlotsViewProps {
   state: HazardPageState;
@@ -20,7 +20,7 @@ const HazardChartsPlotsView: React.FC<HazardChartsPlotsViewProps> = ({ state }: 
   const printTargetRef = useRef<HTMLDivElement>(null);
 
   // const getLatLonArray = (locations: string[]) => {
-  //   const latLonArray = locations.map((location) => getLocationDataFromID(location));
+  //   const latLonArray = locations.map((location) => getLocationDataFromName(location));
   //   return latLonArray;
   // };
 
