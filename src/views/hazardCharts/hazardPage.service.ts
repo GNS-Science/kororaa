@@ -175,3 +175,12 @@ export const numbersToStrings = (values: number[]) => {
 export const stringsToNumbers = (values: string[]) => {
   return values.map((value) => Number(value));
 };
+
+export const getLocationList = (data: HazardChartsPlotsViewQuery$data): string[] => {
+  const locationList = new Set<string>();
+  data.hazard_curves?.curves?.forEach((curve) => {
+    curve?.loc && locationList.add(curve.loc);
+  });
+
+  return Array.from(locationList);
+};
