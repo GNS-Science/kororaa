@@ -3,16 +3,9 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import HazardChartsControls from '../HazardChartsControls';
 import { hazardPageLocations, hazardPageOptions } from '../constants/hazardPageOptions';
 import { convertIDsToLocations } from '../hazardPage.service';
-import { HazardPageState } from '../hazardPageReducer';
+import { hazardPageReducerInitialState, HazardPageState } from '../hazardPageReducer';
 
-const mockState: HazardPageState = {
-  locs: [hazardPageLocations[0].id],
-  vs30s: [hazardPageOptions.vs30s[0]],
-  imts: [hazardPageOptions.imts[0]],
-  poe: undefined,
-  showUncertainty: true,
-  xScale: 'log',
-};
+const mockState: HazardPageState = hazardPageReducerInitialState;
 
 const mockSubmitStateCall = {
   locs: [hazardPageLocations[0].id],
