@@ -7,6 +7,7 @@ import { getPoeInputDisplay, numbersToStrings, stringsToNumbers, validatePoeValu
 import { HazardPageState, LocationData } from './hazardPageReducer';
 import SelectControlMultiple from '../../components/common/SelectControlMultiple';
 import { getLatLonString, getLocationDataFromLatLonString, getLocationDataFromName, getNamesFromLocationData, validateLatLon } from '../../services/latLon/latLon.service';
+// import { InsertEmoticon } from '@mui/icons-material';
 
 interface HazardChartsControlsProps {
   state: HazardPageState;
@@ -17,6 +18,8 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, disp
   const latLonString = useMemo(() => getLatLonString(state.locationData), [state.locationData]);
   const [locationData, setLocationData] = useState<LocationData[]>(state.locationData);
   const [latLon, setLatLon] = useState<string>(latLonString);
+  const [latLonError, setLatLonError] = useState<boolean>(false);
+  const [latLonErrorMessage, setLatLonErrorMessage] = useState<string>('');
   const [vs30s, setVs30s] = useState<number[]>(state.vs30s);
   const [imts, setImts] = useState<string[]>(state.imts);
 
@@ -25,12 +28,17 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, disp
   const [poeInputErrorMessage, setPoeInputErrorMessage] = useState<string>('');
   const [poeInput, setPoeInput] = useState<string>(getPoeInputDisplay(state.poe));
 
-  useEffect(() => {
-    if (validateLatLon(latLon)) {
-      const locationData: LocationData[] = getLocationDataFromLatLonString(latLon);
-      setLocationData(locationData);
+  const handleLatLonBlur = () => {
+    try {
+      validateLatLon(latLon);
+      setLatLonError(false);
+      const validLatLons: LocationData[] = getLocationDataFromLatLonString(latLon);
+      setLocationData(validLatLons);
+    } catch (err) {
+      setLatLonError(true);
+      setLatLonErrorMessage(err as string);
     }
-  }, [latLon]);
+  };
 
   useEffect(() => {
     const latLonString = getLatLonString(locationData);
@@ -39,6 +47,7 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, disp
 
   const handleLatLonChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setLatLon(event.target.value);
+    setLatLonError(validateLatLon(event.target.value));
   };
 
   const handleLocationChange = (event: unknown, newValue: string[] | null) => {
@@ -59,13 +68,19 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, disp
     }
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     try {
       validatePoeValue(poeInput);
+      validateLatLon(latLon);
       dispatch({ locationData, vs30s, imts, poe: poeInput.length === 0 || poeInput === ' ' ? undefined : Number(poeInput) / 100 });
     } catch (err) {
-      setPoeInputError(true);
-      setPoeInputErrorMessage(err as string);
+      if (err === 'Invalid lat~lon input') {
+        setLatLonError(true);
+        setLatLonErrorMessage(err as string);
+      } else {
+        setPoeInputError(true);
+        setPoeInputErrorMessage(err as string);
+      }
     }
   };
 
@@ -88,7 +103,8 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, disp
         />
         <FormControl sx={{ width: 200 }} variant="standard">
           <InputLabel htmlFor="component-helper">Lat,Lon</InputLabel>
-          <Input id="component-helper" name="lon" value={latLon} onChange={handleLatLonChange} aria-describedby="component-helper-text" />
+          <Input id="component-helper" name="lon" value={latLon} onChange={handleLatLonChange} onBlur={handleLatLonBlur} aria-describedby="component-helper-text" />
+          {latLonError && <FormHelperText id="component-helper-text">{latLonErrorMessage}</FormHelperText>}
         </FormControl>
         <SelectControlMultiple
           options={numbersToStrings(hazardPageOptions.vs30s)}

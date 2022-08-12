@@ -68,5 +68,8 @@ export const validateLatLon = (latLon: string): boolean => {
     const lon = Number(latLonArray[1]);
     return lat >= -90 && lat <= 90 && lon >= -180 && lon <= 180;
   });
+  if (!isValid) {
+    throw 'Invalid lat~lon input';
+  }
   return isValid;
 };
