@@ -7,7 +7,7 @@ import { HazardPageState } from '../hazardPageReducer';
 import { getLocationDataFromName } from '../../../services/latLon/latLon.service';
 
 const mockState: HazardPageState = {
-  locationData: [getLocationDataFromName(hazardPageLocations[0].id)],
+  locationData: [getLocationDataFromName(hazardPageLocations[0].name)],
   vs30s: [hazardPageOptions.vs30s[0]],
   imts: [hazardPageOptions.imts[0]],
   poe: undefined,
@@ -16,7 +16,7 @@ const mockState: HazardPageState = {
 };
 
 const mockSubmitStateCall = {
-  locs: [hazardPageLocations[0].id],
+  locationData: [getLocationDataFromName(hazardPageLocations[0].name)],
   vs30s: [hazardPageOptions.vs30s[0]],
   imts: [hazardPageOptions.imts[0]],
   poe: undefined,
@@ -32,7 +32,7 @@ test('Controls renders correctly', () => {
   render(<Wrapper />);
 
   const locationNames = filterLocationNames(mockState.locationData);
-
+  console.log(locationNames);
   expect(screen.getByLabelText('Lat,Lon')).toBeInTheDocument();
   expect(screen.getByText(locationNames[0])).toBeInTheDocument();
   expect(screen.getByDisplayValue(mockState.vs30s[0])).toBeInTheDocument();
