@@ -17,17 +17,6 @@ describe('getlatlonObject function', () => {
   });
 });
 
-describe('getLatLonFromLocationID', () => {
-  it('WLG', () => {
-    const result = latLonService.getLatLonFromLocationID('WLG');
-    expect(result).toBe('-41.3~174.78');
-  });
-  it('GIS', () => {
-    const result = latLonService.getLatLonFromLocationID('GIS');
-    expect(result).toBe('-38.65~178');
-  });
-});
-
 describe('getLatLonFromLocationName', () => {
   it('Wellington', () => {
     const result = latLonService.getLatLonFromLocationName('Wellington');
@@ -39,11 +28,11 @@ describe('getLatLonFromLocationName', () => {
   });
 });
 
-describe('getLatLonArray from IDs', () => {
-  it('Location array returns correct array of latlon', () => {
-    const locationIdArray = ['WLG', 'GIS', 'CHC', 'IVC'];
-    const expected = ['-41.3~174.78', '-38.65~178', '-43.53~172.63', '-46.43~168.36'];
-    const result = latLonService.getLatLonArray(locationIdArray);
-    expect(result).toStrictEqual(expected);
-  });
-});
+// describe('getLatLonArray from IDs', () => {
+//   it('Location array returns correct array of latlon', () => {
+//     const locationIdArray = ['WLG', 'GIS', 'CHC', 'IVC'];
+//     const expected = ['-41.3~174.78', '-38.65~178', '-43.53~172.63', '-46.43~168.36'];
+//     const result = latLonService.getLatLonArray(locationIdArray);
+//     expect(result).toStrictEqual(expected);
+//   });
+// });

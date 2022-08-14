@@ -7,7 +7,6 @@ import { getPoeInputDisplay, numbersToStrings, stringsToNumbers, validatePoeValu
 import { HazardPageState, LocationData } from './hazardPageReducer';
 import SelectControlMultiple from '../../components/common/SelectControlMultiple';
 import { getLatLonString, getLocationDataFromLatLonString, getLocationDataFromName, getNamesFromLocationData, validateLatLon } from '../../services/latLon/latLon.service';
-// import { InsertEmoticon } from '@mui/icons-material';
 
 interface HazardChartsControlsProps {
   state: HazardPageState;
@@ -64,7 +63,6 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, disp
         });
       }
       setLocationData(locations);
-      console.log('locations', locations);
     }
   };
 
