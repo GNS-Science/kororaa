@@ -2,6 +2,7 @@ import * as mathjs from 'mathjs';
 
 import { colorSet } from '../../views/hazardCharts/constants/hazardCharts';
 import { hazardPageOptions } from '../../views/hazardCharts/constants/hazardPageOptions';
+import { LocationData } from '../../views/hazardCharts/hazardPageReducer';
 import { HazardChartsPlotsViewQuery$data } from '../../views/hazardCharts/__generated__/HazardChartsPlotsViewQuery.graphql';
 import { getLatlonObject } from '../latLon/latLon.service';
 
@@ -22,17 +23,18 @@ export type Curves = NonNullable<HazardCurves['curves']>;
 
 const curveTypes = ['upper2', 'upper1', 'mean', 'lower1', 'lower2'];
 
-export const getSpectralAccelUncertaintyCurves = (vs30s: number[], locations: string[], data: HazardChartsPlotsViewQuery$data, poe: number | undefined): UncertaintyChartData => {
+export const getSpectralAccelUncertaintyCurves = (vs30s: number[], locs: string[], data: HazardChartsPlotsViewQuery$data, poe: number | undefined): UncertaintyChartData => {
   const saCurveGroups: UncertaintyChartData = {};
+
   poe &&
     vs30s.forEach((vs30) => {
-      locations.forEach((location) => {
-        const key = `${vs30}m/s ${location}`;
+      locs.forEach((locs) => {
+        const key = `${vs30}m/s ${locs}`;
         if (!saCurveGroups[key]) {
           saCurveGroups[key] = {};
         }
         curveTypes.forEach((curveType) => {
-          const saCurve = getSpectralAccelCurve(curveType, vs30, location, data, poe);
+          const saCurve = getSpectralAccelCurve(curveType, vs30, locs, data, poe);
           if (saCurve) {
             saCurveGroups[key][curveType] = { data: saCurve };
           }

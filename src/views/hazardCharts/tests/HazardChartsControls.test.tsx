@@ -2,13 +2,14 @@ import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import HazardChartsControls from '../HazardChartsControls';
 import { hazardPageLocations, hazardPageOptions } from '../constants/hazardPageOptions';
-import { convertIDsToLocations } from '../hazardPage.service';
 import { hazardPageReducerInitialState, HazardPageState } from '../hazardPageReducer';
+import { getLocationDataFromName } from '../../../services/latLon/latLon.service';
+import { filterLocationNames } from '../hazardPage.service';
 
 const mockState: HazardPageState = hazardPageReducerInitialState;
 
 const mockSubmitStateCall = {
-  locs: [hazardPageLocations[0].id],
+  locationData: [getLocationDataFromName(hazardPageLocations[0].name)],
   vs30s: [hazardPageOptions.vs30s[0]],
   imts: [hazardPageOptions.imts[0]],
   poe: undefined,
@@ -23,8 +24,8 @@ const Wrapper = () => {
 test('Controls renders correctly', () => {
   render(<Wrapper />);
 
-  const locationNames = convertIDsToLocations(mockState.locs);
-
+  const locationNames = filterLocationNames(mockState.locationData);
+  console.log(locationNames);
   expect(screen.getByLabelText('Lat,Lon')).toBeInTheDocument();
   expect(screen.getByText(locationNames[0])).toBeInTheDocument();
   expect(screen.getByDisplayValue(mockState.vs30s[0])).toBeInTheDocument();
@@ -37,7 +38,7 @@ test('When user selects another option in the location autocomplete, the new val
 
   const locationSelect = screen.getByRole('combobox');
   const nextLocationOption = hazardPageOptions.locations[1];
-  const locationNames = convertIDsToLocations(mockState.locs);
+  const locationNames = filterLocationNames(mockState.locationData);
 
   fireEvent.mouseDown(locationSelect);
   fireEvent.click(await screen.findByText(nextLocationOption));

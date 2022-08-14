@@ -1,5 +1,7 @@
 import { colorSet } from './constants/hazardCharts';
-import { hazardPageLocations } from './constants/hazardPageOptions';
+import { hazardPageLocations, hazardPageOptions } from './constants/hazardPageOptions';
+import { LocationData } from './hazardPageReducer';
+
 import { HazardChartsPlotsViewQuery$data } from './__generated__/HazardChartsPlotsViewQuery.graphql';
 
 export interface XY {
@@ -137,6 +139,15 @@ export const convertLocationsToIDs = (locations: string[]): string[] => {
   });
 
   return locationIDs;
+};
+
+export const filterLocationNames = (locations: LocationData[]): string[] => {
+  const namedLocations = locations.filter((location) => location.name);
+  const locationNames: string[] = [];
+  namedLocations.forEach((location) => {
+    location.name && locationNames.push(location.name);
+  });
+  return locationNames;
 };
 
 export const convertIDsToLocations = (IDs: string[]): string[] => {
