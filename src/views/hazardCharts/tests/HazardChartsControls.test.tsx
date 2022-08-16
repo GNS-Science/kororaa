@@ -25,7 +25,7 @@ test('Controls renders correctly', () => {
   render(<Wrapper />);
 
   const locationNames = filterLocationNames(mockState.locationData);
-  console.log(locationNames);
+
   expect(screen.getByLabelText('Lat,Lon')).toBeInTheDocument();
   expect(screen.getByText(locationNames[0])).toBeInTheDocument();
   expect(screen.getByDisplayValue(mockState.vs30s[0])).toBeInTheDocument();
