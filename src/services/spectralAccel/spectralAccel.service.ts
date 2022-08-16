@@ -2,7 +2,7 @@ import * as mathjs from 'mathjs';
 
 import { colorSet } from '../../views/hazardCharts/constants/hazardCharts';
 import { hazardPageOptions } from '../../views/hazardCharts/constants/hazardPageOptions';
-import { LocationData } from '../../views/hazardCharts/hazardPageReducer';
+// import { LocationData } from '../../views/hazardCharts/hazardPageReducer';
 import { HazardChartsPlotsViewQuery$data } from '../../views/hazardCharts/__generated__/HazardChartsPlotsViewQuery.graphql';
 import { getLatlonObject } from '../latLon/latLon.service';
 

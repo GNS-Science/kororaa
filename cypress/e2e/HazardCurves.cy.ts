@@ -7,9 +7,21 @@ describe('Hazard Curves', () => {
     cy.get('button').contains('Accept').click();
   });
 
+  it('Displays no chart', () => {
+    cy.get('[role=curve]').should('not.exist');
+  });
+
+  it('Displays a chart after 400 vs30 is selected', () => {
+    cy.get('[id="mui-component-select-Vs30"]').click();
+    cy.get('li').contains('400').click();
+    cy.get('li').contains('250').click();
+    cy.get('body').click()
+    cy.get('[type="submit"]').click();
+    cy.get('[role=curve]').should('exist');
+  });
+
   it('Displays chart with one curve group', () => {
     cy.contains('Hazard Uncertainty');
-    cy.contains('250m/s WLG PGA');
     cy.get('[role=curve]').should('have.length', 5);
   });
 
@@ -67,8 +79,8 @@ describe('Hazard Curves', () => {
     cy.get('li').contains('Christchurch').click();
     cy.get('[type="submit"]').click({ force: true });
     cy.get('[role="curve"]').should('have.length', 10);
-    cy.get('div[class="visx-legend-label"]').should('contain.text', 'WLG');
-    cy.get('div[class="visx-legend-label"]').should('contain.text', 'CHC');
+    cy.get('div[class="visx-legend-label"]').should('contain.text', '400m/s -41.300~174.800 PGA400m/s -43.500~172.600 PGA');
+    cy.get('div[class="visx-legend-label"]').should('contain.text', '400m/s -41.300~174.800 PGA400m/s -43.500~172.600 PGA');
   });
 
   // it('Displays multiple curves when user selects more than one VS30', () => {

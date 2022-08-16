@@ -1,5 +1,5 @@
 import { colorSet } from './constants/hazardCharts';
-import { hazardPageLocations, hazardPageOptions } from './constants/hazardPageOptions';
+import { hazardPageLocations } from './constants/hazardPageOptions';
 import { LocationData } from './hazardPageReducer';
 
 import { HazardChartsPlotsViewQuery$data } from './__generated__/HazardChartsPlotsViewQuery.graphql';
