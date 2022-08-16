@@ -6,8 +6,8 @@ export const handlers = [
     const locations = req.variables.locs;
     const vs30 = req.variables.vs30s;
 
-    if (vs30.includes('250')) {
-      return res(ctx.data({ initialResponse }));
+    if (vs30.includes(250)) {
+      return res(ctx.data(initialResponse));
     }
 
     if (locations.includes('-41.3~174.78') && locations.includes('-43.53~172.63') && vs30.includes(400)) {
