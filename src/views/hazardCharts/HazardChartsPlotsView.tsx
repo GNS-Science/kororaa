@@ -19,11 +19,6 @@ interface HazardChartsPlotsViewProps {
 const HazardChartsPlotsView: React.FC<HazardChartsPlotsViewProps> = ({ state }: HazardChartsPlotsViewProps) => {
   const printTargetRef = useRef<HTMLDivElement>(null);
 
-  // const getLatLonArray = (locations: string[]) => {
-  //   const latLonArray = locations.map((location) => getLocationDataFromName(location));
-  //   return latLonArray;
-  // };
-
   const data = useLazyLoadQuery<HazardChartsPlotsViewQuery>(hazardChartsPlotsViewQuery, {
     hazard_model: 'SLT_TAG_FINAL',
     locs: getLatLonArray(state.locationData),

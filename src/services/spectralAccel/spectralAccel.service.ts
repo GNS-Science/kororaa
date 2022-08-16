@@ -28,13 +28,13 @@ export const getSpectralAccelUncertaintyCurves = (vs30s: number[], locs: string[
 
   poe &&
     vs30s.forEach((vs30) => {
-      locs.forEach((locs) => {
-        const key = `${vs30}m/s ${locs}`;
+      locs.forEach((loc) => {
+        const key = `${vs30}m/s ${loc}`;
         if (!saCurveGroups[key]) {
           saCurveGroups[key] = {};
         }
         curveTypes.forEach((curveType) => {
-          const saCurve = getSpectralAccelCurve(curveType, vs30, locs, data, poe);
+          const saCurve = getSpectralAccelCurve(curveType, vs30, loc, data, poe);
           if (saCurve) {
             saCurveGroups[key][curveType] = { data: saCurve };
           }

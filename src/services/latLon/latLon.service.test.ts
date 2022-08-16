@@ -1,35 +1,35 @@
 import * as latLonService from './latLon.service';
 
 describe('getlatlonObject function', () => {
-  it('123~123', () => {
+  it('Removes trailing zeros from latlon string', () => {
     const result = latLonService.getLatlonObject('111.000~222.000');
     expect(result).toStrictEqual('111~222');
   });
 
-  it(' 12.12345~ 3.00', () => {
+  it('Removes leading whitespace and trailing zeros from latlon string', () => {
     const result = latLonService.getLatlonObject(' 12.12345~ 3.00');
     expect(result).toStrictEqual('12.12345~3');
   });
 
-  it('undefined', () => {
+  it('Returns empty string if input is null', () => {
     const result = latLonService.getLatlonObject(null);
     expect(result).toStrictEqual('');
   });
 });
 
 describe('getLatLonFromLocationName', () => {
-  it('Wellington', () => {
+  it('Returns correct latlon from name Wellington', () => {
     const result = latLonService.getLatLonFromLocationName('Wellington');
     expect(result).toBe('-41.3~174.78');
   });
-  it('Gisborne', () => {
+  it('Returns correct latlon from name Gisborne', () => {
     const result = latLonService.getLatLonFromLocationName('Gisborne');
     expect(result).toBe('-38.65~178');
   });
 });
 
 describe('getLocationDataFromName', () => {
-  it('Wellington', () => {
+  it('Returns correct LocationData from name Wellington', () => {
     const result = latLonService.getLocationDataFromName('Wellington');
     expect(result).toStrictEqual({
       lat: -41.3,
@@ -37,7 +37,7 @@ describe('getLocationDataFromName', () => {
       name: 'Wellington',
     });
   });
-  it('Gisborne', () => {
+  it('Returns correct LocationData from name Gisborne', () => {
     const result = latLonService.getLocationDataFromName('Gisborne');
     expect(result).toStrictEqual({
       lat: -38.65,
@@ -48,7 +48,7 @@ describe('getLocationDataFromName', () => {
 });
 
 describe('getLocationDataFromLatLonString', () => {
-  it('Wellingtion', () => {
+  it('Returns correct LocationData from latlon string for Wellington', () => {
     const result = latLonService.getLocationDataFromLatLonString('-41.3~174.78');
     expect(result).toStrictEqual([
       {
@@ -58,7 +58,7 @@ describe('getLocationDataFromLatLonString', () => {
       },
     ]);
   });
-  it('Wellington and Gisborne', () => {
+  it('Returns correct LocationData from latlon string for Wellington and Gisborne', () => {
     const result = latLonService.getLocationDataFromLatLonString('-41.3~174.78, -38.65~178');
     expect(result).toStrictEqual([
       {
@@ -73,7 +73,7 @@ describe('getLocationDataFromLatLonString', () => {
       },
     ]);
   });
-  it('Wellington and arbitrary latlon', () => {
+  it('Returns correct LocationData from latlon string for Wellington and arbitrary latlon', () => {
     const result = latLonService.getLocationDataFromLatLonString('-41.3~174.78, -42~173');
     expect(result).toStrictEqual([
       {
@@ -91,7 +91,7 @@ describe('getLocationDataFromLatLonString', () => {
 });
 
 describe('getNamesFromLocationData', () => {
-  it('Wellington', () => {
+  it('Returns correct name from LocationData for Wellington', () => {
     const result = latLonService.getNamesFromLocationData([
       {
         lat: -41.3,
@@ -101,7 +101,7 @@ describe('getNamesFromLocationData', () => {
     ]);
     expect(result).toStrictEqual(['Wellington']);
   });
-  it('Wellington and Gisborne', () => {
+  it('Returns correct name from LocationData for Wellington and Gisborne', () => {
     const result = latLonService.getNamesFromLocationData([
       {
         lat: -41.3,
@@ -119,7 +119,7 @@ describe('getNamesFromLocationData', () => {
 });
 
 describe('getLatLonString', () => {
-  it('Wellington', () => {
+  it('Returns correct latlon string from LocationData for Wellington', () => {
     const result = latLonService.getLatLonString([
       {
         lat: -41.3,
@@ -129,7 +129,7 @@ describe('getLatLonString', () => {
     ]);
     expect(result).toStrictEqual('-41.3~174.78');
   });
-  it('Wellington and Gisborne', () => {
+  it('Returns correct latlon string from LocationData for Wellington and Gisborne', () => {
     const result = latLonService.getLatLonString([
       {
         lat: -41.3,
@@ -147,7 +147,7 @@ describe('getLatLonString', () => {
 });
 
 describe('getLatLonArray', () => {
-  it('Wellington', () => {
+  it('Returns correct latlon string array from LocationData for Wellington', () => {
     const result = latLonService.getLatLonArray([
       {
         lat: -41.3,
@@ -157,7 +157,7 @@ describe('getLatLonArray', () => {
     ]);
     expect(result).toStrictEqual(['-41.3~174.78']);
   });
-  it('Wellington and Gisborne', () => {
+  it('Returns correct latlon string array from LocationData for Wellington and Gisborne', () => {
     const result = latLonService.getLatLonArray([
       {
         lat: -41.3,
@@ -175,11 +175,11 @@ describe('getLatLonArray', () => {
 });
 
 describe('validateLatLon', () => {
-  it('valid', () => {
+  it('Returns true for valid latlon input string', () => {
     const result = latLonService.validateLatLon('-41.3~174.78');
     expect(result).toBe(true);
   });
-  it('invalid', () => {
+  it('Throws invalid error for invalid latlon input string', () => {
     try {
       latLonService.validateLatLon('-41.3~174.78, 1000~1000');
     } catch (e) {
