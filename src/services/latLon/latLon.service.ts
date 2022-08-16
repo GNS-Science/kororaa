@@ -37,7 +37,7 @@ export const getLatLonString = (locations: LocationData[]): string => {
   return latLonString.slice(0, -2);
 };
 
-export const getLatLonArray = (locations: LocationData[]) => {
+export const getLatLonArray = (locations: LocationData[]): string[] => {
   const latLonArray = locations.map((location) => `${location.lat}~${location.lon}`);
   return latLonArray;
 };
