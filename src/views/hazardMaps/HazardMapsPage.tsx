@@ -1,6 +1,7 @@
 import React from 'react';
-import { Box, Typography } from '@mui/material';
+import { Box, CircularProgress, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
+import HazardMapsView from './HazardMapsView';
 
 const HazardMapsPage: React.FC = () => {
   const PageContainer = styled(Box)(({ theme }) => ({
@@ -24,6 +25,9 @@ const HazardMapsPage: React.FC = () => {
         <Typography variant="h1" sx={{ padding: 2, width: '100%', textAlign: 'center' }}>
           Hazard Maps
         </Typography>
+        <React.Suspense fallback={<CircularProgress />}>
+          <HazardMapsView />
+        </React.Suspense>
       </Box>
     </PageContainer>
   );
