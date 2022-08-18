@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0b2203ee68ac627773ec245d4a8c99e4>>
+ * @generated SignedSource<<9fb5e2a393e8559936a31865ecd568e9>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,7 +10,7 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 export type RegionGrid = "NZ_0_1_NB_1_0" | "NZ_0_1_NB_1_1" | "NZ_0_2_NB_1_1" | "WLG_0_01_nb_1_1" | "WLG_0_05_nb_1_1" | "%future added value";
-export type HazardMapsViewQuery$variables = {
+export type HazardMapsPageQuery$variables = {
   grid_id?: RegionGrid | null;
   hazard_model_ids?: ReadonlyArray<string | null> | null;
   imts?: ReadonlyArray<string | null> | null;
@@ -18,7 +18,7 @@ export type HazardMapsViewQuery$variables = {
   vs30s?: ReadonlyArray<number | null> | null;
   poes?: ReadonlyArray<number | null> | null;
 };
-export type HazardMapsViewQuery$data = {
+export type HazardMapsPageQuery$data = {
   readonly gridded_hazard: {
     readonly ok: boolean | null;
     readonly gridded_hazard: ReadonlyArray<{
@@ -30,9 +30,9 @@ export type HazardMapsViewQuery$data = {
     } | null> | null;
   } | null;
 };
-export type HazardMapsViewQuery = {
-  variables: HazardMapsViewQuery$variables;
-  response: HazardMapsViewQuery$data;
+export type HazardMapsPageQuery = {
+  variables: HazardMapsPageQuery$variables;
+  response: HazardMapsPageQuery$data;
 };
 
 const node: ConcreteRequest = (function(){
@@ -175,7 +175,7 @@ return {
     ],
     "kind": "Fragment",
     "metadata": null,
-    "name": "HazardMapsViewQuery",
+    "name": "HazardMapsPageQuery",
     "selections": (v6/*: any*/),
     "type": "QueryRoot",
     "abstractKey": null
@@ -191,20 +191,20 @@ return {
       (v4/*: any*/)
     ],
     "kind": "Operation",
-    "name": "HazardMapsViewQuery",
+    "name": "HazardMapsPageQuery",
     "selections": (v6/*: any*/)
   },
   "params": {
-    "cacheID": "2e1628756fc6d168125f78aca550abf9",
+    "cacheID": "bb59230cd5443755c01664d30a82a003",
     "id": null,
     "metadata": {},
-    "name": "HazardMapsViewQuery",
+    "name": "HazardMapsPageQuery",
     "operationKind": "query",
-    "text": "query HazardMapsViewQuery(\n  $grid_id: RegionGrid\n  $hazard_model_ids: [String]\n  $imts: [String]\n  $aggs: [String]\n  $vs30s: [Float]\n  $poes: [Float]\n) {\n  gridded_hazard(grid_id: $grid_id, hazard_model_ids: $hazard_model_ids, imts: $imts, aggs: $aggs, vs30s: $vs30s, poes: $poes) {\n    ok\n    gridded_hazard {\n      grid_id\n      hazard_model\n      imt\n      agg\n      geojson\n    }\n  }\n}\n"
+    "text": "query HazardMapsPageQuery(\n  $grid_id: RegionGrid\n  $hazard_model_ids: [String]\n  $imts: [String]\n  $aggs: [String]\n  $vs30s: [Float]\n  $poes: [Float]\n) {\n  gridded_hazard(grid_id: $grid_id, hazard_model_ids: $hazard_model_ids, imts: $imts, aggs: $aggs, vs30s: $vs30s, poes: $poes) {\n    ok\n    gridded_hazard {\n      grid_id\n      hazard_model\n      imt\n      agg\n      geojson\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "f4315197dd3416e23539fb2577824be5";
+(node as any).hash = "49d1fb5dbaa347664c654613dc0751c8";
 
 export default node;
