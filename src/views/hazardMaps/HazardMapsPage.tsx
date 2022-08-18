@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useReducer } from 'react';
 import { Box } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { graphql } from 'babel-plugin-relay/macro';
@@ -6,15 +6,18 @@ import { useLazyLoadQuery } from 'react-relay';
 
 import { HazardMapsPageQuery } from './__generated__/HazardMapsPageQuery.graphql';
 import HazardMaps from './HazardMaps';
+import { hazardMapsReducer, initialState } from './hazardMapReducer';
 
 const HazardMapsPage: React.FC = () => {
+  const [state, dispatch] = useReducer(hazardMapsReducer, initialState);
+
   const data = useLazyLoadQuery<HazardMapsPageQuery>(hazardMapsPageQuery, {
     grid_id: 'NZ_0_1_NB_1_0',
     hazard_model_ids: ['SLT_TAG_FINAL'],
-    imts: ['SA(0.5)'],
-    aggs: ['mean'],
-    vs30s: [400],
-    poes: [0.02], //0.1 for the middle color strength
+    imts: state.imts,
+    aggs: state.aggs,
+    vs30s: state.vs30s,
+    poes: state.poes,
   });
 
   const PageContainer = styled(Box)(({ theme }) => ({
@@ -36,7 +39,7 @@ const HazardMapsPage: React.FC = () => {
     <PageContainer>
       <Box role="hazardMapsView" sx={{ width: '100%' }}>
         <div>
-          <HazardMaps data={data} />
+          <HazardMaps data={data} state={state} dispatch={dispatch} />
         </div>
       </Box>
     </PageContainer>

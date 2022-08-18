@@ -1,13 +1,18 @@
 import React, { useState } from 'react';
-import { HazardMapsViewQuery$data } from './__generated__/HazardMapsViewQuery.graphql';
 import { LeafletMap, LeafletDrawer } from '@gns-science/toshi-nest';
+
+import { HazardMapsViewQuery$data } from './__generated__/HazardMapsViewQuery.graphql';
+import HazardMapsControls from './__generated__/HazardMapsControls';
+import { HazardMapsState } from './hazardMapReducer';
 
 interface HazardMapsProps {
   data: HazardMapsViewQuery$data;
+  state: HazardMapsState;
+  dispatch: React.Dispatch<Partial<HazardMapsState>>;
 }
 
 const HazardMaps: React.FC<HazardMapsProps> = (props: HazardMapsProps) => {
-  const { data } = props;
+  const { data, state, dispatch } = props;
   const [fullscreen, setFullscreen] = useState<boolean>(false);
 
   const zoom = 5;
@@ -22,7 +27,7 @@ const HazardMaps: React.FC<HazardMapsProps> = (props: HazardMapsProps) => {
     <>
       <LeafletMap geoJsonData={geoJson} zoom={zoom} nzCentre={nzCentre} height={'700px'} width={'100%'} setFullscreen={setFullscreen} />
       <LeafletDrawer drawerHeight={'700px'} headerHeight={'120px'} width={'400px'} fullscreen={fullscreen}>
-        <p>hello</p>
+        <HazardMapsControls state={state} dispatch={dispatch} />
       </LeafletDrawer>
     </>
   );
