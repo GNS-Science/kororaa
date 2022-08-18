@@ -1,3 +1,4 @@
+import { roundLatLon } from '../../services/latLon/latLon.service';
 import { colorSet } from './constants/hazardCharts';
 import { hazardPageLocations } from './constants/hazardPageOptions';
 import { LocationData } from './hazardPageReducer';
@@ -33,7 +34,7 @@ export const getAllCurveGroups = (data: HazardChartsPlotsViewQuery$data): Hazard
     const agg = currentCurve?.agg;
 
     if (imt && levels && values && agg) {
-      const curveGroupKey = `${currentCurve.vs30}m/s ${currentCurve.loc} ${currentCurve.imt}`;
+      const curveGroupKey = `${currentCurve.vs30}m/s ${roundLatLon(currentCurve.loc)} ${currentCurve.imt}`;
       const curveName = getAggValue(agg);
 
       const curve: number[][] = [];

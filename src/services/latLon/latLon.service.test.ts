@@ -54,7 +54,7 @@ describe('getLocationDataFromLatLonString', () => {
       {
         lat: -41.3,
         lon: 174.78,
-        name: 'Wellington',
+        name: null,
       },
     ]);
   });
@@ -64,12 +64,12 @@ describe('getLocationDataFromLatLonString', () => {
       {
         lat: -41.3,
         lon: 174.78,
-        name: 'Wellington',
+        name: null,
       },
       {
         lat: -38.65,
         lon: 178,
-        name: 'Gisborne',
+        name: null,
       },
     ]);
   });
@@ -79,7 +79,7 @@ describe('getLocationDataFromLatLonString', () => {
       {
         lat: -41.3,
         lon: 174.78,
-        name: 'Wellington',
+        name: null,
       },
       {
         lat: -42,
@@ -127,7 +127,7 @@ describe('getLatLonString', () => {
         name: 'Wellington',
       },
     ]);
-    expect(result).toStrictEqual('-41.3~174.78');
+    expect(result).toStrictEqual('');
   });
   it('Returns correct latlon string from LocationData for Wellington and Gisborne', () => {
     const result = latLonService.getLatLonString([
@@ -142,7 +142,17 @@ describe('getLatLonString', () => {
         name: 'Gisborne',
       },
     ]);
-    expect(result).toStrictEqual('-41.3~174.78, -38.65~178');
+    expect(result).toStrictEqual('');
+  });
+  it('Returns correct latlon string from arbitrary latlon locationData', () => {
+    const result = latLonService.getLatLonString([
+      {
+        lat: -42,
+        lon: 173,
+        name: null,
+      },
+    ]);
+    expect(result).toStrictEqual('-42~173');
   });
 });
 

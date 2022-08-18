@@ -31,7 +31,9 @@ export const getLatLonFromLocationName = (locationName: string): string => {
 
 export const getLatLonString = (locations: LocationData[]): string => {
   let latLonString = '';
-  locations.forEach((location) => {
+  const filteredLocations = locations.filter((location) => location.name === null);
+  if (filteredLocations.length === 0) return '';
+  filteredLocations.forEach((location) => {
     latLonString += `${location.lat}~${location.lon}, `;
   });
   return latLonString.slice(0, -2);
@@ -43,21 +45,20 @@ export const getLatLonArray = (locations: LocationData[]): string[] => {
 };
 
 export const getLocationDataFromLatLonString = (latLonString: string): LocationData[] => {
+  if (latLonString === '') {
+    return [];
+  }
   const latLonArray = latLonString.split(',');
   const locationDataArray = latLonArray.map((latLon) => {
     const latLonArray = latLon.split('~');
-    const latLongData = { lat: Number(latLonArray[0]), lon: Number(latLonArray[1]) };
-    const currentLocation = hazardPageLocations.find((location) => location.latitude === latLongData.lat && location.longitude === latLongData.lon);
-    if (currentLocation) {
-      return { ...latLongData, name: currentLocation.name };
-    } else {
-      return { ...latLongData, name: null };
-    }
+    const latLongData = { lat: Number(latLonArray[0]), lon: Number(latLonArray[1]), name: null };
+    return latLongData as LocationData;
   });
   return locationDataArray as LocationData[];
 };
 
 export const validateLatLon = (latLon: string): boolean => {
+  if (latLon == '') return true;
   const latLonArray = latLon.split(',');
   const isValid = latLonArray.every((latLon) => {
     const latLonArray = latLon.split('~');
@@ -69,4 +70,26 @@ export const validateLatLon = (latLon: string): boolean => {
     throw 'Invalid lat~lon input';
   }
   return isValid;
+};
+
+export const combineLocationData = (locations: string[], latLon: string): LocationData[] => {
+  const namedLocations: LocationData[] = locations.map((location) => {
+    return getLocationDataFromName(location);
+  });
+  const latLonLocations: LocationData[] = getLocationDataFromLatLonString(latLon);
+  return namedLocations.concat(latLonLocations);
+};
+
+export const roundLatLon = (latLon: string | null): string => {
+  if (latLon === null) return '';
+  const latLonArray = latLon.split(',');
+  const roundedLatLon = latLonArray
+    .map((latLon) => {
+      const latLonArray = latLon.split('~');
+      const lat = Number(latLonArray[0]).toFixed(1);
+      const lon = Number(latLonArray[1]).toFixed(1);
+      return `${lat}~${lon}`;
+    })
+    .join(',');
+  return roundedLatLon;
 };

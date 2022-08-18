@@ -4,7 +4,7 @@ import { colorSet } from '../../views/hazardCharts/constants/hazardCharts';
 import { hazardPageOptions } from '../../views/hazardCharts/constants/hazardPageOptions';
 // import { LocationData } from '../../views/hazardCharts/hazardPageReducer';
 import { HazardChartsPlotsViewQuery$data } from '../../views/hazardCharts/__generated__/HazardChartsPlotsViewQuery.graphql';
-import { getLatlonObject } from '../latLon/latLon.service';
+import { getLatlonObject, roundLatLon } from '../latLon/latLon.service';
 
 export interface UncertaintyCurve {
   strokeSize?: number;
@@ -29,7 +29,7 @@ export const getSpectralAccelUncertaintyCurves = (vs30s: number[], locs: string[
   poe &&
     vs30s.forEach((vs30) => {
       locs.forEach((loc) => {
-        const key = `${vs30}m/s ${loc}`;
+        const key = `${vs30}m/s ${roundLatLon(loc)}`;
         if (!saCurveGroups[key]) {
           saCurveGroups[key] = {};
         }

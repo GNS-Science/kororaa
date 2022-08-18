@@ -15,7 +15,7 @@ describe('Hazard Curves', () => {
     cy.get('[id="mui-component-select-Vs30"]').click();
     cy.get('li').contains('400').click();
     cy.get('li').contains('250').click();
-    cy.get('body').click()
+    cy.get('body').click();
     cy.get('[type="submit"]').click();
     cy.get('[role=curve]').should('exist');
   });
@@ -79,10 +79,20 @@ describe('Hazard Curves', () => {
     cy.get('li').contains('Christchurch').click();
     cy.get('[type="submit"]').click({ force: true });
     cy.get('[role="curve"]').should('have.length', 10);
-    cy.get('div[class="visx-legend-label"]').should('contain.text', '400m/s -41.300~174.800 PGA400m/s -43.500~172.600 PGA');
-    cy.get('div[class="visx-legend-label"]').should('contain.text', '400m/s -41.300~174.800 PGA400m/s -43.500~172.600 PGA');
+    cy.get('div[class="visx-legend-label"]').should('contain.text', '400m/s -41.3~174.8 PGA');
+    cy.get('div[class="visx-legend-label"]').should('contain.text', '400m/s -43.5~172.6 PGA');
   });
 
+  it('Displays curve when user inputs arbitrary latlon value', () => {
+    cy.get('div[class="MuiAutocomplete-endAdornment css-1q60rmi-MuiAutocomplete-endAdornment"]').click();
+    cy.get('li').contains('Christchurch').click();
+    cy.get('div[class="MuiAutocomplete-endAdornment css-1q60rmi-MuiAutocomplete-endAdornment"]').click();
+    cy.get('li').contains('Wellington').click();
+    cy.get('[class="MuiInput-input MuiInputBase-input css-1x51dt5-MuiInputBase-input-MuiInput-input"]').first().type('-41.3~174.8');
+    cy.get('[type="submit"]').click({ force: true });
+    cy.get('[role="curve"]').should('have.length', 5);
+    cy.get('div[class="visx-legend-label"]').should('contain.text', '400m/s -41.3~174.8 PGA');
+  });
   // it('Displays multiple curves when user selects more than one VS30', () => {
   //   cy.get('div').contains('250').click();
   //   cy.get('li').contains('350').click();

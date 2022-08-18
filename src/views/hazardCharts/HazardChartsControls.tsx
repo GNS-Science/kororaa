@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import { InputAdornment, Button, Input, FormControl, InputLabel, Box, Autocomplete, TextField, FormHelperText, FormControlLabel, Switch } from '@mui/material';
 
 import CustomControlsBar from '../../components/common/CustomControlsBar';
@@ -6,7 +6,7 @@ import { hazardPageOptions } from './constants/hazardPageOptions';
 import { getPoeInputDisplay, numbersToStrings, stringsToNumbers, validatePoeValue } from './hazardPage.service';
 import { HazardPageState, LocationData } from './hazardPageReducer';
 import SelectControlMultiple from '../../components/common/SelectControlMultiple';
-import { getLatLonString, getLocationDataFromLatLonString, getLocationDataFromName, getNamesFromLocationData, validateLatLon } from '../../services/latLon/latLon.service';
+import { getLatLonString, combineLocationData, getNamesFromLocationData, validateLatLon } from '../../services/latLon/latLon.service';
 
 interface HazardChartsControlsProps {
   state: HazardPageState;
@@ -14,9 +14,9 @@ interface HazardChartsControlsProps {
 }
 
 const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, dispatch }: HazardChartsControlsProps) => {
-  const latLonString = useMemo(() => getLatLonString(state.locationData), [state.locationData]);
   const [locationData, setLocationData] = useState<LocationData[]>(state.locationData);
-  const [latLon, setLatLon] = useState<string>(latLonString);
+  const [locations, setLocations] = useState<string[]>(getNamesFromLocationData(state.locationData));
+  const [latLon, setLatLon] = useState<string>(getLatLonString(state.locationData));
   const [latLonError, setLatLonError] = useState<boolean>(false);
   const [latLonErrorMessage, setLatLonErrorMessage] = useState<string>('');
   const [vs30s, setVs30s] = useState<number[]>(state.vs30s);
@@ -31,8 +31,6 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, disp
     try {
       validateLatLon(latLon);
       setLatLonError(false);
-      const validLatLons: LocationData[] = getLocationDataFromLatLonString(latLon);
-      setLocationData(validLatLons);
     } catch (err) {
       setLatLonError(true);
       setLatLonErrorMessage(err as string);
@@ -40,9 +38,9 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, disp
   };
 
   useEffect(() => {
-    const latLonString = getLatLonString(locationData);
-    setLatLon(latLonString);
-  }, [locationData]);
+    const combinedLocationData = combineLocationData(locations, latLon);
+    setLocationData(combinedLocationData);
+  }, [locations, latLon]);
 
   const handleLatLonChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setLatLon(event.target.value);
@@ -51,18 +49,8 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, disp
 
   const handleLocationChange = (event: unknown, newValue: string[] | null) => {
     if (newValue) {
-      const locations: LocationData[] = newValue.map((location) => {
-        return getLocationDataFromName(location);
-      });
-      const unnamedLocations = locationData.filter((location) => {
-        return location.name == null;
-      });
-      if (unnamedLocations.length > 0) {
-        unnamedLocations.forEach((location) => {
-          locations.push(location);
-        });
-      }
-      setLocationData(locations);
+      const locations = newValue as string[];
+      setLocations(locations);
     }
   };
 
@@ -87,7 +75,7 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, disp
       <CustomControlsBar>
         <Autocomplete
           multiple
-          value={getNamesFromLocationData(locationData)}
+          value={locations}
           onChange={handleLocationChange}
           inputValue={inputValue}
           onInputChange={(event, newInputValue) => {
@@ -101,7 +89,7 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, disp
         />
         <FormControl sx={{ width: 200 }} variant="standard">
           <InputLabel htmlFor="component-helper">Lat,Lon</InputLabel>
-          <Input id="component-helper" name="lon" value={latLon} onChange={handleLatLonChange} onBlur={handleLatLonBlur} aria-describedby="component-helper-text" />
+          <Input id="component-helper" name="lon" value={latLon} onChange={handleLatLonChange} onBlurCapture={handleLatLonBlur} aria-describedby="component-helper-text" />
           {latLonError && <FormHelperText id="component-helper-text">{latLonErrorMessage}</FormHelperText>}
         </FormControl>
         <SelectControlMultiple
