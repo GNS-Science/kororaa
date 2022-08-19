@@ -11,11 +11,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     environment: AWS_TEST
-    env:
-      #The following are set up in AWS_TEST deployment environ
-      REACT_APP_GRAPH_ENDPOINT: ${{ secrets.REACT_APP_GRAPH_ENDPOINT }}
-      REACT_APP_GRAPH_API_KEY: ${{ secrets.REACT_APP_GRAPH_API_KEY}}
-      REACT_APP_DISCLAIMER_VERSION: ${{ secrets.REACT_APP_DISCLAIMER_VERSION }}
+
     strategy:
       matrix:
         node-version: [16]
@@ -36,8 +32,8 @@ jobs:
         run: |
           touch .env
           echo REACT_APP_DISCLAIMER_VERSION=${{ secrets.REACT_APP_DISCLAIMER_VERSION }}e >> .env
-          echo REACT_APP_GRAPHQL_ENDPOINT=${{ secrets.REACT_APP_GRAPH_ENDPOINT }} >> .env
-          echo REACT_APP_GRAPHQL_API_KEY=${{ secrets.REACT_APP_GRAPH_API_KEY}} >> .env
+          echo REACT_APP_GRAPHQL_ENDPOINT=${{ secrets.REACT_APP_GRAPHQL_ENDPOINT }} >> .env
+          echo REACT_APP_GRAPHQL_API_KEY=${{ secrets.REACT_APP_GRAPHQL_API_KEY}} >> .env
 
       - name: Yarn Build & Test
         env:
