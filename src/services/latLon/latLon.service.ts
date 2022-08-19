@@ -26,7 +26,7 @@ export const getLocationDataFromName = (locationName: string): LocationData => {
 
 export const getLatLonFromLocationName = (locationName: string): string => {
   const currentLocation = hazardPageLocations.find((location) => locationName === location.name);
-  return `${currentLocation?.latitude}~${currentLocation?.longitude}`;
+  return `${currentLocation?.latitude}, ${currentLocation?.longitude}`;
 };
 
 export const getLatLonString = (locations: LocationData[]): string => {
@@ -40,7 +40,7 @@ export const getLatLonString = (locations: LocationData[]): string => {
 };
 
 export const getLatLonArray = (locations: LocationData[]): string[] => {
-  const latLonArray = locations.map((location) => `${location.lat}~${location.lon}`);
+  const latLonArray = locations.map((location) => `${location.lat}, ${location.lon}`);
   return latLonArray;
 };
 
@@ -67,7 +67,7 @@ export const validateLatLon = (latLon: string): boolean => {
     return lat >= -90 && lat <= 90 && lon >= -180 && lon <= 180;
   });
   if (!isValid) {
-    throw 'Invalid lat~lon input';
+    throw 'Invalid lat, lon input';
   }
   return isValid;
 };
@@ -82,14 +82,14 @@ export const combineLocationData = (locations: string[], latLon: string): Locati
 
 export const roundLatLon = (latLon: string | null): string => {
   if (latLon === null) return '';
-  const latLonArray = latLon.split(';');
+  const latLonArray = latLon.split('; ');
   const roundedLatLon = latLonArray
     .map((latLon) => {
-      const latLonArray = latLon.split('~');
+      const latLonArray = latLon.split(', ');
       const lat = Number(latLonArray[0]).toFixed(1);
       const lon = Number(latLonArray[1]).toFixed(1);
       return `${lat}, ${lon}`;
     })
-    .join(',');
+    .join('; ');
   return roundedLatLon;
 };

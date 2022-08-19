@@ -2,13 +2,13 @@ import * as latLonService from './latLon.service';
 
 describe('getlatlonObject function', () => {
   it('Removes trailing zeros from latlon string', () => {
-    const result = latLonService.getLatlonObject('111.000~222.000');
-    expect(result).toStrictEqual('111~222');
+    const result = latLonService.getLatlonObject('111.000, 222.000');
+    expect(result).toStrictEqual('111, 222');
   });
 
   it('Removes leading whitespace and trailing zeros from latlon string', () => {
-    const result = latLonService.getLatlonObject(' 12.12345~ 3.00');
-    expect(result).toStrictEqual('12.12345~3');
+    const result = latLonService.getLatlonObject(' 12.12345, 3.00');
+    expect(result).toStrictEqual('12.12345, 3');
   });
 
   it('Returns empty string if input is null', () => {
@@ -20,11 +20,11 @@ describe('getlatlonObject function', () => {
 describe('getLatLonFromLocationName', () => {
   it('Returns correct latlon from name Wellington', () => {
     const result = latLonService.getLatLonFromLocationName('Wellington');
-    expect(result).toBe('-41.3~174.78');
+    expect(result).toBe('-41.3, 174.78');
   });
   it('Returns correct latlon from name Gisborne', () => {
     const result = latLonService.getLatLonFromLocationName('Gisborne');
-    expect(result).toBe('-38.65~178');
+    expect(result).toBe('-38.65, 178');
   });
 });
 
@@ -49,7 +49,7 @@ describe('getLocationDataFromName', () => {
 
 describe('getLocationDataFromLatLonString', () => {
   it('Returns correct LocationData from latlon string for Wellington', () => {
-    const result = latLonService.getLocationDataFromLatLonString('-41.3~174.78');
+    const result = latLonService.getLocationDataFromLatLonString('-41.3, 174.78');
     expect(result).toStrictEqual([
       {
         lat: -41.3,
@@ -59,7 +59,7 @@ describe('getLocationDataFromLatLonString', () => {
     ]);
   });
   it('Returns correct LocationData from latlon string for Wellington and Gisborne', () => {
-    const result = latLonService.getLocationDataFromLatLonString('-41.3~174.78, -38.65~178');
+    const result = latLonService.getLocationDataFromLatLonString('-41.3, 174.78; -38.65, 178');
     expect(result).toStrictEqual([
       {
         lat: -41.3,
@@ -74,7 +74,7 @@ describe('getLocationDataFromLatLonString', () => {
     ]);
   });
   it('Returns correct LocationData from latlon string for Wellington and arbitrary latlon', () => {
-    const result = latLonService.getLocationDataFromLatLonString('-41.3~174.78, -42~173');
+    const result = latLonService.getLocationDataFromLatLonString('-41.3, 174.78; -42, 173');
     expect(result).toStrictEqual([
       {
         lat: -41.3,
@@ -152,7 +152,7 @@ describe('getLatLonString', () => {
         name: null,
       },
     ]);
-    expect(result).toStrictEqual('-42~173');
+    expect(result).toStrictEqual('-42, 173');
   });
 });
 
@@ -165,7 +165,7 @@ describe('getLatLonArray', () => {
         name: 'Wellington',
       },
     ]);
-    expect(result).toStrictEqual(['-41.3~174.78']);
+    expect(result).toStrictEqual(['-41.3, 174.78']);
   });
   it('Returns correct latlon string array from LocationData for Wellington and Gisborne', () => {
     const result = latLonService.getLatLonArray([
@@ -180,20 +180,20 @@ describe('getLatLonArray', () => {
         name: 'Gisborne',
       },
     ]);
-    expect(result).toStrictEqual(['-41.3~174.78', '-38.65~178']);
+    expect(result).toStrictEqual(['-41.3, 174.78', '-38.65, 178']);
   });
 });
 
 describe('validateLatLon', () => {
   it('Returns true for valid latlon input string', () => {
-    const result = latLonService.validateLatLon('-41.3~174.78');
+    const result = latLonService.validateLatLon('-41.3, 174.78');
     expect(result).toBe(true);
   });
   it('Throws invalid error for invalid latlon input string', () => {
     try {
-      latLonService.validateLatLon('-41.3~174.78, 1000~1000');
+      latLonService.validateLatLon('-41.3, 174.78; 1000, 1000');
     } catch (e) {
-      expect(e).toBe('Invalid lat~lon input');
+      expect(e).toBe('Invalid lat, lon input');
     }
   });
 });
