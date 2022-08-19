@@ -40,7 +40,7 @@ export const getLatLonString = (locations: LocationData[]): string => {
 };
 
 export const getLatLonArray = (locations: LocationData[]): string[] => {
-  const latLonArray = locations.map((location) => `${location.lat}, ${location.lon}`);
+  const latLonArray = locations.map((location) => `${location.lat}~${location.lon}`);
   return latLonArray;
 };
 
@@ -82,14 +82,8 @@ export const combineLocationData = (locations: string[], latLon: string): Locati
 
 export const roundLatLon = (latLon: string | null): string => {
   if (latLon === null) return '';
-  const latLonArray = latLon.split('; ');
-  const roundedLatLon = latLonArray
-    .map((latLon) => {
-      const latLonArray = latLon.split(', ');
-      const lat = Number(latLonArray[0]).toFixed(1);
-      const lon = Number(latLonArray[1]).toFixed(1);
-      return `${lat}, ${lon}`;
-    })
-    .join('; ');
-  return roundedLatLon;
+  const latLonArray = latLon.split('~');
+  const lat = Number(latLonArray[0]).toFixed(1);
+  const lon = Number(latLonArray[1]).toFixed(1);
+  return `${lat}, ${lon}`;
 };

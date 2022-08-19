@@ -165,7 +165,7 @@ describe('getLatLonArray', () => {
         name: 'Wellington',
       },
     ]);
-    expect(result).toStrictEqual(['-41.3, 174.78']);
+    expect(result).toStrictEqual(['-41.3~174.78']);
   });
   it('Returns correct latlon string array from LocationData for Wellington and Gisborne', () => {
     const result = latLonService.getLatLonArray([
@@ -180,7 +180,7 @@ describe('getLatLonArray', () => {
         name: 'Gisborne',
       },
     ]);
-    expect(result).toStrictEqual(['-41.3, 174.78', '-38.65, 178']);
+    expect(result).toStrictEqual(['-41.3~174.78', '-38.65~178']);
   });
 });
 
