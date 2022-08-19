@@ -32,7 +32,10 @@ jobs:
           registry-url: https://npm.pkg.github.com/
           scope: '@gns-science'
 
-      - name: Build & test
+      - name: Yarn Build & Test
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.TOSHI_NEST_PACKAGE_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}          
         run: |
           yarn install --frozen-lockfile
           yarn build
@@ -44,8 +47,6 @@ jobs:
           args: --acl public-read --delete
         env:
           #The following are repository secrets 
-          NODE_AUTH_TOKEN: ${{ secrets.TOSHI_NEST_PACKAGE_TOKEN }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_REGION: ${{ secrets.AWS_REGION }}
