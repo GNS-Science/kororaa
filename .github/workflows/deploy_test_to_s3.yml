@@ -1,0 +1,46 @@
+# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: CD (ENV:TEST) push_to_deploy-test into AWS S3 kororaa-ui-test
+
+on:
+  push:
+    branches: [ deploy-test ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    environment: AWS_TEST
+    env:
+      #The following are set up in AWS_TEST deployment environ
+      REACT_APP_GRAPH_ENDPOINT: ${{ secrets.REACT_APP_GRAPH_ENDPOINT }}
+      REACT_APP_GRAPH_API_KEY: ${{ secrets.REACT_APP_GRAPH_API_KEY}}
+      REACT_APP_DISCLAIMER_VERSION: ${{ secrets.REACT_APP_DISCLAIMER_VERSION }}
+    strategy:
+      matrix:
+        node-version: [17.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ matrix.node-version }}
+    - run: yarn install --frozen-lockfile
+    - run: yarn build
+    - run: yarn test
+    - name: Deploy to S3
+      uses: jakejarvis/s3-sync-action@master
+      with:
+        args: --acl public-read --delete
+      env:
+        #The following are repository secrets 
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_REGION: ${{ secrets.AWS_REGION }}
+
+        #The following are set up in AWS_TEST deployment environ        
+        AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
+
+        SOURCE_DIR: "build"
