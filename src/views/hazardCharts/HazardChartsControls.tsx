@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
-import { InputAdornment, Button, Input, FormControl, InputLabel, Box, Autocomplete, TextField, FormHelperText, FormGroup, FormControlLabel, Switch } from '@mui/material';
+import React, { useState, useEffect } from 'react';
+import { InputAdornment, Button, Input, FormControl, InputLabel, Box, Autocomplete, TextField, FormHelperText, FormControlLabel, Switch } from '@mui/material';
 
 import CustomControlsBar from '../../components/common/CustomControlsBar';
 import { hazardPageOptions } from './constants/hazardPageOptions';
-import { convertIDsToLocations, convertLocationsToIDs, getPoeInputDisplay, numbersToStrings, stringsToNumbers, validatePoeValue } from './hazardPage.service';
-import { HazardPageState } from './hazardPageReducer';
+import { getPoeInputDisplay, numbersToStrings, stringsToNumbers, validatePoeValue } from './hazardPage.service';
+import { HazardPageState, LocationData } from './hazardPageReducer';
 import SelectControlMultiple from '../../components/common/SelectControlMultiple';
+import { getLatLonString, combineLocationData, getNamesFromLocationData, validateLatLon } from '../../services/latLon/latLon.service';
 
 interface HazardChartsControlsProps {
   state: HazardPageState;
@@ -13,8 +14,11 @@ interface HazardChartsControlsProps {
 }
 
 const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, dispatch }: HazardChartsControlsProps) => {
-  const [locations, setLocations] = useState<string[]>(convertIDsToLocations(state.locs));
-  const [latLon, setLatLon] = useState<string>('');
+  const [locationData, setLocationData] = useState<LocationData[]>(state.locationData);
+  const [locations, setLocations] = useState<string[]>(getNamesFromLocationData(state.locationData));
+  const [latLon, setLatLon] = useState<string>(getLatLonString(state.locationData));
+  const [latLonError, setLatLonError] = useState<boolean>(false);
+  const [latLonErrorMessage, setLatLonErrorMessage] = useState<string>('');
   const [vs30s, setVs30s] = useState<number[]>(state.vs30s);
   const [imts, setImts] = useState<string[]>(state.imts);
 
@@ -23,17 +27,46 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, disp
   const [poeInputErrorMessage, setPoeInputErrorMessage] = useState<string>('');
   const [poeInput, setPoeInput] = useState<string>(getPoeInputDisplay(state.poe));
 
-  const handleLatLonChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setLatLon(event.target.value);
+  const handleLatLonBlur = () => {
+    try {
+      validateLatLon(latLon);
+      setLatLonError(false);
+    } catch (err) {
+      setLatLonError(true);
+      setLatLonErrorMessage(err as string);
+    }
   };
 
-  const handleSubmit = () => {
+  useEffect(() => {
+    const combinedLocationData = combineLocationData(locations, latLon);
+    setLocationData(combinedLocationData);
+  }, [locations, latLon]);
+
+  const handleLatLonChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setLatLon(event.target.value);
+    setLatLonError(validateLatLon(event.target.value));
+  };
+
+  const handleLocationChange = (event: unknown, newValue: string[] | null) => {
+    if (newValue) {
+      const locations = newValue as string[];
+      setLocations(locations);
+    }
+  };
+
+  const handleSubmit = async () => {
     try {
       validatePoeValue(poeInput);
-      dispatch({ locs: convertLocationsToIDs(locations), vs30s, imts, poe: poeInput.length === 0 || poeInput === ' ' ? undefined : Number(poeInput) / 100 });
+      validateLatLon(latLon);
+      dispatch({ locationData, vs30s, imts, poe: poeInput.length === 0 || poeInput === ' ' ? undefined : Number(poeInput) / 100 });
     } catch (err) {
-      setPoeInputError(true);
-      setPoeInputErrorMessage(err as string);
+      if (err === 'Invalid lat~lon input') {
+        setLatLonError(true);
+        setLatLonErrorMessage(err as string);
+      } else {
+        setPoeInputError(true);
+        setPoeInputErrorMessage(err as string);
+      }
     }
   };
 
@@ -43,9 +76,7 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, disp
         <Autocomplete
           multiple
           value={locations}
-          onChange={(event: unknown, newValue: string[] | null) => {
-            setLocations(newValue as string[]);
-          }}
+          onChange={handleLocationChange}
           inputValue={inputValue}
           onInputChange={(event, newInputValue) => {
             setInputValue(newInputValue);
@@ -58,7 +89,8 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, disp
         />
         <FormControl sx={{ width: 200 }} variant="standard">
           <InputLabel htmlFor="component-helper">Lat,Lon</InputLabel>
-          <Input id="component-helper" name="lon" value={latLon} onChange={handleLatLonChange} aria-describedby="component-helper-text" />
+          <Input id="component-helper" name="lon" value={latLon} onChange={handleLatLonChange} onBlurCapture={handleLatLonBlur} aria-describedby="component-helper-text" />
+          {latLonError && <FormHelperText id="component-helper-text">{latLonErrorMessage}</FormHelperText>}
         </FormControl>
         <SelectControlMultiple
           options={numbersToStrings(hazardPageOptions.vs30s)}

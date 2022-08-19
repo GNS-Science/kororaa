@@ -1,18 +1,25 @@
 import { graphql } from 'msw';
-import { hazardUncertaintyMockDataWlg250 } from './mockData/hazardUncertaintyMockDataWlg250';
-import { hazardUncertaintyMockDataWlgChc250 } from './mockData/hazardUncertaintyMockDataWlgChc250';
+import { wellington400Response, wellingtonChristchurchResponse, arbitraryLatLonResponse, initialResponse } from './mockData/HazardChartsPlotsViewMockData';
 
 export const handlers = [
   graphql.query('HazardChartsPlotsViewQuery', (req, res, ctx) => {
     const locations = req.variables.locs;
     const vs30 = req.variables.vs30s;
 
-    if (locations.includes('WLG') && locations.includes('CHC') && vs30.includes(250)) {
-      return res(ctx.data(hazardUncertaintyMockDataWlgChc250));
+    if (vs30.includes(250)) {
+      return res(ctx.data(initialResponse));
     }
 
-    if (locations.includes('WLG') && vs30.includes(250)) {
-      return res(ctx.data(hazardUncertaintyMockDataWlg250));
+    if (locations.includes('-41.3~174.78') && locations.includes('-43.53~172.63') && vs30.includes(400)) {
+      return res(ctx.data(wellingtonChristchurchResponse));
+    }
+
+    if (locations.includes('-41.3~174.78') && vs30.includes(400)) {
+      return res(ctx.data(wellington400Response));
+    }
+
+    if (locations.includes('-42.000~173.000') && vs30.includes(400)) {
+      return res(ctx.data(arbitraryLatLonResponse));
     }
   }),
 ];

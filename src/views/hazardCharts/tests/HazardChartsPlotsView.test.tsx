@@ -1,20 +1,11 @@
-import { render, screen } from '@testing-library/react';
 import React from 'react';
 import { RelayEnvironmentProvider } from 'react-relay';
 
 import RelayEnvironment from '../../../RelayEnvironment';
 import HazardChartsPlotsView from '../HazardChartsPlotsView';
-import { hazardPageLocations, hazardPageOptions } from '../constants/hazardPageOptions';
-import { HazardPageState } from '../hazardPageReducer';
+import { hazardPageReducerInitialState, HazardPageState } from '../hazardPageReducer';
 
-const mockState: HazardPageState = {
-  locs: [hazardPageLocations[0].id],
-  vs30s: [hazardPageOptions.vs30s[0]],
-  imts: [hazardPageOptions.imts[0]],
-  poe: undefined,
-  showUncertainty: true,
-  xScale: 'log',
-};
+const mockState: HazardPageState = hazardPageReducerInitialState;
 
 const TestRender = () => {
   return (

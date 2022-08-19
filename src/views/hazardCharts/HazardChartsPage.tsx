@@ -4,19 +4,11 @@ import { styled } from '@mui/material/styles';
 import ShareIcon from '@mui/icons-material/Share';
 
 import HazardChartsControls from './HazardChartsControls';
-import { hazardPageLocations, hazardPageOptions } from './constants/hazardPageOptions';
 import HazardChartsPlotsView from './HazardChartsPlotsView';
-import { hazardPageReducer } from './hazardPageReducer';
+import { hazardPageReducer, hazardPageReducerInitialState } from './hazardPageReducer';
 
 const HazardChartsPage: React.FC = () => {
-  const [state, dispatch] = useReducer(hazardPageReducer, {
-    locs: [hazardPageLocations[0].id],
-    vs30s: [hazardPageOptions.vs30s[0]],
-    imts: [hazardPageOptions.imts[0]],
-    poe: undefined,
-    showUncertainty: true,
-    xScale: 'log',
-  });
+  const [state, dispatch] = useReducer(hazardPageReducer, hazardPageReducerInitialState);
 
   const flexProps = {
     display: 'flex',

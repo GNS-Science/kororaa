@@ -10,6 +10,7 @@ import { HazardChartsPlotsViewQuery } from './__generated__/HazardChartsPlotsVie
 import { hazardPageOptions } from './constants/hazardPageOptions';
 import HazardCharts from './HazardCharts';
 import { HazardPageState } from './hazardPageReducer';
+import { getLatLonArray } from '../../services/latLon/latLon.service';
 
 interface HazardChartsPlotsViewProps {
   state: HazardPageState;
@@ -19,8 +20,8 @@ const HazardChartsPlotsView: React.FC<HazardChartsPlotsViewProps> = ({ state }: 
   const printTargetRef = useRef<HTMLDivElement>(null);
 
   const data = useLazyLoadQuery<HazardChartsPlotsViewQuery>(hazardChartsPlotsViewQuery, {
-    hazard_model: 'DEMO_SLT_TAG_FINAL',
-    locs: state.locs,
+    hazard_model: 'SLT_TAG_FINAL',
+    locs: getLatLonArray(state.locationData),
     vs30s: state.vs30s,
     imts: hazardPageOptions.imts,
     aggs: ['mean', '0.005', '0.995', '0.1', '0.9'],
