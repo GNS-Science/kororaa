@@ -32,6 +32,13 @@ jobs:
           registry-url: https://npm.pkg.github.com/
           scope: '@gns-science'
 
+      - name: Create env file
+        run: |
+          touch .env
+          echo REACT_APP_DISCLAIMER_VERSION=${{ secrets.REACT_APP_DISCLAIMER_VERSION }}e >> .env
+          echo REACT_APP_GRAPHQL_ENDPOINT=${{ secrets.REACT_APP_GRAPH_ENDPOINT }} >> .env
+          echo REACT_APP_GRAPHQL_API_KEY=${{ secrets.REACT_APP_GRAPH_API_KEY}} >> .env
+
       - name: Yarn Build & Test
         env:
           NODE_AUTH_TOKEN: ${{ secrets.TOSHI_NEST_PACKAGE_TOKEN }}
