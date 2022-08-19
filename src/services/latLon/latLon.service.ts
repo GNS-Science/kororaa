@@ -3,8 +3,8 @@ import { LocationData } from '../../views/hazardCharts/hazardPageReducer';
 
 export const getLatlonObject = (latlon: string | null): string => {
   if (latlon) {
-    const latlonArray = latlon.split('~');
-    return `${Number(latlonArray[0])}~${Number(latlonArray[1])}`;
+    const latlonArray = latlon.split(', ');
+    return `${Number(latlonArray[0])}, ${Number(latlonArray[1])}`;
   } else {
     return '';
   }
@@ -34,7 +34,7 @@ export const getLatLonString = (locations: LocationData[]): string => {
   const filteredLocations = locations.filter((location) => location.name === null);
   if (filteredLocations.length === 0) return '';
   filteredLocations.forEach((location) => {
-    latLonString += `${location.lat}~${location.lon}, `;
+    latLonString += `${location.lat}, ${location.lon}; `;
   });
   return latLonString.slice(0, -2);
 };
@@ -48,9 +48,9 @@ export const getLocationDataFromLatLonString = (latLonString: string): LocationD
   if (latLonString === '') {
     return [];
   }
-  const latLonArray = latLonString.split(',');
+  const latLonArray = latLonString.split(';');
   const locationDataArray = latLonArray.map((latLon) => {
-    const latLonArray = latLon.split('~');
+    const latLonArray = latLon.split(', ');
     const latLongData = { lat: Number(latLonArray[0]), lon: Number(latLonArray[1]), name: null };
     return latLongData as LocationData;
   });
@@ -59,9 +59,9 @@ export const getLocationDataFromLatLonString = (latLonString: string): LocationD
 
 export const validateLatLon = (latLon: string): boolean => {
   if (latLon == '') return true;
-  const latLonArray = latLon.split(',');
+  const latLonArray = latLon.split(';');
   const isValid = latLonArray.every((latLon) => {
-    const latLonArray = latLon.split('~');
+    const latLonArray = latLon.split(', ');
     const lat = Number(latLonArray[0]);
     const lon = Number(latLonArray[1]);
     return lat >= -90 && lat <= 90 && lon >= -180 && lon <= 180;
@@ -82,13 +82,13 @@ export const combineLocationData = (locations: string[], latLon: string): Locati
 
 export const roundLatLon = (latLon: string | null): string => {
   if (latLon === null) return '';
-  const latLonArray = latLon.split(',');
+  const latLonArray = latLon.split(';');
   const roundedLatLon = latLonArray
     .map((latLon) => {
       const latLonArray = latLon.split('~');
       const lat = Number(latLonArray[0]).toFixed(1);
       const lon = Number(latLonArray[1]).toFixed(1);
-      return `${lat}~${lon}`;
+      return `${lat}, ${lon}`;
     })
     .join(',');
   return roundedLatLon;
