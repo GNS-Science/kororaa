@@ -35,7 +35,8 @@ jobs:
       - name: Yarn Build & Test
         env:
           NODE_AUTH_TOKEN: ${{ secrets.TOSHI_NEST_PACKAGE_TOKEN }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}          
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CI: false         
         run: |
           yarn install --frozen-lockfile
           yarn build
