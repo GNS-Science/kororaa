@@ -18,7 +18,7 @@ jobs:
       REACT_APP_DISCLAIMER_VERSION: ${{ secrets.REACT_APP_DISCLAIMER_VERSION }}
     strategy:
       matrix:
-        node-version: [17.x]
+        node-version: [16]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
