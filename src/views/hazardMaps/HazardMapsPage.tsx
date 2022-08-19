@@ -1,25 +1,10 @@
-import React, { useReducer } from 'react';
-import { Box } from '@mui/material';
+import React from 'react';
+import { Box, CircularProgress } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import { graphql } from 'babel-plugin-relay/macro';
-import { useLazyLoadQuery } from 'react-relay';
 
-import { HazardMapsPageQuery } from './__generated__/HazardMapsPageQuery.graphql';
 import HazardMaps from './HazardMaps';
-import { hazardMapsReducer, initialState } from './hazardMapReducer';
 
 const HazardMapsPage: React.FC = () => {
-  const [state, dispatch] = useReducer(hazardMapsReducer, initialState);
-
-  const data = useLazyLoadQuery<HazardMapsPageQuery>(hazardMapsPageQuery, {
-    grid_id: 'NZ_0_1_NB_1_0',
-    hazard_model_ids: ['SLT_TAG_FINAL'],
-    imts: state.imts,
-    aggs: state.aggs,
-    vs30s: state.vs30s,
-    poes: state.poes,
-  });
-
   const PageContainer = styled(Box)(({ theme }) => ({
     ...flexProps,
     margin: '0 5% 0 5% 0.5% 0.5%',
@@ -38,27 +23,12 @@ const HazardMapsPage: React.FC = () => {
   return (
     <PageContainer>
       <Box role="hazardMapsView" sx={{ width: '100%' }}>
-        <div>
-          <HazardMaps data={data} state={state} dispatch={dispatch} />
-        </div>
+        <React.Suspense fallback={<CircularProgress />}>
+          <HazardMaps />
+        </React.Suspense>
       </Box>
     </PageContainer>
   );
 };
 
 export default HazardMapsPage;
-
-export const hazardMapsPageQuery = graphql`
-  query HazardMapsPageQuery($grid_id: RegionGrid, $hazard_model_ids: [String], $imts: [String], $aggs: [String], $vs30s: [Float], $poes: [Float]) {
-    gridded_hazard(grid_id: $grid_id, hazard_model_ids: $hazard_model_ids, imts: $imts, aggs: $aggs, vs30s: $vs30s, poes: $poes) {
-      ok
-      gridded_hazard {
-        grid_id
-        hazard_model
-        imt
-        agg
-        geojson
-      }
-    }
-  }
-`;

@@ -35,14 +35,7 @@ function App(props: { environment?: Environment }) {
                 <DisclaimerLayer>
                   <Routes>
                     <Route path="/RuptureSets" element={<RuptureSetsPage />} />
-                    <Route
-                      path="/HazardMaps"
-                      element={
-                        <React.Suspense fallback={<CircularProgress />}>
-                          <HazardMapsPage />
-                        </React.Suspense>
-                      }
-                    />
+                    <Route path="/HazardMaps" element={<HazardMapsPage />} />
                     <Route path="/HazardCurves" element={<HazardChartsPage />} />
                     <Route path="/" element={<Home />} />
                   </Routes>
