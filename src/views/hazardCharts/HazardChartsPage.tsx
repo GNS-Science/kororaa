@@ -6,18 +6,13 @@ import ShareIcon from '@mui/icons-material/Share';
 import HazardChartsControls from './HazardChartsControls';
 import HazardChartsPlotsView from './HazardChartsPlotsView';
 import { hazardPageReducer, hazardPageReducerInitialState } from './hazardPageReducer';
+import { flexParentCenter } from '../../utils/styleUtils';
 
 const HazardChartsPage: React.FC = () => {
   const [state, dispatch] = useReducer(hazardPageReducer, hazardPageReducerInitialState);
 
-  const flexProps = {
-    display: 'flex',
-    justifyConten: 'center',
-    alignItems: 'center',
-  };
-
   const PageContainer = styled(Box)(({ theme }) => ({
-    ...flexProps,
+    ...flexParentCenter,
     margin: '0 5% 0 5%',
     flexDirection: 'column',
     [theme.breakpoints.down('xl')]: {
@@ -27,7 +22,7 @@ const HazardChartsPage: React.FC = () => {
 
   return (
     <PageContainer>
-      <Box sx={{ ...flexProps, width: '100%' }}>
+      <Box sx={{ ...flexParentCenter, width: '100%' }}>
         <Typography variant="h1" sx={{ padding: 2, width: '100%', textAlign: 'center' }}>
           Hazard Curves and Spectra
         </Typography>

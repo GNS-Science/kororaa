@@ -23,13 +23,13 @@ const HazardMapsPage: React.FC = () => {
 
   return (
     <PageContainer>
-      <Box role="hazardMapsView" sx={{ width: '100%' }}>
-        <React.Suspense fallback={<CircularProgress />}>
-          <HazardMaps state={state} setFullscreen={setFullscreen} />
-        </React.Suspense>
+      <Box role="hazardMapsView" sx={{ ...flexParentCenter, justifyContent: 'center', height: '100%', width: '100%' }}>
         <LeafletDrawer drawerHeight={'700px'} headerHeight={'120px'} width={'400px'} fullscreen={fullscreen}>
           <HazardMapsControls state={state} dispatch={dispatch} />
         </LeafletDrawer>
+        <React.Suspense fallback={<CircularProgress />}>
+          <HazardMaps state={state} setFullscreen={setFullscreen} />
+        </React.Suspense>
       </Box>
     </PageContainer>
   );
