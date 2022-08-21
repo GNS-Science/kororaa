@@ -6,21 +6,16 @@ import { LeafletDrawer } from '@gns-science/toshi-nest';
 import HazardMaps from './HazardMaps';
 import { hazardMapsReducer, initialState } from './hazardMapReducer';
 import HazardMapsControls from './__generated__/HazardMapsControls';
+import { flexParentCenter } from '../../utils/styleUtils';
 
 const PageContainer = styled(Box)(({ theme }) => ({
-  ...flexProps,
+  ...flexParentCenter,
   margin: '0 5% 0 5% 0.5% 0.5%',
   flexDirection: 'column',
   [theme.breakpoints.down('xl')]: {
     margin: '0 2% 0 2% 0.2% 0.2%',
   },
 }));
-
-const flexProps = {
-  display: 'flex',
-  justifyConten: 'center',
-  alignItems: 'center',
-};
 
 const HazardMapsPage: React.FC = () => {
   const [state, dispatch] = useReducer(hazardMapsReducer, initialState);

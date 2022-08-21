@@ -28,7 +28,7 @@ const HazardMapsControls: React.FC<HazardMapsControlsProps> = ({ state, dispatch
       <SelectControl name="Aggs" options={['mean']} selection={aggs} setSelection={setAggs} />
       <SelectControl name="Vs30s" options={numbersToStrings(hazardPageOptions.vs30s)} selection={vs30s.toString()} setSelection={(newValue: string[]) => setVs30s(Number(newValue))} />
       <SelectControl name="poes" options={['0.1', '0.02']} selection={poes.toString()} setSelection={(newValue: string[]) => setPoes(Number(newValue))} />
-      <Button variant="contained" type="submit" onClick={handleSubmit}>
+      <Button sx={{ margin: 2 }} variant="contained" type="submit" onClick={handleSubmit}>
         Submit
       </Button>
     </Box>
