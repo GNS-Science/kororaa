@@ -17,7 +17,10 @@
 import './commands';
 
 Cypress.on('uncaught:exception', (err, runnable) => {
-  if (err.message.includes('Invalid lat~lon input')) {
+  if (err.message.includes('Invalid lat, lon input')) {
+    return false;
+  }
+  if (err.message.includes('Cannot read properties of undefined')) {
     return false;
   }
 });
