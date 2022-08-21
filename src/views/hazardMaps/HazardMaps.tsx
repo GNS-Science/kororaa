@@ -1,15 +1,17 @@
-import React, { useEffect, useState, useReducer } from 'react';
-import { LeafletMap, LeafletDrawer } from '@gns-science/toshi-nest';
+import React, { useMemo } from 'react';
+import { LeafletMap } from '@gns-science/toshi-nest';
 import { graphql } from 'babel-plugin-relay/macro';
 
-import HazardMapsControls from './__generated__/HazardMapsControls';
-import { hazardMapsReducer, initialState } from './hazardMapReducer';
+import { HazardMapsState } from './hazardMapReducer';
 import { useLazyLoadQuery } from 'react-relay';
 import { HazardMapsQuery } from './__generated__/HazardMapsQuery.graphql';
 
-const HazardMaps: React.FC = () => {
-  const [state, dispatch] = useReducer(hazardMapsReducer, initialState);
+interface HazardMapsProps {
+  state: HazardMapsState;
+  setFullscreen: (value: boolean) => void;
+}
 
+const HazardMaps: React.FC<HazardMapsProps> = ({ state, setFullscreen }: HazardMapsProps) => {
   const data = useLazyLoadQuery<HazardMapsQuery>(hazardMapsQuery, {
     grid_id: 'NZ_0_1_NB_1_0',
     hazard_model_ids: ['SLT_TAG_FINAL'],
@@ -19,26 +21,20 @@ const HazardMaps: React.FC = () => {
     poes: state.poes,
   });
 
-  const [fullscreen, setFullscreen] = useState<boolean>(false);
-  const [geoJson, setGeoJson] = useState<string[]>([]);
-
-  const zoom = 5;
-  const nzCentre = [-40.946, 174.167];
-
-  useEffect(() => {
+  const geoJson = useMemo(() => {
     let geoJsonData: string[] = [];
     if (data && data.gridded_hazard && data.gridded_hazard.gridded_hazard?.length) {
       geoJsonData = data.gridded_hazard?.gridded_hazard.map((hazard) => hazard?.geojson);
     }
-    setGeoJson(geoJsonData);
+    return geoJsonData;
   }, [data]);
+
+  const zoom = 5;
+  const nzCentre = [-40.946, 174.167];
 
   return (
     <>
       <LeafletMap geoJsonData={geoJson} zoom={zoom} nzCentre={nzCentre} height={'700px'} width={'100%'} setFullscreen={setFullscreen} />
-      <LeafletDrawer drawerHeight={'700px'} headerHeight={'120px'} width={'400px'} fullscreen={fullscreen}>
-        <HazardMapsControls state={state} dispatch={dispatch} />
-      </LeafletDrawer>
     </>
   );
 };
