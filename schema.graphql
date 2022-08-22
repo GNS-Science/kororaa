@@ -2,6 +2,45 @@ schema {
   query: QueryRoot
 }
 
+type GriddedHazard {
+  grid_id: RegionGrid
+  hazard_model: String
+  imt: String
+  agg: String
+  vs30: Float
+  poe: Float
+
+  """Acceleration values."""
+  values: [Float]
+  geojson(color_scale: String = "jet", color_scale_vmax: Float = 3, color_scale_vmin: Float = 0, stroke_width: Float, stroke_opacity: Float, fill_opacity: Float): JSONString
+  grid_locations: [GriddedLocation]
+}
+
+type GriddedHazardResult {
+  gridded_hazard: [GriddedHazard]
+  ok: Boolean
+}
+
+type GriddedLocation {
+  lat: Float
+  lon: Float
+  resolution: Float
+  code: String
+}
+
+type GriddedLocationResult {
+  location: GriddedLocation
+  ok: Boolean
+}
+
+"""
+Allows use of a JSON String for input / output from the GraphQL schema.
+
+Use of this type is *not recommended* as you lose the benefits of having a defined, static
+schema (one of the key benefits of GraphQL).
+"""
+scalar JSONString
+
 """An object with an ID"""
 interface Node {
   """The ID of the object."""
@@ -17,7 +56,18 @@ type QueryRoot {
 
   """About this API """
   about: String
+  gridded_location(lat: Float, lon: Float, resolution: Float): GriddedLocationResult
   hazard_curves(hazard_model: String, imts: [String], locs: [String], aggs: [String], vs30s: [Float]): ToshiHazardCurveResult
+  gridded_hazard(grid_id: RegionGrid, hazard_model_ids: [String], imts: [String], locs: [String], aggs: [String], vs30s: [Float], poes: [Float]): GriddedHazardResult
+}
+
+"""An enumeration."""
+enum RegionGrid {
+  NZ_0_1_NB_1_0
+  NZ_0_1_NB_1_1
+  NZ_0_2_NB_1_1
+  WLG_0_01_nb_1_1
+  WLG_0_05_nb_1_1
 }
 
 """Represents one set of level and values for a hazard curve."""
@@ -31,19 +81,13 @@ type ToshiHazardCurve {
 
 type ToshiHazardCurveResult {
   ok: Boolean
+  locations: [GriddedLocation]
   curves: [ToshiHazardResult]
 }
 
-"""
-All the info about a given curve
-loc
-imt
-agg
-rlz
-vs30
-"""
+"""All the info about a given curve."""
 type ToshiHazardResult {
-  hazard_model: ID
+  hazard_model: String
   loc: String
   imt: String
   agg: String
