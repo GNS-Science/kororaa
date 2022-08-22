@@ -5,10 +5,9 @@
   "dependencies": {
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
-    "@gns-science/toshi-nest": "^3.1.0",
+    "@gns-science/toshi-nest": "^1.5.2",
     "@mui/icons-material": "^5.6.2",
     "@mui/material": "^5.6.4",
-    "d3-array": "^3.2.0",
     "mathjs": "^10.5.3",
     "react": "^18.1.0",
     "react-csv": "^2.2.2",
@@ -37,9 +36,7 @@
   },
   "jest": {
     "resetMocks": false,
-    "transformIgnorePatterns": [
-      "node_modules/(?!d3-array|leaflet|react-leaflet-fullscreen-plugin)/"
-    ]
+    "transformIgnorePatterns": ["node_modules/(?!d3-array|leaflet|react-leaflet-fullscreen-plugin)/"]
   },
   "eslintConfig": {
     "extends": [
@@ -93,6 +90,6 @@
     "workerDirectory": "public"
   },
   "resolutions": {
-    "autoprefixer": "10.4.7"
+    "autoprefixer": "10.4.5"
   }
 }
