@@ -33,7 +33,7 @@ test('Controls renders correctly', () => {
   expect(screen.getByLabelText(/Probabilty of Exceedance/)).toBeInTheDocument();
 });
 
-test('When user selects another option in the location autocomplete, the new value is displayed', async () => {
+test.skip('When user selects another option in the location autocomplete, the new value is displayed', async () => {
   render(<Wrapper />);
 
   const locationSelect = screen.getByRole('combobox');
@@ -52,7 +52,7 @@ test('When user selects another option in the location autocomplete, the new val
   expect(await screen.findByText('+2')).toBeInTheDocument();
 });
 
-test('When the vs30 value changes, the new value is displayed', async () => {
+test.skip('When the vs30 value changes, the new value is displayed', async () => {
   render(<Wrapper />);
 
   const buttons = screen.getAllByRole('button');
@@ -65,7 +65,7 @@ test('When the vs30 value changes, the new value is displayed', async () => {
   expect(vs30Select).toContainHTML('Multiple selected');
 });
 
-test('When the spectral period value changes, the new value is displayed', async () => {
+test.skip('When the spectral period value changes, the new value is displayed', async () => {
   render(<Wrapper />);
 
   const buttons = screen.getAllByRole('button');
@@ -89,7 +89,7 @@ test('When the submit button is clicked, mockSetSelections is called with the cu
   expect(mockDispatch).toHaveBeenCalledWith(mockSubmitStateCall);
 });
 
-test('When vs30 value is changed, and then the submit button is clicked, mockSetState is called witht the new values', async () => {
+test.skip('When vs30 value is changed, and then the submit button is clicked, mockSetState is called witht the new values', async () => {
   render(<Wrapper />);
 
   const buttons = screen.getAllByRole('button');
@@ -120,7 +120,7 @@ test('When user types in the poe input field, the value in the field updates', a
   expect(await screen.findByDisplayValue('test input')).toBeInTheDocument();
 });
 
-test('When poe value is changed to a valid number, and then the submit button is clicked, mockSetState is called with the new poe value', async () => {
+test.skip('When poe value is changed to a valid number, and then the submit button is clicked, mockSetState is called with the new poe value', async () => {
   render(<Wrapper />);
 
   const inputs = screen.getAllByRole('textbox');
