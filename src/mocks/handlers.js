@@ -18,7 +18,7 @@ export const handlers = [
       return res(ctx.data(wellington400Response));
     }
 
-    if (locations.includes('-42.000~173.000') && vs30.includes(400)) {
+    if (locations.includes('-42~173') && vs30.includes(400)) {
       return res(ctx.data(arbitraryLatLonResponse));
     }
   }),

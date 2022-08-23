@@ -2,7 +2,7 @@ import React from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@emotion/react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { Box, CircularProgress } from '@mui/material';
+import { Box } from '@mui/material';
 
 import { Environment, RelayEnvironmentProvider } from 'react-relay/hooks';
 import RelayEnvironment from './RelayEnvironment';

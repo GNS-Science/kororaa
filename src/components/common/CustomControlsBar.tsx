@@ -11,21 +11,31 @@ interface CustomControlsBarProps {
   direction: 'row' | 'column';
 }
 
-const CustomControlsBar: React.FC<CustomControlsBarProps> = ({ children, direction }: CustomControlsBarProps) => {
-  const ControlsContainer = styled('div')({
-    width: '100%',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexWrap: 'wrap',
-    flexDirection: direction,
-  });
+const ControlsContainerRow = styled('div')({
+  width: '100%',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  flexWrap: 'wrap',
+  flexDirection: 'row',
+});
 
+const ControlsContainerColumn = styled('div')({
+  width: '100%',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  flexWrap: 'wrap',
+  flexDirection: 'column',
+});
+
+const CustomControlsBar: React.FC<CustomControlsBarProps> = ({ children, direction }: CustomControlsBarProps) => {
   const childrenWithMargin = React.Children.map(children, (child) => {
     return <Control>{child}</Control>;
   });
 
-  return <ControlsContainer>{childrenWithMargin}</ControlsContainer>;
+  if (direction === 'row') return <ControlsContainerRow>{childrenWithMargin}</ControlsContainerRow>;
+  else return <ControlsContainerColumn>{childrenWithMargin}</ControlsContainerColumn>;
 };
 
 export default CustomControlsBar;
