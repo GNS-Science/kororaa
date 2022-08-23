@@ -26,7 +26,7 @@ export type UncertaintyDatum = number[];
 
 export const getAllCurveGroups = (data: HazardChartsPlotsViewQuery$data): HazardUncertaintyChartData => {
   const curveGroups: HazardUncertaintyChartData = {};
-  console.log(data);
+
   data.hazard_curves?.curves?.forEach((currentCurve) => {
     const imt = currentCurve?.imt;
     const levels = currentCurve?.curve?.levels;
