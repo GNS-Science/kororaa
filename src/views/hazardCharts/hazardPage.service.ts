@@ -26,15 +26,16 @@ export type UncertaintyDatum = number[];
 
 export const getAllCurveGroups = (data: HazardChartsPlotsViewQuery$data): HazardUncertaintyChartData => {
   const curveGroups: HazardUncertaintyChartData = {};
-
+  console.log(data);
   data.hazard_curves?.curves?.forEach((currentCurve) => {
     const imt = currentCurve?.imt;
     const levels = currentCurve?.curve?.levels;
     const values = currentCurve?.curve?.values;
     const agg = currentCurve?.agg;
+    const location = data.hazard_curves?.locations?.filter((location) => location?.code === currentCurve?.loc);
 
     if (imt && levels && values && agg) {
-      const curveGroupKey = `${currentCurve.vs30}m/s ${roundLatLon(currentCurve.loc)} ${currentCurve.imt}`;
+      const curveGroupKey = `${location && location[0]?.key ? location[0]?.key : roundLatLon(currentCurve?.loc)} ${currentCurve.imt} ${currentCurve.vs30}m/s `;
       const curveName = getAggValue(agg);
 
       const curve: number[][] = [];

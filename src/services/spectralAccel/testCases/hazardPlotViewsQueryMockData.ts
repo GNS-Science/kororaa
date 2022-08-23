@@ -227,6 +227,16 @@ export const dataFiltered = [
 export const hazardPlotsViewQueryMockData: HazardChartsPlotsViewQuery$data = {
   hazard_curves: {
     ok: true,
+    locations: [
+      {
+        lat: -41.3,
+        lon: 174.78,
+        resolution: 0.01,
+        code: '-41.30~174.78',
+        name: 'Wellington',
+        key: 'WLG',
+      },
+    ],
     curves: [
       {
         hazard_model: 'DEMO_SLT_TAG_FINAL',
