@@ -5,6 +5,7 @@ import { graphql } from 'babel-plugin-relay/macro';
 import { HazardMapsState } from './hazardMapReducer';
 import { useLazyLoadQuery } from 'react-relay';
 import { HazardMapsQuery } from './__generated__/HazardMapsQuery.graphql';
+import { parsePoe } from './hazardMaps.service';
 
 interface HazardMapsProps {
   state: HazardMapsState;
@@ -15,10 +16,10 @@ const HazardMaps: React.FC<HazardMapsProps> = ({ state, setFullscreen }: HazardM
   const data = useLazyLoadQuery<HazardMapsQuery>(hazardMapsQuery, {
     grid_id: 'NZ_0_1_NB_1_0',
     hazard_model_ids: ['SLT_TAG_FINAL'],
-    imts: state.imts,
-    aggs: state.aggs,
-    vs30s: state.vs30s,
-    poes: state.poes,
+    imts: state.spectralPeriod,
+    aggs: state.statistic,
+    vs30s: state.vs30,
+    poes: [parsePoe(state.poe[0])],
     color_scale: state.color_scale,
     color_scale_vmax: state.color_scale_vmax,
     fill_opacity: state.fill_opacity,

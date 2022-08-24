@@ -7,6 +7,7 @@ import { flexParentCenter } from '../../utils/styleUtils';
 import { numbersToStrings } from '../hazardCharts/hazardPage.service';
 import { HazardMapsState } from './hazardMapReducer';
 import CustomControlsBar from '../../components/common/CustomControlsBar';
+import { MAP_COLOR_SCALE } from '../../utils/environmentVariables';
 
 interface HazardMapsControlsProps {
   state: HazardMapsState;
@@ -14,10 +15,10 @@ interface HazardMapsControlsProps {
 }
 
 const HazardMapsControls: React.FC<HazardMapsControlsProps> = ({ state, dispatch }: HazardMapsControlsProps) => {
-  const [imts, setImts] = useState<string>(state.imts[0]);
-  const [aggs, setAggs] = useState<string>(state.aggs[0]);
-  const [vs30s, setVs30s] = useState<number>(state.vs30s[0]);
-  const [poes, setPoes] = useState<number>(state.poes[0]);
+  const [spectralPeriod, setSepectralPeriod] = useState<string>(state.spectralPeriod[0]);
+  const [statistic, setStatistic] = useState<string>(state.statistic[0]);
+  const [vs30, setVs30] = useState<number>(state.vs30[0]);
+  const [poe, setPoe] = useState<string>(state.poe[0]);
   const [colorScale, setColorScale] = useState<string>('inferno');
   const [vmax, setVMax] = useState<string>('2.0');
   const [fillOpacity, setFillOpacity] = useState<string>('0.5');
@@ -26,10 +27,10 @@ const HazardMapsControls: React.FC<HazardMapsControlsProps> = ({ state, dispatch
 
   const handleSubmit = () => {
     dispatch({
-      imts: [imts],
-      aggs: [aggs],
-      vs30s: [vs30s],
-      poes: [poes],
+      spectralPeriod: [spectralPeriod],
+      statistic: [statistic],
+      vs30: [vs30],
+      poe: [poe],
       color_scale: colorScale,
       color_scale_vmax: Number(vmax),
       fill_opacity: Number(fillOpacity),
@@ -41,11 +42,11 @@ const HazardMapsControls: React.FC<HazardMapsControlsProps> = ({ state, dispatch
   return (
     <Box sx={{ width: '100%', ...flexParentCenter, flexDirection: 'column' }}>
       <CustomControlsBar direction="column">
-        <SelectControl name="Imts" options={['PGA', 'SA(0.1)', 'SA(0.5)', 'SA(1.0)']} selection={imts} setSelection={setImts} />
-        <SelectControl name="Aggs" options={['mean']} selection={aggs} setSelection={setAggs} />
-        <SelectControl name="Vs30s" options={numbersToStrings(hazardPageOptions.vs30s)} selection={vs30s.toString()} setSelection={(newValue: string[]) => setVs30s(Number(newValue))} />
-        <SelectControl name="Poes" options={['0.1', '0.02']} selection={poes.toString()} setSelection={(newValue: string[]) => setPoes(Number(newValue))} />
-        <SelectControl name="Color Scale" options={process.env.REACT_APP_MAP_COLOR_SCALE?.split(',')} selection={colorScale} setSelection={setColorScale} />
+        <SelectControl name="Spectral Period" options={['PGA', 'SA(0.1)', 'SA(0.5)', 'SA(1.0)']} selection={spectralPeriod} setSelection={setSepectralPeriod} />
+        <SelectControl name="Statistic" options={['mean']} selection={statistic} setSelection={setStatistic} />
+        <SelectControl name="Vs30" options={numbersToStrings(hazardPageOptions.vs30s)} selection={vs30.toString()} setSelection={(newValue: string[]) => setVs30(Number(newValue))} />
+        <SelectControl name="Probability of Exceedence" options={['10% in 50 years', '2% in 50 years']} selection={poe} setSelection={(newValue: string) => setPoe(newValue)} />
+        <SelectControl name="Color Scale" options={MAP_COLOR_SCALE} selection={colorScale} setSelection={setColorScale} />
         <TextField label="Color scale vMax" value={vmax} onChange={(event) => setVMax(event?.target.value)} variant="standard" />
         <TextField label="Fill opacity" value={fillOpacity} onChange={(event) => setFillOpacity(event?.target.value)} variant="standard" />
         <TextField label="Stroke opacity" value={strokeOpacity} onChange={(event) => setStrokeOpacity(event?.target.value)} variant="standard" />
