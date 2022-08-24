@@ -76,11 +76,9 @@ const NavBar: React.FC = () => {
             </Box>
             <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
               {pages.map((page) => (
-                <MenuItem key={page.name} onClick={handleCloseNavMenu}>
-                  <Typography variant="h5">
-                    <Link href={page.path} underline="none" color="black">
-                      {page.name}
-                    </Link>
+                <MenuItem key={page.name} onClick={handleCloseNavMenu} component={Link} href={page.path}>
+                  <Typography variant="h5" textAlign="center">
+                    {page.name}
                   </Typography>
                 </MenuItem>
               ))}

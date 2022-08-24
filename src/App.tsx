@@ -17,6 +17,7 @@ import DisclaimerLayer from './views/home/DisclaimerLayer';
 import HazardChartsPage from './views/hazardCharts/HazardChartsPage';
 import RuptureSetsPage from './views/ruptureSets/RuptureSetsPage';
 import HazardMapsPage from './views/hazardMaps/HazardMapsPage';
+import ModelComponentsPage from './views/info/ModelComponentsPage';
 
 // The Home component needs to know how to access the Relay environment, and we
 // need to specify a fallback in case it suspends:
@@ -40,6 +41,7 @@ function App(props: { environment?: Environment }) {
                     <Route path="/HazardCurves" element={<HazardChartsPage />} />
                     <Route path="/HazardCurves" element={<HazardChartsPage />} />
                     <Route path="/Resources" element={<InfoPage />} />
+                    <Route path="/Resources/ModelComponents" element={<ModelComponentsPage />} />
                     <Route path="/" element={<Home />} />
                   </Routes>
                 </DisclaimerLayer>
