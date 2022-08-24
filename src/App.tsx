@@ -12,6 +12,7 @@ import theme from './theme';
 import NavBar from './components/common/NavBar';
 import Footer from './components/common/Footer';
 import Home from './views/home/Home';
+import InfoPage from './views/info/Info';
 import DisclaimerLayer from './views/home/DisclaimerLayer';
 import HazardChartsPage from './views/hazardCharts/HazardChartsPage';
 import RuptureSetsPage from './views/ruptureSets/RuptureSetsPage';
@@ -37,6 +38,8 @@ function App(props: { environment?: Environment }) {
                     <Route path="/RuptureSets" element={<RuptureSetsPage />} />
                     <Route path="/HazardMaps" element={<HazardMapsPage />} />
                     <Route path="/HazardCurves" element={<HazardChartsPage />} />
+                    <Route path="/HazardCurves" element={<HazardChartsPage />} />
+                    <Route path="/Resources" element={<InfoPage />} />
                     <Route path="/" element={<Home />} />
                   </Routes>
                 </DisclaimerLayer>

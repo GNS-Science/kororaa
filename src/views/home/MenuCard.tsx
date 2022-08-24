@@ -1,6 +1,7 @@
 import React from 'react';
 import { styled } from '@mui/material';
 import { Card, CardContent, CardMedia, CardActions, Typography, Button } from '@mui/material';
+import { Link } from 'react-router-dom';
 
 const StyledCard = styled(Card)(({ theme }) => ({
   width: '45%',
@@ -15,9 +16,10 @@ interface MenuCardProps {
   title: string;
   text: string;
   img: string;
+  url: string;
 }
 
-const MenuCard: React.FC<MenuCardProps> = ({ title, text, img }: MenuCardProps) => {
+const MenuCard: React.FC<MenuCardProps> = ({ title, text, img, url }: MenuCardProps) => {
   return (
     <StyledCard>
       <CardContent>
@@ -26,7 +28,9 @@ const MenuCard: React.FC<MenuCardProps> = ({ title, text, img }: MenuCardProps) 
       </CardContent>
       <CardMedia component="img" height="300px" image={img} />
       <CardActions>
-        <Button size="small">Learn More</Button>
+        <Button size="small" component={Link} to={url}>
+          More
+        </Button>
       </CardActions>
     </StyledCard>
   );

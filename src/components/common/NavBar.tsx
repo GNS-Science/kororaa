@@ -30,9 +30,9 @@ const NavBar: React.FC = () => {
   const pages = [
     { name: 'Hazard Curves', path: '/HazardCurves' },
     { name: 'Hazard Maps', path: '/HazardMaps' },
-    { name: 'Rupture Sets', path: '/RuptureSets' },
-    { name: 'Info & Input Files', path: '/info' },
-    { name: 'Help', path: '/help' },
+    // { name: 'Rupture Sets', path: '/RuptureSets' },
+    { name: 'Resources', path: '/Resources' },
+    { name: 'Help', path: '/Help' },
   ];
 
   return (
@@ -66,11 +66,9 @@ const NavBar: React.FC = () => {
                 }}
               >
                 {pages.map((page) => (
-                  <MenuItem key={page.name} onClick={handleCloseNavMenu}>
+                  <MenuItem key={page.name} onClick={handleCloseNavMenu} component={Link} href={page.path}>
                     <Typography variant="h5" textAlign="center">
-                      <Link href={page.path} underline="none" color="black">
-                        {page.name}
-                      </Link>
+                      {page.name}
                     </Typography>
                   </MenuItem>
                 ))}
