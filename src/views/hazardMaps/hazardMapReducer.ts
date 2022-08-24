@@ -3,6 +3,11 @@ export type HazardMapsState = {
   aggs: string[];
   vs30s: number[];
   poes: number[];
+  color_scale: string;
+  color_scale_vmax: number;
+  fill_opacity: number;
+  stroke_width: number;
+  stroke_opacity: number;
 };
 
 export const hazardMapsReducer = (state: HazardMapsState, newState: Partial<HazardMapsState>) => {
@@ -17,4 +22,9 @@ export const initialState: HazardMapsState = {
   aggs: ['mean'],
   vs30s: [400],
   poes: [0.02],
+  color_scale: 'inferno',
+  color_scale_vmax: 2.5,
+  fill_opacity: 0.5,
+  stroke_width: 0.2,
+  stroke_opacity: 0.5,
 };

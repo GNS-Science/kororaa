@@ -19,6 +19,11 @@ const HazardMaps: React.FC<HazardMapsProps> = ({ state, setFullscreen }: HazardM
     aggs: state.aggs,
     vs30s: state.vs30s,
     poes: state.poes,
+    color_scale: state.color_scale,
+    color_scale_vmax: state.color_scale_vmax,
+    fill_opacity: state.fill_opacity,
+    stroke_width: state.stroke_width,
+    stroke_opacity: state.stroke_opacity,
   });
 
   const geoJson = useMemo(() => {

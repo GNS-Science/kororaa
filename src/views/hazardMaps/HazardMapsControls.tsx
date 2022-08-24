@@ -25,7 +25,17 @@ const HazardMapsControls: React.FC<HazardMapsControlsProps> = ({ state, dispatch
   const [strokeOpacity, setStrokeOpacity] = useState<string>('0.5');
 
   const handleSubmit = () => {
-    dispatch({ imts: [imts], aggs: [aggs], vs30s: [vs30s], poes: [poes] });
+    dispatch({
+      imts: [imts],
+      aggs: [aggs],
+      vs30s: [vs30s],
+      poes: [poes],
+      color_scale: colorScale,
+      color_scale_vmax: Number(vmax),
+      fill_opacity: Number(fillOpacity),
+      stroke_width: Number(strokeWidth),
+      stroke_opacity: Number(strokeOpacity),
+    });
   };
 
   return (
