@@ -49,8 +49,9 @@ export const getLocationDataFromLatLonString = (latLonString: string): LocationD
     return [];
   }
   const latLonArray = latLonString.split(';');
+  if (latLonArray[latLonArray.length - 1].trim().length === 0) latLonArray.pop();
   const locationDataArray = latLonArray.map((latLon) => {
-    const latLonArray = latLon.split(', ');
+    const latLonArray = latLon.split(',');
     const latLongData = { lat: Number(latLonArray[0]), lon: Number(latLonArray[1]), name: null };
     return latLongData as LocationData;
   });
@@ -60,8 +61,9 @@ export const getLocationDataFromLatLonString = (latLonString: string): LocationD
 export const validateLatLon = (latLon: string): boolean => {
   if (latLon == '') return true;
   const latLonArray = latLon.split(';');
+  if (latLonArray[latLonArray.length - 1].trim().length === 0) latLonArray.pop();
   const isValid = latLonArray.every((latLon) => {
-    const latLonArray = latLon.split(', ');
+    const latLonArray = latLon.split(',');
     const lat = Number(latLonArray[0]);
     const lon = Number(latLonArray[1]);
     return lat >= -90 && lat <= 90 && lon >= -180 && lon <= 180;
