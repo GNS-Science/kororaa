@@ -79,8 +79,8 @@ describe('Hazard Curves', () => {
     cy.get('li').contains('Christchurch').click();
     cy.get('[type="submit"]').click({ force: true });
     cy.get('[role="curve"]').should('have.length', 10);
-    cy.get('div[class="visx-legend-label"]').should('contain.text', '400m/s -41.3, 174.8 PGA');
-    cy.get('div[class="visx-legend-label"]').should('contain.text', '400m/s -43.5, 172.6 PGA');
+    cy.get('div[class="visx-legend-label"]').should('contain.text', 'WLG PGA 400m/s ');
+    cy.get('div[class="visx-legend-label"]').should('contain.text', 'CHC PGA 400m/s');
   });
 
   it('Displays curve when user inputs arbitrary latlon value', () => {
@@ -91,7 +91,7 @@ describe('Hazard Curves', () => {
     cy.get('[class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-formControl css-xzq0v4-MuiInputBase-root-MuiInput-root"]').first().type('-42, 173');
     cy.get('[type="submit"]').click({ force: true });
     cy.get('[role="curve"]').should('have.length', 5);
-    cy.get('div[class="visx-legend-label"]').should('contain.text', '400m/s -42.0, 173.0 PGA');
+    cy.get('div[class="visx-legend-label"]').should('contain.text', '-42.0, 173.0 PGA 400m/s');
   });
 
   it.skip('Displays multiple curves when user selects more than one VS30', () => {

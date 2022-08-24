@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<67ed1bfa32920ed1c567a4cbc549abfd>>
+ * @generated SignedSource<<3baad0f1f82eb57409a887278e887e19>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,10 +15,19 @@ export type HazardChartsPlotsViewQuery$variables = {
   imts?: ReadonlyArray<string | null> | null;
   locs?: ReadonlyArray<string | null> | null;
   aggs?: ReadonlyArray<string | null> | null;
+  resolution?: number | null;
 };
 export type HazardChartsPlotsViewQuery$data = {
   readonly hazard_curves: {
     readonly ok: boolean | null;
+    readonly locations: ReadonlyArray<{
+      readonly lat: number | null;
+      readonly lon: number | null;
+      readonly resolution: number | null;
+      readonly code: string | null;
+      readonly name: string | null;
+      readonly key: string | null;
+    } | null> | null;
     readonly curves: ReadonlyArray<{
       readonly hazard_model: string | null;
       readonly imt: string | null;
@@ -61,9 +70,14 @@ v3 = {
 v4 = {
   "defaultValue": null,
   "kind": "LocalArgument",
+  "name": "resolution"
+},
+v5 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
   "name": "vs30s"
 },
-v5 = [
+v6 = [
   {
     "alias": null,
     "args": [
@@ -89,6 +103,11 @@ v5 = [
       },
       {
         "kind": "Variable",
+        "name": "resolution",
+        "variableName": "resolution"
+      },
+      {
+        "kind": "Variable",
         "name": "vs30s",
         "variableName": "vs30s"
       }
@@ -103,6 +122,59 @@ v5 = [
         "args": null,
         "kind": "ScalarField",
         "name": "ok",
+        "storageKey": null
+      },
+      {
+        "alias": null,
+        "args": null,
+        "concreteType": "GriddedLocation",
+        "kind": "LinkedField",
+        "name": "locations",
+        "plural": true,
+        "selections": [
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "lat",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "lon",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "resolution",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "code",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "name",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "key",
+            "storageKey": null
+          }
+        ],
         "storageKey": null
       },
       {
@@ -187,12 +259,13 @@ return {
       (v1/*: any*/),
       (v2/*: any*/),
       (v3/*: any*/),
-      (v4/*: any*/)
+      (v4/*: any*/),
+      (v5/*: any*/)
     ],
     "kind": "Fragment",
     "metadata": null,
     "name": "HazardChartsPlotsViewQuery",
-    "selections": (v5/*: any*/),
+    "selections": (v6/*: any*/),
     "type": "QueryRoot",
     "abstractKey": null
   },
@@ -200,26 +273,27 @@ return {
   "operation": {
     "argumentDefinitions": [
       (v1/*: any*/),
-      (v4/*: any*/),
+      (v5/*: any*/),
       (v2/*: any*/),
       (v3/*: any*/),
-      (v0/*: any*/)
+      (v0/*: any*/),
+      (v4/*: any*/)
     ],
     "kind": "Operation",
     "name": "HazardChartsPlotsViewQuery",
-    "selections": (v5/*: any*/)
+    "selections": (v6/*: any*/)
   },
   "params": {
-    "cacheID": "9cebff00de66422a2573a2e81507fd68",
+    "cacheID": "eab56daf99662eaf6723e99e1904a8e3",
     "id": null,
     "metadata": {},
     "name": "HazardChartsPlotsViewQuery",
     "operationKind": "query",
-    "text": "query HazardChartsPlotsViewQuery(\n  $hazard_model: String\n  $vs30s: [Float]\n  $imts: [String]\n  $locs: [String]\n  $aggs: [String]\n) {\n  hazard_curves(hazard_model: $hazard_model, vs30s: $vs30s, imts: $imts, locs: $locs, aggs: $aggs) {\n    ok\n    curves {\n      hazard_model\n      imt\n      loc\n      agg\n      vs30\n      curve {\n        levels\n        values\n      }\n    }\n  }\n}\n"
+    "text": "query HazardChartsPlotsViewQuery(\n  $hazard_model: String\n  $vs30s: [Float]\n  $imts: [String]\n  $locs: [String]\n  $aggs: [String]\n  $resolution: Float\n) {\n  hazard_curves(hazard_model: $hazard_model, vs30s: $vs30s, imts: $imts, locs: $locs, aggs: $aggs, resolution: $resolution) {\n    ok\n    locations {\n      lat\n      lon\n      resolution\n      code\n      name\n      key\n    }\n    curves {\n      hazard_model\n      imt\n      loc\n      agg\n      vs30\n      curve {\n        levels\n        values\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "aea87fc4b1a37f050218424bafa790af";
+(node as any).hash = "7997cfe7361220c33f95a87d86c5cc76";
 
 export default node;
