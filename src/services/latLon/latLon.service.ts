@@ -61,7 +61,7 @@ export const getLocationDataFromLatLonString = (latLonString: string): LocationD
 export const validateLatLon = (latLon: string): boolean => {
   if (latLon == '') return true;
   const latLonArray = latLon.split(';');
-  if (latLonArray[latLonArray.length - 1] === '') latLonArray.pop();
+  if (latLonArray[latLonArray.length - 1].trim().length === 0) latLonArray.pop();
   const isValid = latLonArray.every((latLon) => {
     const latLonArray = latLon.split(',');
     const lat = Number(latLonArray[0]);
