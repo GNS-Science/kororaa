@@ -5,7 +5,7 @@ import { LeafletDrawer } from '@gns-science/toshi-nest';
 
 import HazardMaps from './HazardMaps';
 import { hazardMapsReducer, initialState } from './hazardMapReducer';
-import HazardMapsControls from './__generated__/HazardMapsControls';
+import HazardMapsControls from './HazardMapsControls';
 import { flexParentCenter } from '../../utils/styleUtils';
 
 const PageContainer = styled(Box)(({ theme }) => ({
