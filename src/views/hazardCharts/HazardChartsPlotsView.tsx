@@ -12,6 +12,7 @@ import HazardCharts from './HazardCharts';
 import { HazardPageState } from './hazardPageReducer';
 import { getLatLonArray } from '../../services/latLon/latLon.service';
 import { RESOLUTION, HAZARD_MODEL } from '../../utils/environmentVariables';
+import { getCSVData } from './hazardPage.service';
 
 interface HazardChartsPlotsViewProps {
   state: HazardPageState;
@@ -43,7 +44,7 @@ const HazardChartsPlotsView: React.FC<HazardChartsPlotsViewProps> = ({ state }: 
           <Button variant="contained" onClick={handlePrint}>
             Print Figures
           </Button>
-          <CSVLink data={[]} filename="hazard-curves.csv">
+          <CSVLink data={getCSVData(data)} filename="hazard-curves.csv">
             <Button variant="contained">Save Data</Button>
           </CSVLink>
         </ControlsBar>

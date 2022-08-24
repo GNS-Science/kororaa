@@ -26,7 +26,7 @@ export type UncertaintyDatum = number[];
 
 export const getAllCurveGroups = (data: HazardChartsPlotsViewQuery$data): HazardUncertaintyChartData => {
   const curveGroups: HazardUncertaintyChartData = {};
-
+  console.log(data);
   data.hazard_curves?.curves?.forEach((currentCurve) => {
     const imt = currentCurve?.imt;
     const levels = currentCurve?.curve?.levels;
@@ -100,37 +100,32 @@ const getAggValue = (agg: string): string => {
   }
 };
 
-//TODO: CSV data feature will be reindated in a future feature
-// export const getCSVdata = (PGAoptions: string[], data: HazardChartsPlotsViewQuery$data): string[][] => {
-//   const allCurves = getAllCurves(data);
-//   const CSVdata: string[][] = [];
-//   CSVdata[0] = getCSVheadings(PGAoptions);
-
-//   allCurves.PGA.map((xy) => {
-//     const row: string[] = [];
-//     row.push(xy.x.toExponential());
-
-//     for (const key in allCurves) {
-//       const position = CSVdata[0].findIndex((acceleration) => acceleration.includes(key));
-//       const currentPoint = allCurves[key].find((curve) => curve.x === xy.x);
-//       row.splice(position, 0, (currentPoint?.y as number).toExponential());
-//     }
-
-//     CSVdata.push(row);
-//   });
-
-//   return CSVdata;
-// };
-
-// const getCSVheadings = (PGAoptions: string[]): string[] => {
-//   const headings: string[] = [];
-//   headings[0] = 'acceleration';
-//   PGAoptions.map((item) => {
-//     headings.push(`PoE(${item})`);
-//   });
-
-//   return headings;
-// };
+export const getCSVData = (data: HazardChartsPlotsViewQuery$data): string[][] => {
+  const CSVData = data.hazard_curves?.curves?.map((curve) => {
+    const latLonArray = curve?.loc?.split('~');
+    if (latLonArray && curve?.curve?.values && curve?.vs30) {
+      const curveCSVData = [latLonArray[0], latLonArray[1], curve?.vs30.toString(), curve?.imt, curve?.agg];
+      curve?.curve?.values.forEach((value) => {
+        if (value) {
+          curveCSVData.push(value.toString());
+        }
+      });
+      return curveCSVData;
+    }
+  });
+  if (CSVData) {
+    const headings = ['lat', 'lon', 'vs30', 'period', 'statistic'];
+    if (data && data?.hazard_curves && data?.hazard_curves?.curves && data?.hazard_curves?.curves[0]?.curve?.levels) {
+      data?.hazard_curves?.curves[0]?.curve?.levels.forEach((level) => {
+        if (level) {
+          headings.push(level?.toString());
+        }
+      });
+    }
+    CSVData.unshift(headings);
+  }
+  return CSVData as string[][];
+};
 
 export const convertLocationsToIDs = (locations: string[]): string[] => {
   const locationIDs: string[] = [];
