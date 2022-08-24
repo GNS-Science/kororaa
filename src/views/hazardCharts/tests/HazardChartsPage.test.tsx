@@ -27,7 +27,7 @@ describe('For HazardChartsPage component', () => {
     const spectraCurveHeading = screen.queryByText(/Spectral Acceleration/);
 
     expect(heading).toBeInTheDocument();
-    expect(buttons).toHaveLength(6);
+    expect(buttons).toHaveLength(7);
     // expect(charts).toBeInTheDocument();
     expect(spectraCurveHeading).not.toBeInTheDocument();
   });
