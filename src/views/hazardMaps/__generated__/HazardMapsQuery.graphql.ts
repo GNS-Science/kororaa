@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<21864d856237c695bfa546c033b70436>>
+ * @generated SignedSource<<6f30d1bb854a7e88b8e679bab1a0c249>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,6 +17,11 @@ export type HazardMapsQuery$variables = {
   aggs?: ReadonlyArray<string | null> | null;
   vs30s?: ReadonlyArray<number | null> | null;
   poes?: ReadonlyArray<number | null> | null;
+  color_scale?: string | null;
+  color_scale_vmax?: number | null;
+  fill_opacity?: number | null;
+  stroke_width?: number | null;
+  stroke_opacity?: number | null;
 };
 export type HazardMapsQuery$data = {
   readonly gridded_hazard: {
@@ -44,29 +49,54 @@ var v0 = {
 v1 = {
   "defaultValue": null,
   "kind": "LocalArgument",
-  "name": "grid_id"
+  "name": "color_scale"
 },
 v2 = {
   "defaultValue": null,
   "kind": "LocalArgument",
-  "name": "hazard_model_ids"
+  "name": "color_scale_vmax"
 },
 v3 = {
   "defaultValue": null,
   "kind": "LocalArgument",
-  "name": "imts"
+  "name": "fill_opacity"
 },
 v4 = {
   "defaultValue": null,
   "kind": "LocalArgument",
-  "name": "poes"
+  "name": "grid_id"
 },
 v5 = {
   "defaultValue": null,
   "kind": "LocalArgument",
+  "name": "hazard_model_ids"
+},
+v6 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
+  "name": "imts"
+},
+v7 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
+  "name": "poes"
+},
+v8 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
+  "name": "stroke_opacity"
+},
+v9 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
+  "name": "stroke_width"
+},
+v10 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
   "name": "vs30s"
 },
-v6 = [
+v11 = [
   {
     "alias": null,
     "args": [
@@ -151,7 +181,33 @@ v6 = [
           },
           {
             "alias": null,
-            "args": null,
+            "args": [
+              {
+                "kind": "Variable",
+                "name": "color_scale",
+                "variableName": "color_scale"
+              },
+              {
+                "kind": "Variable",
+                "name": "color_scale_vmax",
+                "variableName": "color_scale_vmax"
+              },
+              {
+                "kind": "Variable",
+                "name": "fill_opacity",
+                "variableName": "fill_opacity"
+              },
+              {
+                "kind": "Variable",
+                "name": "stroke_opacity",
+                "variableName": "stroke_opacity"
+              },
+              {
+                "kind": "Variable",
+                "name": "stroke_width",
+                "variableName": "stroke_width"
+              }
+            ],
             "kind": "ScalarField",
             "name": "geojson",
             "storageKey": null
@@ -171,40 +227,50 @@ return {
       (v2/*: any*/),
       (v3/*: any*/),
       (v4/*: any*/),
-      (v5/*: any*/)
+      (v5/*: any*/),
+      (v6/*: any*/),
+      (v7/*: any*/),
+      (v8/*: any*/),
+      (v9/*: any*/),
+      (v10/*: any*/)
     ],
     "kind": "Fragment",
     "metadata": null,
     "name": "HazardMapsQuery",
-    "selections": (v6/*: any*/),
+    "selections": (v11/*: any*/),
     "type": "QueryRoot",
     "abstractKey": null
   },
   "kind": "Request",
   "operation": {
     "argumentDefinitions": [
+      (v4/*: any*/),
+      (v5/*: any*/),
+      (v6/*: any*/),
+      (v0/*: any*/),
+      (v10/*: any*/),
+      (v7/*: any*/),
       (v1/*: any*/),
       (v2/*: any*/),
       (v3/*: any*/),
-      (v0/*: any*/),
-      (v5/*: any*/),
-      (v4/*: any*/)
+      (v9/*: any*/),
+      (v8/*: any*/)
     ],
     "kind": "Operation",
     "name": "HazardMapsQuery",
-    "selections": (v6/*: any*/)
+    "selections": (v11/*: any*/)
   },
   "params": {
-    "cacheID": "556f5206b2769c9fdef8e96ddcf3474a",
+    "cacheID": "0b3d81f6ac9c9651185925c393bfc977",
     "id": null,
     "metadata": {},
     "name": "HazardMapsQuery",
     "operationKind": "query",
-    "text": "query HazardMapsQuery(\n  $grid_id: RegionGrid\n  $hazard_model_ids: [String]\n  $imts: [String]\n  $aggs: [String]\n  $vs30s: [Float]\n  $poes: [Float]\n) {\n  gridded_hazard(grid_id: $grid_id, hazard_model_ids: $hazard_model_ids, imts: $imts, aggs: $aggs, vs30s: $vs30s, poes: $poes) {\n    ok\n    gridded_hazard {\n      grid_id\n      hazard_model\n      imt\n      agg\n      geojson\n    }\n  }\n}\n"
+    "text": "query HazardMapsQuery(\n  $grid_id: RegionGrid\n  $hazard_model_ids: [String]\n  $imts: [String]\n  $aggs: [String]\n  $vs30s: [Float]\n  $poes: [Float]\n  $color_scale: String\n  $color_scale_vmax: Float\n  $fill_opacity: Float\n  $stroke_width: Float\n  $stroke_opacity: Float\n) {\n  gridded_hazard(grid_id: $grid_id, hazard_model_ids: $hazard_model_ids, imts: $imts, aggs: $aggs, vs30s: $vs30s, poes: $poes) {\n    ok\n    gridded_hazard {\n      grid_id\n      hazard_model\n      imt\n      agg\n      geojson(color_scale: $color_scale, color_scale_vmax: $color_scale_vmax, fill_opacity: $fill_opacity, stroke_width: $stroke_width, stroke_opacity: $stroke_opacity)\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "d0d70f31de22a5e4eef281571666ef80";
+(node as any).hash = "913b387455e250f6a48665e88a6335d5";
 
 export default node;

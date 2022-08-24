@@ -42,7 +42,19 @@ const HazardMaps: React.FC<HazardMapsProps> = ({ state, setFullscreen }: HazardM
 export default HazardMaps;
 
 export const hazardMapsQuery = graphql`
-  query HazardMapsQuery($grid_id: RegionGrid, $hazard_model_ids: [String], $imts: [String], $aggs: [String], $vs30s: [Float], $poes: [Float]) {
+  query HazardMapsQuery(
+    $grid_id: RegionGrid
+    $hazard_model_ids: [String]
+    $imts: [String]
+    $aggs: [String]
+    $vs30s: [Float]
+    $poes: [Float]
+    $color_scale: String
+    $color_scale_vmax: Float
+    $fill_opacity: Float
+    $stroke_width: Float
+    $stroke_opacity: Float
+  ) {
     gridded_hazard(grid_id: $grid_id, hazard_model_ids: $hazard_model_ids, imts: $imts, aggs: $aggs, vs30s: $vs30s, poes: $poes) {
       ok
       gridded_hazard {
@@ -50,7 +62,7 @@ export const hazardMapsQuery = graphql`
         hazard_model
         imt
         agg
-        geojson
+        geojson(color_scale: $color_scale, color_scale_vmax: $color_scale_vmax, fill_opacity: $fill_opacity, stroke_width: $stroke_width, stroke_opacity: $stroke_opacity)
       }
     }
   }
