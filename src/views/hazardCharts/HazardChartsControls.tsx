@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { InputAdornment, Button, Input, FormControl, InputLabel, Box, Autocomplete, TextField, FormHelperText, FormControlLabel, Switch } from '@mui/material';
+import { InputAdornment, Button, Input, FormControl, InputLabel, Box, Autocomplete, TextField, FormHelperText, FormControlLabel, Switch, IconButton } from '@mui/material';
+import ClearIcon from '@mui/icons-material/Clear';
 
 import CustomControlsBar from '../../components/common/CustomControlsBar';
 import { hazardPageOptions } from './constants/hazardPageOptions';
@@ -89,7 +90,21 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, disp
         />
         <FormControl sx={{ width: 200 }} variant="standard">
           <InputLabel htmlFor="component-helper">Lat,Lon</InputLabel>
-          <Input id="component-helper" name="lon" value={latLon} onChange={handleLatLonChange} onBlurCapture={handleLatLonBlur} aria-describedby="component-helper-text" />
+          <Input
+            id="component-helper"
+            name="lon"
+            value={latLon}
+            onChange={handleLatLonChange}
+            onBlurCapture={handleLatLonBlur}
+            aria-describedby="component-helper-text"
+            endAdornment={
+              <InputAdornment position="end" onClick={() => setLatLon('')}>
+                <IconButton>
+                  <ClearIcon />
+                </IconButton>
+              </InputAdornment>
+            }
+          />
           {latLonError && <FormHelperText id="component-helper-text">{latLonErrorMessage}</FormHelperText>}
         </FormControl>
         <SelectControlMultiple
