@@ -88,7 +88,7 @@ describe('Hazard Curves', () => {
     cy.get('li').contains('Christchurch').click();
     cy.get('div[class="MuiAutocomplete-endAdornment css-1q60rmi-MuiAutocomplete-endAdornment"]').click();
     cy.get('li').contains('Wellington').click();
-    cy.get('[class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-formControl css-xzq0v4-MuiInputBase-root-MuiInput-root"]').first().type('-42, 173');
+    cy.get('[class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-1x51dt5-MuiInputBase-input-MuiInput-input"]').first().type('-42, 173');
     cy.get('[type="submit"]').click({ force: true });
     cy.get('[role="curve"]').should('have.length', 5);
     cy.get('div[class="visx-legend-label"]').should('contain.text', '-42.0, 173.0 PGA 400m/s');
