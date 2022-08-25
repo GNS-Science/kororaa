@@ -6,6 +6,7 @@ import { HazardMapsState } from './hazardMapReducer';
 import { useLazyLoadQuery } from 'react-relay';
 import { HazardMapsQuery } from './__generated__/HazardMapsQuery.graphql';
 import { parsePoe } from './hazardMaps.service';
+import { HAZARD_MODEL } from '../../utils/environmentVariables';
 
 interface HazardMapsProps {
   state: HazardMapsState;
@@ -15,7 +16,7 @@ interface HazardMapsProps {
 const HazardMaps: React.FC<HazardMapsProps> = ({ state, setFullscreen }: HazardMapsProps) => {
   const data = useLazyLoadQuery<HazardMapsQuery>(hazardMapsQuery, {
     grid_id: 'NZ_0_1_NB_1_0',
-    hazard_model_ids: ['SLT_TAG_FINAL'],
+    hazard_model_ids: [HAZARD_MODEL],
     imts: state.spectralPeriod,
     aggs: state.statistic,
     vs30s: state.vs30,

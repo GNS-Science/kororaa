@@ -2,12 +2,10 @@ import React, { useState } from 'react';
 import { Box, Button, TextField } from '@mui/material';
 import { SelectControl } from '@gns-science/toshi-nest';
 
-import { hazardPageOptions } from '../hazardCharts/constants/hazardPageOptions';
 import { flexParentCenter } from '../../utils/styleUtils';
-import { numbersToStrings } from '../hazardCharts/hazardPage.service';
 import { HazardMapsState } from './hazardMapReducer';
 import CustomControlsBar from '../../components/common/CustomControlsBar';
-import { MAP_COLOR_SCALE } from '../../utils/environmentVariables';
+import { MAP_COLOR_SCALE, MAP_IMTS, MAP_POES, MAP_STATISTICS, MAP_VS30S } from '../../utils/environmentVariables';
 
 interface HazardMapsControlsProps {
   state: HazardMapsState;
@@ -42,10 +40,10 @@ const HazardMapsControls: React.FC<HazardMapsControlsProps> = ({ state, dispatch
   return (
     <Box sx={{ width: '100%', ...flexParentCenter, flexDirection: 'column' }}>
       <CustomControlsBar direction="column">
-        <SelectControl name="Spectral Period" options={['PGA', 'SA(0.1)', 'SA(0.5)', 'SA(1.0)']} selection={spectralPeriod} setSelection={setSepectralPeriod} />
-        <SelectControl name="Statistic" options={['mean']} selection={statistic} setSelection={setStatistic} />
-        <SelectControl name="Vs30" options={numbersToStrings(hazardPageOptions.vs30s)} selection={vs30.toString()} setSelection={(newValue: string[]) => setVs30(Number(newValue))} />
-        <SelectControl name="Probability of Exceedence" options={['10% in 50 years', '2% in 50 years']} selection={poe} setSelection={(newValue: string) => setPoe(newValue)} />
+        <SelectControl name="Spectral Period" options={MAP_IMTS} selection={spectralPeriod} setSelection={setSepectralPeriod} />
+        <SelectControl name="Statistic" options={MAP_STATISTICS} selection={statistic} setSelection={setStatistic} />
+        <SelectControl name="Vs30" options={MAP_VS30S} selection={vs30.toString()} setSelection={(newValue: string[]) => setVs30(Number(newValue))} />
+        <SelectControl name="Probability of Exceedence" options={MAP_POES} selection={poe} setSelection={(newValue: string) => setPoe(newValue)} />
         <SelectControl name="Color Scale" options={MAP_COLOR_SCALE} selection={colorScale} setSelection={setColorScale} />
         <TextField label="Color scale vMax" value={vmax} onChange={(event) => setVMax(event?.target.value)} variant="standard" />
         <TextField label="Fill opacity" value={fillOpacity} onChange={(event) => setFillOpacity(event?.target.value)} variant="standard" />
