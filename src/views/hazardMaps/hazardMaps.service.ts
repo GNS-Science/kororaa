@@ -10,8 +10,11 @@ export const parsePoe = (poe: string): number => {
 };
 
 export const getHazardMapCSVData = (data: string[], vs30: number, imt: string, poe: string) => {
-  const csvData: (number | string)[][] = [];
-  csvData.push([`vs30=${vs30}`, `specctral period=${imt}`, `Poe=${poe}`]);
+  const csvData: (number | string)[][] = [
+    [`vs30=${vs30}`, `specctral period=${imt}`, `Poe=${poe}`],
+    ['lon', 'lat', 'shaking intensity(g)'],
+  ];
+
   data.forEach((geojsonString) => {
     const geojsonObject = JSON.parse(geojsonString);
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
