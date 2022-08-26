@@ -1,12 +1,14 @@
 import React, { useMemo } from 'react';
 import { LeafletMap } from '@gns-science/toshi-nest';
 import { graphql } from 'babel-plugin-relay/macro';
+import { Fab } from '@mui/material';
+import { CSVLink } from 'react-csv';
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 
 import { HazardMapsState } from './hazardMapReducer';
 import { useLazyLoadQuery } from 'react-relay';
 import { HazardMapsQuery } from './__generated__/HazardMapsQuery.graphql';
-import { parsePoe } from './hazardMaps.service';
-import { HAZARD_MODEL } from '../../utils/environmentVariables';
+import { getHazardMapCSVData, parsePoe } from './hazardMaps.service';
 
 interface HazardMapsProps {
   state: HazardMapsState;
@@ -16,7 +18,7 @@ interface HazardMapsProps {
 const HazardMaps: React.FC<HazardMapsProps> = ({ state, setFullscreen }: HazardMapsProps) => {
   const data = useLazyLoadQuery<HazardMapsQuery>(hazardMapsQuery, {
     grid_id: 'NZ_0_1_NB_1_0',
-    hazard_model_ids: [HAZARD_MODEL],
+    hazard_model_ids: ['SLT_TAG_FINAL'],
     imts: state.spectralPeriod,
     aggs: state.statistic,
     vs30s: state.vs30,
@@ -41,6 +43,11 @@ const HazardMaps: React.FC<HazardMapsProps> = ({ state, setFullscreen }: HazardM
 
   return (
     <>
+      <CSVLink data={getHazardMapCSVData(geoJson, state.vs30[0], state.spectralPeriod[0], state.poe[0])} filename="hazard-maps.csv">
+        <Fab sx={{ position: 'absolute', top: '128px', right: '70px' }} color="primary">
+          <ArrowDownwardIcon />
+        </Fab>
+      </CSVLink>
       <LeafletMap geoJsonData={geoJson} zoom={zoom} nzCentre={nzCentre} height={'700px'} width={'100%'} setFullscreen={setFullscreen} />
     </>
   );
