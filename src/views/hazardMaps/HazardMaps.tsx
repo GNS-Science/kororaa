@@ -1,11 +1,14 @@
 import React, { useMemo } from 'react';
 import { LeafletMap } from '@gns-science/toshi-nest';
 import { graphql } from 'babel-plugin-relay/macro';
+import { Fab } from '@mui/material';
+import { CSVLink } from 'react-csv';
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 
 import { HazardMapsState } from './hazardMapReducer';
 import { useLazyLoadQuery } from 'react-relay';
 import { HazardMapsQuery } from './__generated__/HazardMapsQuery.graphql';
-import { parsePoe } from './hazardMaps.service';
+import { getHazardMapCSVData, parsePoe } from './hazardMaps.service';
 
 interface HazardMapsProps {
   state: HazardMapsState;
@@ -40,6 +43,11 @@ const HazardMaps: React.FC<HazardMapsProps> = ({ state, setFullscreen }: HazardM
 
   return (
     <>
+      <CSVLink data={getHazardMapCSVData(geoJson, state.vs30[0], state.spectralPeriod[0], state.poe[0])} filename="hazard-maps.csv">
+        <Fab sx={{ position: 'absolute', top: '128px', right: '70px' }} color="primary">
+          <ArrowDownwardIcon />
+        </Fab>
+      </CSVLink>
       <LeafletMap geoJsonData={geoJson} zoom={zoom} nzCentre={nzCentre} height={'700px'} width={'100%'} setFullscreen={setFullscreen} />
     </>
   );
