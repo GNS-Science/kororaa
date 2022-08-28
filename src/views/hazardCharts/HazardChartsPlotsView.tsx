@@ -16,9 +16,10 @@ import { getCSVData } from './hazardPage.service';
 
 interface HazardChartsPlotsViewProps {
   state: HazardPageState;
+  dispatch: React.Dispatch<Partial<HazardPageState>>;
 }
 
-const HazardChartsPlotsView: React.FC<HazardChartsPlotsViewProps> = ({ state }: HazardChartsPlotsViewProps) => {
+const HazardChartsPlotsView: React.FC<HazardChartsPlotsViewProps> = ({ state, dispatch }: HazardChartsPlotsViewProps) => {
   const printTargetRef = useRef<HTMLDivElement>(null);
 
   const data = useLazyLoadQuery<HazardChartsPlotsViewQuery>(hazardChartsPlotsViewQuery, {
@@ -37,7 +38,7 @@ const HazardChartsPlotsView: React.FC<HazardChartsPlotsViewProps> = ({ state }: 
   return (
     <Box role="plotsView" sx={{ width: '100%' }}>
       <div ref={printTargetRef}>
-        <HazardCharts data={data} state={state} />
+        <HazardCharts data={data} state={state} dispatch={dispatch} />
       </div>
       <Box sx={{ height: 70, marginTop: '20px' }}>
         <ControlsBar>

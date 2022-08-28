@@ -7,13 +7,15 @@ import { HazardChartsPlotsViewQuery$data } from './__generated__/HazardChartsPlo
 import { getAllCurveGroups, getFilteredCurveGroups, getLocationList } from './hazardPage.service';
 import { HazardPageState } from './hazardPageReducer';
 import { addColorsToCurves, getSpectralAccelUncertaintyCurves } from '../../services/spectralAccel/spectralAccel.service';
+import { HazardChartsSettings } from './HazardChartsSettings';
 
 interface HazardChartsProps {
   data: HazardChartsPlotsViewQuery$data;
   state: HazardPageState;
+  dispatch: React.Dispatch<Partial<HazardPageState>>;
 }
 
-const HazardCharts: React.FC<HazardChartsProps> = ({ data, state }: HazardChartsProps) => {
+const HazardCharts: React.FC<HazardChartsProps> = ({ data, state, dispatch }: HazardChartsProps) => {
   const locationList = useMemo(() => getLocationList(data), [data]);
   const allCurveGroups = useMemo(() => getAllCurveGroups(data), [data]);
   const filteredCurveGroups = useMemo(() => getFilteredCurveGroups(allCurveGroups, state.imts), [allCurveGroups, state.imts]);
@@ -42,6 +44,7 @@ const HazardCharts: React.FC<HazardChartsProps> = ({ data, state }: HazardCharts
     <>
       <HazardChartsContainer data-testid="hazardChartsContainer">
         <ChartContainer>
+          <HazardChartsSettings spectral={false} state={state} dispatch={dispatch} />
           <GroupCurveChartResponsive
             scaleType={state.xScale}
             ySacleType={'log'}
@@ -60,6 +63,7 @@ const HazardCharts: React.FC<HazardChartsProps> = ({ data, state }: HazardCharts
         </ChartContainer>
         {state.poe && (
           <ChartContainer>
+            <HazardChartsSettings spectral={true} state={state} dispatch={dispatch} />
             <GroupCurveChartResponsive
               testId="sa-chart"
               spectral={true}
