@@ -44,14 +44,14 @@ const HazardMaps: React.FC<HazardMapsProps> = ({ state, setFullscreen }: HazardM
   const colors = useMemo(() => ['#f7fcfd', '#e5f5f9', '#ccece6', '#99d8c9', '#66c2a4', '#41ae76', '#238b45', '#006d2c', '#00441b'], []);
 
   return (
-    <Box sx={{ width: '100%', height: '700px' }}>
+    <Box sx={{ width: '100%', height: '900px' }}>
       <CSVLink data={getHazardMapCSVData(geoJson, state.vs30[0], state.spectralPeriod[0], state.poe[0])} filename="hazard-maps.csv">
         <Fab sx={{ position: 'absolute', top: '128px', right: '70px' }} color="primary">
           <ArrowDownwardIcon />
         </Fab>
       </CSVLink>
-      <ColorBar width={300} height={35} colors={colors} tickValues={[0, 0.5, 1, 1.5]} bottom="250px" right="10px" />
-      <LeafletMap geoJsonData={geoJson} zoom={zoom} nzCentre={nzCentre} height={'700px'} width={'100%'} setFullscreen={setFullscreen} />
+      <ColorBar width={300} height={35} colors={colors} tickValues={[0, 0.5, 1, 1.5]} bottom="200px" right="10px" />
+      <LeafletMap geoJsonData={geoJson} zoom={zoom} nzCentre={nzCentre} height={'900px'} width={'100%'} setFullscreen={setFullscreen} />
     </Box>
   );
 };
