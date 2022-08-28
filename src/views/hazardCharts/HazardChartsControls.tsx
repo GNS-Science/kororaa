@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { InputAdornment, Button, Input, FormControl, InputLabel, Box, Autocomplete, TextField, FormHelperText, FormControlLabel, Switch, IconButton } from '@mui/material';
+import { InputAdornment, Button, Input, FormControl, InputLabel, Box, Autocomplete, TextField, FormHelperText, IconButton } from '@mui/material';
 import ClearIcon from '@mui/icons-material/Clear';
 
 import CustomControlsBar from '../../components/common/CustomControlsBar';
@@ -132,30 +132,6 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, disp
         <Button variant="contained" type="submit" onClick={handleSubmit}>
           Submit
         </Button>
-        <FormControlLabel
-          labelPlacement="top"
-          control={
-            <Switch
-              checked={state.showUncertainty}
-              onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                dispatch({ showUncertainty: event?.target.checked });
-              }}
-            />
-          }
-          label="Uncertainty"
-        />
-        <FormControlLabel
-          labelPlacement="top"
-          control={
-            <Switch
-              checked={state.xScale === 'linear'}
-              onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                dispatch({ xScale: event?.target.checked ? 'linear' : 'log' });
-              }}
-            />
-          }
-          label="log/linear"
-        />
       </CustomControlsBar>
     </Box>
   );

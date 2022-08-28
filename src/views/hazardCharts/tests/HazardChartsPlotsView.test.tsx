@@ -7,13 +7,13 @@ import { hazardPageReducerInitialState, HazardPageState } from '../hazardPageRed
 
 const mockState: HazardPageState = hazardPageReducerInitialState;
 
-const TestRender = () => {
-  return (
-    <RelayEnvironmentProvider environment={RelayEnvironment}>
-      <HazardChartsPlotsView state={mockState} />
-    </RelayEnvironmentProvider>
-  );
-};
+// const TestRender = () => {
+//   return (
+//     <RelayEnvironmentProvider environment={RelayEnvironment}>
+//       <HazardChartsPlotsView state={mockState} />
+//     </RelayEnvironmentProvider>
+//   );
+// };
 
 test('A query is automatically loaded, with hazard curve showing, as well as the print and download buttons', async () => {
   expect(true).toBeTruthy();

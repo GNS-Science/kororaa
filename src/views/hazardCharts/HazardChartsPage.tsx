@@ -32,7 +32,7 @@ const HazardChartsPage: React.FC = () => {
       </Box>
       <HazardChartsControls state={state} dispatch={dispatch} />
       <React.Suspense fallback={<CircularProgress />}>
-        <HazardChartsPlotsView state={state} />
+        <HazardChartsPlotsView state={state} dispatch={dispatch} />
       </React.Suspense>
     </PageContainer>
   );
