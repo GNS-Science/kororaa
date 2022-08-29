@@ -8,6 +8,7 @@
     "@gns-science/toshi-nest": "^3.3.0",
     "@mui/icons-material": "^5.6.2",
     "@mui/material": "^5.6.4",
+    "html-to-image": "^1.10.6",
     "mathjs": "^10.5.3",
     "react": "^18.1.0",
     "react-csv": "^2.2.2",
@@ -36,7 +37,9 @@
   },
   "jest": {
     "resetMocks": false,
-    "transformIgnorePatterns": ["node_modules/(?!d3-array|leaflet|react-leaflet-fullscreen-plugin)/"]
+    "transformIgnorePatterns": [
+      "node_modules/(?!d3-array|leaflet|react-leaflet-fullscreen-plugin)/"
+    ]
   },
   "eslintConfig": {
     "extends": [
