@@ -33,24 +33,12 @@ jobs:
           echo REACT_APP_GRAPHQL_API_KEY=${{ secrets.REACT_APP_GRAPHQL_API_KEY}} >> .env
           echo REACT_APP_RESOLUTION=${{ secrets.REACT_APP_RESOLUTION}} >> .env
           echo REACT_APP_HAZARD_MODEL=${{ secrets.REACT_APP_HAZARD_MODEL}} >> .env
-
           REACT_APP_GRID_ID=${{ secrets.REACT_APP_GRID_ID }} >> .env
           REACT_APP_MAP_IMTS=${{ secrets.REACT_APP_MAP_IMTS }} >> .env
           REACT_APP_MAP_VS30S=${{ secrets.REACT_APP_MAP_VS30S }} >> .env
           REACT_APP_MAP_STATISTICS=${{ secrets.REACT_APP_MAP_STATISTICS }} >> .env
           REACT_APP_MAP_POES=${{ secrets.REACT_APP_MAP_POES }} >> .env
           REACT_APP_MAP_COLOR_SCALE=${{ secrets.REACT_APP_MAP_COLOR_SCALE }} >> .env
-
-//Only set this to test when running cypress locally, activates mock service worker. If you want API to run leave it unset.
-REACT_APP_MSW=test
-
-
-
-
-
-
-
-
 
       - name: Yarn Build & Test
         env:
