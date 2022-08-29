@@ -23,8 +23,7 @@ export const HazardChartsSettings: React.FC<HazardChartsSettingsProps> = ({ spec
   return (
     <div style={{ height: '0px' }}>
       <IconButton
-        sx={{ left: '515px', zIndex: 10000 }}
-        // sx={{ left: '30px', zIndex: 10000 }}
+        sx={{ left: '30px', zIndex: 10000 }}
         id="positioned-button"
         aria-controls={open ? 'positioned-menu' : undefined}
         aria-haspopup="true"
@@ -59,7 +58,7 @@ export const HazardChartsSettings: React.FC<HazardChartsSettingsProps> = ({ spec
                 }}
               />
             }
-            label="Uncertainty"
+            label="uncertainty"
           />
         </MenuItem>
         {!spectral && (
@@ -74,11 +73,10 @@ export const HazardChartsSettings: React.FC<HazardChartsSettingsProps> = ({ spec
                   }}
                 />
               }
-              label="log/linear"
+              label="linear x-scale"
             />
           </MenuItem>
         )}
-        <MenuItem>Print</MenuItem>
       </Menu>
     </div>
   );
