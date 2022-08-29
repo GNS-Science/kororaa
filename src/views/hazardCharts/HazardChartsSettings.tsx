@@ -1,18 +1,16 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { FormControlLabel, Menu, Checkbox, MenuItem, IconButton } from '@mui/material';
 import SettingsIcon from '@mui/icons-material/Settings';
-import { toPng } from 'html-to-image';
 
 import { HazardPageState } from './hazardPageReducer';
 
 interface HazardChartsSettingsProps {
-  ref: React.RefObject<HTMLDivElement>;
   spectral: boolean;
   state: HazardPageState;
   dispatch: React.Dispatch<Partial<HazardPageState>>;
 }
 
-export const HazardChartsSettings: React.FC<HazardChartsSettingsProps> = ({ ref, spectral, state, dispatch }: HazardChartsSettingsProps) => {
+export const HazardChartsSettings: React.FC<HazardChartsSettingsProps> = ({ spectral, state, dispatch }: HazardChartsSettingsProps) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -21,24 +19,6 @@ export const HazardChartsSettings: React.FC<HazardChartsSettingsProps> = ({ ref,
   const handleClose = () => {
     setAnchorEl(null);
   };
-
-  const onButtonClick = useCallback(() => {
-    if (ref.current === null) {
-      console.log('null');
-      return;
-    }
-
-    toPng(ref.current, { cacheBust: true })
-      .then((dataUrl) => {
-        const link = document.createElement('a');
-        link.download = 'my-image-name.png';
-        link.href = dataUrl;
-        link.click();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, [ref]);
 
   return (
     <div style={{ height: '0px' }}>
@@ -98,7 +78,7 @@ export const HazardChartsSettings: React.FC<HazardChartsSettingsProps> = ({ ref,
             />
           </MenuItem>
         )}
-        <MenuItem onClick={onButtonClick}>Print</MenuItem>
+        <MenuItem>Print</MenuItem>
       </Menu>
     </div>
   );

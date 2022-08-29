@@ -1,4 +1,4 @@
-import React, { useMemo, useRef } from 'react';
+import React, { useMemo } from 'react';
 import { Box } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { GroupCurveChartResponsive } from '@gns-science/toshi-nest';
@@ -22,8 +22,7 @@ const HazardCharts: React.FC<HazardChartsProps> = ({ data, state, dispatch }: Ha
   const curveGroupWithColors = useMemo(() => addColorsToCurves(filteredCurveGroups), [filteredCurveGroups]);
   const saCurvesUncertainty = useMemo(() => getSpectralAccelUncertaintyCurves(state.vs30s, locationList, data, state.poe), [locationList, state, data]);
   const saCurvesWithColors = useMemo(() => addColorsToCurves(saCurvesUncertainty), [saCurvesUncertainty]);
-  const hazardRef = useRef<HTMLDivElement>(null);
-  const spectralRef = useRef<HTMLDivElement>(null);
+
   const HazardChartsContainer = styled(Box)(({ theme }) => ({
     display: 'flex',
     padding: 20,
@@ -45,9 +44,8 @@ const HazardCharts: React.FC<HazardChartsProps> = ({ data, state, dispatch }: Ha
     <>
       <HazardChartsContainer data-testid="hazardChartsContainer">
         <ChartContainer>
-          <HazardChartsSettings ref={hazardRef} spectral={false} state={state} dispatch={dispatch} />
+          <HazardChartsSettings spectral={false} state={state} dispatch={dispatch} />
           <GroupCurveChartResponsive
-            ref={hazardRef}
             scaleType={state.xScale}
             ySacleType={'log'}
             xLabel=" Acceleration (g)"
@@ -65,9 +63,8 @@ const HazardCharts: React.FC<HazardChartsProps> = ({ data, state, dispatch }: Ha
         </ChartContainer>
         {state.poe && (
           <ChartContainer>
-            <HazardChartsSettings ref={spectralRef} spectral={true} state={state} dispatch={dispatch} />
+            <HazardChartsSettings spectral={true} state={state} dispatch={dispatch} />
             <GroupCurveChartResponsive
-              ref={spectralRef}
               testId="sa-chart"
               spectral={true}
               scaleType={'linear'}
