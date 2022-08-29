@@ -6,7 +6,8 @@ export type HazardPageState = {
   vs30s: number[];
   imts: string[];
   poe: number | undefined;
-  showUncertainty: boolean;
+  hazardUncertainty: boolean;
+  spectralUncertainty: boolean;
   xScale: 'log' | 'linear';
 };
 
@@ -15,7 +16,8 @@ export const hazardPageReducerInitialState: HazardPageState = {
   vs30s: [hazardPageOptions.vs30s[0]],
   imts: [hazardPageOptions.imts[0]],
   poe: undefined,
-  showUncertainty: true,
+  hazardUncertainty: true,
+  spectralUncertainty: true,
   xScale: 'log',
 };
 export interface LocationData {

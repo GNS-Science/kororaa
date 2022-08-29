@@ -36,7 +36,9 @@
   },
   "jest": {
     "resetMocks": false,
-    "transformIgnorePatterns": ["node_modules/(?!d3-array|leaflet|react-leaflet-fullscreen-plugin)/"]
+    "transformIgnorePatterns": [
+      "node_modules/(?!d3-array|leaflet|react-leaflet-fullscreen-plugin)/"
+    ]
   },
   "eslintConfig": {
     "extends": [
