@@ -9,6 +9,7 @@ import { HazardMapsState } from './hazardMapReducer';
 import { useLazyLoadQuery } from 'react-relay';
 import { HazardMapsQuery } from './__generated__/HazardMapsQuery.graphql';
 import { getHazardMapCSVData, parsePoe } from './hazardMaps.service';
+import { GRID_ID, HAZARD_MODEL } from '../../utils/environmentVariables';
 
 interface HazardMapsProps {
   state: HazardMapsState;
@@ -17,8 +18,8 @@ interface HazardMapsProps {
 
 const HazardMaps: React.FC<HazardMapsProps> = ({ state, setFullscreen }: HazardMapsProps) => {
   const data = useLazyLoadQuery<HazardMapsQuery>(hazardMapsQuery, {
-    grid_id: 'NZ_0_1_NB_1_0',
-    hazard_model_ids: ['SLT_TAG_FINAL'],
+    grid_id: GRID_ID,
+    hazard_model_ids: [HAZARD_MODEL],
     imts: state.spectralPeriod,
     aggs: state.statistic,
     vs30s: state.vs30,
@@ -50,8 +51,8 @@ const HazardMaps: React.FC<HazardMapsProps> = ({ state, setFullscreen }: HazardM
           <ArrowDownwardIcon />
         </Fab>
       </CSVLink>
-      <ColorBar width={300} height={35} colors={colors} tickValues={[0, 0.5, 1, 1.5]} bottom="250px" right="10px" />
       <LeafletMap geoJsonData={geoJson} zoom={zoom} nzCentre={nzCentre} height={'700px'} width={'100%'} setFullscreen={setFullscreen} />
+      <ColorBar width={300} height={35} colors={colors} tickValues={[0, 0.5, 1, 1.5]} style={{ position: 'relative', zIndex: 10000000, top: '-125px', left: 'calc(100% - 365px)' }} />
     </Box>
   );
 };
