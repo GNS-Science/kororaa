@@ -1,5 +1,4 @@
 import { roundLatLon } from '../../services/latLon/latLon.service';
-import { colorSet } from './constants/hazardCharts';
 import { hazardPageLocations } from './constants/hazardPageOptions';
 import { LocationData } from './hazardPageReducer';
 
@@ -67,20 +66,6 @@ export const getFilteredCurveGroups = (curveGroups: HazardUncertaintyChartData, 
   });
 
   return filteredCurveGroups;
-};
-
-export const addCurveGroupColors = (curveGroups: HazardUncertaintyChartData) => {
-  Object.keys(curveGroups).forEach((key, index) => {
-    Object.keys(curveGroups[key]).forEach((curveName) => {
-      if (curveName === 'mean') {
-        curveGroups[key][curveName]['strokeColor'] = colorSet[index][0];
-      } else {
-        curveGroups[key][curveName]['strokeColor'] = colorSet[index][0];
-      }
-    });
-  });
-
-  return curveGroups;
 };
 
 const getAggValue = (agg: string): string => {
