@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
-import { LeafletMap } from '@gns-science/toshi-nest';
+import { LeafletMap, ColorBar } from '@gns-science/toshi-nest';
 import { graphql } from 'babel-plugin-relay/macro';
-import { Fab } from '@mui/material';
+import { Fab, Box } from '@mui/material';
 import { CSVLink } from 'react-csv';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 
@@ -9,6 +9,7 @@ import { HazardMapsState } from './hazardMapReducer';
 import { useLazyLoadQuery } from 'react-relay';
 import { HazardMapsQuery } from './__generated__/HazardMapsQuery.graphql';
 import { getHazardMapCSVData, parsePoe } from './hazardMaps.service';
+import { GRID_ID, HAZARD_MODEL } from '../../utils/environmentVariables';
 
 interface HazardMapsProps {
   state: HazardMapsState;
@@ -17,8 +18,8 @@ interface HazardMapsProps {
 
 const HazardMaps: React.FC<HazardMapsProps> = ({ state, setFullscreen }: HazardMapsProps) => {
   const data = useLazyLoadQuery<HazardMapsQuery>(hazardMapsQuery, {
-    grid_id: 'NZ_0_1_NB_1_0',
-    hazard_model_ids: ['SLT_TAG_FINAL'],
+    grid_id: GRID_ID,
+    hazard_model_ids: [HAZARD_MODEL],
     imts: state.spectralPeriod,
     aggs: state.statistic,
     vs30s: state.vs30,
@@ -41,15 +42,18 @@ const HazardMaps: React.FC<HazardMapsProps> = ({ state, setFullscreen }: HazardM
   const zoom = 5;
   const nzCentre = [-40.946, 174.167];
 
+  const colors = useMemo(() => ['#f7fcfd', '#e5f5f9', '#ccece6', '#99d8c9', '#66c2a4', '#41ae76', '#238b45', '#006d2c', '#00441b'], []);
+
   return (
-    <>
+    <Box sx={{ width: '100%', height: '700px' }}>
       <CSVLink data={getHazardMapCSVData(geoJson, state.vs30[0], state.spectralPeriod[0], state.poe[0])} filename="hazard-maps.csv">
         <Fab sx={{ position: 'absolute', top: '128px', right: '70px' }} color="primary">
           <ArrowDownwardIcon />
         </Fab>
       </CSVLink>
       <LeafletMap geoJsonData={geoJson} zoom={zoom} nzCentre={nzCentre} height={'700px'} width={'100%'} setFullscreen={setFullscreen} />
-    </>
+      <ColorBar width={300} height={35} colors={colors} tickValues={[0, 0.5, 1, 1.5]} style={{ position: 'relative', zIndex: 10000000, top: '-125px', left: 'calc(100% - 365px)' }} />
+    </Box>
   );
 };
 

@@ -1,5 +1,8 @@
+import { RegionGrid } from '../views/hazardMaps/__generated__/HazardMapsQuery.graphql';
+
 export const RESOLUTION: number = parseFloat(process.env.REACT_APP_RESOLUTION || '0.2');
 export const HAZARD_MODEL: string = process.env.REACT_APP_HAZARD_MODEL || 'SLT_TAG_FINAL';
+export const GRID_ID: RegionGrid | null | undefined = (process.env.GRID_ID as RegionGrid) || ('NZ_0_2_NB_1_1' as RegionGrid);
 export const MAP_IMTS = process.env.REACT_APP_MAP_IMTS?.split(',') || ['PGA'];
 export const MAP_VS30S = process.env.REACT_APP_MAP_VS30S?.split(',') || ['250', '300', '350', '400', '450', '750'];
 export const MAP_STATISTICS = process.env.REACT_APP_MAP_STATISTICS?.split(',') || ['mean'];
