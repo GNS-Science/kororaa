@@ -11,5 +11,5 @@ export const MAP_POES = process.env.REACT_APP_MAP_POES?.split(',') || ['10% in 5
 export const MAP_COLOR_SCALE = process.env.REACT_APP_MAP_COLOR_SCALE?.split(',') || ['jet', 'inferno'];
 
 export const COLOR_MAP = process.env.REACT_APP_COLOR_MAP || 'jet';
-export const COLOR_LIMIT = process.env.REACT_APP_COLOR_LIMIT || 30;
+export const COLOR_LIMIT: number = Number(process.env.REACT_APP_COLOR_LIMIT) || 30;
 export const COLOR_UNCERTAINTY_OPACITY = process.env.REACT_APP_COLOR_UNCERTAINTY_OPACITY || 0.5;
