@@ -1,10 +1,9 @@
 import React from 'react';
 import { styled } from '@mui/material/styles';
-import { Box } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import { Link } from 'react-router-dom';
 
-import { Paper, Typography, Button } from '@mui/material';
+import { Paper, Typography } from '@mui/material';
 
 const PageContainer = styled('div')({
   width: '100%',
@@ -63,9 +62,8 @@ const ModelComponentsPage: React.FC = () => {
             <Typography variant="h3">Source Models</Typography>
           </InfoContainer>
         </Grid>
-        <ModelComponent title="Source 1" text="The Logic tree, Ground Motion Models, Source models, Inversion Solutions, Rupture sets." />
-        <ModelComponent title="Source 2 " text="Scientific publications for the NZSHM." />
-        <ModelComponent title="Technical resources" text="Information technology used and produced by the NZHSM project. APis, Code Repositories etc." />
+        <ModelComponent title="Source 1" text="from json." />
+        <ModelComponent title="Source 2 " text="from json." />
         {/*<InfoCard title="Model Information, Reports, and Input Files" text="More Information" />*/}
       </Grid>
     </PageContainer>
