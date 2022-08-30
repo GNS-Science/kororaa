@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Button, TextField, Fab } from '@mui/material';
-import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
+import { Box, Button, styled, TextField } from '@mui/material';
 import { CSVLink } from 'react-csv';
 import { SelectControl } from '@gns-science/toshi-nest';
 
@@ -9,6 +8,11 @@ import { getHazardMapCSVData } from './hazardMaps.service';
 import { HazardMapsState } from './hazardMapReducer';
 import CustomControlsBar from '../../components/common/CustomControlsBar';
 import { MAP_COLOR_SCALE, MAP_IMTS, MAP_POES, MAP_STATISTICS, MAP_VS30S } from '../../utils/environmentVariables';
+
+const StyledButton = styled(Button)(() => ({
+  margin: '0 0 0 10px',
+  // padding: '0 10px 0 10px',
+}));
 
 interface HazardMapsControlsProps {
   startTransition: React.TransitionStartFunction;
@@ -19,7 +23,7 @@ interface HazardMapsControlsProps {
 }
 
 const HazardMapsControls: React.FC<HazardMapsControlsProps> = ({ startTransition, isPending, geoJson, state, dispatch }: HazardMapsControlsProps) => {
-  const [spectralPeriod, setSepectralPeriod] = useState<string>(state.spectralPeriod[0]);
+  const [spectralPeriod, setSpectralPeriod] = useState<string>(state.spectralPeriod[0]);
   const [statistic, setStatistic] = useState<string>(state.statistic[0]);
   const [vs30, setVs30] = useState<number>(state.vs30[0]);
   const [poe, setPoe] = useState<string>(state.poe[0]);
@@ -48,7 +52,7 @@ const HazardMapsControls: React.FC<HazardMapsControlsProps> = ({ startTransition
   return (
     <Box sx={{ width: '100%', ...flexParentCenter, flexDirection: 'column' }}>
       <CustomControlsBar direction="column">
-        <SelectControl name="Spectral Period" options={MAP_IMTS} selection={spectralPeriod} setSelection={setSepectralPeriod} />
+        <SelectControl name="Spectral Period" options={MAP_IMTS} selection={spectralPeriod} setSelection={setSpectralPeriod} />
         <SelectControl name="Statistic" options={MAP_STATISTICS} selection={statistic} setSelection={setStatistic} />
         <SelectControl name="Vs30" options={MAP_VS30S} selection={vs30.toString()} setSelection={(newValue: string[]) => setVs30(Number(newValue))} />
         <SelectControl name="Probability of Exceedence" options={MAP_POES} selection={poe} setSelection={(newValue: string) => setPoe(newValue)} />
@@ -57,14 +61,16 @@ const HazardMapsControls: React.FC<HazardMapsControlsProps> = ({ startTransition
         <TextField label="Fill opacity" value={fillOpacity} onChange={(event) => setFillOpacity(event?.target.value)} variant="standard" />
         <TextField label="Stroke opacity" value={strokeOpacity} onChange={(event) => setStrokeOpacity(event?.target.value)} variant="standard" />
         <TextField label="Stroke width" value={strokeWidth} onChange={(event) => setStrokeWidth(event?.target.value)} variant="standard" />
-        <Button disabled={isPending} variant="contained" type="submit" onClick={handleSubmit}>
-          Submit
-        </Button>
-        <CSVLink data={getHazardMapCSVData(geoJson, state.vs30[0], state.spectralPeriod[0], state.poe[0])} filename="hazard-maps.csv">
-          <Fab color="primary">
-            <ArrowDownwardIcon />
-          </Fab>
-        </CSVLink>
+        <div>
+          <StyledButton disabled={isPending} variant="contained" type="submit" onClick={handleSubmit}>
+            Submit
+          </StyledButton>
+          <CSVLink data={getHazardMapCSVData(geoJson, state.vs30[0], state.spectralPeriod[0], state.poe[0])} filename="hazard-maps.csv">
+            <StyledButton variant="contained" type="submit" color="primary">
+              Download CSV
+            </StyledButton>
+          </CSVLink>
+        </div>
       </CustomControlsBar>
     </Box>
   );
