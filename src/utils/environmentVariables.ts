@@ -10,6 +10,6 @@ export const MAP_STATISTICS = process.env.REACT_APP_MAP_STATISTICS?.split(',') |
 export const MAP_POES = process.env.REACT_APP_MAP_POES?.split(',') || ['10% in 50 years', '2% in 50 years'];
 export const MAP_COLOR_SCALE = process.env.REACT_APP_MAP_COLOR_SCALE?.split(',') || ['jet', 'inferno'];
 
-export const COLOR_MAP = process.env.REACT_APP_COLOR_MAP || 'jet';
-export const COLOR_LIMIT: number = Number(process.env.REACT_APP_COLOR_LIMIT) || 30;
-export const COLOR_UNCERTAINTY_OPACITY = process.env.REACT_APP_COLOR_UNCERTAINTY_OPACITY || 0.5;
+export const HAZARD_COLOR_MAP = process.env.REACT_APP_HAZARD_COLOR_MAP || 'jet';
+export const HAZARD_COLOR_LIMIT: number = Number(process.env.REACT_APP_HAZARD_COLOR_LIMIT) || 30;
+export const HAZARD_COLOR_UNCERTAINTY_OPACITY = process.env.REACT_APP_HAZARD_COLOR_UNCERTAINTY_OPACITY || 0.5;
