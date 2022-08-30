@@ -40,6 +40,9 @@ const HazardCharts: React.FC<HazardChartsProps> = ({ data, state, dispatch }: Ha
     },
   }));
 
+  React.useEffect(() => {
+    console.log(curveGroupWithColors);
+  }, [curveGroupWithColors]);
   return (
     <>
       <HazardChartsContainer data-testid="hazardChartsContainer">
@@ -47,7 +50,7 @@ const HazardCharts: React.FC<HazardChartsProps> = ({ data, state, dispatch }: Ha
           <HazardChartsSettings spectral={false} state={state} dispatch={dispatch} />
           <GroupCurveChartResponsive
             scaleType={state.xScale}
-            ySacleType={'log'}
+            yScaleType={'log'}
             xLabel=" Acceleration (g)"
             yLabel="Annual Probability of Exceedance"
             xLimits={[0.01, 10]}

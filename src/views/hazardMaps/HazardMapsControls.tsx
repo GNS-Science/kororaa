@@ -1,18 +1,22 @@
 import React, { useState } from 'react';
-import { Box, Button, TextField } from '@mui/material';
+import { Box, Button, TextField, Fab } from '@mui/material';
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
+import { CSVLink } from 'react-csv';
 import { SelectControl } from '@gns-science/toshi-nest';
 
 import { flexParentCenter } from '../../utils/styleUtils';
+import { getHazardMapCSVData } from './hazardMaps.service';
 import { HazardMapsState } from './hazardMapReducer';
 import CustomControlsBar from '../../components/common/CustomControlsBar';
 import { MAP_COLOR_SCALE, MAP_IMTS, MAP_POES, MAP_STATISTICS, MAP_VS30S } from '../../utils/environmentVariables';
 
 interface HazardMapsControlsProps {
+  geoJson: string[];
   state: HazardMapsState;
   dispatch: React.Dispatch<Partial<HazardMapsState>>;
 }
 
-const HazardMapsControls: React.FC<HazardMapsControlsProps> = ({ state, dispatch }: HazardMapsControlsProps) => {
+const HazardMapsControls: React.FC<HazardMapsControlsProps> = ({ geoJson, state, dispatch }: HazardMapsControlsProps) => {
   const [spectralPeriod, setSepectralPeriod] = useState<string>(state.spectralPeriod[0]);
   const [statistic, setStatistic] = useState<string>(state.statistic[0]);
   const [vs30, setVs30] = useState<number>(state.vs30[0]);
@@ -49,9 +53,14 @@ const HazardMapsControls: React.FC<HazardMapsControlsProps> = ({ state, dispatch
         <TextField label="Fill opacity" value={fillOpacity} onChange={(event) => setFillOpacity(event?.target.value)} variant="standard" />
         <TextField label="Stroke opacity" value={strokeOpacity} onChange={(event) => setStrokeOpacity(event?.target.value)} variant="standard" />
         <TextField label="Stroke width" value={strokeWidth} onChange={(event) => setStrokeWidth(event?.target.value)} variant="standard" />
-        <Button sx={{ margin: 2 }} variant="contained" type="submit" onClick={handleSubmit}>
+        <Button variant="contained" type="submit" onClick={handleSubmit}>
           Submit
         </Button>
+        <CSVLink data={getHazardMapCSVData(geoJson, state.vs30[0], state.spectralPeriod[0], state.poe[0])} filename="hazard-maps.csv">
+          <Fab color="primary">
+            <ArrowDownwardIcon />
+          </Fab>
+        </CSVLink>
       </CustomControlsBar>
     </Box>
   );
