@@ -18,7 +18,6 @@ const HazardMapsControls: React.FC<HazardMapsControlsProps> = ({ state, dispatch
   const [vs30, setVs30] = useState<number>(state.vs30[0]);
   const [poe, setPoe] = useState<string>(state.poe[0]);
   const [colorScale, setColorScale] = useState<string>('inferno');
-  const [vmax, setVMax] = useState<string>('2.0');
   const [fillOpacity, setFillOpacity] = useState<string>('0.5');
   const [strokeWidth, setStrokeWidth] = useState<string>('0.1');
   const [strokeOpacity, setStrokeOpacity] = useState<string>('0.5');
@@ -30,7 +29,6 @@ const HazardMapsControls: React.FC<HazardMapsControlsProps> = ({ state, dispatch
       vs30: [vs30],
       poe: [poe],
       color_scale: colorScale,
-      color_scale_vmax: Number(vmax),
       fill_opacity: Number(fillOpacity),
       stroke_width: Number(strokeWidth),
       stroke_opacity: Number(strokeOpacity),
@@ -45,7 +43,6 @@ const HazardMapsControls: React.FC<HazardMapsControlsProps> = ({ state, dispatch
         <SelectControl name="Vs30" options={MAP_VS30S} selection={vs30.toString()} setSelection={(newValue: string[]) => setVs30(Number(newValue))} />
         <SelectControl name="Probability of Exceedence" options={MAP_POES} selection={poe} setSelection={(newValue: string) => setPoe(newValue)} />
         <SelectControl name="Color Scale" options={MAP_COLOR_SCALE} selection={colorScale} setSelection={setColorScale} />
-        <TextField label="Color scale vMax" value={vmax} onChange={(event) => setVMax(event?.target.value)} variant="standard" />
         <TextField label="Fill opacity" value={fillOpacity} onChange={(event) => setFillOpacity(event?.target.value)} variant="standard" />
         <TextField label="Stroke opacity" value={strokeOpacity} onChange={(event) => setStrokeOpacity(event?.target.value)} variant="standard" />
         <TextField label="Stroke width" value={strokeWidth} onChange={(event) => setStrokeWidth(event?.target.value)} variant="standard" />
