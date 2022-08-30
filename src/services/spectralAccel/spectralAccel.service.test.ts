@@ -1,6 +1,7 @@
 import { expected as calculateSpectralAccelCurveExpected } from './testCases/calculateSpectralAccelCurveTestCase';
 import { addColorsToCurves, getSpectralAccelCurve, UncertaintyChartData } from './spectralAccel.service';
 import { hazardPlotsViewQueryMockData } from './testCases/hazardPlotViewsQueryMockData';
+import { colors } from '../../utils/colorUtils';
 
 test('getAllOfCurveType function', () => {
   expect(getSpectralAccelCurve('mean', 400, 'WLG', hazardPlotsViewQueryMockData, 0.02)).toEqual(calculateSpectralAccelCurveExpected);
@@ -30,23 +31,27 @@ test('addColorsToCurves function adds strokColor property to each curve', () => 
   const expected: UncertaintyChartData = {
     testCurveGroup: {
       upper2: {
-        strokeColor: '#6baed6',
+        strokeColor: colors[0],
+        strokeOpacity: 0.5,
         data: [[1, 1]],
       },
       upper1: {
-        strokeColor: '#6baed6',
+        strokeColor: colors[0],
+        strokeOpacity: 0.5,
         data: [[1, 1]],
       },
       mean: {
-        strokeColor: '#08519c',
+        strokeColor: colors[0],
         data: [[1, 1]],
       },
       lower1: {
-        strokeColor: '#6baed6',
+        strokeColor: colors[0],
+        strokeOpacity: 0.5,
         data: [[1, 1]],
       },
       lower2: {
-        strokeColor: '#6baed6',
+        strokeColor: colors[0],
+        strokeOpacity: 0.5,
         data: [[1, 1]],
       },
     },

@@ -1,6 +1,6 @@
 import * as mathjs from 'mathjs';
 
-import { colorSet } from '../../views/hazardCharts/constants/hazardCharts';
+import { colors } from '../../utils/colorUtils';
 import { hazardPageOptions } from '../../views/hazardCharts/constants/hazardPageOptions';
 // import { LocationData } from '../../views/hazardCharts/hazardPageReducer';
 import { HazardChartsPlotsViewQuery$data } from '../../views/hazardCharts/__generated__/HazardChartsPlotsViewQuery.graphql';
@@ -97,9 +97,10 @@ export const addColorsToCurves = (curveGroups: UncertaintyChartData): Uncertaint
   Object.keys(curveGroups).forEach((key, index) => {
     Object.keys(curveGroups[key]).forEach((curveType) => {
       if (curveType === 'mean') {
-        curveGroups[key][curveType]['strokeColor'] = colorSet[index][0];
+        curveGroups[key][curveType]['strokeColor'] = colors[index];
       } else {
-        curveGroups[key][curveType]['strokeColor'] = colorSet[index][1];
+        curveGroups[key][curveType]['strokeColor'] = colors[index];
+        curveGroups[key][curveType]['strokeOpacity'] = 0.5;
       }
     });
   });

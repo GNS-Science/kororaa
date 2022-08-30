@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { InputAdornment, Button, Input, FormControl, InputLabel, Box, Autocomplete, TextField, FormHelperText, IconButton } from '@mui/material';
+import { InputAdornment, Button, Input, FormControl, InputLabel, Box, Autocomplete, TextField, FormHelperText, IconButton, Alert, Collapse } from '@mui/material';
 import ClearIcon from '@mui/icons-material/Clear';
+import CloseIcon from '@mui/icons-material/Close';
 
 import CustomControlsBar from '../../components/common/CustomControlsBar';
 import { hazardPageOptions } from './constants/hazardPageOptions';
-import { getPoeInputDisplay, numbersToStrings, stringsToNumbers, validatePoeValue } from './hazardPage.service';
+import { getPoeInputDisplay, numbersToStrings, stringsToNumbers, validateCurveGroupLength, validatePoeValue } from './hazardPage.service';
 import { HazardPageState, LocationData } from './hazardPageReducer';
 import SelectControlMultiple from '../../components/common/SelectControlMultiple';
 import { getLatLonString, combineLocationData, getNamesFromLocationData, validateLatLon } from '../../services/latLon/latLon.service';
+import { tooManyCurves } from './constants/hazardCharts';
 
 interface HazardChartsControlsProps {
   state: HazardPageState;
@@ -28,6 +30,14 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, disp
   const [poeInputErrorMessage, setPoeInputErrorMessage] = useState<string>('');
   const [poeInput, setPoeInput] = useState<string>(getPoeInputDisplay(state.poe));
 
+  const [controlsError, setControlsError] = useState<boolean>(false);
+  const [controlsErrorMessage, setControlsErrorMessage] = useState<string>('');
+
+  useEffect(() => {
+    const combinedLocationData = combineLocationData(locations, latLon);
+    setLocationData(combinedLocationData);
+  }, [locations, latLon]);
+
   const handleLatLonBlur = () => {
     try {
       validateLatLon(latLon);
@@ -37,11 +47,6 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, disp
       setLatLonErrorMessage(err as string);
     }
   };
-
-  useEffect(() => {
-    const combinedLocationData = combineLocationData(locations, latLon);
-    setLocationData(combinedLocationData);
-  }, [locations, latLon]);
 
   const handleLatLonChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setLatLon(event.target.value);
@@ -59,11 +64,15 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, disp
     try {
       validatePoeValue(poeInput);
       validateLatLon(latLon);
+      validateCurveGroupLength(locationData, vs30s, imts);
       dispatch({ locationData, vs30s, imts, poe: poeInput.length === 0 || poeInput === ' ' ? undefined : Number(poeInput) / 100 });
     } catch (err) {
       if (err === 'Invalid lat, lon input') {
         setLatLonError(true);
         setLatLonErrorMessage(err as string);
+      } else if (err === tooManyCurves) {
+        setControlsError(true);
+        setControlsErrorMessage(err as string);
       } else {
         setPoeInputError(true);
         setPoeInputErrorMessage(err as string);
@@ -73,6 +82,25 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, disp
 
   return (
     <Box sx={{ marginBottom: '20px', width: '100%', border: 'solid 1px black', padding: '10px' }}>
+      <Collapse in={controlsError}>
+        <Alert
+          severity="error"
+          action={
+            <IconButton
+              aria-label="close"
+              color="inherit"
+              size="small"
+              onClick={() => {
+                setControlsError(false);
+              }}
+            >
+              <CloseIcon fontSize="inherit" />
+            </IconButton>
+          }
+        >
+          {controlsErrorMessage}
+        </Alert>
+      </Collapse>
       <CustomControlsBar direction="row">
         <Autocomplete
           multiple

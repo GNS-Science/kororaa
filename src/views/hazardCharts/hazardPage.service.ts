@@ -1,5 +1,6 @@
 import { roundLatLon } from '../../services/latLon/latLon.service';
-import { colorSet } from './constants/hazardCharts';
+import { HAZARD_COLOR_LIMIT } from '../../utils/environmentVariables';
+import { tooManyCurves } from './constants/hazardCharts';
 import { hazardPageLocations } from './constants/hazardPageOptions';
 import { LocationData } from './hazardPageReducer';
 
@@ -67,20 +68,6 @@ export const getFilteredCurveGroups = (curveGroups: HazardUncertaintyChartData, 
   });
 
   return filteredCurveGroups;
-};
-
-export const addCurveGroupColors = (curveGroups: HazardUncertaintyChartData) => {
-  Object.keys(curveGroups).forEach((key, index) => {
-    Object.keys(curveGroups[key]).forEach((curveName) => {
-      if (curveName === 'mean') {
-        curveGroups[key][curveName]['strokeColor'] = colorSet[index][0];
-      } else {
-        curveGroups[key][curveName]['strokeColor'] = colorSet[index][0];
-      }
-    });
-  });
-
-  return curveGroups;
 };
 
 const getAggValue = (agg: string): string => {
@@ -191,4 +178,11 @@ export const getLocationList = (data: HazardChartsPlotsViewQuery$data): string[]
   });
 
   return Array.from(locationList);
+};
+
+export const validateCurveGroupLength = (locationData: LocationData[], vs30s: number[], imts: string[]) => {
+  const length = locationData.length * vs30s.length * imts.length;
+  if (length > HAZARD_COLOR_LIMIT) {
+    throw tooManyCurves;
+  }
 };
