@@ -9,6 +9,7 @@ import { getPoeInputDisplay, numbersToStrings, stringsToNumbers, validateCurveGr
 import { HazardPageState, LocationData } from './hazardPageReducer';
 import SelectControlMultiple from '../../components/common/SelectControlMultiple';
 import { getLatLonString, combineLocationData, getNamesFromLocationData, validateLatLon } from '../../services/latLon/latLon.service';
+import { tooManyCurves } from './constants/hazardCharts';
 
 interface HazardChartsControlsProps {
   state: HazardPageState;
@@ -69,7 +70,7 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, disp
       if (err === 'Invalid lat, lon input') {
         setLatLonError(true);
         setLatLonErrorMessage(err as string);
-      } else if (err === 'Try selecting less options') {
+      } else if (err === tooManyCurves) {
         setControlsError(true);
         setControlsErrorMessage(err as string);
       } else {

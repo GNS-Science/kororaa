@@ -1,4 +1,6 @@
 import { roundLatLon } from '../../services/latLon/latLon.service';
+import { COLOR_LIMIT } from '../../utils/environmentVariables';
+import { tooManyCurves } from './constants/hazardCharts';
 import { hazardPageLocations } from './constants/hazardPageOptions';
 import { LocationData } from './hazardPageReducer';
 
@@ -180,8 +182,7 @@ export const getLocationList = (data: HazardChartsPlotsViewQuery$data): string[]
 
 export const validateCurveGroupLength = (locations: string[], locationData: LocationData[], vs30s: number[], imts: string[]) => {
   const length = (locations.length + locationData.length) * vs30s.length * imts.length;
-  console.log(length);
   if (length > 10) {
-    throw 'Try selecting less options';
+    throw tooManyCurves;
   }
 };

@@ -100,6 +100,7 @@ export const addColorsToCurves = (curveGroups: UncertaintyChartData): Uncertaint
         curveGroups[key][curveType]['strokeColor'] = colors[index];
       } else {
         curveGroups[key][curveType]['strokeColor'] = colors[index];
+        curveGroups[key][curveType]['strokeOpacity'] = 0.5;
       }
     });
   });
