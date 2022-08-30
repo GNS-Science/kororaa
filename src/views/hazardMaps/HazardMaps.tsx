@@ -25,19 +25,20 @@ const HazardMaps: React.FC<HazardMapsProps> = ({ state, setFullscreen }: HazardM
     vs30s: state.vs30,
     poes: [parsePoe(state.poe[0])],
     color_scale: state.color_scale,
-    color_scale_vmax: state.color_scale_vmax,
     fill_opacity: state.fill_opacity,
     stroke_width: state.stroke_width,
     stroke_opacity: state.stroke_opacity,
   });
 
-  const geoJson = useMemo(() => {
-    let geoJsonData: string[] = [];
-    if (data && data.gridded_hazard && data.gridded_hazard.gridded_hazard?.length) {
-      geoJsonData = data.gridded_hazard?.gridded_hazard.map((hazard) => hazard?.geojson);
-    }
-    return geoJsonData;
-  }, [data]);
+  console.log(data);
+
+  // const geoJson = useMemo(() => {
+  //   let geoJsonData: string[] = [];
+  //   if (data && data.gridded_hazard && data.gridded_hazard.gridded_hazard?.length) {
+  //     geoJsonData = data.gridded_hazard?.gridded_hazard.map((hazard) => hazard?.hazard_map?.geojson);
+  //   }
+  //   return geoJsonData;
+  // }, [data]);
 
   const zoom = 5;
   const nzCentre = [-40.946, 174.167];
@@ -46,12 +47,12 @@ const HazardMaps: React.FC<HazardMapsProps> = ({ state, setFullscreen }: HazardM
 
   return (
     <Box sx={{ width: '100%', height: '700px' }}>
-      <CSVLink data={getHazardMapCSVData(geoJson, state.vs30[0], state.spectralPeriod[0], state.poe[0])} filename="hazard-maps.csv">
+      {/* <CSVLink data={getHazardMapCSVData(geoJson, state.vs30[0], state.spectralPeriod[0], state.poe[0])} filename="hazard-maps.csv">
         <Fab sx={{ position: 'absolute', top: '128px', right: '70px' }} color="primary">
           <ArrowDownwardIcon />
         </Fab>
-      </CSVLink>
-      <LeafletMap geoJsonData={geoJson} zoom={zoom} nzCentre={nzCentre} height={'700px'} width={'100%'} setFullscreen={setFullscreen} />
+      </CSVLink> */}
+      {/* <LeafletMap geoJsonData={geoJson} zoom={zoom} nzCentre={nzCentre} height={'700px'} width={'100%'} setFullscreen={setFullscreen} /> */}
       <ColorBar width={300} height={35} colors={colors} tickValues={[0, 0.5, 1, 1.5]} style={{ position: 'relative', zIndex: 10000000, top: '-125px', left: 'calc(100% - 365px)' }} />
     </Box>
   );
@@ -68,7 +69,6 @@ export const hazardMapsQuery = graphql`
     $vs30s: [Float]
     $poes: [Float]
     $color_scale: String
-    $color_scale_vmax: Float
     $fill_opacity: Float
     $stroke_width: Float
     $stroke_opacity: Float
@@ -80,7 +80,13 @@ export const hazardMapsQuery = graphql`
         hazard_model
         imt
         agg
-        geojson(color_scale: $color_scale, color_scale_vmax: $color_scale_vmax, fill_opacity: $fill_opacity, stroke_width: $stroke_width, stroke_opacity: $stroke_opacity)
+        hazard_map(color_scale: $color_scale, fill_opacity: $fill_opacity, stroke_width: $stroke_width, stroke_opacity: $stroke_opacity) {
+          geojson
+          colour_scale {
+            levels
+            hexrgbs
+          }
+        }
       }
     }
   }
