@@ -180,8 +180,8 @@ export const getLocationList = (data: HazardChartsPlotsViewQuery$data): string[]
   return Array.from(locationList);
 };
 
-export const validateCurveGroupLength = (locations: string[], locationData: LocationData[], vs30s: number[], imts: string[]) => {
-  const length = (locations.length + locationData.length) * vs30s.length * imts.length;
+export const validateCurveGroupLength = (locationData: LocationData[], vs30s: number[], imts: string[]) => {
+  const length = locationData.length * vs30s.length * imts.length;
   if (length > HAZARD_COLOR_LIMIT) {
     throw tooManyCurves;
   }

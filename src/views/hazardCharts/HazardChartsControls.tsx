@@ -64,7 +64,7 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, disp
     try {
       validatePoeValue(poeInput);
       validateLatLon(latLon);
-      validateCurveGroupLength(locations, locationData, vs30s, imts);
+      validateCurveGroupLength(locationData, vs30s, imts);
       dispatch({ locationData, vs30s, imts, poe: poeInput.length === 0 || poeInput === ' ' ? undefined : Number(poeInput) / 100 });
     } catch (err) {
       if (err === 'Invalid lat, lon input') {
