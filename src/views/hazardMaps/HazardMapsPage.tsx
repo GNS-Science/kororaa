@@ -1,4 +1,4 @@
-import React, { useReducer, useState, useMemo } from 'react';
+import React, { useReducer, useState, useMemo, useTransition } from 'react';
 import { Box, CircularProgress } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { graphql } from 'babel-plugin-relay/macro';
@@ -25,6 +25,7 @@ const PageContainer = styled(Box)(({ theme }) => ({
 const HazardMapsPage: React.FC = () => {
   const [state, dispatch] = useReducer(hazardMapsReducer, initialState);
   const [fullscreen, setFullscreen] = useState<boolean>(false);
+  const [isPending, startTransition] = useTransition();
 
   const data = useLazyLoadQuery<HazardMapsQuery>(hazardMapsQuery, {
     grid_id: GRID_ID,
@@ -52,7 +53,7 @@ const HazardMapsPage: React.FC = () => {
     <PageContainer>
       <Box role="hazardMapsView" sx={{ ...flexParentCenter, justifyContent: 'center', height: '100%', width: '100%' }}>
         <LeafletDrawer drawerHeight={'700px'} headerHeight={'0px'} width={'400px'} fullscreen={fullscreen}>
-          <HazardMapsControls geoJson={geoJson} state={state} dispatch={dispatch} />
+          <HazardMapsControls isPending={isPending} startTransition={startTransition} geoJson={geoJson} state={state} dispatch={dispatch} />
         </LeafletDrawer>
         <React.Suspense fallback={<CircularProgress />}>
           <HazardMaps geoJson={geoJson} setFullscreen={setFullscreen} />

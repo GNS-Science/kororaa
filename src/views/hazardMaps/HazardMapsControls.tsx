@@ -11,12 +11,14 @@ import CustomControlsBar from '../../components/common/CustomControlsBar';
 import { MAP_COLOR_SCALE, MAP_IMTS, MAP_POES, MAP_STATISTICS, MAP_VS30S } from '../../utils/environmentVariables';
 
 interface HazardMapsControlsProps {
+  startTransition: React.TransitionStartFunction;
+  isPending: boolean;
   geoJson: string[];
   state: HazardMapsState;
   dispatch: React.Dispatch<Partial<HazardMapsState>>;
 }
 
-const HazardMapsControls: React.FC<HazardMapsControlsProps> = ({ geoJson, state, dispatch }: HazardMapsControlsProps) => {
+const HazardMapsControls: React.FC<HazardMapsControlsProps> = ({ startTransition, isPending, geoJson, state, dispatch }: HazardMapsControlsProps) => {
   const [spectralPeriod, setSepectralPeriod] = useState<string>(state.spectralPeriod[0]);
   const [statistic, setStatistic] = useState<string>(state.statistic[0]);
   const [vs30, setVs30] = useState<number>(state.vs30[0]);
@@ -28,16 +30,18 @@ const HazardMapsControls: React.FC<HazardMapsControlsProps> = ({ geoJson, state,
   const [strokeOpacity, setStrokeOpacity] = useState<string>('0.5');
 
   const handleSubmit = () => {
-    dispatch({
-      spectralPeriod: [spectralPeriod],
-      statistic: [statistic],
-      vs30: [vs30],
-      poe: [poe],
-      color_scale: colorScale,
-      color_scale_vmax: Number(vmax),
-      fill_opacity: Number(fillOpacity),
-      stroke_width: Number(strokeWidth),
-      stroke_opacity: Number(strokeOpacity),
+    startTransition(() => {
+      dispatch({
+        spectralPeriod: [spectralPeriod],
+        statistic: [statistic],
+        vs30: [vs30],
+        poe: [poe],
+        color_scale: colorScale,
+        color_scale_vmax: Number(vmax),
+        fill_opacity: Number(fillOpacity),
+        stroke_width: Number(strokeWidth),
+        stroke_opacity: Number(strokeOpacity),
+      });
     });
   };
 
@@ -53,7 +57,7 @@ const HazardMapsControls: React.FC<HazardMapsControlsProps> = ({ geoJson, state,
         <TextField label="Fill opacity" value={fillOpacity} onChange={(event) => setFillOpacity(event?.target.value)} variant="standard" />
         <TextField label="Stroke opacity" value={strokeOpacity} onChange={(event) => setStrokeOpacity(event?.target.value)} variant="standard" />
         <TextField label="Stroke width" value={strokeWidth} onChange={(event) => setStrokeWidth(event?.target.value)} variant="standard" />
-        <Button variant="contained" type="submit" onClick={handleSubmit}>
+        <Button disabled={isPending} variant="contained" type="submit" onClick={handleSubmit}>
           Submit
         </Button>
         <CSVLink data={getHazardMapCSVData(geoJson, state.vs30[0], state.spectralPeriod[0], state.poe[0])} filename="hazard-maps.csv">

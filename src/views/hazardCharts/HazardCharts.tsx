@@ -40,9 +40,6 @@ const HazardCharts: React.FC<HazardChartsProps> = ({ data, state, dispatch }: Ha
     },
   }));
 
-  React.useEffect(() => {
-    console.log(curveGroupWithColors);
-  }, [curveGroupWithColors]);
   return (
     <>
       <HazardChartsContainer data-testid="hazardChartsContainer">
