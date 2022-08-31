@@ -3,8 +3,8 @@ import { styled } from '@mui/material/styles';
 import Grid from '@mui/material/Grid';
 import { Link } from 'react-router-dom';
 
-import { Card, CardContent, CardActions, Typography, Button, IconButton, Tooltip } from '@mui/material';
-import InfoIcon from '@mui/icons-material/Info';
+import { Card, CardContent, CardActions, Typography, Button } from '@mui/material';
+import InfoTooltip from '../../components/common/InfoTooltip';
 
 const StyledCard = styled(Card)(() => ({
   justifyContent: 'center',
@@ -60,11 +60,7 @@ const InfoPage: React.FC = () => {
         <InfoContainer>
           <Typography variant="h1">
             Resources
-            <Tooltip title="lorem ipsum dolor sit amet">
-              <IconButton>
-                <InfoIcon />
-              </IconButton>
-            </Tooltip>
+            <InfoTooltip text="This is a tooltip" />
           </Typography>
           {/* <Typography variant="body1">details deatils</Typography> */}
         </InfoContainer>

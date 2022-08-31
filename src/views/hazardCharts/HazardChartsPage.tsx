@@ -1,12 +1,12 @@
 import React, { useReducer } from 'react';
-import { Box, Typography, Tooltip, CircularProgress, IconButton } from '@mui/material';
+import { Box, Typography, CircularProgress } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import InfoIcon from '@mui/icons-material/Info';
 
 import HazardChartsControls from './HazardChartsControls';
 import HazardChartsPlotsView from './HazardChartsPlotsView';
 import { hazardPageReducer, hazardPageReducerInitialState } from './hazardPageReducer';
 import { flexParentCenter } from '../../utils/styleUtils';
+import { InfoTooltip } from '../../components/common/InfoTooltip';
 
 const HazardChartsPage: React.FC = () => {
   const [state, dispatch] = useReducer(hazardPageReducer, hazardPageReducerInitialState);
@@ -25,11 +25,7 @@ const HazardChartsPage: React.FC = () => {
       <Box sx={{ ...flexParentCenter, width: '100%' }}>
         <Typography variant="h1" sx={{ padding: 2, width: '100%', textAlign: 'center' }}>
           Hazard Curves and Spectra
-          <Tooltip title="lorem ipsum dolor sit amet">
-            <IconButton>
-              <InfoIcon />
-            </IconButton>
-          </Tooltip>
+          <InfoTooltip text={'lorem ipsum dolor'} />
         </Typography>
       </Box>
       <HazardChartsControls state={state} dispatch={dispatch} />
