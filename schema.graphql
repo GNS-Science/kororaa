@@ -2,6 +2,11 @@ schema {
   query: QueryRoot
 }
 
+type GeoJsonHazardMap {
+  geojson: JSONString
+  colour_scale: HexRgbValueMapping
+}
+
 type GriddedHazard {
   grid_id: RegionGrid
   hazard_model: String
@@ -12,7 +17,7 @@ type GriddedHazard {
 
   """Acceleration values."""
   values: [Float]
-  geojson(color_scale: String = "jet", color_scale_vmax: Float = 3, color_scale_vmin: Float = 0, stroke_width: Float, stroke_opacity: Float, fill_opacity: Float): JSONString
+  hazard_map(color_scale: String = "jet", color_scale_vmax: Float, color_scale_vmin: Float = 0, stroke_width: Float, stroke_opacity: Float, fill_opacity: Float): GeoJsonHazardMap
   grid_locations: [GriddedLocation]
 }
 
@@ -33,6 +38,11 @@ type GriddedLocation {
 type GriddedLocationResult {
   location: GriddedLocation
   ok: Boolean
+}
+
+type HexRgbValueMapping {
+  levels: [Float]
+  hexrgbs: [String]
 }
 
 """

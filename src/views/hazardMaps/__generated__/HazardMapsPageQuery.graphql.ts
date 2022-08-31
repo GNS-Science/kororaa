@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6f30d1bb854a7e88b8e679bab1a0c249>>
+ * @generated SignedSource<<de1d8c411291fcd4b938cf525116bf1a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,7 +10,7 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 export type RegionGrid = "NZ_0_1_NB_1_0" | "NZ_0_1_NB_1_1" | "NZ_0_2_NB_1_1" | "WLG_0_01_nb_1_1" | "WLG_0_05_nb_1_1" | "%future added value";
-export type HazardMapsQuery$variables = {
+export type HazardMapsPageQuery$variables = {
   grid_id?: RegionGrid | null;
   hazard_model_ids?: ReadonlyArray<string | null> | null;
   imts?: ReadonlyArray<string | null> | null;
@@ -23,7 +23,7 @@ export type HazardMapsQuery$variables = {
   stroke_width?: number | null;
   stroke_opacity?: number | null;
 };
-export type HazardMapsQuery$data = {
+export type HazardMapsPageQuery$data = {
   readonly gridded_hazard: {
     readonly ok: boolean | null;
     readonly gridded_hazard: ReadonlyArray<{
@@ -31,13 +31,19 @@ export type HazardMapsQuery$data = {
       readonly hazard_model: string | null;
       readonly imt: string | null;
       readonly agg: string | null;
-      readonly geojson: any | null;
+      readonly hazard_map: {
+        readonly geojson: any | null;
+        readonly colour_scale: {
+          readonly levels: ReadonlyArray<number | null> | null;
+          readonly hexrgbs: ReadonlyArray<string | null> | null;
+        } | null;
+      } | null;
     } | null> | null;
   } | null;
 };
-export type HazardMapsQuery = {
-  variables: HazardMapsQuery$variables;
-  response: HazardMapsQuery$data;
+export type HazardMapsPageQuery = {
+  variables: HazardMapsPageQuery$variables;
+  response: HazardMapsPageQuery$data;
 };
 
 const node: ConcreteRequest = (function(){
@@ -208,8 +214,44 @@ v11 = [
                 "variableName": "stroke_width"
               }
             ],
-            "kind": "ScalarField",
-            "name": "geojson",
+            "concreteType": "GeoJsonHazardMap",
+            "kind": "LinkedField",
+            "name": "hazard_map",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "geojson",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "HexRgbValueMapping",
+                "kind": "LinkedField",
+                "name": "colour_scale",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "levels",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "hexrgbs",
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              }
+            ],
             "storageKey": null
           }
         ],
@@ -236,7 +278,7 @@ return {
     ],
     "kind": "Fragment",
     "metadata": null,
-    "name": "HazardMapsQuery",
+    "name": "HazardMapsPageQuery",
     "selections": (v11/*: any*/),
     "type": "QueryRoot",
     "abstractKey": null
@@ -257,20 +299,20 @@ return {
       (v8/*: any*/)
     ],
     "kind": "Operation",
-    "name": "HazardMapsQuery",
+    "name": "HazardMapsPageQuery",
     "selections": (v11/*: any*/)
   },
   "params": {
-    "cacheID": "0b3d81f6ac9c9651185925c393bfc977",
+    "cacheID": "95dbd6f914410a60de4757f3b9dbaee3",
     "id": null,
     "metadata": {},
-    "name": "HazardMapsQuery",
+    "name": "HazardMapsPageQuery",
     "operationKind": "query",
-    "text": "query HazardMapsQuery(\n  $grid_id: RegionGrid\n  $hazard_model_ids: [String]\n  $imts: [String]\n  $aggs: [String]\n  $vs30s: [Float]\n  $poes: [Float]\n  $color_scale: String\n  $color_scale_vmax: Float\n  $fill_opacity: Float\n  $stroke_width: Float\n  $stroke_opacity: Float\n) {\n  gridded_hazard(grid_id: $grid_id, hazard_model_ids: $hazard_model_ids, imts: $imts, aggs: $aggs, vs30s: $vs30s, poes: $poes) {\n    ok\n    gridded_hazard {\n      grid_id\n      hazard_model\n      imt\n      agg\n      geojson(color_scale: $color_scale, color_scale_vmax: $color_scale_vmax, fill_opacity: $fill_opacity, stroke_width: $stroke_width, stroke_opacity: $stroke_opacity)\n    }\n  }\n}\n"
+    "text": "query HazardMapsPageQuery(\n  $grid_id: RegionGrid\n  $hazard_model_ids: [String]\n  $imts: [String]\n  $aggs: [String]\n  $vs30s: [Float]\n  $poes: [Float]\n  $color_scale: String\n  $color_scale_vmax: Float\n  $fill_opacity: Float\n  $stroke_width: Float\n  $stroke_opacity: Float\n) {\n  gridded_hazard(grid_id: $grid_id, hazard_model_ids: $hazard_model_ids, imts: $imts, aggs: $aggs, vs30s: $vs30s, poes: $poes) {\n    ok\n    gridded_hazard {\n      grid_id\n      hazard_model\n      imt\n      agg\n      hazard_map(color_scale: $color_scale, color_scale_vmax: $color_scale_vmax, fill_opacity: $fill_opacity, stroke_width: $stroke_width, stroke_opacity: $stroke_opacity) {\n        geojson\n        colour_scale {\n          levels\n          hexrgbs\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "913b387455e250f6a48665e88a6335d5";
+(node as any).hash = "bd8b54adc01ed62b1385433f908e7d4e";
 
 export default node;

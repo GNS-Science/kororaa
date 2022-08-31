@@ -1,5 +1,6 @@
 import { roundLatLon } from '../../services/latLon/latLon.service';
 import { HAZARD_COLOR_LIMIT } from '../../utils/environmentVariables';
+
 import { tooManyCurves } from './constants/hazardCharts';
 import { hazardPageLocations } from './constants/hazardPageOptions';
 import { LocationData } from './hazardPageReducer';
