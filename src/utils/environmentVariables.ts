@@ -7,7 +7,7 @@ export const GRID_ID: RegionGrid | null | undefined = (process.env.GRID_ID as Re
 export const MAP_IMTS = process.env.REACT_APP_MAP_IMTS?.split(',') || ['PGA'];
 export const MAP_VS30S = process.env.REACT_APP_MAP_VS30S?.split(',') || ['250', '300', '350', '400', '450', '750'];
 export const MAP_STATISTICS = process.env.REACT_APP_MAP_STATISTICS?.split(',') || ['mean'];
-export const MAP_POES = process.env.REACT_APP_MAP_POES?.split(',') || ['10% in 50 years', '2% in 50 years'];
+export const MAP_POES: number[] = process.env.REACT_APP_MAP_POES?.split(',').map((poe) => Number(poe)) || [0.1, 0.02];
 export const MAP_COLOR_SCALE = process.env.REACT_APP_MAP_COLOR_SCALE?.split(',') || ['jet', 'inferno'];
 
 export const COLOR_MAP = process.env.REACT_APP_COLOR_MAP || 'jet';

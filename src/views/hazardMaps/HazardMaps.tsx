@@ -8,7 +8,7 @@ import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import { HazardMapsState } from './hazardMapReducer';
 import { useLazyLoadQuery } from 'react-relay';
 import { HazardMapsQuery } from './__generated__/HazardMapsQuery.graphql';
-import { getHazardMapCSVData, getTickValues, parsePoe } from './hazardMaps.service';
+import { getHazardMapCSVData, getTickValues, readablePoe } from './hazardMaps.service';
 import { GRID_ID, HAZARD_MODEL } from '../../utils/environmentVariables';
 
 interface HazardMapsProps {
@@ -23,7 +23,7 @@ const HazardMaps: React.FC<HazardMapsProps> = ({ state, setFullscreen }: HazardM
     imts: state.spectralPeriod,
     aggs: state.statistic,
     vs30s: state.vs30,
-    poes: [parsePoe(state.poe[0])],
+    poes: state.poe,
     color_scale: state.color_scale,
     color_scale_vmax: state.vmax,
     fill_opacity: state.fill_opacity,
@@ -59,7 +59,7 @@ const HazardMaps: React.FC<HazardMapsProps> = ({ state, setFullscreen }: HazardM
 
   return (
     <Box sx={{ width: '100%', height: '700px' }}>
-      <CSVLink data={getHazardMapCSVData(geoJson, state.vs30[0], state.spectralPeriod[0], state.poe[0])} filename="hazard-maps.csv">
+      <CSVLink data={getHazardMapCSVData(geoJson, state.vs30[0], state.spectralPeriod[0], readablePoe(state.poe[0]))} filename="hazard-maps.csv">
         <Fab sx={{ position: 'absolute', top: '128px', right: '70px' }} color="primary">
           <ArrowDownwardIcon />
         </Fab>
