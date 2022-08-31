@@ -25,6 +25,7 @@ const HazardMaps: React.FC<HazardMapsProps> = ({ state, setFullscreen }: HazardM
     vs30s: state.vs30,
     poes: [parsePoe(state.poe[0])],
     color_scale: state.color_scale,
+    color_scale_vmax: state.vmax,
     fill_opacity: state.fill_opacity,
     stroke_width: state.stroke_width,
     stroke_opacity: state.stroke_opacity,
@@ -82,6 +83,7 @@ export const hazardMapsQuery = graphql`
     $vs30s: [Float]
     $poes: [Float]
     $color_scale: String
+    $color_scale_vmax: Float
     $fill_opacity: Float
     $stroke_width: Float
     $stroke_opacity: Float
@@ -93,7 +95,7 @@ export const hazardMapsQuery = graphql`
         hazard_model
         imt
         agg
-        hazard_map(color_scale: $color_scale, fill_opacity: $fill_opacity, stroke_width: $stroke_width, stroke_opacity: $stroke_opacity) {
+        hazard_map(color_scale: $color_scale, color_scale_vmax: $color_scale_vmax, fill_opacity: $fill_opacity, stroke_width: $stroke_width, stroke_opacity: $stroke_opacity) {
           geojson
           colour_scale {
             levels
