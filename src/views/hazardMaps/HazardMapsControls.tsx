@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Box, Button, styled, TextField } from '@mui/material';
-import { CSVLink } from 'react-csv';
 import { SelectControl } from '@gns-science/toshi-nest';
 
 import { flexParentCenter } from '../../utils/styleUtils';
@@ -8,10 +7,10 @@ import { getHazardMapCSVData } from './hazardMaps.service';
 import { HazardMapsState } from './hazardMapReducer';
 import CustomControlsBar from '../../components/common/CustomControlsBar';
 import { MAP_COLOR_SCALE, MAP_IMTS, MAP_POES, MAP_STATISTICS, MAP_VS30S } from '../../utils/environmentVariables';
+import StyledCSVLink from '../../components/common/StyledCSVLink';
 
 const StyledButton = styled(Button)(() => ({
   margin: '0 0 0 10px',
-  // padding: '0 10px 0 10px',
 }));
 
 interface HazardMapsControlsProps {
@@ -65,11 +64,11 @@ const HazardMapsControls: React.FC<HazardMapsControlsProps> = ({ startTransition
           <StyledButton disabled={isPending} variant="contained" type="submit" onClick={handleSubmit}>
             Submit
           </StyledButton>
-          <CSVLink data={getHazardMapCSVData(geoJson, state.vs30[0], state.spectralPeriod[0], state.poe[0])} filename="hazard-maps.csv">
+          <StyledCSVLink data={getHazardMapCSVData(geoJson, state.vs30[0], state.spectralPeriod[0], state.poe[0])} filename="hazard-maps.csv">
             <StyledButton variant="contained" type="submit" color="primary">
               Download CSV
             </StyledButton>
-          </CSVLink>
+          </StyledCSVLink>
         </div>
       </CustomControlsBar>
     </Box>
