@@ -1,8 +1,3 @@
-export interface ColorScale {
-  levels: number[];
-  hexrgbs: (string | undefined)[];
-}
-
 export const getHazardMapCSVData = (data: string[], vs30: number, imt: string, poe: string) => {
   const csvData: (number | string)[][] = [
     [`vs30=${vs30}`, `specctral period=${imt}`, `Poe=${poe}`],
