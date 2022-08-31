@@ -10,9 +10,9 @@ import { hazardMapsReducer, initialState } from './hazardMapReducer';
 import HazardMapsControls from './HazardMapsControls';
 import { flexParentCenter } from '../../utils/styleUtils';
 import { GRID_ID, HAZARD_MODEL } from '../../utils/environmentVariables';
-import { parsePoeString, getTickValues } from './hazardMaps.service';
+import { getTickValues, ColorScale } from './hazardMaps.service';
 import { HazardMapsPageQuery } from './__generated__/HazardMapsPageQuery.graphql';
-import { ColorScale } from './HazardMaps';
+
 const PageContainer = styled(Box)(({ theme }) => ({
   ...flexParentCenter,
   margin: '0 5% 0 5% 0.5% 0.5%',
@@ -40,14 +40,6 @@ const HazardMapsPage: React.FC = () => {
     stroke_width: state.stroke_width,
     stroke_opacity: state.stroke_opacity,
   });
-
-  // const geoJson = useMemo(() => {
-  //   let geoJsonData: string[] = [];
-  //   if (data && data.gridded_hazard && data.gridded_hazard.gridded_hazard?.length) {
-  //     geoJsonData = data.gridded_hazard?.gridded_hazard.map((hazard) => hazard?.geojson);
-  //   }
-  //   return geoJsonData;
-  // }, [data]);
 
   const geoJson = useMemo<string[]>(() => {
     if (data && data.gridded_hazard && data.gridded_hazard.gridded_hazard?.length) {
