@@ -4,6 +4,7 @@ export type HazardMapsState = {
   vs30: number[];
   poe: string[];
   color_scale: string;
+  vmax: number;
   fill_opacity: number;
   stroke_width: number;
   stroke_opacity: number;
@@ -22,6 +23,7 @@ export const initialState: HazardMapsState = {
   vs30: [400],
   poe: ['10% in 50 years'],
   color_scale: 'inferno',
+  vmax: 0,
   fill_opacity: 0.5,
   stroke_width: 0.2,
   stroke_opacity: 0.5,
