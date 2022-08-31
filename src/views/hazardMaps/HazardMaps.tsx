@@ -39,10 +39,17 @@ const HazardMaps: React.FC<HazardMapsProps> = ({ state, setFullscreen }: HazardM
   }, [data]);
 
   const colorScale = useMemo(() => {
-    if (data && data.gridded_hazard && data.gridded_hazard.gridded_hazard && data.gridded_hazard.gridded_hazard[0] && data.gridded_hazard.gridded_hazard[0].hazard_map?.colour_scale?.levels) {
+    if (
+      data &&
+      data.gridded_hazard &&
+      data.gridded_hazard.gridded_hazard &&
+      data.gridded_hazard.gridded_hazard[0] &&
+      data.gridded_hazard.gridded_hazard[0].hazard_map?.colour_scale?.levels &&
+      data.gridded_hazard.gridded_hazard[0].hazard_map.colour_scale.hexrgbs
+    ) {
       return {
         levels: getTickValues(data.gridded_hazard.gridded_hazard[0]?.hazard_map?.colour_scale?.levels.map((level) => Number(level))),
-        hexrgbs: data.gridded_hazard.gridded_hazard[0]?.hazard_map?.colour_scale?.hexrgbs ?? [],
+        hexrgbs: data.gridded_hazard.gridded_hazard[0]?.hazard_map?.colour_scale?.hexrgbs.map((color) => color?.toString()),
       };
     }
   }, [data]);
@@ -57,7 +64,9 @@ const HazardMaps: React.FC<HazardMapsProps> = ({ state, setFullscreen }: HazardM
         </Fab>
       </CSVLink>
       <LeafletMap geoJsonData={geoJson} zoom={zoom} nzCentre={nzCentre} height={'700px'} width={'100%'} setFullscreen={setFullscreen} />
-      <ColorBar width={300} height={35} colors={colorScale?.hexrgbs} tickValues={colorScale?.levels} style={{ position: 'relative', zIndex: 10000000, top: '-125px', left: 'calc(100% - 365px)' }} />
+      {colorScale && (
+        <ColorBar width={300} height={35} colors={colorScale?.hexrgbs} tickValues={colorScale?.levels} style={{ position: 'relative', zIndex: 10000000, top: '-125px', left: 'calc(100% - 365px)' }} />
+      )}
     </Box>
   );
 };
