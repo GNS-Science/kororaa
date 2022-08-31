@@ -3,7 +3,6 @@ import { graphql } from 'babel-plugin-relay/macro';
 import { useLazyLoadQuery } from 'react-relay';
 import { Box, Button } from '@mui/material';
 import { useReactToPrint } from 'react-to-print';
-import { CSVLink } from 'react-csv';
 import { ControlsBar } from '@gns-science/toshi-nest';
 
 import { HazardChartsPlotsViewQuery } from './__generated__/HazardChartsPlotsViewQuery.graphql';
@@ -13,6 +12,7 @@ import { HazardPageState } from './hazardPageReducer';
 import { getLatLonArray } from '../../services/latLon/latLon.service';
 import { RESOLUTION, HAZARD_MODEL } from '../../utils/environmentVariables';
 import { getCSVData } from './hazardPage.service';
+import StyledCSVLink from '../../components/common/StyledCSVLink';
 
 interface HazardChartsPlotsViewProps {
   state: HazardPageState;
@@ -45,9 +45,9 @@ const HazardChartsPlotsView: React.FC<HazardChartsPlotsViewProps> = ({ state, di
           <Button variant="contained" onClick={handlePrint}>
             Print Figures
           </Button>
-          <CSVLink data={getCSVData(data)} filename="hazard-curves.csv">
+          <StyledCSVLink data={getCSVData(data)} filename="hazard-curves.csv">
             <Button variant="contained">Save Data</Button>
-          </CSVLink>
+          </StyledCSVLink>
         </ControlsBar>
       </Box>
     </Box>
