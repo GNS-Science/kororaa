@@ -4,6 +4,7 @@ import Grid from '@mui/material/Grid';
 import { Link } from 'react-router-dom';
 
 import { Card, CardContent, CardActions, Typography, Button } from '@mui/material';
+import InfoTooltip from '../../components/common/InfoTooltip';
 
 const StyledCard = styled(Card)(() => ({
   justifyContent: 'center',
@@ -57,8 +58,11 @@ const InfoPage: React.FC = () => {
     <PageContainer>
       <Grid item xs={12}>
         <InfoContainer>
-          <Typography variant="h1">Resources</Typography>
-          <Typography variant="body1">details deatils</Typography>
+          <Typography variant="h1">
+            Resources
+            <InfoTooltip text="This is a tooltip" />
+          </Typography>
+          {/* <Typography variant="body1">details deatils</Typography> */}
         </InfoContainer>
       </Grid>
       <Grid container spacing={6} columns={{ sm: 6, md: 8, lg: 12 }}>

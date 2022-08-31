@@ -1,12 +1,12 @@
 import React, { useReducer } from 'react';
-import { Box, Typography, Fab, CircularProgress } from '@mui/material';
+import { Box, Typography, CircularProgress } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import ShareIcon from '@mui/icons-material/Share';
 
 import HazardChartsControls from './HazardChartsControls';
 import HazardChartsPlotsView from './HazardChartsPlotsView';
 import { hazardPageReducer, hazardPageReducerInitialState } from './hazardPageReducer';
 import { flexParentCenter } from '../../utils/styleUtils';
+import { InfoTooltip } from '../../components/common/InfoTooltip';
 
 const HazardChartsPage: React.FC = () => {
   const [state, dispatch] = useReducer(hazardPageReducer, hazardPageReducerInitialState);
@@ -25,10 +25,8 @@ const HazardChartsPage: React.FC = () => {
       <Box sx={{ ...flexParentCenter, width: '100%' }}>
         <Typography variant="h1" sx={{ padding: 2, width: '100%', textAlign: 'center' }}>
           Hazard Curves and Spectra
+          <InfoTooltip text={'lorem ipsum dolor'} />
         </Typography>
-        <Fab sx={{ position: 'absolute', right: '2.5%' }} color="primary">
-          <ShareIcon />
-        </Fab>
       </Box>
       <HazardChartsControls state={state} dispatch={dispatch} />
       <React.Suspense fallback={<CircularProgress />}>
