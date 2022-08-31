@@ -24,3 +24,11 @@ export const getHazardMapCSVData = (data: string[], vs30: number, imt: string, p
   });
   return csvData;
 };
+
+export const getTickValues = (levels: number[]): number[] => {
+  const min = Math.min(...levels);
+  const max = Math.max(...levels);
+  const steps = max / 0.5 + 1;
+
+  return Array.from({ length: steps }, (_, index) => index * 0.5 + min);
+};

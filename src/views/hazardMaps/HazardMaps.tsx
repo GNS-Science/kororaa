@@ -8,7 +8,7 @@ import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import { HazardMapsState } from './hazardMapReducer';
 import { useLazyLoadQuery } from 'react-relay';
 import { HazardMapsQuery } from './__generated__/HazardMapsQuery.graphql';
-import { getHazardMapCSVData, parsePoe } from './hazardMaps.service';
+import { getHazardMapCSVData, getTickValues, parsePoe } from './hazardMaps.service';
 import { GRID_ID, HAZARD_MODEL } from '../../utils/environmentVariables';
 
 interface HazardMapsProps {
@@ -30,30 +30,34 @@ const HazardMaps: React.FC<HazardMapsProps> = ({ state, setFullscreen }: HazardM
     stroke_opacity: state.stroke_opacity,
   });
 
-  console.log(data);
+  const geoJson = useMemo<string[]>(() => {
+    if (data && data.gridded_hazard && data.gridded_hazard.gridded_hazard?.length) {
+      return data.gridded_hazard?.gridded_hazard.map((hazard) => hazard?.hazard_map?.geojson);
+    } else {
+      return [];
+    }
+  }, [data]);
 
-  // const geoJson = useMemo(() => {
-  //   let geoJsonData: string[] = [];
-  //   if (data && data.gridded_hazard && data.gridded_hazard.gridded_hazard?.length) {
-  //     geoJsonData = data.gridded_hazard?.gridded_hazard.map((hazard) => hazard?.hazard_map?.geojson);
-  //   }
-  //   return geoJsonData;
-  // }, [data]);
-
+  const colorScale = useMemo(() => {
+    if (data && data.gridded_hazard && data.gridded_hazard.gridded_hazard && data.gridded_hazard.gridded_hazard[0] && data.gridded_hazard.gridded_hazard[0].hazard_map?.colour_scale?.levels) {
+      return {
+        levels: getTickValues(data.gridded_hazard.gridded_hazard[0]?.hazard_map?.colour_scale?.levels.map((level) => Number(level))),
+        hexrgbs: data.gridded_hazard.gridded_hazard[0]?.hazard_map?.colour_scale?.hexrgbs ?? [],
+      };
+    }
+  }, [data]);
   const zoom = 5;
   const nzCentre = [-40.946, 174.167];
 
-  const colors = useMemo(() => ['#f7fcfd', '#e5f5f9', '#ccece6', '#99d8c9', '#66c2a4', '#41ae76', '#238b45', '#006d2c', '#00441b'], []);
-
   return (
     <Box sx={{ width: '100%', height: '700px' }}>
-      {/* <CSVLink data={getHazardMapCSVData(geoJson, state.vs30[0], state.spectralPeriod[0], state.poe[0])} filename="hazard-maps.csv">
+      <CSVLink data={getHazardMapCSVData(geoJson, state.vs30[0], state.spectralPeriod[0], state.poe[0])} filename="hazard-maps.csv">
         <Fab sx={{ position: 'absolute', top: '128px', right: '70px' }} color="primary">
           <ArrowDownwardIcon />
         </Fab>
-      </CSVLink> */}
-      {/* <LeafletMap geoJsonData={geoJson} zoom={zoom} nzCentre={nzCentre} height={'700px'} width={'100%'} setFullscreen={setFullscreen} /> */}
-      <ColorBar width={300} height={35} colors={colors} tickValues={[0, 0.5, 1, 1.5]} style={{ position: 'relative', zIndex: 10000000, top: '-125px', left: 'calc(100% - 365px)' }} />
+      </CSVLink>
+      <LeafletMap geoJsonData={geoJson} zoom={zoom} nzCentre={nzCentre} height={'700px'} width={'100%'} setFullscreen={setFullscreen} />
+      <ColorBar width={300} height={35} colors={colorScale?.hexrgbs} tickValues={colorScale?.levels} style={{ position: 'relative', zIndex: 10000000, top: '-125px', left: 'calc(100% - 365px)' }} />
     </Box>
   );
 };
