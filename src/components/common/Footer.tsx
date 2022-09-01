@@ -1,6 +1,8 @@
 import React from 'react';
+import { useLocation } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
 import { Typography } from '@mui/material';
+
 import PartnersLogos from './PartnersLogos';
 
 const FooterContainer = styled('footer')(({ theme }) => ({
@@ -27,6 +29,9 @@ const FooterLinkItems = styled('div')({
 });
 
 const Footer: React.FC = () => {
+  const location = useLocation();
+  console.log(location.pathname);
+
   return (
     <FooterContainer>
       <FooterLinkItems>
@@ -34,7 +39,7 @@ const Footer: React.FC = () => {
         <Typography>Contact Information</Typography>
         <Typography>About</Typography>
       </FooterLinkItems>
-      <PartnersLogos />
+      {(location.pathname === '/' || location.pathname === '/Resources') && <PartnersLogos />}
     </FooterContainer>
   );
 };

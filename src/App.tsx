@@ -32,8 +32,8 @@ function App(props: { environment?: Environment }) {
         <CssBaseline>
           <Box sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
             <NavBar />
-            <Box sx={{ flexGrow: 1 }}>
-              <BrowserRouter>
+            <BrowserRouter>
+              <Box sx={{ flexGrow: 1 }}>
                 <DisclaimerLayer>
                   <Routes>
                     <Route path="/RuptureSets" element={<RuptureSetsPage />} />
@@ -44,9 +44,9 @@ function App(props: { environment?: Environment }) {
                     <Route path="/" element={<Home />} />
                   </Routes>
                 </DisclaimerLayer>
-              </BrowserRouter>
-            </Box>
-            <Footer />
+              </Box>
+              <Footer />
+            </BrowserRouter>
           </Box>
         </CssBaseline>
       </ThemeProvider>
