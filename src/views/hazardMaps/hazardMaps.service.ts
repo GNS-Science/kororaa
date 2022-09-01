@@ -1,13 +1,7 @@
-export const parsePoe = (poe: string): number => {
-  switch (poe) {
-    case '10% in 50 years':
-      return 0.1;
-    case '2% in 50 years':
-      return 0.02;
-    default:
-      return 0.1;
-  }
-};
+export interface ColorScale {
+  levels: number[];
+  hexrgbs: (string | undefined)[];
+}
 
 export const getHazardMapCSVData = (data: string[], vs30: number, imt: string, poe: string) => {
   const csvData: (number | string)[][] = [
@@ -23,4 +17,24 @@ export const getHazardMapCSVData = (data: string[], vs30: number, imt: string, p
     });
   });
   return csvData;
+};
+
+export const getTickValues = (levels: number[]): number[] => {
+  const min = Math.min(...levels);
+  const max = Math.max(...levels);
+  const steps = max / 0.5 + 1;
+
+  return Array.from({ length: steps }, (_, index) => index * 0.5 + min);
+};
+
+export const parsePoeString = (poe: string): number => {
+  return Number(poe.replace('% in 50 years', '')) / 100;
+};
+
+export const readablePoe = (poe: number): string => {
+  return `${poe * 100} % in 50 years`;
+};
+
+export const readablePoeArray = (poes: number[]): string[] => {
+  return poes.map((poe) => readablePoe(poe));
 };

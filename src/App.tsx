@@ -39,7 +39,6 @@ function App(props: { environment?: Environment }) {
                     <Route path="/RuptureSets" element={<RuptureSetsPage />} />
                     <Route path="/HazardMaps" element={<HazardMapsPage />} />
                     <Route path="/HazardCurves" element={<HazardChartsPage />} />
-                    <Route path="/HazardCurves" element={<HazardChartsPage />} />
                     <Route path="/Resources" element={<InfoPage />} />
                     <Route path="/Resources/ModelComponents" element={<ModelComponentsPage />} />
                     <Route path="/" element={<Home />} />
