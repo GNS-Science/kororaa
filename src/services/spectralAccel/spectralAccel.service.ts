@@ -28,7 +28,8 @@ export const getSpectralAccelUncertaintyCurves = (vs30s: number[], locs: string[
   poe &&
     vs30s.forEach((vs30) => {
       locs.forEach((loc) => {
-        const key = `${vs30}m/s ${roundLatLon(loc)}`;
+        const location = data.hazard_curves?.locations?.filter((location) => location?.code === loc);
+        const key = `${vs30}m/s ${location && location.length > 0 ? location[0]?.key : roundLatLon(loc)}`;
         if (!saCurveGroups[key]) {
           saCurveGroups[key] = {};
         }
