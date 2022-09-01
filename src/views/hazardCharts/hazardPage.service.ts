@@ -47,7 +47,8 @@ export const getAllCurveGroups = (data: HazardChartsPlotsViewQuery$data): Hazard
       });
 
       if (!curveGroups[curveGroupKey]) {
-        curveGroups[curveGroupKey] = { curveName: { data: curve } };
+        curveGroups[curveGroupKey] = {};
+        curveGroups[curveGroupKey][curveName] = { data: curve };
       } else {
         curveGroups[curveGroupKey][curveName] = { data: curve };
       }

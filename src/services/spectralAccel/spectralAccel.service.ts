@@ -2,9 +2,8 @@ import * as mathjs from 'mathjs';
 
 import { colors } from '../../utils/colorUtils';
 import { hazardPageOptions } from '../../views/hazardCharts/constants/hazardPageOptions';
-// import { LocationData } from '../../views/hazardCharts/hazardPageReducer';
 import { HazardChartsPlotsViewQuery$data } from '../../views/hazardCharts/__generated__/HazardChartsPlotsViewQuery.graphql';
-import { getLatlonObject, roundLatLon } from '../latLon/latLon.service';
+import { roundLatLon } from '../latLon/latLon.service';
 
 export interface UncertaintyCurve {
   strokeSize?: number;
@@ -46,9 +45,7 @@ export const getSpectralAccelUncertaintyCurves = (vs30s: number[], locs: string[
 
 export const getSpectralAccelCurve = (curveType: string, vs30: number, loc: string, data: HazardChartsPlotsViewQuery$data, poe: number) => {
   if (data.hazard_curves?.curves?.length) {
-    const curves: Curves = data.hazard_curves?.curves?.filter(
-      (curve) => curve !== null && curve?.vs30 === vs30 && getLatlonObject(curve?.loc) === getLatlonObject(loc) && getAggValue(curve?.agg as string) === curveType,
-    );
+    const curves: Curves = data.hazard_curves?.curves?.filter((curve) => curve !== null && curve?.vs30 === vs30 && curve?.loc === loc && getAggValue(curve?.agg as string) === curveType);
     const saCurve = calculateSpectralAccelCurve(curves, poe);
 
     return saCurve;
