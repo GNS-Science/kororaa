@@ -1,7 +1,9 @@
+import colormap from 'colormap';
+
 import { expected as calculateSpectralAccelCurveExpected } from './testCases/calculateSpectralAccelCurveTestCase';
 import { addColorsToCurves, getSpectralAccelCurve, UncertaintyChartData } from './spectralAccel.service';
 import { hazardPlotsViewQueryMockData } from './testCases/hazardPlotViewsQueryMockData';
-import { colors } from '../../utils/colorUtils';
+import { HAZARD_COLOR_MAP } from '../../utils/environmentVariables';
 
 test('getAllOfCurveType function', () => {
   expect(getSpectralAccelCurve('mean', 400, 'WLG', hazardPlotsViewQueryMockData, 0.02)).toEqual(calculateSpectralAccelCurveExpected);
@@ -27,6 +29,13 @@ test('addColorsToCurves function adds strokColor property to each curve', () => 
       },
     },
   };
+
+  const colors = colormap({
+    colormap: HAZARD_COLOR_MAP,
+    nshades: 6,
+    format: 'hex',
+    alpha: 1,
+  });
 
   const expected: UncertaintyChartData = {
     testCurveGroup: {
