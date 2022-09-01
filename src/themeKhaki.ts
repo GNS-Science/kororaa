@@ -8,7 +8,7 @@ const GNS_KHAKI = '#a71930';
 const theme = createTheme({
   palette: {
     primary: {
-      main: OLD_PRIMARY_ORANGE,
+      main: GNS_KHAKI,
     },
     secondary: {
       main: GNS_BLUE,

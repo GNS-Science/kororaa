@@ -40,7 +40,7 @@ const InfoCard: React.FC<InfoCardProps> = ({ title, text, url }: InfoCardProps) 
     <Grid item xs={6}>
       <StyledCard>
         <CardContent>
-          <Typography variant="h5">{title}</Typography>
+          <Typography variant="h4">{title}</Typography>
           <Typography>{text}</Typography>
         </CardContent>
         <CardActions>

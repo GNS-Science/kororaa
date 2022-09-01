@@ -8,7 +8,9 @@ import { Environment, RelayEnvironmentProvider } from 'react-relay/hooks';
 import RelayEnvironment from './RelayEnvironment';
 
 import './App.css';
-import theme from './theme';
+// import theme from './theme';
+// import theme from './themeKhaki';
+import theme from './themeGulf';
 import NavBar from './components/common/NavBar';
 import Footer from './components/common/Footer';
 import Home from './views/home/Home';
@@ -36,7 +38,6 @@ function App(props: { environment?: Environment }) {
               <BrowserRouter>
                 <DisclaimerLayer>
                   <Routes>
-                    <Route path="/RuptureSets" element={<RuptureSetsPage />} />
                     <Route path="/HazardMaps" element={<HazardMapsPage />} />
                     <Route path="/HazardCurves" element={<HazardChartsPage />} />
                     <Route path="/Resources" element={<InfoPage />} />

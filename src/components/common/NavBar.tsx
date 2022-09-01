@@ -1,12 +1,12 @@
 import React from 'react';
 import { styled } from '@mui/material/styles';
-import { AppBar, Typography, Container, Toolbar, IconButton, Box, Menu, MenuItem, Link } from '@mui/material';
+import { AppBar, Typography, Container, Toolbar, IconButton, Box, Menu, MenuItem, Link, CardMedia } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 
 const StyledAppBar = styled(AppBar)(({ theme }) => ({
   backgroundColor: theme.palette.info.main,
-  height: 120,
-  borderBottom: `10px solid ${theme.palette.primary.main}`,
+  height: 100,
+  borderBottom: `5px solid ${theme.palette.secondary.main}`,
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-around',
@@ -41,7 +41,7 @@ const NavBar: React.FC = () => {
         <Container maxWidth="xl">
           <StyledToolbar disableGutters>
             <Link href="/">
-              <img src="/NSHM.png" />
+              <img src="/images/NSHM_logo_black_cropped.png" height="40" alt="NSHM logo" />
             </Link>
             <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
               <IconButton size="large" aria-label="account of current user" aria-controls="menu-appbar" aria-haspopup="true" onClick={handleOpenNavMenu} color="inherit">
@@ -83,7 +83,8 @@ const NavBar: React.FC = () => {
                 </MenuItem>
               ))}
             </Box>
-            <img src="/GNS.png" />
+            {/*<CardMedia component="img" height="100" image="/images/2GNS_logo_HORZ.png" alt="GNS logo" />*/}
+            <img src="/images/2GNS_logo_HORZ.png" height="80" alt="GNS logo" />
           </StyledToolbar>
         </Container>
       </StyledAppBar>
