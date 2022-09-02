@@ -1,16 +1,15 @@
 import { createTheme } from '@mui/material/styles';
 
 const OLD_PRIMARY_ORANGE = '#e97826';
-const OLD_SECONDARY_GREY = '#7f7f7f';
-const OLD_GREY = '#d9d9d9';
+// const OLD_SECONDARY_GREY = '#7f7f7f';
+// const OLD_GREY = '#d9d9d9';
 const GNS_BLUE = '#072B61';
-const GNS_KHAKI = '#a71930';
-const GULF_GREEN = '#a1d0ea'; //Original Gulf
-const GULF_BLUE = '#bae0f6';
-const GULF_BLUE_FADED = '#cfe9f7';
+// const GNS_KHAKI = '#a71930';
+// const GULF_GREEN = '#a1d0ea'; //Original Gulf
+// const GULF_BLUE = '#bae0f6';
+// const GULF_BLUE_FADED = '#cfe9f7';
 const GULF_BLUE_FADED_MORE = '#daeaf3';
-
-const GULF_ORANGE = '#fc6200';
+// const GULF_ORANGE = '#fc6200';
 
 const theme = createTheme({
   palette: {

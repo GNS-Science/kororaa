@@ -1,6 +1,6 @@
 import React from 'react';
 import { styled } from '@mui/material/styles';
-import { AppBar, Typography, Container, Toolbar, IconButton, Box, Menu, MenuItem, Link, CardMedia } from '@mui/material';
+import { AppBar, Typography, Container, Toolbar, IconButton, Box, Menu, MenuItem, Link } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 
 const StyledAppBar = styled(AppBar)(({ theme }) => ({
@@ -41,7 +41,8 @@ const NavBar: React.FC = () => {
         <Container maxWidth="xl">
           <StyledToolbar disableGutters>
             <Link href="/">
-              <img src="/images/NSHM_logo_black_cropped.png" height="40" alt="NSHM logo" />
+              <img src="/images/NSHM_logo_black_cropped_blue.png" height="40" alt="NSHM logo" />
+              {/*<img src="/images/NSHM_logo_black.png" height="70" alt="NSHM logo" />*/}
             </Link>
             <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
               <IconButton size="large" aria-label="account of current user" aria-controls="menu-appbar" aria-haspopup="true" onClick={handleOpenNavMenu} color="inherit">

@@ -8,7 +8,7 @@ import { Environment, RelayEnvironmentProvider } from 'react-relay/hooks';
 import RelayEnvironment from './RelayEnvironment';
 
 import './App.css';
-// import theme from './theme';
+//import theme from './theme';
 // import theme from './themeKhaki';
 import theme from './themeGulf';
 import NavBar from './components/common/NavBar';
