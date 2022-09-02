@@ -1,10 +1,9 @@
 import * as mathjs from 'mathjs';
-import colormap from 'colormap';
 
-import { HAZARD_COLOR_MAP } from '../../utils/environmentVariables';
 import { hazardPageOptions } from '../../views/hazardCharts/constants/hazardPageOptions';
 import { HazardChartsPlotsViewQuery$data } from '../../views/hazardCharts/__generated__/HazardChartsPlotsViewQuery.graphql';
 import { roundLatLon } from '../latLon/latLon.service';
+import { getColor } from '../../utils/colorUtils';
 
 export interface UncertaintyCurve {
   strokeSize?: number;
@@ -95,19 +94,12 @@ export const calculateSpectralAccelCurve = (curves: Curves, poe: number): number
 export const addColorsToCurves = (curveGroups: UncertaintyChartData): UncertaintyChartData => {
   const curveGroupLength = Object.keys(curveGroups).length;
 
-  const curveColors = colormap({
-    colormap: HAZARD_COLOR_MAP,
-    nshades: curveGroupLength < 6 ? 6 : curveGroupLength,
-    format: 'hex',
-    alpha: 1,
-  });
-
   Object.keys(curveGroups).forEach((key, index) => {
     Object.keys(curveGroups[key]).forEach((curveType) => {
       if (curveType === 'mean') {
-        curveGroups[key][curveType]['strokeColor'] = curveColors[index];
+        curveGroups[key][curveType]['strokeColor'] = getColor(curveGroupLength, index);
       } else {
-        curveGroups[key][curveType]['strokeColor'] = curveColors[index];
+        curveGroups[key][curveType]['strokeColor'] = getColor(curveGroupLength, index);
         curveGroups[key][curveType]['strokeOpacity'] = 0.5;
       }
     });
