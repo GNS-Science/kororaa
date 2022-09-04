@@ -4,7 +4,7 @@ import { styled } from '@mui/material/styles';
 import { GroupCurveChartResponsive } from '@gns-science/toshi-nest';
 
 import { HazardChartsPlotsViewQuery$data } from './__generated__/HazardChartsPlotsViewQuery.graphql';
-import { getAllCurveGroups, getFilteredCurveGroups, getLocationList } from './hazardPage.service';
+import { getAllCurveGroups, getFilteredCurveGroups, getLocationList, getYScale } from './hazardPage.service';
 import { HazardPageState } from './hazardPageReducer';
 import { addColorsToCurves, getSpectralAccelUncertaintyCurves } from '../../services/spectralAccel/spectralAccel.service';
 import HazardChartsSettings from './HazardChartsSettings';
@@ -54,7 +54,7 @@ const HazardCharts: React.FC<HazardChartsProps> = ({ data, state, dispatch }: Ha
               xLabel=" Acceleration (g)"
               yLabel="Annual Probability of Exceedance"
               xLimits={[0.01, 10]}
-              yLimits={[0.000001, 1]}
+              yLimits={getYScale(curveGroupWithColors, 0.000001)}
               tooltip={true}
               crosshair={true}
               heading="Hazard Uncertainty"
@@ -77,7 +77,7 @@ const HazardCharts: React.FC<HazardChartsProps> = ({ data, state, dispatch }: Ha
                 xLabel="Period (s)"
                 yLabel="Shaking Intensity (g)"
                 xLimits={[0.1, 6]}
-                yLimits={[0.1, 4]}
+                yLimits={getYScale(saCurvesWithColors, 0.1)}
                 tooltip={true}
                 crosshair={true}
                 heading="Spectral Acceleration Chart"
