@@ -38,7 +38,7 @@ const theme = createTheme({
 theme.typography.h1 = {
   fontWeight: 700,
   fontSize: '2rem',
-  // color: GNS_KHAKI,
+  color: GNS_BLUE,
   [theme.breakpoints.down('md')]: {
     fontSize: '1.802rem',
   },
@@ -49,7 +49,7 @@ theme.typography.h1 = {
 
 theme.typography.h2 = {
   fontSize: '2.074rem',
-  // color: GNS_KHAKI,
+  color: GNS_BLUE,
   [theme.breakpoints.down('md')]: {
     fontSize: '1.602rem',
   },
@@ -60,7 +60,7 @@ theme.typography.h2 = {
 
 theme.typography.h3 = {
   fontSize: '1.728rem',
-  // color: GNS_KHAKI,
+  color: GNS_BLUE,
   [theme.breakpoints.down('md')]: {
     fontSize: '1.424rem',
   },
@@ -71,7 +71,7 @@ theme.typography.h3 = {
 
 theme.typography.h4 = {
   fontSize: '1.44rem',
-  // color: GNS_KHAKI,
+  color: GNS_BLUE,
   [theme.breakpoints.down('md')]: {
     fontSize: '1.266rem',
   },
@@ -82,7 +82,7 @@ theme.typography.h4 = {
 
 theme.typography.h5 = {
   fontSize: '1.2rem',
-  // color: GNS_KHAKI,
+  color: GNS_BLUE,
   [theme.breakpoints.down('md')]: {
     fontSize: '1.125rem',
   },
