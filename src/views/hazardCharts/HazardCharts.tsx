@@ -27,9 +27,11 @@ const HazardCharts: React.FC<HazardChartsProps> = ({ data, state, dispatch }: Ha
     display: 'flex',
     padding: 20,
     width: '100%',
+    height: 'calc(50vw * 0.75)',
     border: 'solid black 1px',
     [theme.breakpoints.down('md')]: {
       flexDirection: 'column',
+      height: 'calc(100vw * 0.75 * 2)',
     },
   }));
 
