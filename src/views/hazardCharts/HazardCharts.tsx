@@ -27,9 +27,11 @@ const HazardCharts: React.FC<HazardChartsProps> = ({ data, state, dispatch }: Ha
     display: 'flex',
     padding: 20,
     width: '100%',
+    height: 'calc(50vw * 0.75)',
     border: 'solid black 1px',
     [theme.breakpoints.down('md')]: {
       flexDirection: 'column',
+      height: 'calc(100vw * 0.75 * 2)',
     },
   }));
 
@@ -69,8 +71,8 @@ const HazardCharts: React.FC<HazardChartsProps> = ({ data, state, dispatch }: Ha
               spectral={true}
               scaleType={'linear'}
               yScaleType={'linear'}
-              xLabel="Period [s]"
-              yLabel="Shaking Intensity [g]"
+              xLabel="Period (s)"
+              yLabel="Shaking Intensity (g)"
               xLimits={[0.1, 6]}
               yLimits={[0.1, 4]}
               tooltip={true}
