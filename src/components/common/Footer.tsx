@@ -6,12 +6,12 @@ import PartnersLogos from './PartnersLogos';
 const FooterContainer = styled('footer')(({ theme }) => ({
   flexShrink: 0,
   padding: 40,
-  height: 250,
+  height: 50,
   width: '100%',
   display: 'flex',
   flexDirect: 'row',
   justifyContent: 'space-between',
-  borderTop: `10px solid ${theme.palette.primary.main}`,
+  borderTop: `5px solid ${theme.palette.secondary.main}`,
   [theme.breakpoints.down('md')]: {
     flexDirection: 'column',
     justifyContent: 'center',

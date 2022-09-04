@@ -47,8 +47,9 @@ const Home: React.FC = () => {
         <Typography>Welcome to the New Zealand NSHM. This is the 2022 revision to the model. Here’s a link back to the explanation and background info on the model.</Typography>
       </InfoContainer>
       <CardButtonsContainer>
-        <MenuCard title="Hazard Curves" text="Hazard Curves to view" img="/hazardCurves.png" url="/Hazardcurves" />
-        <MenuCard title="Hazard Maps" text="Hazard Maps to view" img="/hazardMaps.png" url="/HazardMaps" />
+        {/*<MenuCard title="Hazard Curves" text="Hazard Curves to view" img="/images/HazardChart.png" url="/Hazardcurves" />*/}
+        <MenuCard title="Hazard Curves" text="Hazard Curves to view" img="/images/SpectralAccelChart.png" url="/Hazardcurves" />
+        <MenuCard title="Hazard Maps" text="Hazard Maps to view" img="/images/HazardMapExample.png" url="/HazardMaps" />
         {/*<MenuCard title="Rupture Sets" text="Rupture Sets to view" img="/ruptureSets.png" url="/" />*/}
         <MenuCard title="Resources" text="Model Information, Reports, and Input Files" img="/info.jpg" url="/Resources" />
       </CardButtonsContainer>

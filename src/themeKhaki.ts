@@ -1,14 +1,14 @@
 import { createTheme } from '@mui/material/styles';
 
-const OLD_PRIMARY_ORANGE = '#e97826';
-const OLD_SECONDARY_GREY = '#7f7f7f';
+// const OLD_PRIMARY_ORANGE = '#e97826';
+// const OLD_SECONDARY_GREY = '#7f7f7f';
 const GNS_BLUE = '#072B61';
 const GNS_KHAKI = '#a71930';
 
 const theme = createTheme({
   palette: {
     primary: {
-      main: OLD_PRIMARY_ORANGE,
+      main: GNS_KHAKI,
     },
     secondary: {
       main: GNS_BLUE,
