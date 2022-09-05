@@ -7,7 +7,7 @@ import { HazardChartsPlotsViewQuery$data } from './__generated__/HazardChartsPlo
 import { getAllCurveGroups, getFilteredCurveGroups, getLocationList } from './hazardPage.service';
 import { HazardPageState } from './hazardPageReducer';
 import { addColorsToCurves, getSpectralAccelUncertaintyCurves } from '../../services/spectralAccel/spectralAccel.service';
-import { HazardChartsSettings } from './HazardChartsSettings';
+import HazardChartsSettings from './HazardChartsSettings';
 
 interface HazardChartsProps {
   data: HazardChartsPlotsViewQuery$data;
@@ -47,42 +47,46 @@ const HazardCharts: React.FC<HazardChartsProps> = ({ data, state, dispatch }: Ha
       <HazardChartsContainer data-testid="hazardChartsContainer">
         <ChartContainer>
           <HazardChartsSettings spectral={false} state={state} dispatch={dispatch} />
-          <GroupCurveChartResponsive
-            scaleType={state.xScale}
-            yScaleType={'log'}
-            xLabel=" Acceleration (g)"
-            yLabel="Annual Probability of Exceedance"
-            xLimits={[0.01, 10]}
-            yLimits={[0.000001, 1]}
-            tooltip={true}
-            crosshair={true}
-            heading="Hazard Uncertainty"
-            subHeading={`${state.imts[0]}`}
-            curves={curveGroupWithColors}
-            poe={state.poe}
-            uncertainty={state.hazardUncertainty}
-          />
+          <div id="hazardChart">
+            <GroupCurveChartResponsive
+              scaleType={state.xScale}
+              yScaleType={'log'}
+              xLabel=" Acceleration (g)"
+              yLabel="Annual Probability of Exceedance"
+              xLimits={[0.01, 10]}
+              yLimits={[0.000001, 1]}
+              tooltip={true}
+              crosshair={true}
+              heading="Hazard Uncertainty"
+              subHeading={`${state.imts[0]}`}
+              curves={curveGroupWithColors}
+              poe={state.poe}
+              uncertainty={state.hazardUncertainty}
+            />
+          </div>
         </ChartContainer>
         {state.poe && (
           <ChartContainer>
             <HazardChartsSettings spectral={true} state={state} dispatch={dispatch} />
-            <GroupCurveChartResponsive
-              testId="sa-chart"
-              spectral={true}
-              scaleType={'linear'}
-              yScaleType={'linear'}
-              xLabel="Period (s)"
-              yLabel="Shaking Intensity (g)"
-              xLimits={[0.1, 6]}
-              yLimits={[0.1, 4]}
-              tooltip={true}
-              crosshair={true}
-              heading="Spectral Acceleration Chart"
-              subHeading={`${state.poe * 100}% in 50 years`}
-              curves={saCurvesWithColors}
-              poe={state.poe}
-              uncertainty={state.spectralUncertainty}
-            />
+            <div id="spectraChart">
+              <GroupCurveChartResponsive
+                testId="sa-chart"
+                spectral={true}
+                scaleType={'linear'}
+                yScaleType={'linear'}
+                xLabel="Period (s)"
+                yLabel="Shaking Intensity (g)"
+                xLimits={[0.1, 6]}
+                yLimits={[0.1, 4]}
+                tooltip={true}
+                crosshair={true}
+                heading="Spectral Acceleration Chart"
+                subHeading={`${state.poe * 100}% in 50 years`}
+                curves={saCurvesWithColors}
+                poe={state.poe}
+                uncertainty={state.spectralUncertainty}
+              />
+            </div>
           </ChartContainer>
         )}
       </HazardChartsContainer>
