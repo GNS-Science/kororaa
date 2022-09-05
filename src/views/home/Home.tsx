@@ -1,59 +1,38 @@
 import React from 'react';
 import { Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import { Box } from '@mui/material';
+import { Grid } from '@mui/material';
 
 import MenuCard from './MenuCard';
 
-const HomeContainer = styled('div')({
+const HomePageContainer = styled('div')({
   width: '100%',
-  display: 'flex',
-  flexDirection: 'column',
   justifyContent: 'center',
   alignItems: 'center',
-});
-
-const InfoContainer = styled('div')({
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'center',
-  textAlign: 'center',
-  width: '100%',
   padding: '4rem',
 });
 
-const CardButtonsContainer = styled(Box)(({ theme }) => ({
+const HomeTitleContainer = styled('div')({
+  justifyContent: 'left',
+  textAlign: 'left',
   width: '100%',
-  maxWidth: 1300,
-  height: 1100,
-  padding: 10,
-  display: 'flex',
-  flexWrap: 'wrap',
-  flexDirection: 'row',
-  justifyContent: 'space-around',
-  [theme.breakpoints.down('md')]: {
-    flexDirection: 'column',
-    height: 'auto',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-}));
+  'padding-bottom': '2rem',
+});
 
 const Home: React.FC = () => {
   return (
-    <HomeContainer>
-      <InfoContainer>
+    <HomePageContainer>
+      <HomeTitleContainer>
         <Typography variant="h1">New Zealand National Seismic Hazard Model</Typography>
-        <Typography>Welcome to the New Zealand NSHM. This is the 2022 revision to the model. Here’s a link back to the explanation and background info on the model.</Typography>
-      </InfoContainer>
-      <CardButtonsContainer>
-        {/*<MenuCard title="Hazard Curves" text="Hazard Curves to view" img="/images/HazardChart.png" url="/Hazardcurves" />*/}
-        <MenuCard title="Hazard Curves" text="Hazard Curves to view" img="/images/SpectralAccelChart.png" url="/Hazardcurves" />
-        <MenuCard title="Hazard Maps" text="Hazard Maps to view" img="/images/HazardMapExample.png" url="/HazardMaps" />
-        {/*<MenuCard title="Rupture Sets" text="Rupture Sets to view" img="/ruptureSets.png" url="/" />*/}
-        <MenuCard title="Resources" text="Model Information, Reports, and Input Files" img="/info.jpg" url="/Resources" />
-      </CardButtonsContainer>
-    </HomeContainer>
+        <Typography>Welcome to the 2022 revision of the NSHM model. Here’s a link back to the explanation and background info on the model.</Typography>
+      </HomeTitleContainer>
+      <Grid container spacing={6} columns={{ sm: 6, md: 8, lg: 12 }}>
+        <MenuCard title="Hazard Curves" text="Hazard and Spectral acceleration plots." img="/images/SpectralAccelChart.png" url="/Hazardcurves" />
+        <MenuCard title="Hazard Maps" text="Showing gridded hazard levels across NZ." img="/images/HazardMapExample.png" url="/HazardMaps" />
+        <MenuCard title="Rupture Sets" text="Ruptures and seismic event rates." img="/images/TUI-ruptures-0.png" url="/Previews" />
+        <MenuCard title="Resources" text="Model information, reports, and datsets." img="/info.jpg" url="/Resources" />
+      </Grid>
+    </HomePageContainer>
   );
 };
 
