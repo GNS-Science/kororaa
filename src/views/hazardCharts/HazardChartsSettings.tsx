@@ -92,7 +92,7 @@ const HazardChartsSettings: React.FC<HazardChartsSettingsProps> = ({ spectral, s
             />
           </MenuItem>
         )}
-        <Button variant="outlined" onClick={downloadHazard}>
+        <Button variant="outlined" sx={{ width: '70%', margin: '5px 15% 5px 15%' }} onClick={downloadHazard}>
           Download
         </Button>
       </Menu>
