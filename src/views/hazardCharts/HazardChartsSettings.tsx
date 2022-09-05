@@ -25,6 +25,7 @@ const HazardChartsSettings: React.FC<HazardChartsSettingsProps> = ({ spectral, s
     const chartType = spectral ? 'spectraChart' : 'hazardChart';
     const element = document.getElementById(chartType);
     if (element === null) {
+      setAnchorEl(null);
       return;
     }
     toJpeg(element, { quality: 0.95 }).then((dataUrl: string) => {
@@ -33,6 +34,7 @@ const HazardChartsSettings: React.FC<HazardChartsSettingsProps> = ({ spectral, s
       link.href = dataUrl;
       link.click();
     });
+    setAnchorEl(null);
   };
 
   return (
