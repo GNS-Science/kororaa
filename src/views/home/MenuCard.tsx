@@ -1,16 +1,8 @@
 import React from 'react';
-import { CardActionArea, styled } from '@mui/material';
+import { CardActionArea } from '@mui/material';
+import Grid from '@mui/material/Grid';
 import { Card, CardContent, CardMedia, CardActions, Typography, Button } from '@mui/material';
 import { Link } from 'react-router-dom';
-
-const StyledCard = styled(Card)(({ theme }) => ({
-  width: '45%',
-  height: '40%',
-  [theme.breakpoints.down('md')]: {
-    width: '80%',
-    margin: 30,
-  },
-}));
 
 interface MenuCardProps {
   title: string;
@@ -21,20 +13,22 @@ interface MenuCardProps {
 
 const MenuCard: React.FC<MenuCardProps> = ({ title, text, img, url }: MenuCardProps) => {
   return (
-    <StyledCard>
-      <CardActionArea component={Link} to={url}>
-        <CardContent>
-          <Typography variant="h5">{title}</Typography>
-          <Typography>{text}</Typography>
-        </CardContent>
-        <CardMedia component="img" height="300px" image={img} />
-        <CardActions>
-          <Button size="small" component={Link} to={url}>
-            More
-          </Button>
-        </CardActions>
-      </CardActionArea>
-    </StyledCard>
+    <Grid item xs={3}>
+      <Card>
+        <CardActionArea component={Link} to={url}>
+          <CardContent>
+            <Typography variant="h5">{title}</Typography>
+            <Typography>{text}</Typography>
+          </CardContent>
+          <CardMedia component="img" height="250px" image={img} sx={{ objectFit: 'cover' }} />
+          <CardActions>
+            <Button size="small" component={Link} to={url}>
+              More
+            </Button>
+          </CardActions>
+        </CardActionArea>
+      </Card>
+    </Grid>
   );
 };
 
