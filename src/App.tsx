@@ -15,9 +15,11 @@ import NavBar from './components/common/NavBar';
 import Footer from './components/common/Footer';
 import Home from './views/home/Home';
 import InfoPage from './views/info/Info';
+import PreviewsPage from './views/preview/PreviewsPage';
+
 import DisclaimerLayer from './views/home/DisclaimerLayer';
 import HazardChartsPage from './views/hazardCharts/HazardChartsPage';
-import RuptureSetsPage from './views/ruptureSets/RuptureSetsPage';
+// import RuptureSetsPage from './views/ruptureSets/RuptureSetsPage';
 import HazardMapsPage from './views/hazardMaps/HazardMapsPage';
 import ModelComponentsPage from './views/info/ModelComponentsPage';
 
@@ -40,6 +42,7 @@ function App(props: { environment?: Environment }) {
                   <Routes>
                     <Route path="/HazardMaps" element={<HazardMapsPage />} />
                     <Route path="/HazardCurves" element={<HazardChartsPage />} />
+                    <Route path="/Previews" element={<PreviewsPage />} />
                     <Route path="/Resources" element={<InfoPage />} />
                     <Route path="/Resources/ModelComponents" element={<ModelComponentsPage />} />
                     <Route path="/" element={<Home />} />
