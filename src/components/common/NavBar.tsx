@@ -16,7 +16,16 @@ const StyledToolbar = styled(Toolbar)({
   justifyContent: 'space-around',
 });
 
-const NavBar: React.FC = () => {
+interface MenuPageItem {
+  name: string;
+  path: string;
+}
+
+interface MenuProps {
+  pages: MenuPageItem[];
+}
+
+const HamburgerMenu: React.FC<MenuProps> = ({ pages }: MenuProps) => {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -26,6 +35,66 @@ const NavBar: React.FC = () => {
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
+
+  return (
+    <>
+      <IconButton size="large" aria-label="account of current user" aria-controls="menu-appbar" aria-haspopup="true" onClick={handleOpenNavMenu} color="inherit">
+        <MenuIcon />
+      </IconButton>
+      <Menu
+        id="menu-appbar"
+        anchorEl={anchorElNav}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'left',
+        }}
+        keepMounted
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'left',
+        }}
+        open={Boolean(anchorElNav)}
+        onClose={handleCloseNavMenu}
+        sx={{
+          display: { xs: 'block', md: 'none' },
+        }}
+      >
+        {pages.map((page) => (
+          <MenuItem key={page.name} onClick={handleCloseNavMenu} component={Link} href={page.path}>
+            <Typography variant="h5" textAlign="center">
+              {page.name}
+            </Typography>
+          </MenuItem>
+        ))}
+      </Menu>
+    </>
+  );
+};
+
+const MainMenu: React.FC<MenuProps> = ({ pages }: MenuProps) => {
+  return (
+    <>
+      {pages.map((page) => (
+        <MenuItem key={page.name} component={Link} href={page.path}>
+          <Typography variant="h5" textAlign="center">
+            {page.name}
+          </Typography>
+        </MenuItem>
+      ))}
+    </>
+  );
+};
+
+const NavBar: React.FC = () => {
+  // const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
+
+  // const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
+  //   setAnchorElNav(event.currentTarget);
+  // };
+
+  // const handleCloseNavMenu = () => {
+  //   setAnchorElNav(null);
+  // };
 
   const pages = [
     { name: 'Hazard Curves', path: '/HazardCurves' },
@@ -45,44 +114,10 @@ const NavBar: React.FC = () => {
               {/*<img src="/images/NSHM_logo_black.png" height="70" alt="NSHM logo" />*/}
             </Link>
             <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-              <IconButton size="large" aria-label="account of current user" aria-controls="menu-appbar" aria-haspopup="true" onClick={handleOpenNavMenu} color="inherit">
-                <MenuIcon />
-              </IconButton>
-              <Menu
-                id="menu-appbar"
-                anchorEl={anchorElNav}
-                anchorOrigin={{
-                  vertical: 'bottom',
-                  horizontal: 'left',
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'left',
-                }}
-                open={Boolean(anchorElNav)}
-                onClose={handleCloseNavMenu}
-                sx={{
-                  display: { xs: 'block', md: 'none' },
-                }}
-              >
-                {pages.map((page) => (
-                  <MenuItem key={page.name} onClick={handleCloseNavMenu} component={Link} href={page.path}>
-                    <Typography variant="h5" textAlign="center">
-                      {page.name}
-                    </Typography>
-                  </MenuItem>
-                ))}
-              </Menu>
+              <HamburgerMenu pages={pages} />
             </Box>
             <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-              {pages.map((page) => (
-                <MenuItem key={page.name} onClick={handleCloseNavMenu} component={Link} href={page.path}>
-                  <Typography variant="h5" textAlign="center">
-                    {page.name}
-                  </Typography>
-                </MenuItem>
-              ))}
+              <MainMenu pages={pages} />
             </Box>
             {/*<CardMedia component="img" height="100" image="/images/2GNS_logo_HORZ.png" alt="GNS logo" />*/}
             <img src="/images/2GNS_logo_HORZ.png" height="80" alt="GNS logo" />
