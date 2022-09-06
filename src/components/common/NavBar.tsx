@@ -26,17 +26,18 @@ interface MenuProps {
   pages: MenuPageItem[];
 }
 
+interface SubMenuProps {
+  pages: MenuPageItem[];
+  anchorElNav: HTMLElement | null;
+  setAnchorElNav: React.Dispatch<React.SetStateAction<HTMLElement | null>>;
+  open: boolean;
+}
+
 interface FluidMenuProps {
   page: MenuPageItem;
 }
 
-const SubMenu: React.FC<MenuProps> = ({ pages }: MenuProps) => {
-  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
-
-  const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElNav(event.currentTarget);
-  };
-
+const SubMenu: React.FC<SubMenuProps> = ({ pages, anchorElNav, setAnchorElNav, open }: SubMenuProps) => {
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
@@ -54,11 +55,8 @@ const SubMenu: React.FC<MenuProps> = ({ pages }: MenuProps) => {
         vertical: 'top',
         horizontal: 'left',
       }}
-      open={Boolean(anchorElNav)}
+      open={open}
       onClose={handleCloseNavMenu}
-      sx={{
-        display: { xs: 'block', md: 'none' },
-      }}
     >
       {pages.map((page) => (
         <MenuItem key={page.name} onClick={handleCloseNavMenu} component={Link} href={page.path}>
@@ -78,21 +76,21 @@ const HamburgerMenu: React.FC<MenuProps> = ({ pages }: MenuProps) => {
     setAnchorElNav(event.currentTarget);
   };
 
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
-  };
-
   return (
     <>
       <IconButton size="large" aria-label="account of current user" aria-controls="menu-appbar" aria-haspopup="true" onClick={handleOpenNavMenu} color="inherit">
         <MenuIcon />
       </IconButton>
-      <SubMenu pages={pages} />
+      <SubMenu open={Boolean(anchorElNav)} pages={pages} anchorElNav={anchorElNav} setAnchorElNav={setAnchorElNav} />
     </>
   );
 };
 
 const FluidMenuItem: React.FC<FluidMenuProps> = ({ page }: FluidMenuProps) => {
+  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
+  const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorElNav(event.currentTarget);
+  };
   if (page.path) {
     return (
       <MenuItem key={page.name} component={Link} href={page.path}>
@@ -104,12 +102,12 @@ const FluidMenuItem: React.FC<FluidMenuProps> = ({ page }: FluidMenuProps) => {
   }
   return (
     <>
-      <MenuItem key={page.name} component={Link} href={page.path}>
+      <MenuItem onClick={handleOpenNavMenu} key={page.name} component={Link} href={page.path}>
         <Typography variant="h5" textAlign="center">
           {page.name}
         </Typography>
       </MenuItem>
-      {page.submenu && <SubMenu pages={page.submenu} />}
+      {page.submenu && <SubMenu open={Boolean(anchorElNav)} pages={page.submenu} anchorElNav={anchorElNav} setAnchorElNav={setAnchorElNav} />}
     </>
   );
 };
@@ -146,6 +144,17 @@ const NavBar: React.FC = () => {
     },
   ];
 
+  const hamburgerPages = [
+    { name: 'Hazard Curves', path: '/HazardCurves' },
+    { name: 'Disaggregations', path: '/Disaggs' },
+    { name: 'Hazard Maps', path: '/HazardMaps' },
+    { name: 'Coming Features', path: '/Previews' },
+    { name: 'Resources', path: '/Resources' },
+    { name: 'Help', path: '/Help' },
+    { name: 'About', path: '/About' },
+    { name: 'Contacts', path: '/Contacts' },
+  ];
+
   return (
     <Box sx={{ flexShrink: 0 }}>
       <StyledAppBar position="static">
@@ -156,7 +165,7 @@ const NavBar: React.FC = () => {
               {/*<img src="/images/NSHM_logo_black.png" height="70" alt="NSHM logo" />*/}
             </Link>
             <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-              <HamburgerMenu pages={pages} />
+              <HamburgerMenu pages={hamburgerPages} />
             </Box>
             <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
               <MainMenu pages={pages} />
