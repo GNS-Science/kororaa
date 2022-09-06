@@ -13,3 +13,12 @@ export const MAP_COLOR_SCALE = process.env.REACT_APP_MAP_COLOR_SCALE?.split(',')
 export const HAZARD_COLOR_MAP = process.env.REACT_APP_HAZARD_COLOR_MAP || 'jet';
 export const HAZARD_COLOR_LIMIT: number = Number(process.env.REACT_APP_HAZARD_COLOR_LIMIT) || 30;
 export const HAZARD_COLOR_UNCERTAINTY_OPACITY = process.env.REACT_APP_HAZARD_COLOR_UNCERTAINTY_OPACITY || 0.5;
+export const HAZARD_GMAX: number = Number(process.env.REACT_APP_HAZARD_GMAX) || 10;
+export const HAZARD_GMIN: number = Number(process.env.REACT_APP_HAZARD_GMIN) || 0.01;
+export const HAZARD_POEMAX: number = Number(process.env.REACT_APP_HAZARD_POEMAX) || 6;
+export const HAZARD_POEMIN: number = Number(process.env.REACT_APP_HAZARD_POEMIN) || 0.000001;
+
+export const SA_PERIODMAX: number = Number(process.env.REACT_APP_SA_PERIODMAX) || 6;
+export const SA_PERIODMIN: number = Number(process.env.REACT_APP_SA_PERIODMIN) || 0.1;
+export const SA_GMAX: number | string = process.env.REACT_APP_SA_GMAX === 'auto' ? 'auto' : Number(process.env.REACT_APP_SA_GMAX);
+export const SA_GMIN: number = Number(process.env.REACT_APP_SA_GMIN) || 0.1;

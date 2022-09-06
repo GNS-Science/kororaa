@@ -8,6 +8,7 @@ import { getAllCurveGroups, getFilteredCurveGroups, getLocationList, getYScale }
 import { HazardPageState } from './hazardPageReducer';
 import { addColorsToCurves, getSpectralAccelUncertaintyCurves } from '../../services/spectralAccel/spectralAccel.service';
 import HazardChartsSettings from './HazardChartsSettings';
+import { HAZARD_GMAX, HAZARD_GMIN, HAZARD_POEMAX, HAZARD_POEMIN, SA_GMAX, SA_GMIN, SA_PERIODMAX, SA_PERIODMIN } from '../../utils/environmentVariables';
 
 interface HazardChartsProps {
   data: HazardChartsPlotsViewQuery$data;
@@ -53,8 +54,8 @@ const HazardCharts: React.FC<HazardChartsProps> = ({ data, state, dispatch }: Ha
               yScaleType={'log'}
               xLabel=" Acceleration (g)"
               yLabel="Annual Probability of Exceedance"
-              xLimits={[0.01, 10]}
-              yLimits={getYScale(curveGroupWithColors, 0.000001)}
+              xLimits={[HAZARD_GMIN, HAZARD_GMAX]}
+              yLimits={[HAZARD_POEMIN, HAZARD_POEMAX]}
               tooltip={true}
               crosshair={true}
               heading="Hazard Uncertainty"
@@ -76,8 +77,8 @@ const HazardCharts: React.FC<HazardChartsProps> = ({ data, state, dispatch }: Ha
                 yScaleType={'linear'}
                 xLabel="Period (s)"
                 yLabel="Shaking Intensity (g)"
-                xLimits={[0.1, 6]}
-                yLimits={getYScale(saCurvesWithColors, 0.1)}
+                xLimits={[SA_PERIODMIN, SA_PERIODMAX]}
+                yLimits={SA_GMAX === 'auto' ? getYScale(saCurvesWithColors, SA_GMIN) : [SA_GMAX, SA_GMIN]}
                 tooltip={true}
                 crosshair={true}
                 heading="Spectral Acceleration Chart"

@@ -199,5 +199,5 @@ export const getYScale = (data: HazardUncertaintyChartData, min: number): number
     });
   });
 
-  return [min, 1.2 * Math.max(...largestY)];
+  return [min, Number((1.2 * Math.max(...largestY)).toFixed(1))];
 };
