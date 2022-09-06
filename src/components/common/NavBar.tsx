@@ -18,12 +18,58 @@ const StyledToolbar = styled(Toolbar)({
 
 interface MenuPageItem {
   name: string;
-  path: string;
+  path?: string;
+  submenu?: MenuPageItem[];
 }
 
 interface MenuProps {
   pages: MenuPageItem[];
 }
+
+interface FluidMenuProps {
+  page: MenuPageItem;
+}
+
+const SubMenu: React.FC<MenuProps> = ({ pages }: MenuProps) => {
+  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
+
+  const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorElNav(event.currentTarget);
+  };
+
+  const handleCloseNavMenu = () => {
+    setAnchorElNav(null);
+  };
+
+  return (
+    <Menu
+      id="menu-appbar"
+      anchorEl={anchorElNav}
+      anchorOrigin={{
+        vertical: 'bottom',
+        horizontal: 'left',
+      }}
+      keepMounted
+      transformOrigin={{
+        vertical: 'top',
+        horizontal: 'left',
+      }}
+      open={Boolean(anchorElNav)}
+      onClose={handleCloseNavMenu}
+      sx={{
+        display: { xs: 'block', md: 'none' },
+      }}
+    >
+      {pages.map((page) => (
+        <MenuItem key={page.name} onClick={handleCloseNavMenu} component={Link} href={page.path}>
+          <Typography variant="h5" textAlign="center">
+            {page.name}
+          </Typography>
+        </MenuItem>
+      ))}
+    </Menu>
+  );
+};
 
 const HamburgerMenu: React.FC<MenuProps> = ({ pages }: MenuProps) => {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
@@ -41,32 +87,29 @@ const HamburgerMenu: React.FC<MenuProps> = ({ pages }: MenuProps) => {
       <IconButton size="large" aria-label="account of current user" aria-controls="menu-appbar" aria-haspopup="true" onClick={handleOpenNavMenu} color="inherit">
         <MenuIcon />
       </IconButton>
-      <Menu
-        id="menu-appbar"
-        anchorEl={anchorElNav}
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'left',
-        }}
-        keepMounted
-        transformOrigin={{
-          vertical: 'top',
-          horizontal: 'left',
-        }}
-        open={Boolean(anchorElNav)}
-        onClose={handleCloseNavMenu}
-        sx={{
-          display: { xs: 'block', md: 'none' },
-        }}
-      >
-        {pages.map((page) => (
-          <MenuItem key={page.name} onClick={handleCloseNavMenu} component={Link} href={page.path}>
-            <Typography variant="h5" textAlign="center">
-              {page.name}
-            </Typography>
-          </MenuItem>
-        ))}
-      </Menu>
+      <SubMenu pages={pages} />
+    </>
+  );
+};
+
+const FluidMenuItem: React.FC<FluidMenuProps> = ({ page }: FluidMenuProps) => {
+  if (page.path) {
+    return (
+      <MenuItem key={page.name} component={Link} href={page.path}>
+        <Typography variant="h5" textAlign="center">
+          {page.name}
+        </Typography>
+      </MenuItem>
+    );
+  }
+  return (
+    <>
+      <MenuItem key={page.name} component={Link} href={page.path}>
+        <Typography variant="h5" textAlign="center">
+          {page.name}
+        </Typography>
+      </MenuItem>
+      {page.submenu && <SubMenu pages={page.submenu} />}
     </>
   );
 };
@@ -75,33 +118,32 @@ const MainMenu: React.FC<MenuProps> = ({ pages }: MenuProps) => {
   return (
     <>
       {pages.map((page) => (
-        <MenuItem key={page.name} component={Link} href={page.path}>
-          <Typography variant="h5" textAlign="center">
-            {page.name}
-          </Typography>
-        </MenuItem>
+        <FluidMenuItem key={page.name} page={page} />
       ))}
     </>
   );
 };
 
 const NavBar: React.FC = () => {
-  // const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
-
-  // const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
-  //   setAnchorElNav(event.currentTarget);
-  // };
-
-  // const handleCloseNavMenu = () => {
-  //   setAnchorElNav(null);
-  // };
-
   const pages = [
-    { name: 'Hazard Curves', path: '/HazardCurves' },
+    {
+      name: 'Site Hazard',
+      submenu: [
+        { name: 'Hazard Curves', path: '/HazardCurves' },
+        { name: 'Disaggregations', path: '/Disaggs' },
+      ],
+    },
     { name: 'Hazard Maps', path: '/HazardMaps' },
     { name: 'Coming Features', path: '/Previews' },
     { name: 'Resources', path: '/Resources' },
-    { name: 'Help', path: '/Help' },
+    {
+      name: 'Help',
+      submenu: [
+        { name: 'Help', path: '/Help' },
+        { name: 'About', path: '/About' },
+        { name: 'Contacts', path: '/Contacts' },
+      ],
+    },
   ];
 
   return (
