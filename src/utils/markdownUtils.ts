@@ -1,5 +1,6 @@
 export const hazardMarkdown = `
-### Hazard Curve
+# Hazard Curve
+#### this is markdown
 lorem ipsum
 `;
 

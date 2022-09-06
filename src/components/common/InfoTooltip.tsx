@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { styled } from '@mui/material/styles';
-import { Button, Dialog, DialogContent, DialogActions, IconButton } from '@mui/material';
+import { Dialog, DialogContent, IconButton } from '@mui/material';
 import InfoIcon from '@mui/icons-material/Info';
 import ReactMarkdown from 'react-markdown';
 
@@ -15,6 +15,24 @@ const StyledIconButton = styled(IconButton)(() => ({
 
 export const InfoTooltip: React.FC<InfoTooltipProps> = ({ markdown }) => {
   const [open, setOpen] = React.useState<boolean>(false);
+  const iconRef = useRef<HTMLButtonElement>(null);
+  const [x, setX] = useState<number | undefined>();
+  const [y, setY] = useState<number | undefined>();
+
+  const getPosition = () => {
+    const x = iconRef.current?.offsetLeft;
+    setX(x);
+    const y = iconRef.current?.offsetTop;
+    setY(y);
+  };
+
+  useEffect(() => {
+    getPosition();
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener('resize', getPosition);
+  }, []);
 
   const handleOpen = () => {
     setOpen(true);
@@ -25,16 +43,23 @@ export const InfoTooltip: React.FC<InfoTooltipProps> = ({ markdown }) => {
   };
   return (
     <>
-      <StyledIconButton onClick={handleOpen}>
+      <StyledIconButton ref={iconRef} onClick={handleOpen}>
         <InfoIcon />
       </StyledIconButton>
-      <Dialog open={open} onClose={handleClose}>
+      <Dialog
+        PaperProps={{
+          style: {
+            position: 'absolute',
+            top: y + 'px',
+            left: x + 'px',
+          },
+        }}
+        open={open}
+        onClose={handleClose}
+      >
         <DialogContent>
           <ReactMarkdown>{markdown}</ReactMarkdown>
         </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>Close</Button>
-        </DialogActions>
       </Dialog>
     </>
   );
