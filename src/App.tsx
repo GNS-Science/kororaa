@@ -2,7 +2,7 @@ import React from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@emotion/react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { Box } from '@mui/material';
+import { Box, CircularProgress } from '@mui/material';
 
 import { Environment, RelayEnvironmentProvider } from 'react-relay/hooks';
 import RelayEnvironment from './RelayEnvironment';
@@ -39,7 +39,14 @@ function App(props: { environment?: Environment }) {
               <Box sx={{ flexGrow: 1 }}>
                 <DisclaimerLayer>
                   <Routes>
-                    <Route path="/HazardMaps" element={<HazardMapsPage />} />
+                    <Route
+                      path="/HazardMaps"
+                      element={
+                        <React.Suspense>
+                          <HazardMapsPage />
+                        </React.Suspense>
+                      }
+                    />
                     <Route path="/HazardCurves" element={<HazardChartsPage />} />
                     <Route path="/Previews" element={<PreviewsPage />} />
                     <Route path="/Resources" element={<InfoPage />} />

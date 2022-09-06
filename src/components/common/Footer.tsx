@@ -30,7 +30,6 @@ const FooterLinkItems = styled('div')({
 
 const Footer: React.FC = () => {
   const location = useLocation();
-  console.log(location.pathname);
 
   return (
     <FooterContainer>
