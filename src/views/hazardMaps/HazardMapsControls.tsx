@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Box, Button, styled, TextField } from '@mui/material';
 import { SelectControl } from '@gns-science/toshi-nest';
+import { toJpeg } from 'html-to-image';
 
 import { flexParentCenter } from '../../utils/styleUtils';
 import { getHazardMapCSVData } from './hazardMaps.service';
@@ -50,6 +51,19 @@ const HazardMapsControls: React.FC<HazardMapsControlsProps> = ({ startTransition
     });
   };
 
+  const handleDownload = () => {
+    const element = document.getElementById('map');
+    if (element === null) {
+      return;
+    }
+    toJpeg(element, { quality: 0.95 }).then((dataUrl: string) => {
+      const link = document.createElement('a');
+      link.download = `hazard map.jpeg`;
+      link.href = dataUrl;
+      link.click();
+    });
+  };
+
   return (
     <Box sx={{ width: '100%', ...flexParentCenter, flexDirection: 'column' }}>
       <CustomControlsBar direction="column">
@@ -62,15 +76,18 @@ const HazardMapsControls: React.FC<HazardMapsControlsProps> = ({ startTransition
         <TextField label="Fill opacity" value={fillOpacity} onChange={(event) => setFillOpacity(event?.target.value)} variant="standard" />
         <TextField label="Stroke opacity" value={strokeOpacity} onChange={(event) => setStrokeOpacity(event?.target.value)} variant="standard" />
         <TextField label="Stroke width" value={strokeWidth} onChange={(event) => setStrokeWidth(event?.target.value)} variant="standard" />
+        <StyledButton disabled={isPending} variant="contained" type="submit" onClick={handleSubmit}>
+          Submit
+        </StyledButton>
         <div>
-          <StyledButton disabled={isPending} variant="contained" type="submit" onClick={handleSubmit}>
-            Submit
-          </StyledButton>
           <StyledCSVLink data={getHazardMapCSVData(geoJson, state.vs30[0], state.spectralPeriod[0], readablePoe(state.poe[0]))} filename="hazard-maps.csv">
             <StyledButton variant="contained" type="submit" color="primary">
               Download CSV
             </StyledButton>
           </StyledCSVLink>
+          <StyledButton variant="contained" onClick={handleDownload}>
+            Download Image
+          </StyledButton>
         </div>
       </CustomControlsBar>
     </Box>

@@ -19,7 +19,6 @@ import PreviewsPage from './views/preview/PreviewsPage';
 
 import DisclaimerLayer from './views/home/DisclaimerLayer';
 import HazardChartsPage from './views/hazardCharts/HazardChartsPage';
-// import RuptureSetsPage from './views/ruptureSets/RuptureSetsPage';
 import HazardMapsPage from './views/hazardMaps/HazardMapsPage';
 import ModelComponentsPage from './views/info/ModelComponentsPage';
 

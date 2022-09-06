@@ -1,6 +1,7 @@
 import React from 'react';
-import { FormControlLabel, Menu, Checkbox, MenuItem, IconButton } from '@mui/material';
+import { FormControlLabel, Menu, Checkbox, MenuItem, IconButton, Button } from '@mui/material';
 import SettingsIcon from '@mui/icons-material/Settings';
+import { toJpeg } from 'html-to-image';
 
 import { HazardPageState } from './hazardPageReducer';
 
@@ -10,13 +11,29 @@ interface HazardChartsSettingsProps {
   dispatch: React.Dispatch<Partial<HazardPageState>>;
 }
 
-export const HazardChartsSettings: React.FC<HazardChartsSettingsProps> = ({ spectral, state, dispatch }: HazardChartsSettingsProps) => {
+const HazardChartsSettings: React.FC<HazardChartsSettingsProps> = ({ spectral, state, dispatch }: HazardChartsSettingsProps) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const downloadHazard = () => {
+    const chartType = spectral ? 'spectraChart' : 'hazardChart';
+    const element = document.getElementById(chartType);
+    if (element === null) {
+      setAnchorEl(null);
+      return;
+    }
+    toJpeg(element, { quality: 0.95 }).then((dataUrl: string) => {
+      const link = document.createElement('a');
+      link.download = `${spectral ? 'spectra' : 'hazard'} chart.jpeg`;
+      link.href = dataUrl;
+      link.click();
+    });
     setAnchorEl(null);
   };
 
@@ -77,7 +94,12 @@ export const HazardChartsSettings: React.FC<HazardChartsSettingsProps> = ({ spec
             />
           </MenuItem>
         )}
+        <Button variant="outlined" sx={{ width: '70%', margin: '5px 15% 5px 15%' }} onClick={downloadHazard}>
+          Download
+        </Button>
       </Menu>
     </div>
   );
 };
+
+export default HazardChartsSettings;
