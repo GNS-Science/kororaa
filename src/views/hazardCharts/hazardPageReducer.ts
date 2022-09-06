@@ -8,7 +8,8 @@ export type HazardPageState = {
   poe: number | undefined;
   hazardUncertainty: boolean;
   spectralUncertainty: boolean;
-  xScale: 'log' | 'linear';
+  hazardXScale: 'log' | 'linear';
+  spectraXScale: 'log' | 'linear';
 };
 
 export const hazardPageReducerInitialState: HazardPageState = {
@@ -18,7 +19,8 @@ export const hazardPageReducerInitialState: HazardPageState = {
   poe: undefined,
   hazardUncertainty: true,
   spectralUncertainty: true,
-  xScale: 'log',
+  hazardXScale: 'log',
+  spectraXScale: 'linear',
 };
 export interface LocationData {
   name: string | null;

@@ -49,7 +49,7 @@ const HazardCharts: React.FC<HazardChartsProps> = ({ data, state, dispatch }: Ha
           <HazardChartsSettings spectral={false} state={state} dispatch={dispatch} />
           <div id="hazardChart">
             <GroupCurveChartResponsive
-              scaleType={state.xScale}
+              scaleType={state.hazardXScale}
               yScaleType={'log'}
               xLabel=" Acceleration (g)"
               yLabel="Annual Probability of Exceedance"
@@ -72,7 +72,7 @@ const HazardCharts: React.FC<HazardChartsProps> = ({ data, state, dispatch }: Ha
               <GroupCurveChartResponsive
                 testId="sa-chart"
                 spectral={true}
-                scaleType={'linear'}
+                scaleType={state.spectraXScale}
                 yScaleType={'linear'}
                 xLabel="Period (s)"
                 yLabel="Shaking Intensity (g)"
