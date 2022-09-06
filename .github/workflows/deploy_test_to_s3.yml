@@ -28,16 +28,19 @@ jobs:
       - name: Create env file
         run: |
           touch .env
-          echo REACT_APP_DISCLAIMER_VERSION=${{ secrets.REACT_APP_DISCLAIMER_VERSION }} >> .env
-          echo REACT_APP_GRAPHQL_ENDPOINT=${{ secrets.REACT_APP_GRAPHQL_ENDPOINT }} >> .env
-          echo REACT_APP_GRAPHQL_API_KEY=${{ secrets.REACT_APP_GRAPHQL_API_KEY}} >> .env
-          echo REACT_APP_RESOLUTION=${{ secrets.REACT_APP_RESOLUTION}} >> .env
-          echo "REACT_APP_HAZARD_MODEL=${{ secrets.REACT_APP_HAZARD_MODEL}}" >> .env
-          echo "REACT_APP_GRID_ID=${{ secrets.REACT_APP_GRID_ID }}" >> .env
-          echo "REACT_APP_MAP_IMTS=${{ secrets.REACT_APP_MAP_IMTS }}" >> .env
-          echo "REACT_APP_MAP_VS30S=${{ secrets.REACT_APP_MAP_VS30S }}" >> .env
-          echo "REACT_APP_MAP_STATISTICS=${{ secrets.REACT_APP_MAP_STATISTICS }}" >> .env
-          echo "REACT_APP_MAP_POES=${{ secrets.REACT_APP_MAP_POES }}" >> .env
+          echo "REACT_APP_DISCLAIMER_VERSION=${{secrets.REACT_APP_DISCLAIMER_VERSION}}" >> .env
+          echo "REACT_APP_GRAPHQL_ENDPOINT=${{secrets.REACT_APP_GRAPHQL_ENDPOINT}}" >> .env
+          echo "REACT_APP_GRAPHQL_API_KEY=${{secrets.REACT_APP_GRAPHQL_API_KEY}}" >> .env
+          echo "REACT_APP_RESOLUTION=${{secrets.REACT_APP_RESOLUTION}}" >> .env
+          echo "REACT_APP_HAZARD_COLOR_LIMIT=${{secrets.REACT_APP_HAZARD_COLOR_LIMIT}}" >> .env
+          echo "REACT_APP_HAZARD_COLOR_MAP=${{secrets.REACT_APP_HAZARD_COLOR_MAP}}" >> .env
+          echo "REACT_APP_HAZARD_COLOR_UNCERTAINTY_OPACITY=${{secrets.REACT_APP_HAZARD_COLOR_UNCERTAINTY_OPACITY}}" >> .env
+          echo "REACT_APP_HAZARD_MODEL=${{secrets.REACT_APP_HAZARD_MODEL}}" >> .env
+          echo "REACT_APP_GRID_ID=${{secrets.REACT_APP_GRID_ID }}" >> .env
+          echo "REACT_APP_MAP_IMTS=${{secrets.REACT_APP_MAP_IMTS }}" >> .env
+          echo "REACT_APP_MAP_VS30S=${{secrets.REACT_APP_MAP_VS30S }}" >> .env
+          echo "REACT_APP_MAP_STATISTICS=${{secrets.REACT_APP_MAP_STATISTICS }}" >> .env
+          echo "REACT_APP_MAP_POES=${{secrets.REACT_APP_MAP_POES }}" >> .env
           echo "REACT_APP_MAP_COLOR_SCALE=${{ secrets.REACT_APP_MAP_COLOR_SCALE }}" >> .env
 
       - name: Yarn Build & Test

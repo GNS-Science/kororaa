@@ -30,7 +30,7 @@ const NavBar: React.FC = () => {
   const pages = [
     { name: 'Hazard Curves', path: '/HazardCurves' },
     { name: 'Hazard Maps', path: '/HazardMaps' },
-    // { name: 'Rupture Sets', path: '/RuptureSets' },
+    { name: 'Coming Features', path: '/Previews' },
     { name: 'Resources', path: '/Resources' },
     { name: 'Help', path: '/Help' },
   ];
