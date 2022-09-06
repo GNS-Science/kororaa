@@ -103,6 +103,7 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, disp
       </Collapse>
       <CustomControlsBar direction="row">
         <Autocomplete
+          disableCloseOnSelect
           multiple
           value={locations}
           onChange={handleLocationChange}
@@ -113,7 +114,6 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, disp
           options={hazardPageOptions.locations}
           style={{ width: 230, marginLeft: 16 }}
           renderInput={(params) => <TextField {...params} label="Locations" variant="standard" />}
-          blurOnSelect={true}
           limitTags={1}
         />
         <FormControl sx={{ width: 200 }} variant="standard">
