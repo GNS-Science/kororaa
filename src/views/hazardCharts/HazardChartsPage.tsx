@@ -7,6 +7,7 @@ import HazardChartsPlotsView from './HazardChartsPlotsView';
 import { hazardPageReducer, hazardPageReducerInitialState } from './hazardPageReducer';
 import { flexParentCenter } from '../../utils/styleUtils';
 import { InfoTooltip } from '../../components/common/InfoTooltip';
+import { hazardMarkdown } from '../../utils/markdownUtils';
 
 const HazardChartsPage: React.FC = () => {
   const [state, dispatch] = useReducer(hazardPageReducer, hazardPageReducerInitialState);
@@ -25,7 +26,7 @@ const HazardChartsPage: React.FC = () => {
       <Box sx={{ ...flexParentCenter, width: '100%' }}>
         <Typography variant="h1" sx={{ padding: 2, width: '100%', textAlign: 'center' }}>
           Hazard Curves and Spectra
-          <InfoTooltip text={'lorem ipsum dolor'} />
+          <InfoTooltip markdown={hazardMarkdown} />
         </Typography>
       </Box>
       <HazardChartsControls state={state} dispatch={dispatch} />

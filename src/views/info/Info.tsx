@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 
 import { Card, CardContent, CardActions, Typography, Button } from '@mui/material';
 import InfoTooltip from '../../components/common/InfoTooltip';
+import { infoMarkdown } from '../../utils/markdownUtils';
 
 const StyledCard = styled(Card)(() => ({
   justifyContent: 'center',
@@ -60,7 +61,7 @@ const InfoPage: React.FC = () => {
         <InfoContainer>
           <Typography variant="h1">
             Resources
-            <InfoTooltip text="This is a tooltip" />
+            <InfoTooltip markdown={infoMarkdown} />
           </Typography>
           {/* <Typography variant="body1">details deatils</Typography> */}
         </InfoContainer>

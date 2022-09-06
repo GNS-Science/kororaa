@@ -1,24 +1,67 @@
-import React from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { styled } from '@mui/material/styles';
-import { Tooltip, IconButton } from '@mui/material';
+import { Dialog, DialogContent, IconButton } from '@mui/material';
 import InfoIcon from '@mui/icons-material/Info';
-
-const StyledTooltip = styled(Tooltip)(() => ({
-  bottom: '10px',
-  right: '6px',
-}));
+import ReactMarkdown from 'react-markdown';
 
 interface InfoTooltipProps {
-  text: string;
+  markdown: string;
 }
 
-export const InfoTooltip: React.FC<InfoTooltipProps> = ({ text }) => {
+const StyledIconButton = styled(IconButton)(() => ({
+  bottom: '10px',
+  right: '3px',
+}));
+
+export const InfoTooltip: React.FC<InfoTooltipProps> = ({ markdown }) => {
+  const [open, setOpen] = React.useState<boolean>(false);
+  const iconRef = useRef<HTMLButtonElement>(null);
+  const [x, setX] = useState<number | undefined>();
+  const [y, setY] = useState<number | undefined>();
+
+  const getPosition = () => {
+    const x = iconRef.current?.offsetLeft;
+    setX(x);
+    const y = iconRef.current?.offsetTop;
+    setY(y);
+  };
+
+  useEffect(() => {
+    getPosition();
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener('resize', getPosition);
+  }, []);
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
   return (
-    <StyledTooltip title={text} arrow>
-      <IconButton style={{ backgroundColor: 'transparent' }}>
-        <InfoIcon fontSize="small" />
-      </IconButton>
-    </StyledTooltip>
+    <>
+      <StyledIconButton ref={iconRef} onClick={handleOpen}>
+        <InfoIcon />
+      </StyledIconButton>
+      <Dialog
+        PaperProps={{
+          style: {
+            position: 'absolute',
+            top: y + 'px',
+            left: x + 'px',
+          },
+        }}
+        open={open}
+        onClose={handleClose}
+      >
+        <DialogContent>
+          <ReactMarkdown>{markdown}</ReactMarkdown>
+        </DialogContent>
+      </Dialog>
+    </>
   );
 };
 
