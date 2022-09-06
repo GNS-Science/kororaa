@@ -78,22 +78,20 @@ const HazardChartsSettings: React.FC<HazardChartsSettingsProps> = ({ spectral, s
             label="uncertainty"
           />
         </MenuItem>
-        {!spectral && (
-          <MenuItem>
-            <FormControlLabel
-              labelPlacement="end"
-              control={
-                <Checkbox
-                  checked={state.xScale === 'linear'}
-                  onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                    dispatch({ xScale: event?.target.checked ? 'linear' : 'log' });
-                  }}
-                />
-              }
-              label="linear x-scale"
-            />
-          </MenuItem>
-        )}
+        <MenuItem>
+          <FormControlLabel
+            labelPlacement="end"
+            control={
+              <Checkbox
+                checked={spectral ? state.spectraXScale === 'linear' : state.hazardXScale === 'linear'}
+                onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                  spectral ? dispatch({ spectraXScale: event?.target.checked ? 'linear' : 'log' }) : dispatch({ hazardXScale: event?.target.checked ? 'linear' : 'log' });
+                }}
+              />
+            }
+            label="linear x-scale"
+          />
+        </MenuItem>
         <Button variant="outlined" sx={{ width: '70%', margin: '5px 15% 5px 15%' }} onClick={downloadHazard}>
           Download
         </Button>
