@@ -4,10 +4,24 @@ import { styled } from '@mui/material/styles';
 import { GroupCurveChartResponsive } from '@gns-science/toshi-nest';
 
 import { HazardChartsPlotsViewQuery$data } from './__generated__/HazardChartsPlotsViewQuery.graphql';
-import { getAllCurveGroups, getFilteredCurveGroups, getLocationList } from './hazardPage.service';
+import { getAllCurveGroups, getFilteredCurveGroups, getLocationList, getYScale } from './hazardPage.service';
 import { HazardPageState } from './hazardPageReducer';
 import { addColorsToCurves, getSpectralAccelUncertaintyCurves } from '../../services/spectralAccel/spectralAccel.service';
 import HazardChartsSettings from './HazardChartsSettings';
+import {
+  HAZARD_GMAX,
+  HAZARD_GMAX_LOG,
+  HAZARD_GMIN,
+  HAZARD_GMIN_LOG,
+  HAZARD_POEMAX,
+  HAZARD_POEMIN,
+  SA_GMAX,
+  SA_GMIN,
+  SA_PERIODMAX,
+  SA_PERIODMAX_LOG,
+  SA_PERIODMIN,
+  SA_PERIODMIN_LOG,
+} from '../../utils/environmentVariables';
 
 interface HazardChartsProps {
   data: HazardChartsPlotsViewQuery$data;
@@ -53,8 +67,8 @@ const HazardCharts: React.FC<HazardChartsProps> = ({ data, state, dispatch }: Ha
               yScaleType={'log'}
               xLabel=" Acceleration (g)"
               yLabel="Annual Probability of Exceedance"
-              xLimits={[0.01, 10]}
-              yLimits={[0.000001, 1]}
+              xLimits={state.hazardXScale === 'linear' ? [HAZARD_GMIN, HAZARD_GMAX] : [HAZARD_GMIN_LOG, HAZARD_GMAX_LOG]}
+              yLimits={[HAZARD_POEMIN, HAZARD_POEMAX]}
               tooltip={true}
               crosshair={true}
               heading="Hazard Uncertainty"
@@ -76,8 +90,8 @@ const HazardCharts: React.FC<HazardChartsProps> = ({ data, state, dispatch }: Ha
                 yScaleType={'linear'}
                 xLabel="Period (s)"
                 yLabel="Shaking Intensity (g)"
-                xLimits={[0.1, 6]}
-                yLimits={[0.1, 4]}
+                xLimits={state.spectraXScale === 'linear' ? [SA_PERIODMIN, SA_PERIODMAX] : [SA_PERIODMIN_LOG, SA_PERIODMAX_LOG]}
+                yLimits={SA_GMAX === 'auto' ? getYScale(saCurvesWithColors, SA_GMIN) : [SA_GMIN, SA_GMAX]}
                 tooltip={true}
                 crosshair={true}
                 heading="Spectral Acceleration Chart"

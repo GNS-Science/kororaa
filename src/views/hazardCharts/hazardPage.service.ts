@@ -188,3 +188,19 @@ export const validateCurveGroupLength = (locationData: LocationData[], vs30s: nu
     throw tooManyCurves;
   }
 };
+
+export const getYScale = (data: HazardUncertaintyChartData, min: number): number[] => {
+  const largestY: number[] = [];
+
+  Object.keys(data).forEach((key) => {
+    Object.keys(data[key]).forEach((curveType) => {
+      const yArray = Array.from(data[key][curveType].data, (x) => x[1]);
+      largestY.push(Math.max(...yArray));
+    });
+  });
+
+  const yMax = 1.2 * Math.max(...largestY);
+  const yMaxRounded = Math.round(yMax * 2) / 2;
+
+  return [min, yMaxRounded];
+};
