@@ -2,7 +2,7 @@ import React from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@emotion/react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { Box, CircularProgress } from '@mui/material';
+import { Box } from '@mui/material';
 
 import { Environment, RelayEnvironmentProvider } from 'react-relay/hooks';
 import RelayEnvironment from './RelayEnvironment';
@@ -33,9 +33,9 @@ function App(props: { environment?: Environment }) {
     <RelayEnvironmentProvider environment={env}>
       <ThemeProvider theme={theme}>
         <CssBaseline>
-          <Box sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-            <NavBar />
-            <BrowserRouter>
+          <BrowserRouter>
+            <Box sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+              <NavBar />
               <Box sx={{ flexGrow: 1 }}>
                 <DisclaimerLayer>
                   <Routes>
@@ -56,8 +56,8 @@ function App(props: { environment?: Environment }) {
                 </DisclaimerLayer>
               </Box>
               <Footer />
-            </BrowserRouter>
-          </Box>
+            </Box>
+          </BrowserRouter>
         </CssBaseline>
       </ThemeProvider>
     </RelayEnvironmentProvider>

@@ -1,5 +1,6 @@
 import React from 'react';
 import { styled } from '@mui/material/styles';
+import { useLocation } from 'react-router-dom';
 import { AppBar, Typography, Container, Toolbar, IconButton, Box, Menu, MenuItem, Link } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 
@@ -14,6 +15,9 @@ const StyledAppBar = styled(AppBar)(({ theme }) => ({
 
 const StyledToolbar = styled(Toolbar)({
   justifyContent: 'space-around',
+  '.Mui-selected': {
+    backgroundColor: 'yellow !important',
+  },
 });
 
 interface MenuPageItem {
@@ -23,6 +27,10 @@ interface MenuPageItem {
 }
 
 interface MenuProps {
+  pages: MenuPageItem[];
+}
+
+interface MainMenuProps {
   pages: MenuPageItem[];
 }
 
@@ -41,7 +49,7 @@ const SubMenu: React.FC<SubMenuProps> = ({ pages, anchorElNav, setAnchorElNav, o
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
-
+  const location = useLocation();
   return (
     <Menu
       id="menu-appbar"
@@ -59,7 +67,7 @@ const SubMenu: React.FC<SubMenuProps> = ({ pages, anchorElNav, setAnchorElNav, o
       onClose={handleCloseNavMenu}
     >
       {pages.map((page) => (
-        <MenuItem key={page.name} onClick={handleCloseNavMenu} component={Link} href={page.path}>
+        <MenuItem selected={page.path === location.pathname} key={page.name} onClick={handleCloseNavMenu} component={Link} href={page.path}>
           <Typography variant="h5" textAlign="center">
             {page.name}
           </Typography>
@@ -91,9 +99,11 @@ const FluidMenuItem: React.FC<FluidMenuProps> = ({ page }: FluidMenuProps) => {
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
   };
+  const location = useLocation();
+
   if (page.path) {
     return (
-      <MenuItem key={page.name} component={Link} href={page.path}>
+      <MenuItem selected={page.path === location.pathname} key={page.name} component={Link} href={page.path}>
         <Typography variant="h5" textAlign="center">
           {page.name}
         </Typography>
@@ -102,7 +112,7 @@ const FluidMenuItem: React.FC<FluidMenuProps> = ({ page }: FluidMenuProps) => {
   }
   return (
     <>
-      <MenuItem onClick={handleOpenNavMenu} key={page.name} component={Link} href={page.path}>
+      <MenuItem onClick={handleOpenNavMenu} selected={page.submenu && page.submenu.filter((page) => page.path === location.pathname).length > 0} key={page.name} component={Link} href={page.path}>
         <Typography variant="h5" textAlign="center">
           {page.name}
         </Typography>
@@ -112,7 +122,7 @@ const FluidMenuItem: React.FC<FluidMenuProps> = ({ page }: FluidMenuProps) => {
   );
 };
 
-const MainMenu: React.FC<MenuProps> = ({ pages }: MenuProps) => {
+const MainMenu: React.FC<MainMenuProps> = ({ pages }: MainMenuProps) => {
   return (
     <>
       {pages.map((page) => (
