@@ -56,8 +56,6 @@ const HazardCharts: React.FC<HazardChartsProps> = ({ data, state, dispatch }: Ha
     },
   }));
 
-  console.log([SA_PERIODMIN_LOG, SA_PERIODMAX_LOG]);
-
   return (
     <>
       <HazardChartsContainer data-testid="hazardChartsContainer">
