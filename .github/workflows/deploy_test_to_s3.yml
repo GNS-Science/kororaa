@@ -42,6 +42,20 @@ jobs:
           echo "REACT_APP_MAP_STATISTICS=${{secrets.REACT_APP_MAP_STATISTICS }}" >> .env
           echo "REACT_APP_MAP_POES=${{secrets.REACT_APP_MAP_POES }}" >> .env
           echo "REACT_APP_MAP_COLOR_SCALE=${{ secrets.REACT_APP_MAP_COLOR_SCALE }}" >> .env
+          echo
+          echo "The following settings can be exposed, and they're common to PROD and TEST"
+          echo "REACT_APP_HAZARD_GMAX=5" >> .env
+          echo "REACT_APP_HAZARD_GMIN=0" >> .env
+          echo "REACT_APP_HAZARD_GMAX_LOG=5" >> .env
+          echo "REACT_APP_HAZARD_GMIN_LOG=0.01" >> .env
+          echo "REACT_APP_HAZARD_POEMAX=1" >> .env
+          echo "REACT_APP_HAZARD_POEMIN=0.000001" >> .env
+          echo "REACT_APP_SA_PERIODMAX=10" >> .env
+          echo "REACT_APP_SA_PERIODMIN=0" >> .env
+          echo "REACT_APP_SA_PERIODMAX_LOG=10" >> .env
+          echo "REACT_APP_SA_PERIODMIN_LOG=0.01" >> .env
+          echo "REACT_APP_SA_GMAX=auto" >> .env
+          echo "REACT_APP_SA_GMIN=0" >> .env
 
       - name: Yarn Build & Test
         env:
