@@ -72,7 +72,6 @@ const HazardCharts: React.FC<HazardChartsProps> = ({ data, state, dispatch }: Ha
               tooltip={true}
               crosshair={true}
               heading="Hazard Curve"
-              subHeading={`${state.imts[0]}`}
               curves={curveGroupWithColors}
               poe={state.poe}
               uncertainty={state.hazardUncertainty}
