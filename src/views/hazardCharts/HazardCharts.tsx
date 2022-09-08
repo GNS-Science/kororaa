@@ -94,7 +94,7 @@ const HazardCharts: React.FC<HazardChartsProps> = ({ data, state, dispatch }: Ha
                 yLimits={SA_GMAX === 'auto' ? getYScale(saCurvesWithColors, SA_GMIN) : [SA_GMIN, SA_GMAX]}
                 tooltip={true}
                 crosshair={true}
-                heading="Spectral Acceleration Chart"
+                heading="Universal Hazard Spectra"
                 subHeading={`${state.poe * 100}% in 50 years`}
                 curves={saCurvesWithColors}
                 poe={state.poe}
