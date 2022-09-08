@@ -72,7 +72,7 @@ const HazardMapsPage: React.FC = () => {
           <HazardMapsControls isPending={isPending} startTransition={startTransition} geoJson={geoJson} state={state} dispatch={dispatch} />
         </LeafletDrawer>
         <React.Suspense fallback={<CircularProgress />}>
-          <HazardMaps geoJson={geoJson} setFullscreen={setFullscreen} colorScale={colorScale} />
+          <HazardMaps state={state} geoJson={geoJson} setFullscreen={setFullscreen} colorScale={colorScale} />
         </React.Suspense>
       </Box>
     </PageContainer>
