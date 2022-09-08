@@ -16,7 +16,7 @@ const HomeTitleContainer = styled('div')({
   justifyContent: 'left',
   textAlign: 'left',
   width: '100%',
-  'padding-bottom': '2rem',
+  paddingBottom: '2rem',
 });
 
 const Home: React.FC = () => {
