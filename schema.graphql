@@ -2,6 +2,34 @@ schema {
   query: QueryRoot
 }
 
+enum ColourScaleNormalise {
+  LOG
+  LIN
+}
+
+"""
+The `DateTime` scalar type represents a DateTime
+value as specified by
+[iso8601](https://en.wikipedia.org/wiki/ISO_8601).
+"""
+scalar DateTime
+
+"""All the info about a given disagg report."""
+type DisaggregationReport {
+  hazard_model: String
+  location: HazardCodedLocation
+  imt: String
+  poe: Float
+  vs30: Int
+  inv_time: Int
+  report_url: String
+}
+
+type DisaggregationReportResult {
+  ok: Boolean
+  reports: [DisaggregationReport]
+}
+
 type GeoJsonHazardMap {
   geojson: JSONString
   colour_scale: HexRgbValueMapping
@@ -17,7 +45,7 @@ type GriddedHazard {
 
   """Acceleration values."""
   values: [Float]
-  hazard_map(color_scale: String = "jet", color_scale_vmax: Float, color_scale_vmin: Float = 0, stroke_width: Float, stroke_opacity: Float, fill_opacity: Float): GeoJsonHazardMap
+  hazard_map(color_scale: String = "jet", color_scale_vmax: Float, color_scale_vmin: Float = 0, color_scale_normalise: ColourScaleNormalise, stroke_width: Float, stroke_opacity: Float, fill_opacity: Float): GeoJsonHazardMap
   grid_locations: [GriddedLocation]
 }
 
@@ -29,15 +57,23 @@ type GriddedHazardResult {
 type GriddedLocation {
   lat: Float
   lon: Float
-  resolution: Float
   code: String
   name: String
   key: String
+  resolution: Float
 }
 
 type GriddedLocationResult {
   location: GriddedLocation
   ok: Boolean
+}
+
+type HazardCodedLocation {
+  lat: Float
+  lon: Float
+  code: String
+  name: String
+  key: String
 }
 
 type HexRgbValueMapping {
@@ -59,6 +95,16 @@ interface Node {
   id: ID!
 }
 
+type Person {
+  name: String
+}
+
+enum ProjectAreaEnum {
+  Core
+  GMCM
+  SRM
+}
+
 """This is the entry point for all graphql query operations"""
 type QueryRoot {
   node(
@@ -68,6 +114,8 @@ type QueryRoot {
 
   """About this API """
   about: String
+  disaggregation_reports: DisaggregationReportResult
+  science_reports: ScienceReportResult
   gridded_location(lat: Float, lon: Float, resolution: Float): GriddedLocationResult
   hazard_curves(hazard_model: String, imts: [String], locs: [String], aggs: [String], vs30s: [Float], resolution: Float = 0.1): ToshiHazardCurveResult
   gridded_hazard(grid_id: RegionGrid, hazard_model_ids: [String], imts: [String], locs: [String], aggs: [String], vs30s: [Float], poes: [Float]): GriddedHazardResult
@@ -80,6 +128,35 @@ enum RegionGrid {
   NZ_0_2_NB_1_1
   WLG_0_01_nb_1_1
   WLG_0_05_nb_1_1
+}
+
+enum ReportStatusEnum {
+  Undefined
+  Review
+  Published
+}
+
+"""NSHM Science report publication details."""
+type ScienceReport {
+  title: String
+  topic: String
+  area: ProjectAreaEnum
+  status: ReportStatusEnum
+
+  """Internal notes, not for UI."""
+  notes: String
+
+  """publication date"""
+  publication_date: DateTime
+  report_number: String
+  lead_author: Person
+  reviewers: [Person]
+  bibliographic_ref: String
+}
+
+type ScienceReportResult {
+  ok: Boolean
+  reports: [ScienceReport]
 }
 
 """Represents one set of level and values for a hazard curve."""
