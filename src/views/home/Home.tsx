@@ -30,7 +30,7 @@ const Home: React.FC = () => {
         <MenuCard title="Hazard Curves" text="Hazard and Spectral acceleration plots." img="/images/SpectralAccelChart.png" url="/Hazardcurves" />
         <MenuCard title="Hazard Maps" text="Showing gridded hazard levels across NZ." img="/images/HazardMapExample.png" url="/HazardMaps" />
         <MenuCard title="Rupture Sets" text="Ruptures and seismic event rates." img="/images/TUI-ruptures-0.png" url="/Previews" />
-        <MenuCard title="Resources" text="Model information, reports, and datsets." img="/info.jpg" url="/Resources" />
+        <MenuCard title="Science Reports" text="Model information, reports, and datsets." img="/info.jpg" url="/Resources/ScienceReports" />
       </Grid>
     </HomePageContainer>
   );
