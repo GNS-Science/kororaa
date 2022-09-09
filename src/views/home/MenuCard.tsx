@@ -22,9 +22,7 @@ const MenuCard: React.FC<MenuCardProps> = ({ title, text, img, url }: MenuCardPr
           </CardContent>
           <CardMedia component="img" height="250px" image={img} sx={{ objectFit: 'cover' }} />
           <CardActions>
-            <Button size="small" component={Link} to={url}>
-              More
-            </Button>
+            <Button size="small">More</Button>
           </CardActions>
         </CardActionArea>
       </Card>
