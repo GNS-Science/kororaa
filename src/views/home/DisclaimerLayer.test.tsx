@@ -1,15 +1,19 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { ThemeProvider } from '@emotion/react';
 
 import DisclaimerLayer from './DisclaimerLayer';
+import theme from '../../themeGulf';
 
 describe('For <DisclaimerLayer />: ', () => {
   const Wrapper = () => {
     return (
-      <DisclaimerLayer>
-        <p>hello</p>
-      </DisclaimerLayer>
+      <ThemeProvider theme={theme}>
+        <DisclaimerLayer>
+          <p>hello</p>
+        </DisclaimerLayer>
+      </ThemeProvider>
     );
   };
 
