@@ -44,12 +44,12 @@ interface IScienceReport {
   bibliographic_ref?: string | null;
 }
 
-interface ScienceReportCardProps {
+interface IScienceReportCardProps {
   report: IScienceReport;
   key: number;
 }
 
-const ScienceReportCard: React.FC<ScienceReportCardProps> = ({ report }: ScienceReportCardProps) => {
+const ScienceReportCard: React.FC<IScienceReportCardProps> = ({ report }: IScienceReportCardProps) => {
   return (
     <Grid item xs={9}>
       <StyledCard>
@@ -93,15 +93,12 @@ const ScienceReportsComponent: React.FC = () => {
       <SectionContainer>
         <Typography variant="h3">Status: Published</Typography>
       </SectionContainer>
-      {/*</Grid>*/}
       <Grid container spacing={6} columns={{ sm: 6, md: 8, lg: 12 }}>
         {published?.map((report, i) => report && <ScienceReportCard report={report as IScienceReport} key={i} />)}
       </Grid>
-      {/*<Grid item xs={12}>*/}
       <SectionContainer>
-        <Typography variant="h3">Status: Reviewing</Typography>
+        <Typography variant="h3">Status: In Review</Typography>
       </SectionContainer>
-      {/*</Grid>*/}
       <Grid container spacing={6} columns={{ sm: 6, md: 8, lg: 12 }}>
         {reviewing?.map((report, i) => report && <ScienceReportCard report={report as IScienceReport} key={i} />)}
       </Grid>

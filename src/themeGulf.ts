@@ -5,7 +5,7 @@ const OLD_PRIMARY_ORANGE = '#e97826';
 // const OLD_GREY = '#d9d9d9';
 const GNS_BLUE = '#072B61';
 // const GNS_KHAKI = '#a71930';
-const GULF_GREEN = '#a1d0ea'; //Original Gulf
+// const GULF_GREEN = '#a1d0ea'; //Original Gulf
 // const GULF_BLUE = '#bae0f6';
 // const GULF_BLUE_FADED = '#cfe9f7';
 const GULF_BLUE_FADED_MORE = '#daeaf3';
@@ -33,7 +33,7 @@ const theme = createTheme({
     },
     navbar: {
       main: GULF_BLUE_FADED_MORE,
-      accent: GULF_GREEN, // GNS_BLUE,
+      accent: GNS_BLUE, // GULF_GREEN
     },
     // Used by `getContrastText()` to maximize the contrast between
     // the background and the text.

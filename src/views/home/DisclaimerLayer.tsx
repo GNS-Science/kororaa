@@ -11,7 +11,7 @@ const StyledModal = styled(Modal)({
 const Paper = styled('div')(({ theme }) => ({
   position: 'absolute',
   width: '60%',
-  backgroundColor: theme.palette.info.main,
+  backgroundColor: theme.palette.navbar.main,
   padding: theme.spacing(2, 4, 5),
   border: 'none',
 }));
