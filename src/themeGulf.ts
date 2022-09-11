@@ -5,22 +5,35 @@ const OLD_PRIMARY_ORANGE = '#e97826';
 // const OLD_GREY = '#d9d9d9';
 const GNS_BLUE = '#072B61';
 // const GNS_KHAKI = '#a71930';
-// const GULF_GREEN = '#a1d0ea'; //Original Gulf
+const GULF_GREEN = '#a1d0ea'; //Original Gulf
 // const GULF_BLUE = '#bae0f6';
 // const GULF_BLUE_FADED = '#cfe9f7';
 const GULF_BLUE_FADED_MORE = '#daeaf3';
 // const GULF_ORANGE = '#fc6200';
+
+declare module '@mui/material/styles' {
+  interface Palette {
+    navbar: Palette['primary'];
+  }
+  interface PaletteOptions {
+    navbar?: PaletteOptions['primary'];
+  }
+  interface PaletteColor {
+    accent?: string;
+  }
+  interface SimplePaletteColorOptions {
+    accent?: string;
+  }
+}
 
 const theme = createTheme({
   palette: {
     primary: {
       main: OLD_PRIMARY_ORANGE,
     },
-    secondary: {
-      main: GNS_BLUE,
-    },
-    info: {
+    navbar: {
       main: GULF_BLUE_FADED_MORE,
+      accent: GULF_GREEN, // GNS_BLUE,
     },
     // Used by `getContrastText()` to maximize the contrast between
     // the background and the text.

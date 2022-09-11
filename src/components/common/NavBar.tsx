@@ -4,9 +4,9 @@ import { AppBar, Typography, Container, Toolbar, IconButton, Box, Menu, MenuItem
 import MenuIcon from '@mui/icons-material/Menu';
 
 const StyledAppBar = styled(AppBar)(({ theme }) => ({
-  backgroundColor: theme.palette.info.main,
+  backgroundColor: theme.palette.navbar.main,
   height: 100,
-  borderBottom: `5px solid ${theme.palette.secondary.main}`,
+  borderBottom: `5px solid ${theme.palette.navbar.accent}`,
   // display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-around',
@@ -161,7 +161,7 @@ const NavBar: React.FC = () => {
   return (
     <React.StrictMode>
       <StyledAppBar position="static">
-        <Container maxWidth="xl">
+        <Container maxWidth={false}>
           <StyledToolbar disableGutters>
             <Link href="/">
               <img src="/images/NSHM_logo_black_cropped_blue.png" height="40" alt="NSHM logo" />
