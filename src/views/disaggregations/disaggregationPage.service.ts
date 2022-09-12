@@ -49,22 +49,10 @@ export const getVs30Options = (data: DisaggregationsPageQuery$data): (number | u
   );
 };
 
-export const getInvTimeOptions = (data: DisaggregationsPageQuery$data): (number | undefined)[] => {
-  return Array.from(
-    new Set(
-      data?.disaggregation_reports?.reports?.map((report) => {
-        if (report && report?.inv_time && report?.inv_time !== undefined) {
-          return report.inv_time;
-        }
-      }),
-    ),
-  );
-};
-
 export const getReportUrl = (data: DisaggregationsPageQuery$data, state: DisaggregationsPageState): string => {
   return (
     data?.disaggregation_reports?.reports?.filter((report) => {
-      return report?.location?.name === state.location && report?.poe === state.poe && report?.imt === state.imt && report?.vs30 === state.vs30 && report?.inv_time === state.invTime;
+      return report?.location?.name === state.location && report?.poe === state.poe && report?.imt === state.imt && report?.vs30 === state.vs30;
     })[0]?.report_url || ''
   );
 };
