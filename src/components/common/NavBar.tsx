@@ -1,6 +1,7 @@
 import React from 'react';
 import { styled } from '@mui/material/styles';
-import { AppBar, Typography, Container, Toolbar, IconButton, Box, Menu, MenuItem, Link } from '@mui/material';
+import { Link } from 'react-router-dom';
+import { AppBar, Typography, Container, Toolbar, IconButton, Box, Menu, MenuItem, Button } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 
 const StyledAppBar = styled(AppBar)(({ theme }) => ({
@@ -59,8 +60,8 @@ const SubMenu: React.FC<SubMenuProps> = ({ pages, anchorElNav, setAnchorElNav, o
       onClose={handleCloseNavMenu}
     >
       {pages.map((page) => (
-        <MenuItem key={page.name} onClick={handleCloseNavMenu} component={Link} href={page.path}>
-          <Typography variant="h5" textAlign="center">
+        <MenuItem key={page.name} component={Link} to={page.path || ''}>
+          <Typography onClick={handleCloseNavMenu} variant="h5" textAlign="center">
             {page.name}
           </Typography>
         </MenuItem>
@@ -93,7 +94,7 @@ const FluidMenuItem: React.FC<FluidMenuProps> = ({ page }: FluidMenuProps) => {
   };
   if (page.path) {
     return (
-      <MenuItem key={page.name} component={Link} href={page.path}>
+      <MenuItem key={page.name} component={Link} to={page.path}>
         <Typography variant="h5" textAlign="center">
           {page.name}
         </Typography>
@@ -102,7 +103,7 @@ const FluidMenuItem: React.FC<FluidMenuProps> = ({ page }: FluidMenuProps) => {
   }
   return (
     <>
-      <MenuItem onClick={handleOpenNavMenu} key={page.name} component={Link} href={page.path}>
+      <MenuItem sx={{ textTransform: 'none' }} key={page.name} onClick={handleOpenNavMenu} component={Button}>
         <Typography variant="h5" textAlign="center">
           {page.name}
         </Typography>
@@ -163,7 +164,7 @@ const NavBar: React.FC = () => {
       <StyledAppBar position="static">
         <Container maxWidth={false}>
           <StyledToolbar disableGutters>
-            <Link href="/">
+            <Link to="/">
               <img src="/images/NSHM_logo_black_cropped_blue.png" height="40" alt="NSHM logo" />
               {/*<img src="/images/NSHM_logo_black.png" height="70" alt="NSHM logo" />*/}
             </Link>

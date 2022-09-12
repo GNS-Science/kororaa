@@ -31,6 +31,7 @@ const Home: React.FC = () => {
         <MenuCard title="Hazard Maps" text="Showing gridded hazard levels across NZ." img="/images/HazardMapExample.png" url="/HazardMaps" />
         <MenuCard title="Rupture Sets" text="Ruptures and seismic event rates." img="/images/TUI-ruptures-0.png" url="/Previews" />
         <MenuCard title="Science Reports" text="Model information, reports, and datsets." img="/info.jpg" url="/Resources/ScienceReports" />
+        <MenuCard title="Disaggregations" text="Disaggregation heatmaps." img="/images/disagg.png" url="/Disaggs" />
       </Grid>
     </HomePageContainer>
   );

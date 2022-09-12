@@ -32,7 +32,7 @@ export const parsePoeString = (poe: string): number => {
 };
 
 export const readablePoe = (poe: number): string => {
-  return `${poe * 100} % in 50 years`;
+  return `${poe * 100}% in 50 years`;
 };
 
 export const readablePoeArray = (poes: number[]): string[] => {
