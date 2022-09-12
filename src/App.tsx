@@ -20,21 +20,8 @@ import PreviewsPage from './views/preview/PreviewsPage';
 import DisclaimerLayer from './views/home/DisclaimerLayer';
 import HazardChartsPage from './views/hazardCharts/HazardChartsPage';
 import HazardMapsPage from './views/hazardMaps/HazardMapsPage';
-// import ModelComponentsPage from './views/info/ModelComponentsPage';
 import ScienceReportsPage from './views/info/ScienceReportsPage';
-
-function onRenderCallback(
-  id: string, // the "id" prop of the Profiler tree that has just committed
-  phase: string, // either "mount" (if the tree just mounted) or "update" (if it re-rendered)
-  actualDuration: number, // time spent rendering the committed update
-  baseDuration: number, // estimated time to render the entire subtree without memoization
-  // startTime: number, // when React began rendering this update
-  // commitTime: number, // when React committed this update
-  // interactions: Set // the Set of interactions belonging to this update
-) {
-  // Aggregate or log render timings...
-  console.log('Profiling ' + id + ' phase: ' + phase + ' actualDur: ' + actualDuration + ' baseDur: ' + baseDuration);
-}
+import DisaggregationsPage from './views/disaggregations/DisaggregationsPage';
 
 // The Home component needs to know how to access the Relay environment, and we
 // need to specify a fallback in case it suspends:
@@ -47,11 +34,9 @@ function App(props: { environment?: Environment }) {
     <RelayEnvironmentProvider environment={env}>
       <ThemeProvider theme={theme}>
         <CssBaseline>
-          <Box sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-            <React.Profiler id="Navigation" onRender={onRenderCallback}>
+          <BrowserRouter>
+            <Box sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
               <NavBar />
-            </React.Profiler>
-            <BrowserRouter>
               <Box sx={{ flexGrow: 1 }}>
                 <DisclaimerLayer>
                   <Routes>
@@ -63,6 +48,7 @@ function App(props: { environment?: Environment }) {
                         </React.Suspense>
                       }
                     />
+                    <Route path="/Disaggs" element={<DisaggregationsPage />} />
                     <Route path="/HazardCurves" element={<HazardChartsPage />} />
                     <Route path="/Previews" element={<PreviewsPage />} />
                     <Route path="/Resources/ScienceReports" element={<ScienceReportsPage />} />
@@ -71,8 +57,8 @@ function App(props: { environment?: Environment }) {
                 </DisclaimerLayer>
               </Box>
               <Footer />
-            </BrowserRouter>
-          </Box>
+            </Box>
+          </BrowserRouter>
         </CssBaseline>
       </ThemeProvider>
     </RelayEnvironmentProvider>
