@@ -4,10 +4,10 @@ import { AppBar, Typography, Container, Toolbar, IconButton, Box, Menu, MenuItem
 import MenuIcon from '@mui/icons-material/Menu';
 
 const StyledAppBar = styled(AppBar)(({ theme }) => ({
-  backgroundColor: theme.palette.info.main,
+  backgroundColor: theme.palette.navbar.main,
   height: 100,
-  borderBottom: `5px solid ${theme.palette.secondary.main}`,
-  display: 'flex',
+  borderBottom: `5px solid ${theme.palette.navbar.accent}`,
+  // display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-around',
 }));
@@ -133,7 +133,10 @@ const NavBar: React.FC = () => {
     },
     { name: 'Hazard Maps', path: '/HazardMaps' },
     { name: 'Coming Features', path: '/Previews' },
-    { name: 'Resources', path: '/Resources' },
+    {
+      name: 'Resources',
+      submenu: [{ name: 'Science reports', path: '/Resources/ScienceReports' }],
+    },
     {
       name: 'Help',
       submenu: [
@@ -149,16 +152,16 @@ const NavBar: React.FC = () => {
     { name: 'Disaggregations', path: '/Disaggs' },
     { name: 'Hazard Maps', path: '/HazardMaps' },
     { name: 'Coming Features', path: '/Previews' },
-    { name: 'Resources', path: '/Resources' },
+    { name: 'Science Reports', path: '/Resources/ScienceReports' },
     { name: 'Help', path: '/Help' },
     { name: 'About', path: '/About' },
     { name: 'Contacts', path: '/Contacts' },
   ];
 
   return (
-    <Box sx={{ flexShrink: 0 }}>
+    <React.StrictMode>
       <StyledAppBar position="static">
-        <Container maxWidth="xl">
+        <Container maxWidth={false}>
           <StyledToolbar disableGutters>
             <Link href="/">
               <img src="/images/NSHM_logo_black_cropped_blue.png" height="40" alt="NSHM logo" />
@@ -175,7 +178,7 @@ const NavBar: React.FC = () => {
           </StyledToolbar>
         </Container>
       </StyledAppBar>
-    </Box>
+    </React.StrictMode>
   );
 };
 

@@ -69,7 +69,7 @@ const InfoPage: React.FC = () => {
       <Grid container spacing={6} columns={{ sm: 6, md: 8, lg: 12 }}>
         {/*<InfoCard title="The Logic Tree" text="The Logic tree structure with branches and weghts" url="/Resources/LogicTree" />*/}
         <InfoCard title="NZSHM Model Components " text="The Logic tree, Ground Motion Models, Source models, Inversion Solutions, Rupture sets." url="/Resources/ModelComponents" />
-        <InfoCard title="NZSHM Publications" text="Scientific publications for the NZSHM." url="." />
+        <InfoCard title="NZSHM Science Reports" text="Scientific publications for the NZSHM." url="/Resources/ScienceReports" />
         <InfoCard title="Technical resources" text="Information technology used and produced by the NZHSM project. APis, Code Repositories etc." url="." />
       </Grid>
     </PageContainer>

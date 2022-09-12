@@ -11,16 +11,29 @@ const GNS_BLUE = '#072B61';
 const GULF_BLUE_FADED_MORE = '#daeaf3';
 // const GULF_ORANGE = '#fc6200';
 
+declare module '@mui/material/styles' {
+  interface Palette {
+    navbar: Palette['primary'];
+  }
+  interface PaletteOptions {
+    navbar?: PaletteOptions['primary'];
+  }
+  interface PaletteColor {
+    accent?: string;
+  }
+  interface SimplePaletteColorOptions {
+    accent?: string;
+  }
+}
+
 const theme = createTheme({
   palette: {
     primary: {
       main: OLD_PRIMARY_ORANGE,
     },
-    secondary: {
-      main: GNS_BLUE,
-    },
-    info: {
+    navbar: {
       main: GULF_BLUE_FADED_MORE,
+      accent: GNS_BLUE, // GULF_GREEN
     },
     // Used by `getContrastText()` to maximize the contrast between
     // the background and the text.
