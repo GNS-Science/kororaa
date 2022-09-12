@@ -1,7 +1,7 @@
 import React, { useMemo, useReducer } from 'react';
 import { styled } from '@mui/material/styles';
 import { graphql } from 'babel-plugin-relay/macro';
-import { Box, Typography } from '@mui/material';
+import { Box, Alert, Typography } from '@mui/material';
 import { useLazyLoadQuery } from 'react-relay';
 import { DisaggregationsPageQuery } from './__generated__/DisaggregationsPageQuery.graphql';
 import { disaggregationsPageReducer, disaggregationsPageReducerInitialState } from './DisaggregationsPageReducer';
@@ -38,6 +38,10 @@ const ControlsContainer = styled(Box)(() => ({
   padding: '1rem',
 }));
 
+const WarningContainer = styled(Box)(({ theme }) => ({
+  padding: '2rem',
+}));
+
 export const DisaggregationsPage: React.FC = () => {
   const data = useLazyLoadQuery<DisaggregationsPageQuery>(disaggregationsPageQuery, {});
   const [state, dispatch] = useReducer(disaggregationsPageReducer, disaggregationsPageReducerInitialState);
@@ -55,7 +59,13 @@ export const DisaggregationsPage: React.FC = () => {
         <ControlsContainer>
           <DisaggregationsControls data={data} state={state} dispatch={dispatch} />
         </ControlsContainer>
-        {reportUrl !== '' ? <iframe src={`http://${reportUrl}`}></iframe> : <Box>No report available for this selection</Box>}
+        {reportUrl !== '' ? (
+          <iframe src={`http://${reportUrl}`}></iframe>
+        ) : (
+          <WarningContainer>
+            <Alert severity="error">No report available for this selection.</Alert>
+          </WarningContainer>
+        )}
       </DisaggregationsContainer>
     </PageContainer>
   );

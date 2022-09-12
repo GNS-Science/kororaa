@@ -4,6 +4,7 @@ import { SelectControl } from '@gns-science/toshi-nest';
 import { DisaggregationsPageQuery$data } from './__generated__/DisaggregationsPageQuery.graphql';
 import { DisaggregationsPageState } from './DisaggregationsPageReducer';
 import { getVs30Options, getImtOptions, getLocationOptions, getPoeOptions } from './disaggregationPage.service';
+import { readablePoe, readablePoeArray, parsePoeString } from '../hazardMaps/hazardMaps.service';
 import CustomControlsBar from '../../components/common/CustomControlsBar';
 
 export interface DisaggregationsControlsProps {
@@ -31,7 +32,7 @@ export const DisaggregationsControls: React.FC<DisaggregationsControlsProps> = (
       <SelectControl name="Location" options={locationOptions} selection={location} setSelection={setLocation} />
       <SelectControl name="Vs30" options={vs30Options} selection={vs30} setSelection={setVs30} />
       <SelectControl name="Spectral Period" options={imtOptions} selection={imt} setSelection={setImt} />
-      <SelectControl name="PoE" options={poeOptions} selection={poe} setSelection={setPoe} />
+      <SelectControl name="PoE" options={readablePoeArray(poeOptions as number[])} selection={readablePoe(poe)} setSelection={(newValue: string) => setPoe(parsePoeString(newValue))} />
     </CustomControlsBar>
   );
 };
