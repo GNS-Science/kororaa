@@ -24,7 +24,7 @@ const HazardChartsPage: React.FC = () => {
   return (
     <PageContainer>
       <Box sx={{ ...flexParentCenter, width: '100%' }}>
-        <Typography variant="h1" sx={{ padding: 2, width: '100%', textAlign: 'center' }}>
+        <Typography variant="h1" sx={{ padding: 2, width: '100%' }}>
           Hazard Curves and Spectra
           <InfoTooltip markdown={hazardMarkdown} />
         </Typography>

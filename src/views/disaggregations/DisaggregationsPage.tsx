@@ -1,7 +1,7 @@
 import React, { useMemo, useReducer } from 'react';
 import { styled } from '@mui/material/styles';
 import { graphql } from 'babel-plugin-relay/macro';
-import { Box, Alert, Typography } from '@mui/material';
+import { Box, Alert, Typography, CircularProgress } from '@mui/material';
 import { useLazyLoadQuery } from 'react-relay';
 import { DisaggregationsPageQuery } from './__generated__/DisaggregationsPageQuery.graphql';
 import { disaggregationsPageReducer, disaggregationsPageReducerInitialState } from './DisaggregationsPageReducer';
@@ -42,7 +42,7 @@ const WarningContainer = styled(Box)(() => ({
   padding: '2rem',
 }));
 
-export const DisaggregationsPage: React.FC = () => {
+export const DisaggregationsComponent: React.FC = () => {
   const data = useLazyLoadQuery<DisaggregationsPageQuery>(disaggregationsPageQuery, {});
   const [state, dispatch] = useReducer(disaggregationsPageReducer, disaggregationsPageReducerInitialState);
   const reportUrl = useMemo(() => getReportUrl(data, state), [data, state]);
@@ -50,7 +50,7 @@ export const DisaggregationsPage: React.FC = () => {
   return (
     <PageContainer>
       <Box sx={{ ...flexParentCenter, width: '100%' }}>
-        <Typography variant="h1" sx={{ padding: 2, width: '100%', textAlign: 'center' }}>
+        <Typography variant="h1" sx={{ padding: 2, width: '100%' }}>
           Disaggregations
           <InfoTooltip markdown={'lorem ipsum'} />
         </Typography>
@@ -68,6 +68,14 @@ export const DisaggregationsPage: React.FC = () => {
         )}
       </DisaggregationsContainer>
     </PageContainer>
+  );
+};
+
+const DisaggregationsPage = () => {
+  return (
+    <React.Suspense fallback={<CircularProgress />}>
+      <DisaggregationsComponent />
+    </React.Suspense>
   );
 };
 
