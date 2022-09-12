@@ -38,7 +38,7 @@ const ControlsContainer = styled(Box)(() => ({
   padding: '1rem',
 }));
 
-const WarningContainer = styled(Box)(({ theme }) => ({
+const WarningContainer = styled(Box)(() => ({
   padding: '2rem',
 }));
 
