@@ -51,7 +51,7 @@ export const DisaggregationsPage: React.FC = () => {
     <PageContainer>
       <Box sx={{ ...flexParentCenter, width: '100%' }}>
         <Typography variant="h1" sx={{ padding: 2, width: '100%', textAlign: 'center' }}>
-          Hazard Curves and Spectra
+          Disaggregations
           <InfoTooltip markdown={'lorem ipsum'} />
         </Typography>
       </Box>
