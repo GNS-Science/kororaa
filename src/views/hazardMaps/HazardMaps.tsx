@@ -9,16 +9,17 @@ interface HazardMapsProps {
   state: HazardMapsState;
   geoJson: string[];
   colorScale: ColorScale | undefined;
+  fullscreen: boolean;
   setFullscreen: (value: boolean) => void;
 }
 
-const HazardMaps: React.FC<HazardMapsProps> = ({ state, geoJson, setFullscreen, colorScale }: HazardMapsProps) => {
+const HazardMaps: React.FC<HazardMapsProps> = ({ state, geoJson, fullscreen, setFullscreen, colorScale }: HazardMapsProps) => {
   const zoom = 5;
   const nzCentre = [-40.946, 174.167];
 
   return (
-    <Box id="map" sx={{ width: '100%', height: '700px' }}>
-      <LeafletMap geoJsonData={geoJson} zoom={zoom} nzCentre={nzCentre} height={'700px'} width={'100%'} setFullscreen={setFullscreen} />
+    <Box id="map" sx={{ width: '100%', height: '80vh' }}>
+      <LeafletMap geoJsonData={geoJson} zoom={zoom} nzCentre={nzCentre} height={'80vh'} width={'100%'} setFullscreen={setFullscreen} />
       {colorScale && (
         <ColorBar
           heading={`Vs30=${state.vs30[0]}m/s, ${state.spectralPeriod[0]} ${state.poe[0] * 100}% in 50 years`}
@@ -26,7 +27,9 @@ const HazardMaps: React.FC<HazardMapsProps> = ({ state, geoJson, setFullscreen, 
           height={35}
           colors={colorScale?.hexrgbs}
           tickValues={colorScale?.levels}
-          style={{ position: 'relative', zIndex: 1197, top: '-115px', left: 'calc(100% - 319px)' }}
+          style={
+            !fullscreen ? { position: 'relative', zIndex: 119700, top: '-115px', left: 'calc(100% - 319px)' } : { position: 'absolute', zIndex: 119700, bottom: '14px', left: 'calc(100% - 319px)' }
+          }
         />
       )}
     </Box>

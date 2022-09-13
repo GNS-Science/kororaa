@@ -68,11 +68,11 @@ const HazardMapsPage: React.FC = () => {
   return (
     <PageContainer>
       <Box role="hazardMapsView" sx={{ ...flexParentCenter, justifyContent: 'center', height: '100%', width: '100%' }}>
-        <LeafletDrawer drawerHeight={'700px'} headerHeight={'120px'} width={'400px'} fullscreen={fullscreen}>
+        <LeafletDrawer drawerHeight={'80vh'} headerHeight={'100px'} width={'400px'} fullscreen={fullscreen}>
           <HazardMapsControls isPending={isPending} startTransition={startTransition} geoJson={geoJson} state={state} dispatch={dispatch} />
         </LeafletDrawer>
         <React.Suspense fallback={<CircularProgress />}>
-          <HazardMaps state={state} geoJson={geoJson} setFullscreen={setFullscreen} colorScale={colorScale} />
+          <HazardMaps state={state} geoJson={geoJson} setFullscreen={setFullscreen} colorScale={colorScale} fullscreen={fullscreen} />
         </React.Suspense>
       </Box>
     </PageContainer>
