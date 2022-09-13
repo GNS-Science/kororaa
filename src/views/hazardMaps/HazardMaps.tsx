@@ -18,7 +18,7 @@ const HazardMaps: React.FC<HazardMapsProps> = ({ state, geoJson, fullscreen, set
   const nzCentre = [-40.946, 174.167];
 
   return (
-    <Box id="map" sx={{ width: '100%', height: '100%', minHeight: '80vh' }}>
+    <Box id="map" sx={{ width: '100%', height: '80vh' }}>
       <LeafletMap geoJsonData={geoJson} zoom={zoom} nzCentre={nzCentre} height={'80vh'} width={'100%'} setFullscreen={setFullscreen} />
       {colorScale && (
         <ColorBar
