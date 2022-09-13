@@ -128,7 +128,7 @@ const NavBar: React.FC = () => {
     {
       name: 'Site Hazard',
       submenu: [
-        { name: 'Hazard Curves', path: '/HazardCurves' },
+        { name: 'Curves and Spectra', path: '/HazardCurves' },
         { name: 'Disaggregations', path: '/Disaggs' },
       ],
     },
@@ -149,7 +149,7 @@ const NavBar: React.FC = () => {
   ];
 
   const hamburgerPages = [
-    { name: 'Hazard Curves', path: '/HazardCurves' },
+    { name: 'Curves and Spectra', path: '/HazardCurves' },
     { name: 'Disaggregations', path: '/Disaggs' },
     { name: 'Hazard Maps', path: '/HazardMaps' },
     { name: 'Coming Features', path: '/Previews' },
