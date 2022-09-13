@@ -27,7 +27,9 @@ const HazardMaps: React.FC<HazardMapsProps> = ({ state, geoJson, fullscreen, set
           height={35}
           colors={colorScale?.hexrgbs}
           tickValues={colorScale?.levels}
-          style={!fullscreen ? { position: 'relative', zIndex: 119700, top: '-115px', left: 'calc(100% - 319px)' } : { position: 'relative', zIndex: 119700, top: '65vh', left: 'calc(100% - 319px)' }}
+          style={
+            !fullscreen ? { position: 'relative', zIndex: 119700, top: '-115px', left: 'calc(100% - 319px)' } : { position: 'absolute', zIndex: 119700, bottom: '14px', left: 'calc(100% - 319px)' }
+          }
         />
       )}
     </Box>
