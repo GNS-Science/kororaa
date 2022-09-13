@@ -21,7 +21,7 @@ export const HAZARD_POEMAX: number = Number(process.env.REACT_APP_HAZARD_POEMAX)
 export const HAZARD_POEMIN: number = Number(process.env.REACT_APP_HAZARD_POEMIN) || 0.000001;
 
 export const SA_PERIODMAX: number = Number(process.env.REACT_APP_SA_PERIODMAX) || 6;
-export const SA_PERIODMIN: number = Number(process.env.REACT_APP_SA_PERIODMIN) || 0.1;
+export const SA_PERIODMIN: number = Number(process.env.REACT_APP_SA_PERIODMIN) || 0;
 export const SA_PERIODMAX_LOG: number = Number(process.env.REACT_APP_SA_PERIODMAX_LOG) || 6;
 export const SA_PERIODMIN_LOG: number = Number(process.env.REACT_APP_SA_PERIODMIN_LOG) || 0.1;
 export const SA_GMAX: number | string = process.env.REACT_APP_SA_GMAX === 'auto' ? 'auto' : Number(process.env.REACT_APP_SA_GMAX);
