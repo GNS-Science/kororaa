@@ -12,7 +12,7 @@ const PageContainer = styled('div')({
   width: '100%',
   justifyContent: 'center',
   alignItems: 'center',
-  padding: '4rem',
+  padding: '2rem',
 });
 
 const PreviewTitleContainer = styled('div')({

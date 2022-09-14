@@ -7,16 +7,13 @@ import { DisaggregationsPageQuery } from './__generated__/DisaggregationsPageQue
 import { disaggregationsPageReducer, disaggregationsPageReducerInitialState } from './DisaggregationsPageReducer';
 import DisaggregationsControls from './DisaggregationsControls';
 import { getReportUrl } from './disaggregationPage.service';
-import { flexParentCenter } from '../../utils/styleUtils';
 import { InfoTooltip } from '../../components/common/InfoTooltip';
 
-const PageContainer = styled(Box)(({ theme }) => ({
-  ...flexParentCenter,
-  margin: '0 5% 0 5%',
-  flexDirection: 'column',
-  [theme.breakpoints.down('xl')]: {
-    margin: '0 2% 0 2%',
-  },
+const PageContainer = styled('div')(({ theme }) => ({
+  padding: '2rem',
+  width: '100%',
+  justifyContent: 'center',
+  alignItems: 'center',
 }));
 
 const DisaggregationsContainer = styled(Box)(() => ({
@@ -38,6 +35,13 @@ const ControlsContainer = styled(Box)(() => ({
   padding: '1rem',
 }));
 
+const TitleContainer = styled('div')({
+  justifyContent: 'left',
+  textAlign: 'left',
+  width: '100%',
+  paddingBottom: '2rem',
+});
+
 const WarningContainer = styled(Box)(() => ({
   padding: '2rem',
 }));
@@ -49,12 +53,12 @@ export const DisaggregationsComponent: React.FC = () => {
 
   return (
     <PageContainer>
-      <Box sx={{ ...flexParentCenter, width: '100%' }}>
-        <Typography variant="h1" sx={{ padding: 2, width: '100%' }}>
+      <TitleContainer>
+        <Typography variant="h1">
           Disaggregations
           <InfoTooltip markdown={'lorem ipsum'} />
         </Typography>
-      </Box>
+      </TitleContainer>
       <DisaggregationsContainer>
         <ControlsContainer>
           <DisaggregationsControls data={data} state={state} dispatch={dispatch} />
