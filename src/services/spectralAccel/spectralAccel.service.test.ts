@@ -6,7 +6,7 @@ import { hazardPlotsViewQueryMockData } from './testCases/hazardPlotViewsQueryMo
 import { HAZARD_COLOR_MAP } from '../../utils/environmentVariables';
 
 test('getAllOfCurveType function', () => {
-  expect(getSpectralAccelCurve('mean', 400, 'WLG', hazardPlotsViewQueryMockData, 0.02)).toEqual(calculateSpectralAccelCurveExpected);
+  expect(getSpectralAccelCurve('mean', 400, 'WLG', hazardPlotsViewQueryMockData, 0.02, 'log')).toEqual(calculateSpectralAccelCurveExpected);
 });
 
 test('addColorsToCurves function adds strokColor property to each curve', () => {

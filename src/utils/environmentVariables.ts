@@ -14,7 +14,7 @@ export const HAZARD_COLOR_MAP = process.env.REACT_APP_HAZARD_COLOR_MAP || 'jet';
 export const HAZARD_COLOR_LIMIT: number = Number(process.env.REACT_APP_HAZARD_COLOR_LIMIT) || 30;
 export const HAZARD_COLOR_UNCERTAINTY_OPACITY = process.env.REACT_APP_HAZARD_COLOR_UNCERTAINTY_OPACITY || 0.5;
 export const HAZARD_GMAX: number = Number(process.env.REACT_APP_HAZARD_GMAX) || 10;
-export const HAZARD_GMIN: number = Number(process.env.REACT_APP_HAZARD_GMIN) || 0.01;
+export const HAZARD_GMIN: number = Number(process.env.REACT_APP_HAZARD_GMIN) || 0;
 export const HAZARD_GMAX_LOG: number = Number(process.env.REACT_APP_HAZARD_GMAX_LOG) || 10;
 export const HAZARD_GMIN_LOG: number = Number(process.env.REACT_APP_HAZARD_GMIN_LOG) || 0.01;
 export const HAZARD_POEMAX: number = Number(process.env.REACT_APP_HAZARD_POEMAX) || 6;
@@ -26,3 +26,5 @@ export const SA_PERIODMAX_LOG: number = Number(process.env.REACT_APP_SA_PERIODMA
 export const SA_PERIODMIN_LOG: number = Number(process.env.REACT_APP_SA_PERIODMIN_LOG) || 0.1;
 export const SA_GMAX: number | string = process.env.REACT_APP_SA_GMAX === 'auto' ? 'auto' : Number(process.env.REACT_APP_SA_GMAX);
 export const SA_GMIN: number = Number(process.env.REACT_APP_SA_GMIN) || 0.1;
+
+export const SA_MIN_VALUE_LOG: number = Number(process.env.REACT_APP_SA_MIN_VALUE_LOG) || 0.0001;

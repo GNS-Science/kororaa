@@ -4,6 +4,7 @@ import { hazardPageOptions } from '../../views/hazardCharts/constants/hazardPage
 import { HazardChartsPlotsViewQuery$data } from '../../views/hazardCharts/__generated__/HazardChartsPlotsViewQuery.graphql';
 import { roundLatLon } from '../latLon/latLon.service';
 import { getColor } from '../../utils/colorUtils';
+import { SA_MIN_VALUE_LOG } from '../../utils/environmentVariables';
 
 export interface UncertaintyCurve {
   strokeSize?: number;
@@ -22,7 +23,7 @@ export type Curves = NonNullable<HazardCurves['curves']>;
 
 const curveTypes = ['upper2', 'upper1', 'mean', 'lower1', 'lower2'];
 
-export const getSpectralAccelUncertaintyCurves = (vs30s: number[], locs: string[], data: HazardChartsPlotsViewQuery$data, poe: number | undefined): UncertaintyChartData => {
+export const getSpectralAccelUncertaintyCurves = (vs30s: number[], locs: string[], data: HazardChartsPlotsViewQuery$data, poe: number | undefined, scaleType: string): UncertaintyChartData => {
   const saCurveGroups: UncertaintyChartData = {};
 
   poe &&
@@ -34,7 +35,7 @@ export const getSpectralAccelUncertaintyCurves = (vs30s: number[], locs: string[
           saCurveGroups[key] = {};
         }
         curveTypes.forEach((curveType) => {
-          const saCurve = getSpectralAccelCurve(curveType, vs30, loc, data, poe);
+          const saCurve = getSpectralAccelCurve(curveType, vs30, loc, data, poe, scaleType);
           if (saCurve) {
             saCurveGroups[key][curveType] = { data: saCurve };
           }
@@ -44,17 +45,17 @@ export const getSpectralAccelUncertaintyCurves = (vs30s: number[], locs: string[
   return saCurveGroups;
 };
 
-export const getSpectralAccelCurve = (curveType: string, vs30: number, loc: string, data: HazardChartsPlotsViewQuery$data, poe: number) => {
+export const getSpectralAccelCurve = (curveType: string, vs30: number, loc: string, data: HazardChartsPlotsViewQuery$data, poe: number, scaleType: string) => {
   if (data.hazard_curves?.curves?.length) {
     const curves: Curves = data.hazard_curves?.curves?.filter((curve) => curve !== null && curve?.vs30 === vs30 && curve?.loc === loc && getAggValue(curve?.agg as string) === curveType);
-    const saCurve = calculateSpectralAccelCurve(curves, poe);
+    const saCurve = calculateSpectralAccelCurve(curves, poe, scaleType);
 
     return saCurve;
   }
 };
 
 //TODO: add this function as utility method in toshi-nest as it is shared between Kororaa and TUI
-export const calculateSpectralAccelCurve = (curves: Curves, poe: number): number[][] => {
+export const calculateSpectralAccelCurve = (curves: Curves, poe: number, scaleType: string): number[][] => {
   const data: number[][] = [];
   const yValue: number = -Math.log(1 - poe) / 50;
 
@@ -81,9 +82,9 @@ export const calculateSpectralAccelCurve = (curves: Curves, poe: number): number
           });
         const point = mathjs.intersect(p1, p2, p3, p4);
         const result = [Math.exp(point[0] as number), mathjs.exp(mathjs.exp(point[1] as number))];
-        data.push([imt === 'PGA' ? 0.01 : parseFloat(getImtValue(imt as string)), result[0]]);
+        data.push([imt === 'PGA' && scaleType === 'log' ? SA_MIN_VALUE_LOG : parseFloat(getImtValue(imt as string, scaleType === 'linear')), result[0]]);
       } catch {
-        data.push([imt === 'PGA' ? 0.01 : parseFloat(getImtValue(imt as string)), 0]);
+        data.push([imt === 'PGA' && scaleType === 'log' ? SA_MIN_VALUE_LOG : parseFloat(getImtValue(imt as string, scaleType === 'linear')), 0]);
       }
     }
   });
@@ -125,10 +126,10 @@ const getAggValue = (agg: string): string => {
   }
 };
 
-const getImtValue = (imt: string): string => {
+const getImtValue = (imt: string, linear: boolean): string => {
   switch (imt) {
     case 'PGA':
-      return '0.01';
+      return linear ? '0' : SA_MIN_VALUE_LOG.toString();
     case 'SA(0.1)':
       return '0.1';
     case 'SA(0.2)':
@@ -156,6 +157,6 @@ const getImtValue = (imt: string): string => {
     case 'SA(1)':
       return '1';
     default:
-      return '0.01';
+      return linear ? '0' : SA_MIN_VALUE_LOG.toString();
   }
 };
