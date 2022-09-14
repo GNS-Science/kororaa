@@ -2,6 +2,7 @@ import React from 'react';
 import { styled } from '@mui/material/styles';
 import { Link } from 'react-router-dom';
 import { AppBar, Typography, Container, Toolbar, IconButton, Box, Menu, MenuItem, Button } from '@mui/material';
+import { useLocation } from 'react-router-dom';
 import MenuIcon from '@mui/icons-material/Menu';
 
 const StyledAppBar = styled(AppBar)(({ theme }) => ({
@@ -42,7 +43,7 @@ const SubMenu: React.FC<SubMenuProps> = ({ pages, anchorElNav, setAnchorElNav, o
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
-
+  const location = useLocation();
   return (
     <Menu
       id="menu-appbar"
@@ -60,7 +61,7 @@ const SubMenu: React.FC<SubMenuProps> = ({ pages, anchorElNav, setAnchorElNav, o
       onClose={handleCloseNavMenu}
     >
       {pages.map((page) => (
-        <MenuItem key={page.name} component={Link} to={page.path || ''}>
+        <MenuItem selected={page.path === location.pathname} key={page.name} component={Link} to={page.path || ''}>
           <Typography onClick={handleCloseNavMenu} variant="h5" textAlign="center">
             {page.name}
           </Typography>
@@ -92,9 +93,11 @@ const FluidMenuItem: React.FC<FluidMenuProps> = ({ page }: FluidMenuProps) => {
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
   };
+  const location = useLocation();
+
   if (page.path) {
     return (
-      <MenuItem key={page.name} component={Link} to={page.path}>
+      <MenuItem selected={page.path === location.pathname} key={page.name} component={Link} to={page.path}>
         <Typography variant="h5" textAlign="center">
           {page.name}
         </Typography>
@@ -103,7 +106,13 @@ const FluidMenuItem: React.FC<FluidMenuProps> = ({ page }: FluidMenuProps) => {
   }
   return (
     <>
-      <MenuItem sx={{ textTransform: 'none' }} key={page.name} onClick={handleOpenNavMenu} component={Button}>
+      <MenuItem
+        sx={{ textTransform: 'none' }}
+        key={page.name}
+        onClick={handleOpenNavMenu}
+        component={Button}
+        selected={page.submenu && page.submenu.filter((page) => page.path === location.pathname).length > 0}
+      >
         <Typography variant="h5" textAlign="center">
           {page.name}
         </Typography>
