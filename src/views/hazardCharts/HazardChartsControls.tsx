@@ -81,7 +81,7 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, disp
   };
 
   return (
-    <Box sx={{ marginBottom: '20px', width: '100%', border: 'solid 1px black', padding: '10px' }}>
+    <Box sx={{ marginBottom: '0.5rem', width: '100%', border: 'solid 1px black', padding: '0.5rem' }}>
       <Collapse in={controlsError}>
         <Alert
           severity="error"
