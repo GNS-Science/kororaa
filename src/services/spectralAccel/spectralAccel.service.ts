@@ -4,7 +4,7 @@ import { hazardPageOptions } from '../../views/hazardCharts/constants/hazardPage
 import { HazardChartsPlotsViewQuery$data } from '../../views/hazardCharts/__generated__/HazardChartsPlotsViewQuery.graphql';
 import { roundLatLon } from '../latLon/latLon.service';
 import { getColor } from '../../utils/colorUtils';
-import { SA_MIN_VALUE_LOG } from '../../utils/environmentVariables';
+import { SA_LOG_PGA_SUBSTITUTE } from '../../utils/environmentVariables';
 
 export interface UncertaintyCurve {
   strokeSize?: number;
@@ -82,9 +82,9 @@ export const calculateSpectralAccelCurve = (curves: Curves, poe: number, scaleTy
           });
         const point = mathjs.intersect(p1, p2, p3, p4);
         const result = [Math.exp(point[0] as number), mathjs.exp(mathjs.exp(point[1] as number))];
-        data.push([imt === 'PGA' && scaleType === 'log' ? SA_MIN_VALUE_LOG : parseFloat(getImtValue(imt as string, scaleType === 'linear')), result[0]]);
+        data.push([imt === 'PGA' && scaleType === 'log' ? SA_LOG_PGA_SUBSTITUTE : parseFloat(getImtValue(imt as string, scaleType === 'linear')), result[0]]);
       } catch {
-        data.push([imt === 'PGA' && scaleType === 'log' ? SA_MIN_VALUE_LOG : parseFloat(getImtValue(imt as string, scaleType === 'linear')), 0]);
+        data.push([imt === 'PGA' && scaleType === 'log' ? SA_LOG_PGA_SUBSTITUTE : parseFloat(getImtValue(imt as string, scaleType === 'linear')), 0]);
       }
     }
   });
@@ -129,7 +129,7 @@ const getAggValue = (agg: string): string => {
 const getImtValue = (imt: string, linear: boolean): string => {
   switch (imt) {
     case 'PGA':
-      return linear ? '0' : SA_MIN_VALUE_LOG.toString();
+      return linear ? '0' : SA_LOG_PGA_SUBSTITUTE.toString();
     case 'SA(0.1)':
       return '0.1';
     case 'SA(0.2)':
@@ -157,6 +157,6 @@ const getImtValue = (imt: string, linear: boolean): string => {
     case 'SA(1)':
       return '1';
     default:
-      return linear ? '0' : SA_MIN_VALUE_LOG.toString();
+      return linear ? '0' : SA_LOG_PGA_SUBSTITUTE.toString();
   }
 };
