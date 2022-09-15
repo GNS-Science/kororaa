@@ -61,7 +61,7 @@ const InfoPage: React.FC = () => {
         <InfoContainer>
           <Typography variant="h1">
             Resources
-            <InfoTooltip markdown={infoMarkdown} />
+            <InfoTooltip content={infoMarkdown} format={true} />
           </Typography>
           {/* <Typography variant="body1">details deatils</Typography> */}
         </InfoContainer>
