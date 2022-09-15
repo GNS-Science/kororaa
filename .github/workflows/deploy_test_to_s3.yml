@@ -25,16 +25,20 @@ jobs:
           registry-url: https://npm.pkg.github.com/
           scope: '@gns-science'
 
-      - name: Create env file
+      - name: Yarn Test
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.TOSHI_NEST_PACKAGE_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CI: false
         run: |
+          yarn install --frozen-lockfile
+          yarn test
+
+      - name: Yarn build
+        run: |
+          echo "Configure build environment"
           touch .env
-          echo "REACT_APP_DISCLAIMER_VERSION=${{secrets.REACT_APP_DISCLAIMER_VERSION}}" >> .env
-          echo "REACT_APP_GRAPHQL_ENDPOINT=${{secrets.REACT_APP_GRAPHQL_ENDPOINT}}" >> .env
-          echo "REACT_APP_GRAPHQL_API_KEY=${{secrets.REACT_APP_GRAPHQL_API_KEY}}" >> .env
-          echo "REACT_APP_RESOLUTION=${{secrets.REACT_APP_RESOLUTION}}" >> .env
-          echo "REACT_APP_HAZARD_MODEL=${{secrets.REACT_APP_HAZARD_MODEL}}" >> .env
-          echo
-          echo "The following settings can be exposed, and they're common to PROD and TEST"
+          echo "The following settings can be exposed, and are common to PROD and TEST.."
           echo "REACT_APP_HAZARD_COLOR_LIMIT=12" >> .env
           echo "REACT_APP_HAZARD_COLOR_MAP=portland" >> .env
           echo "REACT_APP_HAZARD_COLOR_UNCERTAINTY_OPACITY=0.8" >> .env
@@ -57,13 +61,15 @@ jobs:
           echo "REACT_APP_SA_GMAX=auto" >> .env
           echo "REACT_APP_SA_GMIN=0" >> .env
           echo "REACT_APP_SA_LOG_PGA_SUBSTITUTE=0.02" >> .env
-      - name: Yarn Build & Test
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.TOSHI_NEST_PACKAGE_TOKEN }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          CI: false         
-        run: |
-          yarn install --frozen-lockfile
+          echo
+          cat .env
+          echo "Now add the secrets.."
+          echo "REACT_APP_DISCLAIMER_VERSION=${{secrets.REACT_APP_DISCLAIMER_VERSION}}" >> .env
+          echo "REACT_APP_GRAPHQL_ENDPOINT=${{secrets.REACT_APP_GRAPHQL_ENDPOINT}}" >> .env
+          echo "REACT_APP_GRAPHQL_API_KEY=${{secrets.REACT_APP_GRAPHQL_API_KEY}}" >> .env
+          echo "REACT_APP_RESOLUTION=${{secrets.REACT_APP_RESOLUTION}}" >> .env
+          echo "REACT_APP_HAZARD_MODEL=${{secrets.REACT_APP_HAZARD_MODEL}}" >> .env
+          echo
           yarn build
     
       - name: Deploy to S3
