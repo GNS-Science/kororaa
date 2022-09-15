@@ -35,6 +35,8 @@ jobs:
           yarn test
 
       - name: Yarn build
+        env:
+          CI: false
         run: |
           echo "Configure build environment"
           touch .env
