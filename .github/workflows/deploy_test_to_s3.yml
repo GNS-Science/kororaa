@@ -32,18 +32,18 @@ jobs:
           echo "REACT_APP_GRAPHQL_ENDPOINT=${{secrets.REACT_APP_GRAPHQL_ENDPOINT}}" >> .env
           echo "REACT_APP_GRAPHQL_API_KEY=${{secrets.REACT_APP_GRAPHQL_API_KEY}}" >> .env
           echo "REACT_APP_RESOLUTION=${{secrets.REACT_APP_RESOLUTION}}" >> .env
-          echo "REACT_APP_HAZARD_COLOR_LIMIT=${{secrets.REACT_APP_HAZARD_COLOR_LIMIT}}" >> .env
-          echo "REACT_APP_HAZARD_COLOR_MAP=${{secrets.REACT_APP_HAZARD_COLOR_MAP}}" >> .env
-          echo "REACT_APP_HAZARD_COLOR_UNCERTAINTY_OPACITY=${{secrets.REACT_APP_HAZARD_COLOR_UNCERTAINTY_OPACITY}}" >> .env
           echo "REACT_APP_HAZARD_MODEL=${{secrets.REACT_APP_HAZARD_MODEL}}" >> .env
-          echo "REACT_APP_GRID_ID=${{secrets.REACT_APP_GRID_ID }}" >> .env
-          echo "REACT_APP_MAP_IMTS=${{secrets.REACT_APP_MAP_IMTS }}" >> .env
-          echo "REACT_APP_MAP_VS30S=${{secrets.REACT_APP_MAP_VS30S }}" >> .env
-          echo "REACT_APP_MAP_STATISTICS=${{secrets.REACT_APP_MAP_STATISTICS }}" >> .env
-          echo "REACT_APP_MAP_POES=${{secrets.REACT_APP_MAP_POES }}" >> .env
-          echo "REACT_APP_MAP_COLOR_SCALE=${{ secrets.REACT_APP_MAP_COLOR_SCALE }}" >> .env
           echo
           echo "The following settings can be exposed, and they're common to PROD and TEST"
+          echo "REACT_APP_HAZARD_COLOR_LIMIT=12" >> .env
+          echo "REACT_APP_HAZARD_COLOR_MAP=portland" >> .env
+          echo "REACT_APP_HAZARD_COLOR_UNCERTAINTY_OPACITY=0.8" >> .env
+          echo "REACT_APP_GRID_ID=NZ_0_1_NB_1_0" >> .env
+          echo "REACT_APP_MAP_IMTS=PGA,SA(0.1),SA(0.2),SA(0.5),SA(1.0),SA(1.5)" >> .env
+          echo "REACT_APP_MAP_VS30S=250,400,750" >> .env
+          echo "REACT_APP_MAP_STATISTICS=mean,0.8,0.9" >> .env
+          echo "REACT_APP_MAP_POES=0.1,0.02" >> .env
+          echo "REACT_APP_MAP_COLOR_SCALE=jet,inferno,viridis,plasma,magma,cividis" >> .env
           echo "REACT_APP_HAZARD_GMAX=5" >> .env
           echo "REACT_APP_HAZARD_GMIN=0" >> .env
           echo "REACT_APP_HAZARD_GMAX_LOG=5" >> .env
@@ -56,7 +56,7 @@ jobs:
           echo "REACT_APP_SA_PERIODMIN_LOG=0.01" >> .env
           echo "REACT_APP_SA_GMAX=auto" >> .env
           echo "REACT_APP_SA_GMIN=0" >> .env
-
+          echo "REACT_APP_SA_LOG_PGA_SUBSTITUTE=0.02" >> .env
       - name: Yarn Build & Test
         env:
           NODE_AUTH_TOKEN: ${{ secrets.TOSHI_NEST_PACKAGE_TOKEN }}
