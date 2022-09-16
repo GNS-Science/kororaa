@@ -1,5 +1,5 @@
 import React, { useReducer, useState, useMemo, useTransition } from 'react';
-import { Box, CircularProgress } from '@mui/material';
+import { Box, CircularProgress, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { graphql } from 'babel-plugin-relay/macro';
 import { useLazyLoadQuery } from 'react-relay';
@@ -12,6 +12,7 @@ import { flexParentCenter } from '../../utils/styleUtils';
 import { GRID_ID, HAZARD_MODEL } from '../../utils/environmentVariables';
 import { getTickValues, ColorScale } from './hazardMaps.service';
 import { HazardMapsPageQuery } from './__generated__/HazardMapsPageQuery.graphql';
+import { InfoTooltip } from '../../components/common/InfoTooltip';
 
 const PageContainer = styled(Box)(({ theme }) => ({
   ...flexParentCenter,
@@ -41,6 +42,8 @@ const HazardMapsPage: React.FC = () => {
     stroke_opacity: state.stroke_opacity,
   });
 
+  const markdown = useMemo(() => data?.textual_content?.content && data?.textual_content?.content[0]?.text, [data]);
+  const content_type = useMemo(() => data?.textual_content?.content && data?.textual_content?.content[0]?.content_type, [data]);
   const geoJson = useMemo<string[]>(() => {
     if (data && data.gridded_hazard && data.gridded_hazard.gridded_hazard?.length) {
       return data.gridded_hazard?.gridded_hazard.map((hazard) => hazard?.hazard_map?.geojson);
@@ -69,6 +72,10 @@ const HazardMapsPage: React.FC = () => {
     <PageContainer>
       <Box role="hazardMapsView" sx={{ ...flexParentCenter, justifyContent: 'center', height: '100%', width: '100%' }}>
         <LeafletDrawer drawerHeight={'80vh'} headerHeight={'100px'} width={'400px'} fullscreen={fullscreen}>
+          <Typography variant="h4" sx={{ textAlign: 'center' }}>
+            Hazard Maps
+            <InfoTooltip content={markdown || ''} format={content_type === 'Markdown'} />
+          </Typography>
           <HazardMapsControls isPending={isPending} startTransition={startTransition} geoJson={geoJson} state={state} dispatch={dispatch} />
         </LeafletDrawer>
         <React.Suspense fallback={<CircularProgress />}>
@@ -109,6 +116,18 @@ export const hazardMapsPageQuery = graphql`
             hexrgbs
           }
         }
+      }
+    }
+    textual_content(index: "hazmap_help.md") {
+      ok
+      content {
+        index
+        content_type
+        text
+        created
+        author
+        tags
+        status
       }
     }
   }
