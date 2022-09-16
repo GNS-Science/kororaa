@@ -1,4 +1,4 @@
-import React, { useReducer, useState, useMemo, useTransition } from 'react';
+import React, { useReducer, useState, useMemo, useTransition, useEffect } from 'react';
 import { Box, CircularProgress, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { graphql } from 'babel-plugin-relay/macro';
@@ -27,6 +27,16 @@ const HazardMapsPage: React.FC = () => {
   const [state, dispatch] = useReducer(hazardMapsReducer, initialState);
   const [fullscreen, setFullscreen] = useState<boolean>(false);
   const [isPending, startTransition] = useTransition();
+  const [scrollHeight, setScrollHeight] = useState<number>(0);
+
+  useEffect(() => {
+    function updateScrollHeight() {
+      setScrollHeight(window.scrollY);
+    }
+    window.addEventListener('scroll', updateScrollHeight);
+    updateScrollHeight();
+    return () => window.removeEventListener('scroll', updateScrollHeight);
+  }, []);
 
   const data = useLazyLoadQuery<HazardMapsPageQuery>(hazardMapsPageQuery, {
     grid_id: GRID_ID,
@@ -71,7 +81,7 @@ const HazardMapsPage: React.FC = () => {
   return (
     <PageContainer>
       <Box role="hazardMapsView" sx={{ ...flexParentCenter, justifyContent: 'center', height: '100%', width: '100%' }}>
-        <LeafletDrawer drawerHeight={'80vh'} headerHeight={'100px'} width={'400px'} fullscreen={fullscreen}>
+        <LeafletDrawer drawerHeight={'80vh'} headerHeight={`${100 - scrollHeight}px`} width={'400px'} fullscreen={fullscreen}>
           <Typography variant="h4" sx={{ textAlign: 'center' }}>
             Hazard Maps
             <InfoTooltip content={markdown || ''} format={content_type === 'Markdown'} />
