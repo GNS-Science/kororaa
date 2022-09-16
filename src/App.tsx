@@ -49,7 +49,14 @@ function App(props: { environment?: Environment }) {
                       }
                     />
                     <Route path="/Disaggs" element={<DisaggregationsPage />} />
-                    <Route path="/HazardCurves" element={<HazardChartsPage />} />
+                    <Route
+                      path="/HazardCurves"
+                      element={
+                        <React.Suspense>
+                          <HazardChartsPage />
+                        </React.Suspense>
+                      }
+                    />
                     <Route path="/Previews" element={<PreviewsPage />} />
                     <Route path="/Resources/ScienceReports" element={<ScienceReportsPage />} />
                     <Route path="/" element={<Home />} />

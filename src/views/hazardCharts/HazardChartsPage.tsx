@@ -35,20 +35,18 @@ const HazardChartsPage: React.FC = () => {
   const content_type = useMemo(() => data?.textual_content?.content && data?.textual_content?.content[0]?.content_type, [data]);
 
   return (
-    <React.Suspense fallback={<CircularProgress />}>
-      <PageContainer>
-        <TitleContainer>
-          <Typography variant="h1">
-            Hazard Curves and Spectra
-            <InfoTooltip content={markdown || ''} format={content_type === 'Markdown'} />
-          </Typography>
-        </TitleContainer>
-        <HazardChartsControls state={state} dispatch={dispatch} />
-        <React.Suspense fallback={<CircularProgress />}>
-          <HazardChartsPlotsView state={state} dispatch={dispatch} />
-        </React.Suspense>
-      </PageContainer>
-    </React.Suspense>
+    <PageContainer>
+      <TitleContainer>
+        <Typography variant="h1">
+          Hazard Curves and Spectra
+          <InfoTooltip content={markdown || ''} format={content_type === 'Markdown'} />
+        </Typography>
+      </TitleContainer>
+      <HazardChartsControls state={state} dispatch={dispatch} />
+      <React.Suspense fallback={<CircularProgress />}>
+        <HazardChartsPlotsView state={state} dispatch={dispatch} />
+      </React.Suspense>
+    </PageContainer>
   );
 };
 
