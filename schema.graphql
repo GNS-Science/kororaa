@@ -7,6 +7,18 @@ enum ColourScaleNormalise {
   LIN
 }
 
+enum ContentFormatEnum {
+  Raw
+  Markdown
+}
+
+enum ContentStatusEnum {
+  Undefined
+  Draft
+  Published
+  Deprecated
+}
+
 """
 The `DateTime` scalar type represents a DateTime
 value as specified by
@@ -116,6 +128,7 @@ type QueryRoot {
   about: String
   disaggregation_reports: DisaggregationReportResult
   science_reports: ScienceReportResult
+  textual_content(index: String, tags: [String]): TextualContentResult
   gridded_location(lat: Float, lon: Float, resolution: Float): GriddedLocationResult
   hazard_curves(hazard_model: String, imts: [String], locs: [String], aggs: [String], vs30s: [Float], resolution: Float = 0.1): ToshiHazardCurveResult
   gridded_hazard(grid_id: RegionGrid, hazard_model_ids: [String], imts: [String], locs: [String], aggs: [String], vs30s: [Float], poes: [Float]): GriddedHazardResult
@@ -157,6 +170,24 @@ type ScienceReport {
 type ScienceReportResult {
   ok: Boolean
   reports: [ScienceReport]
+}
+
+"""NSHM textual content details."""
+type TextualContent {
+  index: String
+  content_type: ContentFormatEnum
+  author: String
+  tags: [String]
+  status: ContentStatusEnum
+
+  """created date"""
+  created: DateTime
+  text: String
+}
+
+type TextualContentResult {
+  ok: Boolean
+  content: [TextualContent]
 }
 
 """Represents one set of level and values for a hazard curve."""

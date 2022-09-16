@@ -3,9 +3,11 @@ import { styled } from '@mui/material/styles';
 import { Dialog, DialogContent, IconButton } from '@mui/material';
 import InfoIcon from '@mui/icons-material/Info';
 import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
 interface InfoTooltipProps {
-  markdown: string;
+  content: string;
+  format: boolean;
 }
 
 const StyledIconButton = styled(IconButton)(() => ({
@@ -13,7 +15,7 @@ const StyledIconButton = styled(IconButton)(() => ({
   right: '3px',
 }));
 
-export const InfoTooltip: React.FC<InfoTooltipProps> = ({ markdown }) => {
+export const InfoTooltip: React.FC<InfoTooltipProps> = ({ content, format }) => {
   const [open, setOpen] = React.useState<boolean>(false);
   const iconRef = useRef<HTMLButtonElement>(null);
   const [x, setX] = useState<number | undefined>();
@@ -52,14 +54,13 @@ export const InfoTooltip: React.FC<InfoTooltipProps> = ({ markdown }) => {
             position: 'absolute',
             top: y + 'px',
             left: x + 'px',
+            maxHeight: '70vh',
           },
         }}
         open={open}
         onClose={handleClose}
       >
-        <DialogContent>
-          <ReactMarkdown>{markdown}</ReactMarkdown>
-        </DialogContent>
+        <DialogContent>{format ? <ReactMarkdown remarkPlugins={[remarkGfm]}>{content}</ReactMarkdown> : <p>{content}</p>}</DialogContent>
       </Dialog>
     </>
   );

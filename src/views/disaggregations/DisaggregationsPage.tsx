@@ -9,7 +9,7 @@ import DisaggregationsControls from './DisaggregationsControls';
 import { getReportUrl } from './disaggregationPage.service';
 import { InfoTooltip } from '../../components/common/InfoTooltip';
 
-const PageContainer = styled('div')(({ theme }) => ({
+const PageContainer = styled('div')(() => ({
   padding: '2rem',
   width: '100%',
   justifyContent: 'center',
@@ -50,13 +50,15 @@ export const DisaggregationsComponent: React.FC = () => {
   const data = useLazyLoadQuery<DisaggregationsPageQuery>(disaggregationsPageQuery, {});
   const [state, dispatch] = useReducer(disaggregationsPageReducer, disaggregationsPageReducerInitialState);
   const reportUrl = useMemo(() => getReportUrl(data, state), [data, state]);
+  const markdown = useMemo(() => data?.textual_content?.content && data?.textual_content?.content[0]?.text, [data]);
+  const content_type = useMemo(() => data?.textual_content?.content && data?.textual_content?.content[0]?.content_type, [data]);
 
   return (
     <PageContainer>
       <TitleContainer>
         <Typography variant="h1">
           Disaggregations
-          <InfoTooltip markdown={'lorem ipsum'} />
+          <InfoTooltip content={markdown || ''} format={content_type === 'Markdown'} />
         </Typography>
       </TitleContainer>
       <DisaggregationsContainer>
@@ -99,6 +101,18 @@ export const disaggregationsPageQuery = graphql`
         poe
         imt
         report_url
+      }
+    }
+    textual_content(index: "disagg_help.md") {
+      ok
+      content {
+        index
+        content_type
+        text
+        created
+        author
+        tags
+        status
       }
     }
   }
