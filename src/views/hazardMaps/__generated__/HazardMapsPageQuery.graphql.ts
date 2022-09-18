@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<de1d8c411291fcd4b938cf525116bf1a>>
+ * @generated SignedSource<<798df6795592b233b6d825dffae91e47>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,6 +9,8 @@
 // @ts-nocheck
 
 import { ConcreteRequest, Query } from 'relay-runtime';
+export type ContentFormatEnum = "Raw" | "Markdown" | "%future added value";
+export type ContentStatusEnum = "Undefined" | "Draft" | "Published" | "Deprecated" | "%future added value";
 export type RegionGrid = "NZ_0_1_NB_1_0" | "NZ_0_1_NB_1_1" | "NZ_0_2_NB_1_1" | "WLG_0_01_nb_1_1" | "WLG_0_05_nb_1_1" | "%future added value";
 export type HazardMapsPageQuery$variables = {
   grid_id?: RegionGrid | null;
@@ -38,6 +40,18 @@ export type HazardMapsPageQuery$data = {
           readonly hexrgbs: ReadonlyArray<string | null> | null;
         } | null;
       } | null;
+    } | null> | null;
+  } | null;
+  readonly textual_content: {
+    readonly ok: boolean | null;
+    readonly content: ReadonlyArray<{
+      readonly index: string | null;
+      readonly content_type: ContentFormatEnum | null;
+      readonly text: string | null;
+      readonly created: any | null;
+      readonly author: string | null;
+      readonly tags: ReadonlyArray<string | null> | null;
+      readonly status: ContentStatusEnum | null;
     } | null> | null;
   } | null;
 };
@@ -102,7 +116,14 @@ v10 = {
   "kind": "LocalArgument",
   "name": "vs30s"
 },
-v11 = [
+v11 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "ok",
+  "storageKey": null
+},
+v12 = [
   {
     "alias": null,
     "args": [
@@ -142,13 +163,7 @@ v11 = [
     "name": "gridded_hazard",
     "plural": false,
     "selections": [
-      {
-        "alias": null,
-        "args": null,
-        "kind": "ScalarField",
-        "name": "ok",
-        "storageKey": null
-      },
+      (v11/*: any*/),
       {
         "alias": null,
         "args": null,
@@ -259,6 +274,84 @@ v11 = [
       }
     ],
     "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": [
+      {
+        "kind": "Literal",
+        "name": "index",
+        "value": "hazmap_help.md"
+      }
+    ],
+    "concreteType": "TextualContentResult",
+    "kind": "LinkedField",
+    "name": "textual_content",
+    "plural": false,
+    "selections": [
+      (v11/*: any*/),
+      {
+        "alias": null,
+        "args": null,
+        "concreteType": "TextualContent",
+        "kind": "LinkedField",
+        "name": "content",
+        "plural": true,
+        "selections": [
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "index",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "content_type",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "text",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "created",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "author",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "tags",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "status",
+            "storageKey": null
+          }
+        ],
+        "storageKey": null
+      }
+    ],
+    "storageKey": "textual_content(index:\"hazmap_help.md\")"
   }
 ];
 return {
@@ -279,7 +372,7 @@ return {
     "kind": "Fragment",
     "metadata": null,
     "name": "HazardMapsPageQuery",
-    "selections": (v11/*: any*/),
+    "selections": (v12/*: any*/),
     "type": "QueryRoot",
     "abstractKey": null
   },
@@ -300,19 +393,19 @@ return {
     ],
     "kind": "Operation",
     "name": "HazardMapsPageQuery",
-    "selections": (v11/*: any*/)
+    "selections": (v12/*: any*/)
   },
   "params": {
-    "cacheID": "95dbd6f914410a60de4757f3b9dbaee3",
+    "cacheID": "efd6fb53026d17f1294319c0c32d4081",
     "id": null,
     "metadata": {},
     "name": "HazardMapsPageQuery",
     "operationKind": "query",
-    "text": "query HazardMapsPageQuery(\n  $grid_id: RegionGrid\n  $hazard_model_ids: [String]\n  $imts: [String]\n  $aggs: [String]\n  $vs30s: [Float]\n  $poes: [Float]\n  $color_scale: String\n  $color_scale_vmax: Float\n  $fill_opacity: Float\n  $stroke_width: Float\n  $stroke_opacity: Float\n) {\n  gridded_hazard(grid_id: $grid_id, hazard_model_ids: $hazard_model_ids, imts: $imts, aggs: $aggs, vs30s: $vs30s, poes: $poes) {\n    ok\n    gridded_hazard {\n      grid_id\n      hazard_model\n      imt\n      agg\n      hazard_map(color_scale: $color_scale, color_scale_vmax: $color_scale_vmax, fill_opacity: $fill_opacity, stroke_width: $stroke_width, stroke_opacity: $stroke_opacity) {\n        geojson\n        colour_scale {\n          levels\n          hexrgbs\n        }\n      }\n    }\n  }\n}\n"
+    "text": "query HazardMapsPageQuery(\n  $grid_id: RegionGrid\n  $hazard_model_ids: [String]\n  $imts: [String]\n  $aggs: [String]\n  $vs30s: [Float]\n  $poes: [Float]\n  $color_scale: String\n  $color_scale_vmax: Float\n  $fill_opacity: Float\n  $stroke_width: Float\n  $stroke_opacity: Float\n) {\n  gridded_hazard(grid_id: $grid_id, hazard_model_ids: $hazard_model_ids, imts: $imts, aggs: $aggs, vs30s: $vs30s, poes: $poes) {\n    ok\n    gridded_hazard {\n      grid_id\n      hazard_model\n      imt\n      agg\n      hazard_map(color_scale: $color_scale, color_scale_vmax: $color_scale_vmax, fill_opacity: $fill_opacity, stroke_width: $stroke_width, stroke_opacity: $stroke_opacity) {\n        geojson\n        colour_scale {\n          levels\n          hexrgbs\n        }\n      }\n    }\n  }\n  textual_content(index: \"hazmap_help.md\") {\n    ok\n    content {\n      index\n      content_type\n      text\n      created\n      author\n      tags\n      status\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "bd8b54adc01ed62b1385433f908e7d4e";
+(node as any).hash = "332207fb4136ffd59259767d4c8c1a96";
 
 export default node;
