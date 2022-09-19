@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<798df6795592b233b6d825dffae91e47>>
+ * @generated SignedSource<<7986c6da5db2b66853d3516438166b12>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,6 +9,7 @@
 // @ts-nocheck
 
 import { ConcreteRequest, Query } from 'relay-runtime';
+export type ColourScaleNormalise = "LOG" | "LIN" | "%future added value";
 export type ContentFormatEnum = "Raw" | "Markdown" | "%future added value";
 export type ContentStatusEnum = "Undefined" | "Draft" | "Published" | "Deprecated" | "%future added value";
 export type RegionGrid = "NZ_0_1_NB_1_0" | "NZ_0_1_NB_1_1" | "NZ_0_2_NB_1_1" | "WLG_0_01_nb_1_1" | "WLG_0_05_nb_1_1" | "%future added value";
@@ -24,6 +25,7 @@ export type HazardMapsPageQuery$variables = {
   fill_opacity?: number | null;
   stroke_width?: number | null;
   stroke_opacity?: number | null;
+  color_scale_normalise?: ColourScaleNormalise | null;
 };
 export type HazardMapsPageQuery$data = {
   readonly gridded_hazard: {
@@ -74,56 +76,61 @@ v1 = {
 v2 = {
   "defaultValue": null,
   "kind": "LocalArgument",
-  "name": "color_scale_vmax"
+  "name": "color_scale_normalise"
 },
 v3 = {
   "defaultValue": null,
   "kind": "LocalArgument",
-  "name": "fill_opacity"
+  "name": "color_scale_vmax"
 },
 v4 = {
   "defaultValue": null,
   "kind": "LocalArgument",
-  "name": "grid_id"
+  "name": "fill_opacity"
 },
 v5 = {
   "defaultValue": null,
   "kind": "LocalArgument",
-  "name": "hazard_model_ids"
+  "name": "grid_id"
 },
 v6 = {
   "defaultValue": null,
   "kind": "LocalArgument",
-  "name": "imts"
+  "name": "hazard_model_ids"
 },
 v7 = {
   "defaultValue": null,
   "kind": "LocalArgument",
-  "name": "poes"
+  "name": "imts"
 },
 v8 = {
   "defaultValue": null,
   "kind": "LocalArgument",
-  "name": "stroke_opacity"
+  "name": "poes"
 },
 v9 = {
   "defaultValue": null,
   "kind": "LocalArgument",
-  "name": "stroke_width"
+  "name": "stroke_opacity"
 },
 v10 = {
   "defaultValue": null,
   "kind": "LocalArgument",
-  "name": "vs30s"
+  "name": "stroke_width"
 },
 v11 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
+  "name": "vs30s"
+},
+v12 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "ok",
   "storageKey": null
 },
-v12 = [
+v13 = [
   {
     "alias": null,
     "args": [
@@ -163,7 +170,7 @@ v12 = [
     "name": "gridded_hazard",
     "plural": false,
     "selections": [
-      (v11/*: any*/),
+      (v12/*: any*/),
       {
         "alias": null,
         "args": null,
@@ -207,6 +214,11 @@ v12 = [
                 "kind": "Variable",
                 "name": "color_scale",
                 "variableName": "color_scale"
+              },
+              {
+                "kind": "Variable",
+                "name": "color_scale_normalise",
+                "variableName": "color_scale_normalise"
               },
               {
                 "kind": "Variable",
@@ -289,7 +301,7 @@ v12 = [
     "name": "textual_content",
     "plural": false,
     "selections": [
-      (v11/*: any*/),
+      (v12/*: any*/),
       {
         "alias": null,
         "args": null,
@@ -367,45 +379,47 @@ return {
       (v7/*: any*/),
       (v8/*: any*/),
       (v9/*: any*/),
-      (v10/*: any*/)
+      (v10/*: any*/),
+      (v11/*: any*/)
     ],
     "kind": "Fragment",
     "metadata": null,
     "name": "HazardMapsPageQuery",
-    "selections": (v12/*: any*/),
+    "selections": (v13/*: any*/),
     "type": "QueryRoot",
     "abstractKey": null
   },
   "kind": "Request",
   "operation": {
     "argumentDefinitions": [
-      (v4/*: any*/),
       (v5/*: any*/),
       (v6/*: any*/),
-      (v0/*: any*/),
-      (v10/*: any*/),
       (v7/*: any*/),
+      (v0/*: any*/),
+      (v11/*: any*/),
+      (v8/*: any*/),
       (v1/*: any*/),
-      (v2/*: any*/),
       (v3/*: any*/),
+      (v4/*: any*/),
+      (v10/*: any*/),
       (v9/*: any*/),
-      (v8/*: any*/)
+      (v2/*: any*/)
     ],
     "kind": "Operation",
     "name": "HazardMapsPageQuery",
-    "selections": (v12/*: any*/)
+    "selections": (v13/*: any*/)
   },
   "params": {
-    "cacheID": "efd6fb53026d17f1294319c0c32d4081",
+    "cacheID": "cab22314ac3f32dfcbc557c02cc0bd22",
     "id": null,
     "metadata": {},
     "name": "HazardMapsPageQuery",
     "operationKind": "query",
-    "text": "query HazardMapsPageQuery(\n  $grid_id: RegionGrid\n  $hazard_model_ids: [String]\n  $imts: [String]\n  $aggs: [String]\n  $vs30s: [Float]\n  $poes: [Float]\n  $color_scale: String\n  $color_scale_vmax: Float\n  $fill_opacity: Float\n  $stroke_width: Float\n  $stroke_opacity: Float\n) {\n  gridded_hazard(grid_id: $grid_id, hazard_model_ids: $hazard_model_ids, imts: $imts, aggs: $aggs, vs30s: $vs30s, poes: $poes) {\n    ok\n    gridded_hazard {\n      grid_id\n      hazard_model\n      imt\n      agg\n      hazard_map(color_scale: $color_scale, color_scale_vmax: $color_scale_vmax, fill_opacity: $fill_opacity, stroke_width: $stroke_width, stroke_opacity: $stroke_opacity) {\n        geojson\n        colour_scale {\n          levels\n          hexrgbs\n        }\n      }\n    }\n  }\n  textual_content(index: \"hazmap_help.md\") {\n    ok\n    content {\n      index\n      content_type\n      text\n      created\n      author\n      tags\n      status\n    }\n  }\n}\n"
+    "text": "query HazardMapsPageQuery(\n  $grid_id: RegionGrid\n  $hazard_model_ids: [String]\n  $imts: [String]\n  $aggs: [String]\n  $vs30s: [Float]\n  $poes: [Float]\n  $color_scale: String\n  $color_scale_vmax: Float\n  $fill_opacity: Float\n  $stroke_width: Float\n  $stroke_opacity: Float\n  $color_scale_normalise: ColourScaleNormalise\n) {\n  gridded_hazard(grid_id: $grid_id, hazard_model_ids: $hazard_model_ids, imts: $imts, aggs: $aggs, vs30s: $vs30s, poes: $poes) {\n    ok\n    gridded_hazard {\n      grid_id\n      hazard_model\n      imt\n      agg\n      hazard_map(color_scale: $color_scale, color_scale_vmax: $color_scale_vmax, fill_opacity: $fill_opacity, stroke_width: $stroke_width, stroke_opacity: $stroke_opacity, color_scale_normalise: $color_scale_normalise) {\n        geojson\n        colour_scale {\n          levels\n          hexrgbs\n        }\n      }\n    }\n  }\n  textual_content(index: \"hazmap_help.md\") {\n    ok\n    content {\n      index\n      content_type\n      text\n      created\n      author\n      tags\n      status\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "332207fb4136ffd59259767d4c8c1a96";
+(node as any).hash = "a69cb4807d959b5241d6f0e2e374c722";
 
 export default node;

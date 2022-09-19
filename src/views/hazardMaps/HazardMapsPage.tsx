@@ -11,7 +11,7 @@ import HazardMapsControls from './HazardMapsControls';
 import { flexParentCenter } from '../../utils/styleUtils';
 import { GRID_ID, HAZARD_MODEL } from '../../utils/environmentVariables';
 import { getTickValues, ColorScale } from './hazardMaps.service';
-import { HazardMapsPageQuery } from './__generated__/HazardMapsPageQuery.graphql';
+import { ColourScaleNormalise, HazardMapsPageQuery } from './__generated__/HazardMapsPageQuery.graphql';
 import { InfoTooltip } from '../../components/common/InfoTooltip';
 
 const PageContainer = styled(Box)(({ theme }) => ({
@@ -38,6 +38,14 @@ const HazardMapsPage: React.FC = () => {
     return () => window.removeEventListener('scroll', updateScrollHeight);
   }, []);
 
+  const colorScaleNormalise = useMemo<ColourScaleNormalise>(() => {
+    if (state.statistic[0] === 'cov') {
+      return 'LIN';
+    } else {
+      return 'LOG';
+    }
+  }, [state.statistic]);
+
   const data = useLazyLoadQuery<HazardMapsPageQuery>(hazardMapsPageQuery, {
     grid_id: GRID_ID,
     hazard_model_ids: [HAZARD_MODEL],
@@ -50,6 +58,7 @@ const HazardMapsPage: React.FC = () => {
     fill_opacity: state.fill_opacity,
     stroke_width: state.stroke_width,
     stroke_opacity: state.stroke_opacity,
+    color_scale_normalise: colorScaleNormalise,
   });
 
   const markdown = useMemo(() => data?.textual_content?.content && data?.textual_content?.content[0]?.text, [data]);
@@ -111,6 +120,7 @@ export const hazardMapsPageQuery = graphql`
     $fill_opacity: Float
     $stroke_width: Float
     $stroke_opacity: Float
+    $color_scale_normalise: ColourScaleNormalise
   ) {
     gridded_hazard(grid_id: $grid_id, hazard_model_ids: $hazard_model_ids, imts: $imts, aggs: $aggs, vs30s: $vs30s, poes: $poes) {
       ok
@@ -119,7 +129,14 @@ export const hazardMapsPageQuery = graphql`
         hazard_model
         imt
         agg
-        hazard_map(color_scale: $color_scale, color_scale_vmax: $color_scale_vmax, fill_opacity: $fill_opacity, stroke_width: $stroke_width, stroke_opacity: $stroke_opacity) {
+        hazard_map(
+          color_scale: $color_scale
+          color_scale_vmax: $color_scale_vmax
+          fill_opacity: $fill_opacity
+          stroke_width: $stroke_width
+          stroke_opacity: $stroke_opacity
+          color_scale_normalise: $color_scale_normalise
+        ) {
           geojson
           colour_scale {
             levels
