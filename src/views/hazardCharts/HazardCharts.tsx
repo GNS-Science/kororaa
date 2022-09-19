@@ -37,6 +37,16 @@ const HazardCharts: React.FC<HazardChartsProps> = ({ data, state, dispatch }: Ha
   const saCurvesUncertainty = useMemo(() => getSpectralAccelUncertaintyCurves(state.vs30s, locationList, data, state.poe, state.spectraXScale), [locationList, state, data]);
   const saCurvesWithColors = useMemo(() => addColorsToCurves(saCurvesUncertainty), [saCurvesUncertainty]);
 
+  const spectralYLimits = useMemo(() => {
+    if (SA_GMAX === 'auto') {
+      const yScale = getYScale(saCurvesWithColors, SA_GMIN);
+      if (isNaN(yScale[1])) return [SA_GMIN, 0.1];
+      return yScale;
+    } else {
+      return [SA_GMIN, SA_GMAX];
+    }
+  }, [saCurvesWithColors]);
+
   const HazardChartsContainer = styled(Box)(({ theme }) => ({
     display: 'flex',
     padding: 20,
@@ -90,11 +100,11 @@ const HazardCharts: React.FC<HazardChartsProps> = ({ data, state, dispatch }: Ha
                 xLabel="Period (s)"
                 yLabel="Shaking Intensity (g)"
                 xLimits={state.spectraXScale === 'linear' ? [SA_PERIODMIN, SA_PERIODMAX] : [SA_PERIODMIN_LOG, SA_PERIODMAX_LOG]}
-                yLimits={SA_GMAX === 'auto' ? getYScale(saCurvesWithColors, SA_GMIN) : [SA_GMIN, SA_GMAX]}
+                yLimits={spectralYLimits}
                 tooltip={true}
                 crosshair={true}
-                heading="Universal Hazard Spectra"
-                subHeading={`${state.poe * 100}% in 50 years`}
+                heading="Uniform Hazard Spectrum"
+                subHeading={`${(state.poe * 100).toFixed(1)}% in 50 years`}
                 curves={saCurvesWithColors}
                 poe={state.poe}
                 uncertainty={state.spectralUncertainty}
