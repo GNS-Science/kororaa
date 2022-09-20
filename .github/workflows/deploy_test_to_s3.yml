@@ -44,7 +44,6 @@ jobs:
           echo "REACT_APP_HAZARD_COLOR_LIMIT=12" >> .env
           echo "REACT_APP_HAZARD_COLOR_MAP=portland" >> .env
           echo "REACT_APP_HAZARD_COLOR_UNCERTAINTY_OPACITY=0.8" >> .env
-          echo "REACT_APP_GRID_ID=NZ_0_1_NB_1_0" >> .env
           echo "REACT_APP_MAP_IMTS=PGA,SA(0.1),SA(0.2),SA(0.5),SA(1.0),SA(1.5)" >> .env
           echo "REACT_APP_MAP_VS30S=250,400,750" >> .env
           echo "REACT_APP_MAP_STATISTICS=mean,0.8,0.9" >> .env
@@ -71,6 +70,7 @@ jobs:
           echo "REACT_APP_GRAPHQL_API_KEY=${{secrets.REACT_APP_GRAPHQL_API_KEY}}" >> .env
           echo "REACT_APP_RESOLUTION=${{secrets.REACT_APP_RESOLUTION}}" >> .env
           echo "REACT_APP_HAZARD_MODEL=${{secrets.REACT_APP_HAZARD_MODEL}}" >> .env
+          echo "REACT_APP_GRID_ID=${{secrets.REACT_APP_GRID_ID}}" >> .env
           echo
           yarn build
     
