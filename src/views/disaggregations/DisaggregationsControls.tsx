@@ -1,12 +1,12 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { SelectControl } from '@gns-science/toshi-nest';
-import { Tooltip } from '@mui/material';
 
 import { DisaggregationsPageQuery$data } from './__generated__/DisaggregationsPageQuery.graphql';
 import { DisaggregationsPageState } from './DisaggregationsPageReducer';
 import { getVs30Options, getImtOptions, getLocationOptions, getPoeOptions } from './disaggregationPage.service';
 import { readablePoe, readablePoeArray, parsePoeString } from '../hazardMaps/hazardMaps.service';
 import CustomControlsBar from '../../components/common/CustomControlsBar';
+import { locationTooltip, vs30Tooltip, imtTooltip, poeTooltip } from './constants/disaggregations';
 
 export interface DisaggregationsControlsProps {
   data: DisaggregationsPageQuery$data;
@@ -30,12 +30,16 @@ export const DisaggregationsControls: React.FC<DisaggregationsControlsProps> = (
 
   return (
     <CustomControlsBar direction="column">
-      <Tooltip title="Select the Vs30 value for the disaggregation">
-        <SelectControl name="Location" options={locationOptions} selection={location} setSelection={setLocation} />
-      </Tooltip>
-      <SelectControl name="Vs30" options={vs30Options} selection={vs30} setSelection={setVs30} />
-      <SelectControl name="Spectral Period" options={imtOptions} selection={imt} setSelection={setImt} />
-      <SelectControl name="PoE" options={readablePoeArray(poeOptions as number[])} selection={readablePoe(poe)} setSelection={(newValue: string) => setPoe(parsePoeString(newValue))} />
+      <SelectControl name="Location" options={locationOptions} selection={location} setSelection={setLocation} tooltip={locationTooltip} />
+      <SelectControl name="Vs30" options={vs30Options} selection={vs30} setSelection={setVs30} tooltip={vs30Tooltip} />
+      <SelectControl name="Spectral Period" options={imtOptions} selection={imt} setSelection={setImt} tooltip={imtTooltip} />
+      <SelectControl
+        name="PoE"
+        options={readablePoeArray(poeOptions as number[])}
+        selection={readablePoe(poe)}
+        setSelection={(newValue: string) => setPoe(parsePoeString(newValue))}
+        tooltip={poeTooltip}
+      />
     </CustomControlsBar>
   );
 };
