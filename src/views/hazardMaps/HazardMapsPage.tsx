@@ -48,11 +48,11 @@ const HazardMapsPage: React.FC = () => {
 
   const data = useLazyLoadQuery<HazardMapsPageQuery>(hazardMapsPageQuery, {
     grid_id: GRID_ID,
-    hazard_model_ids: [HAZARD_MODEL],
-    imts: state.spectralPeriod,
-    aggs: state.statistic,
-    vs30s: state.vs30,
-    poes: [state.poe[0]],
+    hazard_model_id: HAZARD_MODEL,
+    imt: state.spectralPeriod,
+    agg: state.statistic,
+    vs30: state.vs30,
+    poe: state.poe,
     color_scale: state.color_scale,
     color_scale_vmax: state.color_scale_vmax,
     fill_opacity: state.fill_opacity,
@@ -110,11 +110,11 @@ export default HazardMapsPage;
 export const hazardMapsPageQuery = graphql`
   query HazardMapsPageQuery(
     $grid_id: RegionGrid
-    $hazard_model_ids: [String]
-    $imts: [String]
-    $aggs: [String]
-    $vs30s: [Float]
-    $poes: [Float]
+    $hazard_model_id: String
+    $imt: String
+    $agg: String
+    $vs30: Int
+    $poe: Float
     $color_scale: String
     $color_scale_vmax: Float
     $fill_opacity: Float
@@ -122,7 +122,7 @@ export const hazardMapsPageQuery = graphql`
     $stroke_opacity: Float
     $color_scale_normalise: ColourScaleNormalise
   ) {
-    gridded_hazard(grid_id: $grid_id, hazard_model_ids: $hazard_model_ids, imts: $imts, aggs: $aggs, vs30s: $vs30s, poes: $poes) {
+    gridded_hazard(grid_id: $grid_id, hazard_model_id: $hazard_model_id, imt: $imt, agg: $agg, vs30: $vs30, poe: $poe) {
       ok
       gridded_hazard {
         grid_id

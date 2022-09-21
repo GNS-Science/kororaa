@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7986c6da5db2b66853d3516438166b12>>
+ * @generated SignedSource<<d91b895bc300712a3719859dbeb4e13b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,11 +15,11 @@ export type ContentStatusEnum = "Undefined" | "Draft" | "Published" | "Deprecate
 export type RegionGrid = "NZ_0_1_NB_1_0" | "NZ_0_1_NB_1_1" | "NZ_0_2_NB_1_1" | "WLG_0_01_nb_1_1" | "WLG_0_05_nb_1_1" | "%future added value";
 export type HazardMapsPageQuery$variables = {
   grid_id?: RegionGrid | null;
-  hazard_model_ids?: ReadonlyArray<string | null> | null;
-  imts?: ReadonlyArray<string | null> | null;
-  aggs?: ReadonlyArray<string | null> | null;
-  vs30s?: ReadonlyArray<number | null> | null;
-  poes?: ReadonlyArray<number | null> | null;
+  hazard_model_id?: string | null;
+  imt?: string | null;
+  agg?: string | null;
+  vs30?: number | null;
+  poe?: number | null;
   color_scale?: string | null;
   color_scale_vmax?: number | null;
   fill_opacity?: number | null;
@@ -66,7 +66,7 @@ const node: ConcreteRequest = (function(){
 var v0 = {
   "defaultValue": null,
   "kind": "LocalArgument",
-  "name": "aggs"
+  "name": "agg"
 },
 v1 = {
   "defaultValue": null,
@@ -96,17 +96,17 @@ v5 = {
 v6 = {
   "defaultValue": null,
   "kind": "LocalArgument",
-  "name": "hazard_model_ids"
+  "name": "hazard_model_id"
 },
 v7 = {
   "defaultValue": null,
   "kind": "LocalArgument",
-  "name": "imts"
+  "name": "imt"
 },
 v8 = {
   "defaultValue": null,
   "kind": "LocalArgument",
-  "name": "poes"
+  "name": "poe"
 },
 v9 = {
   "defaultValue": null,
@@ -121,7 +121,7 @@ v10 = {
 v11 = {
   "defaultValue": null,
   "kind": "LocalArgument",
-  "name": "vs30s"
+  "name": "vs30"
 },
 v12 = {
   "alias": null,
@@ -136,8 +136,8 @@ v13 = [
     "args": [
       {
         "kind": "Variable",
-        "name": "aggs",
-        "variableName": "aggs"
+        "name": "agg",
+        "variableName": "agg"
       },
       {
         "kind": "Variable",
@@ -146,23 +146,23 @@ v13 = [
       },
       {
         "kind": "Variable",
-        "name": "hazard_model_ids",
-        "variableName": "hazard_model_ids"
+        "name": "hazard_model_id",
+        "variableName": "hazard_model_id"
       },
       {
         "kind": "Variable",
-        "name": "imts",
-        "variableName": "imts"
+        "name": "imt",
+        "variableName": "imt"
       },
       {
         "kind": "Variable",
-        "name": "poes",
-        "variableName": "poes"
+        "name": "poe",
+        "variableName": "poe"
       },
       {
         "kind": "Variable",
-        "name": "vs30s",
-        "variableName": "vs30s"
+        "name": "vs30",
+        "variableName": "vs30"
       }
     ],
     "concreteType": "GriddedHazardResult",
@@ -410,16 +410,16 @@ return {
     "selections": (v13/*: any*/)
   },
   "params": {
-    "cacheID": "cab22314ac3f32dfcbc557c02cc0bd22",
+    "cacheID": "d10de7adf7da2ffc99eefd9c9e50f1a7",
     "id": null,
     "metadata": {},
     "name": "HazardMapsPageQuery",
     "operationKind": "query",
-    "text": "query HazardMapsPageQuery(\n  $grid_id: RegionGrid\n  $hazard_model_ids: [String]\n  $imts: [String]\n  $aggs: [String]\n  $vs30s: [Float]\n  $poes: [Float]\n  $color_scale: String\n  $color_scale_vmax: Float\n  $fill_opacity: Float\n  $stroke_width: Float\n  $stroke_opacity: Float\n  $color_scale_normalise: ColourScaleNormalise\n) {\n  gridded_hazard(grid_id: $grid_id, hazard_model_ids: $hazard_model_ids, imts: $imts, aggs: $aggs, vs30s: $vs30s, poes: $poes) {\n    ok\n    gridded_hazard {\n      grid_id\n      hazard_model\n      imt\n      agg\n      hazard_map(color_scale: $color_scale, color_scale_vmax: $color_scale_vmax, fill_opacity: $fill_opacity, stroke_width: $stroke_width, stroke_opacity: $stroke_opacity, color_scale_normalise: $color_scale_normalise) {\n        geojson\n        colour_scale {\n          levels\n          hexrgbs\n        }\n      }\n    }\n  }\n  textual_content(index: \"hazmap_help.md\") {\n    ok\n    content {\n      index\n      content_type\n      text\n      created\n      author\n      tags\n      status\n    }\n  }\n}\n"
+    "text": "query HazardMapsPageQuery(\n  $grid_id: RegionGrid\n  $hazard_model_id: String\n  $imt: String\n  $agg: String\n  $vs30: Int\n  $poe: Float\n  $color_scale: String\n  $color_scale_vmax: Float\n  $fill_opacity: Float\n  $stroke_width: Float\n  $stroke_opacity: Float\n  $color_scale_normalise: ColourScaleNormalise\n) {\n  gridded_hazard(grid_id: $grid_id, hazard_model_id: $hazard_model_id, imt: $imt, agg: $agg, vs30: $vs30, poe: $poe) {\n    ok\n    gridded_hazard {\n      grid_id\n      hazard_model\n      imt\n      agg\n      hazard_map(color_scale: $color_scale, color_scale_vmax: $color_scale_vmax, fill_opacity: $fill_opacity, stroke_width: $stroke_width, stroke_opacity: $stroke_opacity, color_scale_normalise: $color_scale_normalise) {\n        geojson\n        colour_scale {\n          levels\n          hexrgbs\n        }\n      }\n    }\n  }\n  textual_content(index: \"hazmap_help.md\") {\n    ok\n    content {\n      index\n      content_type\n      text\n      created\n      author\n      tags\n      status\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "a69cb4807d959b5241d6f0e2e374c722";
+(node as any).hash = "e969fc424a4bcf769e33295e472e04ff";
 
 export default node;
