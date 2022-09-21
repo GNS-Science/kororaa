@@ -198,9 +198,6 @@ export const getYScale = (data: HazardUncertaintyChartData, min: number): number
       largestY.push(Math.max(...yArray));
     });
   });
-
   const yMax = 1.2 * Math.max(...largestY);
-  const yMaxRounded = Math.round(yMax * 2) / 2;
-
-  return [min, yMaxRounded];
+  return [min, yMax];
 };

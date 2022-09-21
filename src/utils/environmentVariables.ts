@@ -25,6 +25,6 @@ export const SA_PERIODMIN: number = Number(process.env.REACT_APP_SA_PERIODMIN) |
 export const SA_PERIODMAX_LOG: number = Number(process.env.REACT_APP_SA_PERIODMAX_LOG) || 6;
 export const SA_PERIODMIN_LOG: number = Number(process.env.REACT_APP_SA_PERIODMIN_LOG) || 0.001;
 export const SA_GMAX: number | string = process.env.REACT_APP_SA_GMAX === 'auto' ? 'auto' : Number(process.env.REACT_APP_SA_GMAX);
-export const SA_GMIN: number = Number(process.env.REACT_APP_SA_GMIN) || 0.1;
+export const SA_GMIN: number = Number(process.env.REACT_APP_SA_GMIN) || 0;
 
 export const SA_LOG_PGA_SUBSTITUTE: number = Number(process.env.REACT_APP_SA_LOG_PGA_SUBSTITUTE) || 0.001;
