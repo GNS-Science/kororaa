@@ -143,7 +143,7 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, disp
           options={numbersToStrings(hazardPageOptions.vs30s)}
           selection={numbersToStrings(vs30s)}
           setSelection={(newValue: string[]) => setVs30s(stringsToNumbers(newValue))}
-          name="Vs30"
+          name="Vs30 (m/s)"
           tooltip={vs30Tooltip}
         />
         <SelectControlMultiple tooltip={imtTooltip} options={hazardPageOptions.imts} selection={imts} setSelection={setImts} name="Spectral Period" />
