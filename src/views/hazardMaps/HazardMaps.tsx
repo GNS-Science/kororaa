@@ -22,7 +22,7 @@ const HazardMaps: React.FC<HazardMapsProps> = ({ state, geoJson, fullscreen, set
       <LeafletMap geoJsonData={geoJson} zoom={zoom} nzCentre={nzCentre} height={'80vh'} width={'100%'} setFullscreen={setFullscreen} />
       {colorScale && (
         <ColorBar
-          heading={`Vs30=${state.vs30[0]}m/s, ${state.spectralPeriod[0]} ${state.poe[0] * 100}% in 50 years`}
+          heading={`Vs30=${state.vs30}m/s, ${state.spectralPeriod} ${state.poe * 100}% in 50 years`}
           width={276}
           height={35}
           colors={colorScale?.hexrgbs}

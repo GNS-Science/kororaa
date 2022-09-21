@@ -25,10 +25,10 @@ interface HazardMapsControlsProps {
 }
 
 const HazardMapsControls: React.FC<HazardMapsControlsProps> = ({ startTransition, isPending, geoJson, state, dispatch }: HazardMapsControlsProps) => {
-  const [spectralPeriod, setSpectralPeriod] = useState<string>(state.spectralPeriod[0]);
-  const [statistic, setStatistic] = useState<string>(state.statistic[0]);
-  const [vs30, setVs30] = useState<number>(state.vs30[0]);
-  const [poe, setPoe] = useState<number>(state.poe[0]);
+  const [spectralPeriod, setSpectralPeriod] = useState<string>(state.spectralPeriod);
+  const [statistic, setStatistic] = useState<string>(state.statistic);
+  const [vs30, setVs30] = useState<number>(state.vs30);
+  const [poe, setPoe] = useState<number>(state.poe);
   const [colorScale, setColorScale] = useState<string>('inferno');
   const [vmax, setVMax] = useState<number>(state.color_scale_vmax);
   const [fillOpacity, setFillOpacity] = useState<string>('0.5');
@@ -38,10 +38,10 @@ const HazardMapsControls: React.FC<HazardMapsControlsProps> = ({ startTransition
   const handleSubmit = () => {
     startTransition(() => {
       dispatch({
-        spectralPeriod: [spectralPeriod],
-        statistic: [statistic],
-        vs30: [vs30],
-        poe: [poe],
+        spectralPeriod: spectralPeriod,
+        statistic: statistic,
+        vs30: vs30,
+        poe: poe,
         color_scale: colorScale,
         color_scale_vmax: Number(vmax),
         fill_opacity: Number(fillOpacity),
@@ -80,7 +80,7 @@ const HazardMapsControls: React.FC<HazardMapsControlsProps> = ({ startTransition
           Submit
         </StyledButton>
         <div>
-          <StyledCSVLink data={getHazardMapCSVData(geoJson, state.vs30[0], state.spectralPeriod[0], readablePoe(state.poe[0]))} filename="hazard-maps.csv">
+          <StyledCSVLink data={getHazardMapCSVData(geoJson, state.vs30, state.spectralPeriod, readablePoe(state.poe))} filename="hazard-maps.csv">
             <StyledButton variant="contained" type="submit" color="primary">
               Download CSV
             </StyledButton>
