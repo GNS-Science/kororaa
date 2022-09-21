@@ -9,7 +9,8 @@ import { getPoeInputDisplay, numbersToStrings, stringsToNumbers, validateCurveGr
 import { HazardPageState, LocationData } from './hazardPageReducer';
 import SelectControlMultiple from '../../components/common/SelectControlMultiple';
 import { getLatLonString, combineLocationData, getNamesFromLocationData, validateLatLon } from '../../services/latLon/latLon.service';
-import { locationTooltip, tooManyCurves, latLonTooltip, imtTooltip, poeTooltip, vs30Tooltip } from './constants/hazardCharts';
+import { locationTooltip, tooManyCurves, latLonTooltip } from './constants/hazardCharts';
+import { imtTooltip, poeTooltip, vs30Tooltip } from '../../constants/tooltips';
 
 interface HazardChartsControlsProps {
   state: HazardPageState;
@@ -102,41 +103,45 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, disp
         </Alert>
       </Collapse>
       <CustomControlsBar direction="row">
-        <Tooltip title={locationTooltip} arrow>
-          <Autocomplete
-            disableCloseOnSelect
-            multiple
-            value={locations}
-            onChange={handleLocationChange}
-            inputValue={inputValue}
-            onInputChange={(event, newInputValue) => {
-              setInputValue(newInputValue);
-            }}
-            options={hazardPageOptions.locations}
-            style={{ width: 230, marginLeft: 16 }}
-            renderInput={(params) => <TextField {...params} label="Locations" variant="standard" />}
-            limitTags={1}
-          />
-        </Tooltip>
+        <Autocomplete
+          disableCloseOnSelect
+          multiple
+          value={locations}
+          onChange={handleLocationChange}
+          inputValue={inputValue}
+          onInputChange={(event, newInputValue) => {
+            setInputValue(newInputValue);
+          }}
+          options={hazardPageOptions.locations}
+          style={{ width: 230, marginLeft: 16 }}
+          renderInput={(params) => (
+            <Tooltip title={locationTooltip} arrow>
+              <TextField {...params} label="Locations" variant="standard" />
+            </Tooltip>
+          )}
+          limitTags={1}
+        />
         <FormControl sx={{ width: 200 }} variant="standard">
-          <InputLabel htmlFor="component-helper">Lat,Lon</InputLabel>
           <Tooltip title={latLonTooltip} arrow>
-            <Input
-              id="component-helper"
-              name="lon"
-              value={latLon}
-              onChange={handleLatLonChange}
-              onBlurCapture={handleLatLonBlur}
-              aria-describedby="component-helper-text"
-              endAdornment={
-                <InputAdornment position="end" onClick={() => setLatLon('')}>
-                  <IconButton>
-                    <ClearIcon />
-                  </IconButton>
-                </InputAdornment>
-              }
-            />
+            <InputLabel shrink={true} htmlFor="component-helper">
+              Coordinates (lat, lon)
+            </InputLabel>
           </Tooltip>
+          <Input
+            id="lat-lon-input"
+            name="lon"
+            value={latLon}
+            onChange={handleLatLonChange}
+            onBlurCapture={handleLatLonBlur}
+            aria-describedby="component-helper-text"
+            endAdornment={
+              <InputAdornment position="end" onClick={() => setLatLon('')}>
+                <IconButton>
+                  <ClearIcon />
+                </IconButton>
+              </InputAdornment>
+            }
+          />
           {latLonError && <FormHelperText id="component-helper-text">{latLonErrorMessage}</FormHelperText>}
         </FormControl>
         <SelectControlMultiple
@@ -148,20 +153,20 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, disp
         />
         <SelectControlMultiple tooltip={imtTooltip} options={hazardPageOptions.imts} selection={imts} setSelection={setImts} name="Spectral Period" />
         <FormControl sx={{ width: 200 }} variant="standard">
-          <InputLabel htmlFor="component-helper">Probabilty of Exceedance (50 Yrs)</InputLabel>
           <Tooltip title={poeTooltip} arrow>
-            <Input
-              error={poeInputError}
-              id="poe-input"
-              name="poe"
-              value={poeInput}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                setPoeInput(e.target.value);
-              }}
-              aria-describedby="component-helper-text"
-              endAdornment={<InputAdornment position="end">%</InputAdornment>}
-            />
+            <InputLabel htmlFor="component-helper">Probability of Exceedance (50 Yrs)</InputLabel>
           </Tooltip>
+          <Input
+            error={poeInputError}
+            id="poe-input"
+            name="poe"
+            value={poeInput}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              setPoeInput(e.target.value);
+            }}
+            aria-describedby="component-helper-text"
+            endAdornment={<InputAdornment position="end">%</InputAdornment>}
+          />
           {poeInputError && <FormHelperText id="outlined-weight-helper-text">{poeInputErrorMessage}</FormHelperText>}
         </FormControl>
         <Button variant="contained" type="submit" onClick={handleSubmit}>

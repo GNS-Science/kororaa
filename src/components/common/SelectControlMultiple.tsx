@@ -23,33 +23,33 @@ const SelectControlMultiple: React.FC<SelectControlMultiple> = ({ options, selec
 
   if (tooltip !== '') {
     return (
-      <Tooltip title={tooltip} arrow>
-        <MultiSelectContainer>
-          <FormControl variant="standard" fullWidth>
+      <MultiSelectContainer>
+        <FormControl variant="standard" fullWidth>
+          <Tooltip title={tooltip} arrow>
             <InputLabel>{name}</InputLabel>
-            <Select
-              name={name}
-              value={selection}
-              multiple
-              onChange={handleChange}
-              input={<Input />}
-              renderValue={(selected) => {
-                const selectedArray = selected as string[];
-                if (selectedArray.length === 1) return selection[0];
-                if (selectedArray.length > 1) return 'Multiple selected';
-              }}
-              variant="standard"
-            >
-              {options.map((opt) => (
-                <MenuItem key={opt} value={opt}>
-                  <Checkbox checked={selection.indexOf(opt) > -1} />
-                  {opt}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-        </MultiSelectContainer>
-      </Tooltip>
+          </Tooltip>
+          <Select
+            name={name}
+            value={selection}
+            multiple
+            onChange={handleChange}
+            input={<Input />}
+            renderValue={(selected) => {
+              const selectedArray = selected as string[];
+              if (selectedArray.length === 1) return selection[0];
+              if (selectedArray.length > 1) return 'Multiple selected';
+            }}
+            variant="standard"
+          >
+            {options.map((opt) => (
+              <MenuItem key={opt} value={opt}>
+                <Checkbox checked={selection.indexOf(opt) > -1} />
+                {opt}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+      </MultiSelectContainer>
     );
   } else
     return (
