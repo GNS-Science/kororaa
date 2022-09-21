@@ -57,7 +57,7 @@ const HazardChartsPlotsView: React.FC<HazardChartsPlotsViewProps> = ({ state, di
 export default HazardChartsPlotsView;
 
 export const hazardChartsPlotsViewQuery = graphql`
-  query HazardChartsPlotsViewQuery($hazard_model: String, $vs30s: [Float], $imts: [String], $locs: [String], $aggs: [String], $resolution: Float) {
+  query HazardChartsPlotsViewQuery($hazard_model: String, $vs30s: [Int], $imts: [String], $locs: [String], $aggs: [String], $resolution: Float) {
     hazard_curves(hazard_model: $hazard_model, vs30s: $vs30s, imts: $imts, locs: $locs, aggs: $aggs, resolution: $resolution) {
       ok
       locations {
