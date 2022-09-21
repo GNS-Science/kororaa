@@ -11,6 +11,7 @@ import { MAP_COLOR_SCALE, MAP_IMTS, MAP_POES, MAP_STATISTICS, MAP_VS30S } from '
 import StyledCSVLink from '../../components/common/StyledCSVLink';
 import { getTickValues, parsePoeString, readablePoe, readablePoeArray } from './hazardMaps.service';
 import { numbersToStrings } from '../hazardCharts/hazardPage.service';
+import { spectralPeriodTooltip, statisticTooltip, vs30Tooltip, poeTooltip, colorScaleTooltip, vMaxTooltip } from './constants/hazardMaps';
 
 const StyledButton = styled(Button)(() => ({
   margin: '0 0 0 10px',
@@ -67,12 +68,18 @@ const HazardMapsControls: React.FC<HazardMapsControlsProps> = ({ startTransition
   return (
     <Box sx={{ width: '100%', ...flexParentCenter, flexDirection: 'column' }}>
       <CustomControlsBar direction="column">
-        <SelectControl name="Spectral Period" options={MAP_IMTS} selection={spectralPeriod} setSelection={setSpectralPeriod} />
-        <SelectControl name="Statistic" options={MAP_STATISTICS} selection={statistic} setSelection={setStatistic} />
-        <SelectControl name="Vs30" options={MAP_VS30S} selection={vs30.toString()} setSelection={(newValue: string[]) => setVs30(Number(newValue))} />
-        <SelectControl name="Probability of Exceedence" options={readablePoeArray(MAP_POES)} selection={readablePoe(poe)} setSelection={(newValue: string) => setPoe(parsePoeString(newValue))} />
-        <SelectControl name="Color Scale" options={MAP_COLOR_SCALE} selection={colorScale} setSelection={setColorScale} />
-        <SelectControl name="VMax" options={numbersToStrings(getTickValues([0, 10]))} selection={vmax} setSelection={setVMax} />
+        <SelectControl name="Spectral Period" options={MAP_IMTS} selection={spectralPeriod} setSelection={setSpectralPeriod} tooltip={spectralPeriodTooltip} />
+        <SelectControl name="Statistic" options={MAP_STATISTICS} selection={statistic} setSelection={setStatistic} tooltip={statisticTooltip} />
+        <SelectControl name="Vs30" options={MAP_VS30S} selection={vs30.toString()} setSelection={(newValue: string[]) => setVs30(Number(newValue))} tooltip={vs30Tooltip} />
+        <SelectControl
+          name="Probability of Exceedence"
+          options={readablePoeArray(MAP_POES)}
+          selection={readablePoe(poe)}
+          setSelection={(newValue: string) => setPoe(parsePoeString(newValue))}
+          tooltip={poeTooltip}
+        />
+        <SelectControl name="Color Scale" options={MAP_COLOR_SCALE} selection={colorScale} setSelection={setColorScale} tooltip={colorScaleTooltip} />
+        <SelectControl name="VMax" options={numbersToStrings(getTickValues([0, 10]))} selection={vmax} setSelection={setVMax} tooltip={vMaxTooltip} />
         <TextField label="Fill opacity" value={fillOpacity} onChange={(event) => setFillOpacity(event?.target.value)} variant="standard" />
         <TextField label="Stroke opacity" value={strokeOpacity} onChange={(event) => setStrokeOpacity(event?.target.value)} variant="standard" />
         <TextField label="Stroke width" value={strokeWidth} onChange={(event) => setStrokeWidth(event?.target.value)} variant="standard" />
