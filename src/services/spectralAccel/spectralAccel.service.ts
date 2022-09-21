@@ -2,7 +2,7 @@ import * as mathjs from 'mathjs';
 
 import { hazardPageOptions } from '../../views/hazardCharts/constants/hazardPageOptions';
 import { HazardChartsPlotsViewQuery$data } from '../../views/hazardCharts/__generated__/HazardChartsPlotsViewQuery.graphql';
-import { roundLatLon } from '../latLon/latLon.service';
+import { getLatLonFromLocationKey, roundLatLon } from '../latLon/latLon.service';
 import { getColor } from '../../utils/colorUtils';
 import { SA_LOG_PGA_SUBSTITUTE } from '../../utils/environmentVariables';
 
@@ -107,6 +107,20 @@ export const addColorsToCurves = (curveGroups: UncertaintyChartData): Uncertaint
   });
 
   return curveGroups;
+};
+
+export const tryParseLatLon = (loc: string): string[] => {
+  if (loc.split('~').length === 1) {
+    return getLatLonFromLocationKey(loc).split('~');
+  } else return loc.split('~');
+};
+
+export const getSpectralCSVData = (curves: UncertaintyChartData) => {
+  const csvData = curves.map((curve) => {
+    const vs30 = curve.key.split(' ')[0];
+    const location = curve.key.split(' ')[1];
+    const latLon = tryParseLatLon(location);
+  });
 };
 
 const getAggValue = (agg: string): string => {

@@ -63,5 +63,5 @@ import { HazardChartsPlotsViewQuery$data } from '../__generated__/HazardChartsPl
 
 test.todo('For the getSpectralAccelerationData function');
 test.todo('For the getImtValue function');
-test.todo('For the getCSVdata function');
+test.todo('For the getHazardCSVdata function');
 test.todo('For the getCSVheadings funcstion');
