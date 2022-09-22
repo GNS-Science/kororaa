@@ -26,11 +26,11 @@ test('Controls renders correctly', () => {
 
   const locationNames = filterLocationNames(mockState.locationData);
 
-  expect(screen.getByLabelText('Lat,Lon')).toBeInTheDocument();
+  expect(screen.getByLabelText('Locations')).toBeInTheDocument();
   expect(screen.getByText(locationNames[0])).toBeInTheDocument();
   expect(screen.getByDisplayValue(mockState.vs30s[0])).toBeInTheDocument();
   expect(screen.getByDisplayValue(mockState.imts[0])).toBeInTheDocument();
-  expect(screen.getByLabelText(/Probabilty of Exceedance/)).toBeInTheDocument();
+  expect(screen.getByLabelText(/Probability of Exceedance/)).toBeInTheDocument();
 });
 
 test.skip('When user selects another option in the location autocomplete, the new value is displayed', async () => {

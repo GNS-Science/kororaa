@@ -7,10 +7,10 @@ export type DisaggregationsPageState = {
 };
 
 export const disaggregationsPageReducerInitialState: DisaggregationsPageState = {
-  location: '',
-  imt: '',
-  vs30: 0,
-  poe: 0,
+  location: 'Auckland',
+  imt: 'PGA',
+  vs30: 400,
+  poe: 0.1,
   reportUrl: '',
 };
 

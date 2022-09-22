@@ -4,7 +4,7 @@ import Grid from '@mui/material/Grid';
 import { Card, CardContent, CardMedia, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
 
-interface MenuCardProps {
+export interface MenuCardProps {
   title: string;
   text: string;
   img: string;

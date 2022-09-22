@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { InputAdornment, Button, Input, FormControl, InputLabel, Box, Autocomplete, TextField, FormHelperText, IconButton, Alert, Collapse } from '@mui/material';
+import { InputAdornment, Button, Input, FormControl, InputLabel, Box, Autocomplete, TextField, FormHelperText, IconButton, Alert, Collapse, Tooltip } from '@mui/material';
 import ClearIcon from '@mui/icons-material/Clear';
 import CloseIcon from '@mui/icons-material/Close';
 
@@ -9,7 +9,8 @@ import { getPoeInputDisplay, numbersToStrings, stringsToNumbers, validateCurveGr
 import { HazardPageState, LocationData } from './hazardPageReducer';
 import SelectControlMultiple from '../../components/common/SelectControlMultiple';
 import { getLatLonString, combineLocationData, getNamesFromLocationData, validateLatLon } from '../../services/latLon/latLon.service';
-import { tooManyCurves } from './constants/hazardCharts';
+import { locationTooltip, tooManyCurves, latLonTooltip } from './constants/hazardCharts';
+import { imtTooltip, poeTooltip, vs30Tooltip } from '../../constants/tooltips';
 
 interface HazardChartsControlsProps {
   state: HazardPageState;
@@ -113,13 +114,21 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, disp
           }}
           options={hazardPageOptions.locations}
           style={{ width: 230, marginLeft: 16 }}
-          renderInput={(params) => <TextField {...params} label="Locations" variant="standard" />}
+          renderInput={(params) => (
+            <Tooltip title={locationTooltip} arrow>
+              <TextField {...params} label="Locations" variant="standard" />
+            </Tooltip>
+          )}
           limitTags={1}
         />
         <FormControl sx={{ width: 200 }} variant="standard">
-          <InputLabel htmlFor="component-helper">Lat,Lon</InputLabel>
+          <Tooltip title={latLonTooltip} arrow>
+            <InputLabel shrink={true} htmlFor="component-helper">
+              Coordinates (lat, lon)
+            </InputLabel>
+          </Tooltip>
           <Input
-            id="component-helper"
+            id="lat-lon-input"
             name="lon"
             value={latLon}
             onChange={handleLatLonChange}
@@ -139,11 +148,14 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, disp
           options={numbersToStrings(hazardPageOptions.vs30s)}
           selection={numbersToStrings(vs30s)}
           setSelection={(newValue: string[]) => setVs30s(stringsToNumbers(newValue))}
-          name="Vs30"
+          name="Vs30 (m/s)"
+          tooltip={vs30Tooltip}
         />
-        <SelectControlMultiple options={hazardPageOptions.imts} selection={imts} setSelection={setImts} name="Spectral Period" />
+        <SelectControlMultiple tooltip={imtTooltip} options={hazardPageOptions.imts} selection={imts} setSelection={setImts} name="Spectral Period" />
         <FormControl sx={{ width: 200 }} variant="standard">
-          <InputLabel htmlFor="component-helper">Probabilty of Exceedance (50 Yrs)</InputLabel>
+          <Tooltip title={poeTooltip} arrow>
+            <InputLabel htmlFor="component-helper">Probability of Exceedance (50 Yrs)</InputLabel>
+          </Tooltip>
           <Input
             error={poeInputError}
             id="poe-input"
