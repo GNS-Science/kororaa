@@ -4,10 +4,8 @@ import { styled } from '@mui/material/styles';
 import { Grid } from '@mui/material';
 import MenuCard from './MenuCard';
 
-// import { MenuCardProps } from './MenuCard';
-// import { CardActionArea } from '@mui/material';
-// import { Card, CardContent, CardMedia } from '@mui/material';
-// import { Link } from 'react-router-dom';
+import { LogoCard } from '../../components/common/PartnersLogos';
+import { partnersLogos } from '../../constants/partnersLogos';
 
 const HomePageContainer = styled('div')({
   width: '100%',
@@ -23,40 +21,31 @@ const HomeTitleContainer = styled('div')({
   paddingBottom: '2rem',
 });
 
-// const LogoCard: React.FC<MenuCardProps> = ({ title, text, img, url }: MenuCardProps) => {
-//   return (
-//     <Grid item xs={12}>
-//       <Card>
-//         <CardActionArea component={Link} to={url}>
-//           <CardContent>
-//             <Typography variant="h5">{title}</Typography>
-//             <Typography>{text}</Typography>
-//           </CardContent>
-//           <CardMedia component="img" height="225px" image={img} sx={{ objectFit: 'cover' }} />
-//         </CardActionArea>
-//       </Card>
-//     </Grid>
-//   );
-// };
-
 const Home: React.FC = () => {
   return (
     <HomePageContainer>
       <HomeTitleContainer>
-        <Typography variant="h1">Aotearoa New Zealand National Seismic Hazard Model</Typography>
-        <Typography variant="h3">Te Tauira Matapae Pumate Ru i Aotearoa</Typography>
-        <Typography variant="body1">The NSHM is a collaborative GNS Science led research programme.</Typography>
+        <Typography variant="h1">
+          <em>Te Tauira Matapae Pūmate Rū i Aotearoa • New Zealand National Seismic Hazard Model</em>
+        </Typography>
+        <Typography variant="h5">
+          <em>a GNS Science led research programme</em>
+        </Typography>
       </HomeTitleContainer>
-      <Grid container spacing={3} columns={{ sm: 6, md: 8, lg: 12 }}>
-        <MenuCard title="Hazard Curves" text="Hazard and Spectral acceleration plots." img="/images/SpectralAccelChart.png" url="/Hazardcurves" />
-        <MenuCard title="Hazard Maps" text="Showing gridded hazard levels across NZ." img="/images/HazardMapExample.png" url="/HazardMaps" />
-        <MenuCard title="Rupture Sets" text="Ruptures and seismic event rates." img="/images/TUI-ruptures-0.png" url="/Previews" />
-        <MenuCard title="Science Reports" text="Model information, reports, and datasets." img="/info.jpg" url="/Resources/ScienceReports" />
-        <MenuCard title="Disaggregations" text="Disaggregation plots for selected sites." img="/images/disagg.png" url="/Disaggs" />
+
+      <Grid container spacing={3} columns={{ sm: 6, md: 8, lg: 12 }} paddingBottom="2rem">
+        <MenuCard title="Hazard Curves" text="Hazard and UHS plots." img="/images/SpectralAccelChart.png" url="/Hazardcurves" />
+        <MenuCard title="Hazard Maps" text="Hazard levels across NZ." img="/images/HazardMapExample.png" url="/HazardMaps" />
+        <MenuCard title="Rupture Sets" text="Ruptures and event rates." img="/images/TUI-ruptures-0.png" url="/Previews" />
+        <MenuCard title="Science Reports" text="Model reports and datasets." img="/info.jpg" url="/Resources/ScienceReports" />
+        <MenuCard title="Disaggregations" text="Source details at selected sites." img="/images/disagg.png" url="/Disaggs" />
       </Grid>
-      {/*<Grid container spacing={3} columns={{ sm: 6, md: 8, lg: 12 }}>
-        <LogoCard title="E mahi ana me" text="In collaboration with" img="/images/disagg.png" url="/Collaborators" />
-      </Grid>*/}
+
+      <Grid container spacing={3} columns={{ sm: 6, md: 8, lg: 12 }} paddingBottom="1rem">
+        <Grid item xs={12}>
+          <LogoCard title="E mahi ana me" text="In collaboration with" logos={partnersLogos} url="/Collaborators" />
+        </Grid>
+      </Grid>
     </HomePageContainer>
   );
 };

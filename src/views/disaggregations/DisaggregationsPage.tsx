@@ -56,7 +56,7 @@ export const DisaggregationsComponent: React.FC = () => {
   return (
     <PageContainer>
       <TitleContainer>
-        <Typography variant="h1">
+        <Typography variant="h2">
           Disaggregations
           <InfoTooltip content={markdown || ''} format={content_type === 'Markdown'} />
         </Typography>

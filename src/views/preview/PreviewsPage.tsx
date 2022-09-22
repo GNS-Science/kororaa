@@ -49,7 +49,7 @@ const PreviewsPage: React.FC = () => {
     <PageContainer>
       <Grid item xs={12}>
         <PreviewTitleContainer>
-          <Typography variant="h1">Coming features</Typography>
+          <Typography variant="h2">Coming features</Typography>
           <Typography variant="body1">New features that we expect to include over the coming months.</Typography>
         </PreviewTitleContainer>
       </Grid>

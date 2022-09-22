@@ -37,7 +37,7 @@ const HazardChartsPage: React.FC = () => {
   return (
     <PageContainer>
       <TitleContainer>
-        <Typography variant="h1">
+        <Typography variant="h2">
           Hazard Curves and Spectra
           <InfoTooltip content={markdown || ''} format={content_type === 'Markdown'} />
         </Typography>

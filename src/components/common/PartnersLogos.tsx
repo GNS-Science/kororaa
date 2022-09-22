@@ -1,27 +1,25 @@
 import React from 'react';
 import { styled } from '@mui/material/styles';
 
-import { partnersLogos } from '../../constants/partnersLogos';
+import { PartnersLogo } from '../../constants/partnersLogos';
 import { Typography } from '@mui/material';
+import { CardActionArea } from '@mui/material';
+import { Card, CardContent } from '@mui/material';
+import { Link } from 'react-router-dom';
 
-const PartnersLogosContainer = styled('div')(({ theme }) => ({
-  width: '50%',
-  height: '100%',
-  display: 'flex',
-  flexDirection: 'row',
-  justifyContent: 'space-around',
-  flexWrap: 'wrap',
-  [theme.breakpoints.down('md')]: {
-    width: '100%',
-    padding: 15,
-  },
-}));
+export interface LogoCardProps {
+  title: string;
+  text: string;
+  logos: PartnersLogo[];
+  url: string;
+}
 
-const Logo = styled('img')(({ theme }) => ({
+export const Logo = styled('img')(({ theme }) => ({
   width: 'auto',
   maxWidth: 80,
   height: 'auto',
   maxHeight: 50,
+  // valign: 'center',
   objectFit: 'contain',
   margin: 5,
   [theme.breakpoints.down('md')]: {
@@ -30,19 +28,38 @@ const Logo = styled('img')(({ theme }) => ({
   },
 }));
 
-const PartnersLogos: React.FC = () => {
+export const LogoCard: React.FC<LogoCardProps> = ({ title, text, logos, url }: LogoCardProps) => {
   return (
-    <PartnersLogosContainer>
-      <Typography sx={{ fontStyle: 'italic' }}>
-        E mahi ana me
-        <br />
-        <strong>In collaboration with</strong>
-      </Typography>
-      {partnersLogos.map((logo) => (
-        <Logo key={logo.name} src={`/partners/${logo.path}`} />
-      ))}
-    </PartnersLogosContainer>
+    <Card>
+      <CardActionArea component={Link} to={url}>
+        <CardContent>
+          <Typography variant="h5">{title}</Typography>
+          <Typography>{text}</Typography>
+        </CardContent>
+        <CardContent>
+          {logos.map((logo) => (
+            <Logo key={logo.name} src={`/partners/${logo.path}`} />
+            // <CardMedia key={logo.path} component="img" height="15px" image={`/partners/${logo.path}`} sx={{ objectFit: 'none' }} />
+          ))}
+        </CardContent>
+      </CardActionArea>
+    </Card>
   );
 };
 
-export default PartnersLogos;
+// const PartnersLogos: React.FC = () => {
+//   return (
+//     <PartnersLogosContainer>
+//       <Typography sx={{ fontStyle: 'italic' }}>
+//         E mahi ana me
+//         <br />
+//         <strong>In collaboration with</strong>
+//       </Typography>
+//       {partnersLogos.map((logo) => (
+//         <Logo key={logo.name} src={`/partners/${logo.path}`} />
+//       ))}
+//     </PartnersLogosContainer>
+//   );
+// };
+
+// export default PartnersLogos;
