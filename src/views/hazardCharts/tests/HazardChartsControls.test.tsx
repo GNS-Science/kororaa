@@ -10,9 +10,9 @@ const mockState: HazardPageState = hazardPageReducerInitialState;
 
 const mockSubmitStateCall = {
   locationData: [getLocationDataFromName(hazardPageLocations[0].name)],
-  vs30s: [hazardPageOptions.vs30s[0]],
+  vs30s: [400],
   imts: [hazardPageOptions.imts[0]],
-  poe: undefined,
+  poe: 0.1,
 };
 
 const mockDispatch = jest.fn();
