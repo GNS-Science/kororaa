@@ -29,7 +29,7 @@ export const DisaggregationsControls: React.FC<DisaggregationsControlsProps> = (
 
   return (
     <CustomControlsBar direction="column">
-      <SelectControl name="Location" options={locationOptions} selection={location} setSelection={setLocation} />
+      <SelectControl name="Location" options={locationOptions.sort()} selection={location} setSelection={setLocation} />
       <SelectControl name="Vs30" options={vs30Options} selection={vs30} setSelection={setVs30} />
       <SelectControl name="Spectral Period" options={imtOptions} selection={imt} setSelection={setImt} />
       <SelectControl name="PoE" options={readablePoeArray(poeOptions as number[])} selection={readablePoe(poe)} setSelection={(newValue: string) => setPoe(parsePoeString(newValue))} />
