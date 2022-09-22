@@ -107,7 +107,7 @@ export const getHazardCSVData = (data: HazardChartsPlotsViewQuery$data): string[
     if (data && data?.hazard_curves && data?.hazard_curves?.curves && data?.hazard_curves?.curves[0]?.curve?.levels) {
       data?.hazard_curves?.curves[0]?.curve?.levels.forEach((level) => {
         if (level) {
-          headings.push(`annual poe - ${level?.toString()}`);
+          headings.push(`annual poe - ${level?.toString()} g`);
         }
       });
     }
