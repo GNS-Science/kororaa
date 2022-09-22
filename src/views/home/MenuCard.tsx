@@ -13,7 +13,7 @@ export interface MenuCardProps {
 
 const MenuCard: React.FC<MenuCardProps> = ({ title, text, img, url }: MenuCardProps) => {
   return (
-    <Grid item xs={3}>
+    <Grid item xs={2}>
       <Card>
         <CardActionArea component={Link} to={url}>
           <CardContent>

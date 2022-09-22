@@ -145,7 +145,7 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, disp
           {latLonError && <FormHelperText id="component-helper-text">{latLonErrorMessage}</FormHelperText>}
         </FormControl>
         <SelectControlMultiple
-          options={numbersToStrings(hazardPageOptions.vs30s)}
+          options={hazardPageOptions.vs30s}
           selection={numbersToStrings(vs30s)}
           setSelection={(newValue: string[]) => setVs30s(stringsToNumbers(newValue))}
           name="Vs30 (m/s)"

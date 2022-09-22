@@ -49,8 +49,11 @@ const theme = createTheme({
 });
 
 theme.typography.h1 = {
-  fontWeight: 700,
-  fontSize: '2rem',
+  // fontWeight: 200,
+  fontSize: '2.5rem',
+  [theme.breakpoints.down('lg')]: {
+    fontSize: '2.074rem',
+  },
   color: GNS_BLUE,
   [theme.breakpoints.down('md')]: {
     fontSize: '1.802rem',

@@ -1,4 +1,4 @@
-interface PartnersLogo {
+export interface PartnersLogo {
   name: string;
   path: string;
 }

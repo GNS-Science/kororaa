@@ -86,7 +86,7 @@ const ScienceReportsComponent: React.FC = () => {
 
   return (
     <PageContainer>
-      <Typography variant="h1">
+      <Typography variant="h2">
         Science Reports
         <InfoTooltip content={infoMarkdown} format={true} />
       </Typography>
