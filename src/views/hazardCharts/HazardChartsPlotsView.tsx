@@ -53,7 +53,7 @@ const HazardChartsPlotsView: React.FC<HazardChartsPlotsViewProps> = ({ state, di
           <StyledCSVLink data={getHazardCSVData(data)} filename="hazard-curves.csv">
             <Button variant="contained">Download Hazard Curve Data</Button>
           </StyledCSVLink>
-          <StyledCSVLink data={saCSVData || ''} filename="hazard-curves.csv">
+          <StyledCSVLink data={saCSVData || ''} filename="uniform-hazard-spectra.csv">
             <Button variant="contained">Download UHS Data</Button>
           </StyledCSVLink>
         </ControlsBar>
