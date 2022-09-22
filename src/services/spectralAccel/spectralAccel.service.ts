@@ -115,8 +115,27 @@ export const tryParseLatLon = (loc: string): string[] => {
   } else return loc.split(',');
 };
 
-export const getSpectralCSVData = (curves: UncertaintyChartData): string[][] => {
-  const saHeaderArray = ['lat', 'lon', 'vs30', 'statistic', 'PGA', 'SA(0.1)', 'SA(0.2)', 'SA(0.3)', 'SA(0.4)', 'SA(0.5)', 'SA(0.7)', 'SA(1.0)', 'SA(2.0)', 'SA(3.0)', 'SA(4.0)', 'SA(5.0)', 'SA(1)'];
+export const getSpectralCSVData = (curves: UncertaintyChartData, poe: number | undefined): string[][] => {
+  const saHeaderArray = [
+    'lat',
+    'lon',
+    'vs30',
+    'PoE (% in 50 years)',
+    'statistic',
+    'PGA',
+    'SA(0.1)',
+    'SA(0.2)',
+    'SA(0.3)',
+    'SA(0.4)',
+    'SA(0.5)',
+    'SA(0.7)',
+    'SA(1.0)',
+    'SA(1.5)',
+    'SA(2.0)',
+    'SA(3.0)',
+    'SA(4.0)',
+    'SA(5.0)',
+  ];
   const csvData: string[][] = [];
   Object.fromEntries(
     Object.entries(curves).map((curve) => {
@@ -124,11 +143,11 @@ export const getSpectralCSVData = (curves: UncertaintyChartData): string[][] => 
       const location = curve[0].split(' ').length === 3 ? curve[0].split(' ')[1] + curve[0].split(' ')[2] : curve[0].split(' ')[1];
       const latLon = tryParseLatLon(location);
       Object.entries(curve[1])?.forEach((value) => {
-        const curveCSVData = [latLon[0], latLon[1], vs30];
+        const curveCSVData = [latLon[0], latLon[1], vs30, (poe && poe * 100)?.toString() || ''];
         curveCSVData.push(getAggNumber(value[0]));
         if (value) {
           value[1].data.forEach((point) => {
-            curveCSVData.push(point[1].toString());
+            curveCSVData.push(point[1].toFixed(2).toString());
           });
         }
         csvData.push(curveCSVData);
