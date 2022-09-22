@@ -89,7 +89,7 @@ const getAggValue = (agg: string): string => {
   }
 };
 
-export const getCSVData = (data: HazardChartsPlotsViewQuery$data): string[][] => {
+export const getHazardCSVData = (data: HazardChartsPlotsViewQuery$data): string[][] => {
   const CSVData = data.hazard_curves?.curves?.map((curve) => {
     const latLonArray = curve?.loc?.split('~');
     if (latLonArray && curve?.curve?.values && curve?.vs30) {
@@ -107,7 +107,7 @@ export const getCSVData = (data: HazardChartsPlotsViewQuery$data): string[][] =>
     if (data && data?.hazard_curves && data?.hazard_curves?.curves && data?.hazard_curves?.curves[0]?.curve?.levels) {
       data?.hazard_curves?.curves[0]?.curve?.levels.forEach((level) => {
         if (level) {
-          headings.push(level?.toString());
+          headings.push(`annual poe - ${level?.toString()} g`);
         }
       });
     }

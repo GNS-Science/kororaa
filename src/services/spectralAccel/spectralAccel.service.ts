@@ -2,7 +2,7 @@ import * as mathjs from 'mathjs';
 
 import { hazardPageOptions } from '../../views/hazardCharts/constants/hazardPageOptions';
 import { HazardChartsPlotsViewQuery$data } from '../../views/hazardCharts/__generated__/HazardChartsPlotsViewQuery.graphql';
-import { roundLatLon } from '../latLon/latLon.service';
+import { getLatLonFromLocationKey, roundLatLon } from '../latLon/latLon.service';
 import { getColor } from '../../utils/colorUtils';
 import { SA_LOG_PGA_SUBSTITUTE } from '../../utils/environmentVariables';
 
@@ -109,6 +109,37 @@ export const addColorsToCurves = (curveGroups: UncertaintyChartData): Uncertaint
   return curveGroups;
 };
 
+export const tryParseLatLon = (loc: string): string[] => {
+  if (loc.split(',').length === 1) {
+    return getLatLonFromLocationKey(loc).split(',');
+  } else return loc.split(',');
+};
+
+export const getSpectralCSVData = (curves: UncertaintyChartData): string[][] => {
+  const saHeaderArray = ['lat', 'lon', 'vs30', 'statistic', 'PGA', 'SA(0.1)', 'SA(0.2)', 'SA(0.3)', 'SA(0.4)', 'SA(0.5)', 'SA(0.7)', 'SA(1.0)', 'SA(2.0)', 'SA(3.0)', 'SA(4.0)', 'SA(5.0)', 'SA(1)'];
+  const csvData: string[][] = [];
+  Object.fromEntries(
+    Object.entries(curves).map((curve) => {
+      const vs30 = curve[0].split(' ')[0].replace('m/s', '');
+      const location = curve[0].split(' ').length === 3 ? curve[0].split(' ')[1] + curve[0].split(' ')[2] : curve[0].split(' ')[1];
+      const latLon = tryParseLatLon(location);
+      Object.entries(curve[1])?.forEach((value) => {
+        const curveCSVData = [latLon[0], latLon[1], vs30];
+        curveCSVData.push(getAggNumber(value[0]));
+        if (value) {
+          value[1].data.forEach((point) => {
+            curveCSVData.push(point[1].toString());
+          });
+        }
+        csvData.push(curveCSVData);
+      });
+      return csvData;
+    }),
+  );
+  csvData.unshift(saHeaderArray);
+  return csvData;
+};
+
 const getAggValue = (agg: string): string => {
   switch (agg) {
     case 'mean':
@@ -121,6 +152,23 @@ const getAggValue = (agg: string): string => {
       return 'upper1';
     case '0.995':
       return 'upper2';
+    default:
+      return '';
+  }
+};
+
+const getAggNumber = (agg: string): string => {
+  switch (agg) {
+    case 'mean':
+      return 'mean';
+    case 'lower2':
+      return '0.005';
+    case 'lower1':
+      return '0.1';
+    case 'upper1':
+      return '0.9';
+    case 'upper2':
+      return '0.995';
     default:
       return '';
   }

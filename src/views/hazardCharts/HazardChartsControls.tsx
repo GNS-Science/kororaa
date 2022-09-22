@@ -112,7 +112,7 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, disp
           onInputChange={(event, newInputValue) => {
             setInputValue(newInputValue);
           }}
-          options={hazardPageOptions.locations}
+          options={hazardPageOptions.locations.sort()}
           style={{ width: 230, marginLeft: 16 }}
           renderInput={(params) => (
             <Tooltip title={locationTooltip} arrow>

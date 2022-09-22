@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useMemo } from 'react';
 import { graphql } from 'babel-plugin-relay/macro';
 import { useLazyLoadQuery } from 'react-relay';
 import { Box, Button } from '@mui/material';
@@ -11,7 +11,9 @@ import HazardCharts from './HazardCharts';
 import { HazardPageState } from './hazardPageReducer';
 import { getLatLonArray } from '../../services/latLon/latLon.service';
 import { RESOLUTION, HAZARD_MODEL } from '../../utils/environmentVariables';
-import { getCSVData } from './hazardPage.service';
+import { getHazardCSVData, getLocationList } from './hazardPage.service';
+import { getSpectralCSVData } from '../../services/spectralAccel/spectralAccel.service';
+import { getSpectralAccelUncertaintyCurves } from '../../services/spectralAccel/spectralAccel.service';
 import StyledCSVLink from '../../components/common/StyledCSVLink';
 
 interface HazardChartsPlotsViewProps {
@@ -31,6 +33,9 @@ const HazardChartsPlotsView: React.FC<HazardChartsPlotsViewProps> = ({ state, di
     resolution: RESOLUTION,
   });
 
+  const locationList = useMemo(() => getLocationList(data), [data]);
+  const saCurves = useMemo(() => getSpectralAccelUncertaintyCurves(state.vs30s, locationList, data, state.poe, state.spectraXScale), [locationList, state, data]);
+  const saCSVData = useMemo(() => getSpectralCSVData(saCurves), [saCurves]);
   const handlePrint = useReactToPrint({
     content: () => printTargetRef.current,
   });
@@ -45,8 +50,11 @@ const HazardChartsPlotsView: React.FC<HazardChartsPlotsViewProps> = ({ state, di
           <Button variant="contained" onClick={handlePrint}>
             Print Figures
           </Button>
-          <StyledCSVLink data={getCSVData(data)} filename="hazard-curves.csv">
-            <Button variant="contained">Download Data</Button>
+          <StyledCSVLink data={getHazardCSVData(data)} filename="hazard-curves.csv">
+            <Button variant="contained">Download Hazard Curve Data</Button>
+          </StyledCSVLink>
+          <StyledCSVLink data={saCSVData || ''} filename="uniform-hazard-spectra.csv">
+            <Button variant="contained">Download UHS Data</Button>
           </StyledCSVLink>
         </ControlsBar>
       </Box>
