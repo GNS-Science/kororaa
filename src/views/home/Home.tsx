@@ -18,7 +18,7 @@ const HomeTitleContainer = styled('div')({
   justifyContent: 'left',
   textAlign: 'left',
   width: '100%',
-  paddingBottom: '2rem',
+  paddingBottom: '1rem',
 });
 
 const Home: React.FC = () => {
@@ -41,7 +41,7 @@ const Home: React.FC = () => {
         <MenuCard title="Disaggregations" text="Source details at selected sites." img="/images/disagg.png" url="/Disaggs" />
       </Grid>
 
-      <Grid container spacing={3} columns={{ sm: 6, md: 8, lg: 12 }} paddingBottom="1rem">
+      <Grid container spacing={3} columns={{ sm: 6, md: 8, lg: 12 }}>
         <Grid item xs={12}>
           <LogoCard title="E mahi ana me" text="In collaboration with" logos={partnersLogos} url="/Collaborators" />
         </Grid>

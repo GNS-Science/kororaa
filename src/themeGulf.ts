@@ -51,14 +51,14 @@ const theme = createTheme({
 theme.typography.h1 = {
   // fontWeight: 200,
   fontSize: '2.5rem',
-  [theme.breakpoints.down('lg')]: {
-    fontSize: '2.074rem',
-  },
+  // [theme.breakpoints.down('xl')]: {
+  //   fontSize: '2.074rem',
+  // },
   color: GNS_BLUE,
-  [theme.breakpoints.down('md')]: {
+  [theme.breakpoints.down('xl')]: {
     fontSize: '1.802rem',
   },
-  [theme.breakpoints.down('sm')]: {
+  [theme.breakpoints.down('md')]: {
     fontSize: '1.383rem',
   },
 };
@@ -99,8 +99,11 @@ theme.typography.h4 = {
 theme.typography.h5 = {
   fontSize: '1.2rem',
   color: GNS_BLUE,
+  [theme.breakpoints.down('xl')]: {
+    fontSize: '1.1rem',
+  },
   [theme.breakpoints.down('md')]: {
-    fontSize: '1.125rem',
+    fontSize: '1.067rem',
   },
   [theme.breakpoints.down('sm')]: {
     fontSize: '1.067rem',

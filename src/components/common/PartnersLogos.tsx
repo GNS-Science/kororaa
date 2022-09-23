@@ -38,7 +38,7 @@ export const LogoCard: React.FC<LogoCardProps> = ({ title, text, logos, url }: L
         </CardContent>
         <CardContent>
           {logos.map((logo) => (
-            <Logo key={logo.name} src={`/partners/${logo.path}`} />
+            <Logo key={logo.name} src={`/images/partner_logos/${logo.path}`} />
             // <CardMedia key={logo.path} component="img" height="15px" image={`/partners/${logo.path}`} sx={{ objectFit: 'none' }} />
           ))}
         </CardContent>

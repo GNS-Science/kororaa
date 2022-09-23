@@ -3,12 +3,12 @@ import { styled } from '@mui/material/styles';
 import { Typography } from '@mui/material';
 
 const FooterContainer = styled('footer')(({ theme }) => ({
-  flexShrink: 0,
-  padding: '1rem',
-  height: 50,
+  // flexShrink: 0,
+  // padding: 0,
+  // height: 50,
   width: '100%',
-  display: 'flex',
-  flexDirect: 'row',
+  // display: 'flex',
+  // flexDirect: 'row',
   justifyContent: 'space-between',
   borderTop: `5px solid ${theme.palette.navbar.accent}`,
   [theme.breakpoints.down('md')]: {
@@ -20,8 +20,8 @@ const FooterContainer = styled('footer')(({ theme }) => ({
 }));
 
 const FooterLinkItems = styled('div')({
-  display: 'flex',
-  flexDirection: 'column',
+  // display: 'flex',
+  // flexDirection: 'column',
   padding: 15,
 });
 
