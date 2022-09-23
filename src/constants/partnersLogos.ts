@@ -5,59 +5,59 @@ export interface PartnersLogo {
 
 export const partnersLogos: PartnersLogo[] = [
   {
-    name: 'au',
+    name: 'Auckland University',
     path: 'au.png',
   },
   {
-    name: 'aurencon',
+    name: 'Aurecon',
     path: 'aurecon.jpg',
   },
   {
-    name: 'eqc',
-    path: 'eqc.jpg',
+    name: 'EQC',
+    path: 'eqc.png',
   },
   {
-    name: 'ga',
+    name: 'Geoscience Australia',
     path: 'ga.jpg',
   },
   {
-    name: 'gem',
+    name: 'GEM',
     path: 'gem.png',
   },
   {
-    name: 'gfz',
+    name: 'GFZ',
     path: 'gfz.png',
   },
   {
-    name: 'golder',
+    name: 'Golder',
     path: 'golder.jpg',
   },
   {
-    name: 'iu',
+    name: 'IU',
     path: 'iu.png',
   },
   {
-    name: 'lamont',
+    name: 'Lamont',
     path: 'lamont.jpg',
   },
   {
-    name: 'mbie',
+    name: 'MBIE',
     path: 'mbie.png',
   },
   {
-    name: 'missouriS&T',
-    path: 'missouriS&T.png',
+    name: 'MissouriS&T',
+    path: 'missouriST.png',
   },
   {
-    name: 'niwa',
+    name: 'NIWA',
     path: 'niwa.jpg',
   },
   {
-    name: 'scec',
+    name: 'SCEC',
     path: 'scec.png',
   },
   {
-    name: 'ucla',
+    name: 'UCLA',
     path: 'ucla.jpg',
   },
   {
@@ -65,19 +65,23 @@ export const partnersLogos: PartnersLogo[] = [
     path: 'ucRed.jpg',
   },
   {
-    name: 'uoo',
+    name: 'University of Otago',
     path: 'uoo.png',
   },
   {
-    name: 'usc',
+    name: 'USC',
     path: 'usc.png',
   },
   {
-    name: 'usgs',
+    name: 'USGS',
     path: 'usgs.png',
   },
   {
-    name: 'vuw',
+    name: 'VUW',
     path: 'vuw.png',
+  },
+  {
+    name: 'WSP',
+    path: 'wsp.jpg',
   },
 ];
