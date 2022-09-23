@@ -35,7 +35,7 @@ const HazardChartsPlotsView: React.FC<HazardChartsPlotsViewProps> = ({ state, di
 
   const locationList = useMemo(() => getLocationList(data), [data]);
   const saCurves = useMemo(() => getSpectralAccelUncertaintyCurves(state.vs30s, locationList, data, state.poe, state.spectraXScale), [locationList, state, data]);
-  const saCSVData = useMemo(() => getSpectralCSVData(saCurves), [saCurves]);
+  const saCSVData = useMemo(() => getSpectralCSVData(saCurves, state.poe), [saCurves, state.poe]);
   const handlePrint = useReactToPrint({
     content: () => printTargetRef.current,
   });

@@ -96,7 +96,7 @@ export const getHazardCSVData = (data: HazardChartsPlotsViewQuery$data): string[
       const curveCSVData = [latLonArray[0], latLonArray[1], curve?.vs30.toString(), curve?.imt, curve?.agg];
       curve?.curve?.values.forEach((value) => {
         if (value) {
-          curveCSVData.push(value.toString());
+          curveCSVData.push(value.toFixed(6).toString());
         }
       });
       return curveCSVData;

@@ -88,7 +88,7 @@ const HazardMapsControls: React.FC<HazardMapsControlsProps> = ({ startTransition
           Submit
         </StyledButton>
         <div>
-          <StyledCSVLink data={getHazardMapCSVData(geoJson, state.vs30, state.spectralPeriod, readablePoe(state.poe))} filename="hazard-maps.csv">
+          <StyledCSVLink data={getHazardMapCSVData(geoJson, state.vs30, state.spectralPeriod, readablePoe(state.poe), state.statistic)} filename="hazard-maps.csv">
             <StyledButton variant="contained" type="submit" color="primary">
               Download CSV
             </StyledButton>

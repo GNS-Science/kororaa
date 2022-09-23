@@ -3,9 +3,9 @@ export interface ColorScale {
   hexrgbs: (string | undefined)[];
 }
 
-export const getHazardMapCSVData = (data: string[], vs30: number, imt: string, poe: string) => {
+export const getHazardMapCSVData = (data: string[], vs30: number, imt: string, poe: string, statistic: string) => {
   const csvData: (number | string)[][] = [
-    [`vs30=${vs30}`, `spectral period=${imt}`, `Poe=${poe}`],
+    [`vs30=${vs30}`, `spectral period=${imt}`, `Poe=${poe}`, `Statistic=${statistic}`],
     ['lon', 'lat', 'shaking intensity(g)'],
   ];
 
@@ -13,7 +13,7 @@ export const getHazardMapCSVData = (data: string[], vs30: number, imt: string, p
     const geojsonObject = JSON.parse(geojsonString);
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     geojsonObject.features.forEach((feature: any) => {
-      csvData.push([feature.properties.loc[0], feature.properties.loc[1], feature.properties.value]);
+      csvData.push([feature.properties.loc[0], feature.properties.loc[1], feature.properties.value.toFixed(2)]);
     });
   });
   return csvData;
