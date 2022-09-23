@@ -1,4 +1,4 @@
-import { MAP_VS30S } from '../../../utils/environmentVariables';
+import { HAZARD_IMTS, MAP_VS30S } from '../../../utils/environmentVariables';
 
 interface HazardPageLocations {
   id: string;
@@ -189,5 +189,5 @@ export const hazardPageLocations: HazardPageLocations[] = [
 export const hazardPageOptions = {
   locations: hazardPageLocations.map((location) => location.name),
   vs30s: MAP_VS30S,
-  imts: ['PGA', 'SA(0.1)', 'SA(0.2)', 'SA(0.3)', 'SA(0.4)', 'SA(0.5)', 'SA(0.7)', 'SA(1.0)', 'SA(1.5)', 'SA(2.0)', 'SA(3.0)', 'SA(4.0)', 'SA(5.0)', 'SA(10.0)'],
+  imts: HAZARD_IMTS,
 };

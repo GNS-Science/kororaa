@@ -10,6 +10,24 @@ export const MAP_STATISTICS = process.env.REACT_APP_MAP_STATISTICS?.split(',') |
 export const MAP_POES: number[] = process.env.REACT_APP_MAP_POES?.split(',').map((poe) => Number(poe)) || [0.1, 0.02];
 export const MAP_COLOR_SCALE = process.env.REACT_APP_MAP_COLOR_SCALE?.split(',') || ['jet', 'inferno'];
 
+export const HAZARD_IMTS = process.env.REACT_APP_HAZARD_IMTS?.split(',') || [
+  'PGA',
+  'SA(0.1)',
+  'SA(0.2)',
+  'SA(0.3)',
+  'SA(0.4)',
+  'SA(0.5)',
+  'SA(0.7)',
+  'SA(1.0)',
+  'SA(1.5)',
+  'SA(2.0)',
+  'SA(3.0)',
+  'SA(4.0)',
+  'SA(5.0)',
+  'SA(6.0)',
+  'SA(7.5)',
+  'SA(10.0)',
+];
 export const HAZARD_COLOR_MAP = process.env.REACT_APP_HAZARD_COLOR_MAP || 'jet';
 export const HAZARD_COLOR_LIMIT: number = Number(process.env.REACT_APP_HAZARD_COLOR_LIMIT) || 30;
 export const HAZARD_COLOR_UNCERTAINTY_OPACITY = process.env.REACT_APP_HAZARD_COLOR_UNCERTAINTY_OPACITY || 0.5;

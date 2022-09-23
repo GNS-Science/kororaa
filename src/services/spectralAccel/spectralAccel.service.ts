@@ -4,7 +4,7 @@ import { hazardPageOptions } from '../../views/hazardCharts/constants/hazardPage
 import { HazardChartsPlotsViewQuery$data } from '../../views/hazardCharts/__generated__/HazardChartsPlotsViewQuery.graphql';
 import { getLatLonFromLocationKey, roundLatLon } from '../latLon/latLon.service';
 import { getColor } from '../../utils/colorUtils';
-import { SA_LOG_PGA_SUBSTITUTE } from '../../utils/environmentVariables';
+import { SA_LOG_PGA_SUBSTITUTE, HAZARD_IMTS } from '../../utils/environmentVariables';
 
 export interface UncertaintyCurve {
   strokeSize?: number;
@@ -115,26 +115,7 @@ export const tryParseLatLon = (loc: string): string[] => {
 };
 
 export const getSpectralCSVData = (curves: UncertaintyChartData, poe: number | undefined): string[][] => {
-  const saHeaderArray = [
-    'lat',
-    'lon',
-    'vs30',
-    'PoE (% in 50 years)',
-    'statistic',
-    'PGA',
-    'SA(0.1)',
-    'SA(0.2)',
-    'SA(0.3)',
-    'SA(0.4)',
-    'SA(0.5)',
-    'SA(0.7)',
-    'SA(1.0)',
-    'SA(1.5)',
-    'SA(2.0)',
-    'SA(3.0)',
-    'SA(4.0)',
-    'SA(5.0)',
-  ];
+  const saHeaderArray = ['lat', 'lon', 'vs30', 'PoE (% in 50 years)', 'statistic', ...HAZARD_IMTS];
   const csvData: string[][] = [];
   Object.fromEntries(
     Object.entries(curves).map((curve) => {
