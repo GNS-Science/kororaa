@@ -10,6 +10,24 @@ export const MAP_STATISTICS = process.env.REACT_APP_MAP_STATISTICS?.split(',') |
 export const MAP_POES: number[] = process.env.REACT_APP_MAP_POES?.split(',').map((poe) => Number(poe)) || [0.1, 0.02];
 export const MAP_COLOR_SCALE = process.env.REACT_APP_MAP_COLOR_SCALE?.split(',') || ['jet', 'inferno'];
 
+export const HAZARD_IMTS = process.env.REACT_APP_HAZARD_IMTS?.split(',') || [
+  'PGA',
+  'SA(0.1)',
+  'SA(0.2)',
+  'SA(0.3)',
+  'SA(0.4)',
+  'SA(0.5)',
+  'SA(0.7)',
+  'SA(1.0)',
+  'SA(1.5)',
+  'SA(2.0)',
+  'SA(3.0)',
+  'SA(4.0)',
+  'SA(5.0)',
+  'SA(6.0)',
+  'SA(7.5)',
+  'SA(10.0)',
+];
 export const HAZARD_COLOR_MAP = process.env.REACT_APP_HAZARD_COLOR_MAP || 'jet';
 export const HAZARD_COLOR_LIMIT: number = Number(process.env.REACT_APP_HAZARD_COLOR_LIMIT) || 30;
 export const HAZARD_COLOR_UNCERTAINTY_OPACITY = process.env.REACT_APP_HAZARD_COLOR_UNCERTAINTY_OPACITY || 0.5;
@@ -20,9 +38,9 @@ export const HAZARD_GMIN_LOG: number = Number(process.env.REACT_APP_HAZARD_GMIN_
 export const HAZARD_POEMAX: number = Number(process.env.REACT_APP_HAZARD_POEMAX) || 6;
 export const HAZARD_POEMIN: number = Number(process.env.REACT_APP_HAZARD_POEMIN) || 0.000001;
 
-export const SA_PERIODMAX: number = Number(process.env.REACT_APP_SA_PERIODMAX) || 6;
+export const SA_PERIODMAX: number = Number(process.env.REACT_APP_SA_PERIODMAX) || 10;
 export const SA_PERIODMIN: number = Number(process.env.REACT_APP_SA_PERIODMIN) || 0;
-export const SA_PERIODMAX_LOG: number = Number(process.env.REACT_APP_SA_PERIODMAX_LOG) || 6;
+export const SA_PERIODMAX_LOG: number = Number(process.env.REACT_APP_SA_PERIODMAX_LOG) || 10;
 export const SA_PERIODMIN_LOG: number = Number(process.env.REACT_APP_SA_PERIODMIN_LOG) || 0.001;
 export const SA_GMAX: number | string = process.env.REACT_APP_SA_GMAX === 'auto' ? 'auto' : Number(process.env.REACT_APP_SA_GMAX);
 export const SA_GMIN: number = Number(process.env.REACT_APP_SA_GMIN) || 0;

@@ -4,7 +4,7 @@ import { hazardPageOptions } from '../../views/hazardCharts/constants/hazardPage
 import { HazardChartsPlotsViewQuery$data } from '../../views/hazardCharts/__generated__/HazardChartsPlotsViewQuery.graphql';
 import { getLatLonFromLocationKey, roundLatLon } from '../latLon/latLon.service';
 import { getColor } from '../../utils/colorUtils';
-import { SA_LOG_PGA_SUBSTITUTE } from '../../utils/environmentVariables';
+import { SA_LOG_PGA_SUBSTITUTE, HAZARD_IMTS } from '../../utils/environmentVariables';
 
 export interface UncertaintyCurve {
   strokeSize?: number;
@@ -25,7 +25,6 @@ const curveTypes = ['upper2', 'upper1', 'mean', 'lower1', 'lower2'];
 
 export const getSpectralAccelUncertaintyCurves = (vs30s: number[], locs: string[], data: HazardChartsPlotsViewQuery$data, poe: number | undefined, scaleType: string): UncertaintyChartData => {
   const saCurveGroups: UncertaintyChartData = {};
-
   poe &&
     vs30s.forEach((vs30) => {
       locs.forEach((loc) => {
@@ -47,10 +46,10 @@ export const getSpectralAccelUncertaintyCurves = (vs30s: number[], locs: string[
 
 export const getSpectralAccelCurve = (curveType: string, vs30: number, loc: string, data: HazardChartsPlotsViewQuery$data, poe: number, scaleType: string) => {
   if (data.hazard_curves?.curves?.length) {
-    const curves: Curves = data.hazard_curves?.curves?.filter((curve) => curve !== null && curve?.vs30 === vs30 && curve?.loc === loc && getAggValue(curve?.agg as string) === curveType);
+    const curves: Curves = data.hazard_curves?.curves?.filter((curve) => curve !== null && curve?.vs30 === vs30 && curve?.loc === loc && convertAgg(curve?.agg as string) === curveType);
     const saCurve = calculateSpectralAccelCurve(curves, poe, scaleType);
-
-    return saCurve;
+    const sortedCurve = saCurve.sort((a, b) => a[0] - b[0]);
+    return sortedCurve;
   }
 };
 
@@ -116,26 +115,7 @@ export const tryParseLatLon = (loc: string): string[] => {
 };
 
 export const getSpectralCSVData = (curves: UncertaintyChartData, poe: number | undefined): string[][] => {
-  const saHeaderArray = [
-    'lat',
-    'lon',
-    'vs30',
-    'PoE (% in 50 years)',
-    'statistic',
-    'PGA',
-    'SA(0.1)',
-    'SA(0.2)',
-    'SA(0.3)',
-    'SA(0.4)',
-    'SA(0.5)',
-    'SA(0.7)',
-    'SA(1.0)',
-    'SA(1.5)',
-    'SA(2.0)',
-    'SA(3.0)',
-    'SA(4.0)',
-    'SA(5.0)',
-  ];
+  const saHeaderArray = ['lat', 'lon', 'vs30', 'PoE (% in 50 years)', 'statistic', ...HAZARD_IMTS];
   const csvData: string[][] = [];
   Object.fromEntries(
     Object.entries(curves).map((curve) => {
@@ -144,7 +124,7 @@ export const getSpectralCSVData = (curves: UncertaintyChartData, poe: number | u
       const latLon = tryParseLatLon(location);
       Object.entries(curve[1])?.forEach((value) => {
         const curveCSVData = [latLon[0], latLon[1], vs30, (poe && poe * 100)?.toString() || ''];
-        curveCSVData.push(getAggNumber(value[0]));
+        curveCSVData.push(convertAgg(value[0]));
         if (value) {
           value[1].data.forEach((point) => {
             curveCSVData.push(point[1].toFixed(2).toString());
@@ -159,71 +139,28 @@ export const getSpectralCSVData = (curves: UncertaintyChartData, poe: number | u
   return csvData;
 };
 
-const getAggValue = (agg: string): string => {
-  switch (agg) {
-    case 'mean':
-      return 'mean';
-    case '0.005':
-      return 'lower2';
-    case '0.1':
-      return 'lower1';
-    case '0.9':
-      return 'upper1';
-    case '0.995':
-      return 'upper2';
-    default:
-      return '';
-  }
-};
+interface Map {
+  [key: string]: string;
+}
 
-const getAggNumber = (agg: string): string => {
-  switch (agg) {
-    case 'mean':
-      return 'mean';
-    case 'lower2':
-      return '0.005';
-    case 'lower1':
-      return '0.1';
-    case 'upper1':
-      return '0.9';
-    case 'upper2':
-      return '0.995';
-    default:
-      return '';
-  }
+export const convertAgg = (agg: string): string => {
+  const aggDict: Map = {
+    mean: 'mean',
+    lower2: '0.005',
+    lower1: '0.1',
+    upper1: '0.9',
+    upper2: '0.995',
+    '0.005': 'lower2',
+    '0.1': 'lower1',
+    '0.9': 'upper1',
+    '0.995': 'upper2',
+  };
+  return aggDict[agg];
 };
 
 const getImtValue = (imt: string, linear: boolean): string => {
-  switch (imt) {
-    case 'PGA':
-      return linear ? '0' : SA_LOG_PGA_SUBSTITUTE.toString();
-    case 'SA(0.1)':
-      return '0.1';
-    case 'SA(0.2)':
-      return '0.2';
-    case 'SA(0.3)':
-      return '0.3';
-    case 'SA(0.4)':
-      return '0.4';
-    case 'SA(0.5)':
-      return '0.5';
-    case 'SA(0.7)':
-      return '0.7';
-    case 'SA(1.0)':
-      return '1.0';
-    case 'SA(1.5)':
-      return '1.5';
-    case 'SA(2.0)':
-      return '2.0';
-    case 'SA(3.0)':
-      return '3.0';
-    case 'SA(4.0)':
-      return '4.0';
-    case 'SA(5.0)':
-      return '5.0';
-    case 'SA(1)':
-      return '1';
-    default:
-      return linear ? '0' : SA_LOG_PGA_SUBSTITUTE.toString();
+  if (imt === 'PGA') {
+    return linear ? '0' : SA_LOG_PGA_SUBSTITUTE.toString();
   }
+  return imt.replace('SA(', '').replace(')', '');
 };

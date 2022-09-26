@@ -4,6 +4,7 @@ import { HAZARD_COLOR_LIMIT } from '../../utils/environmentVariables';
 import { tooManyCurves } from './constants/hazardCharts';
 import { hazardPageLocations } from './constants/hazardPageOptions';
 import { LocationData } from './hazardPageReducer';
+import { convertAgg } from '../../services/spectralAccel/spectralAccel.service';
 
 import { HazardChartsPlotsViewQuery$data } from './__generated__/HazardChartsPlotsViewQuery.graphql';
 
@@ -38,7 +39,7 @@ export const getAllCurveGroups = (data: HazardChartsPlotsViewQuery$data): Hazard
 
     if (imt && levels && values && agg) {
       const curveGroupKey = `${location && location[0]?.key ? location[0]?.key : roundLatLon(currentCurve?.loc)} ${currentCurve.imt} ${currentCurve.vs30}m/s `;
-      const curveName = getAggValue(agg);
+      const curveName = convertAgg(agg);
 
       const curve: number[][] = [];
 
@@ -70,23 +71,6 @@ export const getFilteredCurveGroups = (curveGroups: HazardUncertaintyChartData, 
   });
 
   return filteredCurveGroups;
-};
-
-const getAggValue = (agg: string): string => {
-  switch (agg) {
-    case 'mean':
-      return 'mean';
-    case '0.005':
-      return 'lower2';
-    case '0.1':
-      return 'lower1';
-    case '0.9':
-      return 'upper1';
-    case '0.995':
-      return 'upper2';
-    default:
-      return '';
-  }
 };
 
 export const getHazardCSVData = (data: HazardChartsPlotsViewQuery$data): string[][] => {
