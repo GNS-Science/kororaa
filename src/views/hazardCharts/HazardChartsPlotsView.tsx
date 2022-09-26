@@ -10,7 +10,7 @@ import { hazardPageOptions } from './constants/hazardPageOptions';
 import HazardCharts from './HazardCharts';
 import { HazardPageState } from './hazardPageReducer';
 import { getLatLonArray } from '../../services/latLon/latLon.service';
-import { RESOLUTION, HAZARD_MODEL } from '../../utils/environmentVariables';
+import { RESOLUTION, HAZARD_MODEL, MEAN, UPPER1, UPPER2, LOWER1, LOWER2 } from '../../utils/environmentVariables';
 import { getHazardCSVData, getLocationList } from './hazardPage.service';
 import { getSpectralCSVData } from '../../services/spectralAccel/spectralAccel.service';
 import { getSpectralAccelUncertaintyCurves } from '../../services/spectralAccel/spectralAccel.service';
@@ -29,7 +29,7 @@ const HazardChartsPlotsView: React.FC<HazardChartsPlotsViewProps> = ({ state, di
     locs: getLatLonArray(state.locationData),
     vs30s: state.vs30s,
     imts: hazardPageOptions.imts,
-    aggs: ['mean', '0.005', '0.995', '0.1', '0.9'],
+    aggs: [MEAN, LOWER2, UPPER2, LOWER1, UPPER1],
     resolution: RESOLUTION,
   });
 

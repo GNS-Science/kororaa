@@ -46,3 +46,9 @@ export const SA_GMAX: number | string = process.env.REACT_APP_SA_GMAX === 'auto'
 export const SA_GMIN: number = Number(process.env.REACT_APP_SA_GMIN) || 0;
 
 export const SA_LOG_PGA_SUBSTITUTE: number = Number(process.env.REACT_APP_SA_LOG_PGA_SUBSTITUTE) || 0.001;
+
+export const MEAN: string = process.env.REACT_APP_MEAN || 'mean';
+export const UPPER1: string = process.env.REACT_APP_UPPER1 || '0.9';
+export const UPPER2: string = process.env.REACT_APP_UPPER2 || '0.95';
+export const LOWER1: string = process.env.REACT_APP_LOWER1 || '0.1';
+export const LOWER2: string = process.env.REACT_APP_LOWER2 || '0.05';
