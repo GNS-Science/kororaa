@@ -1,5 +1,5 @@
 import React from 'react';
-import { FormControlLabel, Menu, Checkbox, MenuItem, IconButton, Button } from '@mui/material';
+import { FormControlLabel, Menu, Checkbox, MenuItem, IconButton, Button, Tooltip } from '@mui/material';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { toJpeg } from 'html-to-image';
 
@@ -47,7 +47,9 @@ const HazardChartsSettings: React.FC<HazardChartsSettingsProps> = ({ spectral, s
         aria-expanded={open ? 'true' : undefined}
         onClick={handleClick}
       >
-        <SettingsIcon></SettingsIcon>
+        <Tooltip title="Settings" arrow placement="right">
+          <SettingsIcon />
+        </Tooltip>
       </IconButton>
       <Menu
         id="positioned-menu"
