@@ -4,7 +4,7 @@ import { hazardPageOptions } from '../../views/hazardCharts/constants/hazardPage
 import { HazardChartsPlotsViewQuery$data } from '../../views/hazardCharts/__generated__/HazardChartsPlotsViewQuery.graphql';
 import { getLatLonFromLocationKey, roundLatLon } from '../latLon/latLon.service';
 import { getColor } from '../../utils/colorUtils';
-import { SA_LOG_PGA_SUBSTITUTE, HAZARD_IMTS } from '../../utils/environmentVariables';
+import { SA_LOG_PGA_SUBSTITUTE, HAZARD_IMTS, MEAN, LOWER1, LOWER2, UPPER1, UPPER2 } from '../../utils/environmentVariables';
 
 export interface UncertaintyCurve {
   strokeSize?: number;
@@ -145,16 +145,16 @@ interface Map {
 
 export const convertAgg = (agg: string): string => {
   const aggDict: Map = {
-    mean: 'mean',
-    lower2: '0.005',
-    lower1: '0.1',
-    upper1: '0.9',
-    upper2: '0.995',
-    '0.005': 'lower2',
-    '0.1': 'lower1',
-    '0.9': 'upper1',
-    '0.995': 'upper2',
+    mean: MEAN,
+    lower2: LOWER2,
+    lower1: LOWER1,
+    upper1: UPPER1,
+    upper2: UPPER2,
   };
+  aggDict[LOWER2] = 'lower2';
+  aggDict[LOWER1] = 'lower1';
+  aggDict[UPPER1] = 'upper1';
+  aggDict[UPPER2] = 'upper2';
   return aggDict[agg];
 };
 
