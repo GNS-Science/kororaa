@@ -153,12 +153,6 @@ export const hazardPageLocations: HazardPageLocations[] = [
     longitude: 175.28,
   },
   {
-    id: 'LYJ',
-    name: 'Lower Hutt',
-    latitude: -41.21,
-    longitude: 174.9,
-  },
-  {
     id: 'KBZ',
     name: 'Kaikoura',
     latitude: -42.4,
