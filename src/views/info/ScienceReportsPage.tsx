@@ -4,8 +4,9 @@ import Grid from '@mui/material/Grid';
 import { graphql } from 'babel-plugin-relay/macro';
 import { useLazyLoadQuery } from 'react-relay/hooks';
 
-import { Card, CardContent, Typography, CircularProgress } from '@mui/material';
+import { Card, CardContent, Typography, CircularProgress, Backdrop } from '@mui/material';
 import InfoTooltip from '../../components/common/InfoTooltip';
+import SimpleBackdrop from '../../components/common/SimpleBackdrop';
 import { infoMarkdown } from '../../utils/markdownUtils';
 import { ScienceReportsPageQuery, ProjectAreaEnum, ReportStatusEnum } from './__generated__/ScienceReportsPageQuery.graphql';
 
@@ -108,7 +109,7 @@ const ScienceReportsComponent: React.FC = () => {
 
 const ScienceReportsPage = () => {
   return (
-    <React.Suspense fallback={<CircularProgress />}>
+    <React.Suspense fallback={<SimpleBackdrop />}>
       <ScienceReportsComponent />
     </React.Suspense>
   );

@@ -1,13 +1,14 @@
 import React, { useMemo, useReducer } from 'react';
 import { styled } from '@mui/material/styles';
 import { graphql } from 'babel-plugin-relay/macro';
-import { Box, Alert, Typography, CircularProgress } from '@mui/material';
+import { Box, Alert, Typography } from '@mui/material';
 import { useLazyLoadQuery } from 'react-relay';
 import { DisaggregationsPageQuery } from './__generated__/DisaggregationsPageQuery.graphql';
 import { disaggregationsPageReducer, disaggregationsPageReducerInitialState } from './DisaggregationsPageReducer';
 import DisaggregationsControls from './DisaggregationsControls';
 import { getReportUrl } from './disaggregationPage.service';
 import { InfoTooltip } from '../../components/common/InfoTooltip';
+import SimpleBackdrop from '../../components/common/SimpleBackdrop';
 
 const PageContainer = styled('div')(() => ({
   padding: '2rem',
@@ -79,7 +80,7 @@ export const DisaggregationsComponent: React.FC = () => {
 
 const DisaggregationsPage = () => {
   return (
-    <React.Suspense fallback={<CircularProgress />}>
+    <React.Suspense fallback={<SimpleBackdrop />}>
       <DisaggregationsComponent />
     </React.Suspense>
   );

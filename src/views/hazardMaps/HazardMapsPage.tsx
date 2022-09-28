@@ -1,5 +1,5 @@
 import React, { useReducer, useState, useMemo, useTransition, useEffect } from 'react';
-import { Box, CircularProgress, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { graphql } from 'babel-plugin-relay/macro';
 import { useLazyLoadQuery } from 'react-relay';
@@ -13,6 +13,7 @@ import { GRID_ID, HAZARD_MODEL } from '../../utils/environmentVariables';
 import { getTickValues, ColorScale } from './hazardMaps.service';
 import { ColourScaleNormalise, HazardMapsPageQuery } from './__generated__/HazardMapsPageQuery.graphql';
 import { InfoTooltip } from '../../components/common/InfoTooltip';
+import SimpleBackdrop from '../../components/common/SimpleBackdrop';
 
 const PageContainer = styled(Box)(({ theme }) => ({
   ...flexParentCenter,
@@ -23,7 +24,7 @@ const PageContainer = styled(Box)(({ theme }) => ({
   },
 }));
 
-const HazardMapsPage: React.FC = () => {
+const HazardMapsComponent: React.FC = () => {
   const [state, dispatch] = useReducer(hazardMapsReducer, initialState);
   const [fullscreen, setFullscreen] = useState<boolean>(false);
   const [isPending, startTransition] = useTransition();
@@ -95,13 +96,21 @@ const HazardMapsPage: React.FC = () => {
             Hazard Maps
             <InfoTooltip content={markdown || ''} format={content_type === 'Markdown'} />
           </Typography>
-          <HazardMapsControls isPending={isPending} startTransition={startTransition} geoJson={geoJson} state={state} dispatch={dispatch} />
+          <HazardMapsControls startTransition={startTransition} isPending={isPending} geoJson={geoJson} state={state} dispatch={dispatch} />
         </LeafletDrawer>
-        <React.Suspense fallback={<CircularProgress />}>
+        <React.Suspense fallback={<SimpleBackdrop />}>
           <HazardMaps state={state} geoJson={geoJson} setFullscreen={setFullscreen} colorScale={colorScale} fullscreen={fullscreen} />
         </React.Suspense>
       </Box>
     </PageContainer>
+  );
+};
+
+const HazardMapsPage: React.FC = () => {
+  return (
+    <React.Suspense fallback={<SimpleBackdrop />}>
+      <HazardMapsComponent />
+    </React.Suspense>
   );
 };
 

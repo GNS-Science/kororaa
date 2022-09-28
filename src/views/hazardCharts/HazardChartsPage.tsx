@@ -1,5 +1,5 @@
 import React, { useReducer, useMemo } from 'react';
-import { Box, Typography, CircularProgress } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { graphql } from 'babel-plugin-relay/macro';
 import { useLazyLoadQuery } from 'react-relay';
@@ -8,6 +8,7 @@ import HazardChartsControls from './HazardChartsControls';
 import HazardChartsPlotsView from './HazardChartsPlotsView';
 import { hazardPageReducer, hazardPageReducerInitialState } from './hazardPageReducer';
 import { InfoTooltip } from '../../components/common/InfoTooltip';
+import SimpleBackdrop from '../../components/common/SimpleBackdrop';
 import { HazardChartsPageQuery } from './__generated__/HazardChartsPageQuery.graphql';
 
 const PageContainer = styled(Box)(({ theme }) => ({
@@ -43,7 +44,7 @@ const HazardChartsPage: React.FC = () => {
         </Typography>
       </TitleContainer>
       <HazardChartsControls state={state} dispatch={dispatch} />
-      <React.Suspense fallback={<CircularProgress />}>
+      <React.Suspense fallback={<SimpleBackdrop />}>
         <HazardChartsPlotsView state={state} dispatch={dispatch} />
       </React.Suspense>
     </PageContainer>
