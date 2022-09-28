@@ -7,10 +7,9 @@ const GNS_BLUE = '#072B61';
 // const GNS_KHAKI = '#a71930';
 // const GULF_GREEN = '#a1d0ea'; //Original Gulf
 // const GULF_BLUE = '#bae0f6';
-const GULF_BLUE_FADED = '#cfe9f7';
+// const GULF_BLUE_FADED = '#cfe9f7';
 const GULF_BLUE_FADED_MORE = '#daeaf3';
-const GULF_ORANGE = '#fc6200';
-const OFF_WHITE = '#f3f3f3';
+// const GULF_ORANGE = '#fc6200';
 
 declare module '@mui/material/styles' {
   interface Palette {
@@ -33,7 +32,7 @@ const theme = createTheme({
       main: OLD_PRIMARY_ORANGE,
     },
     navbar: {
-      main: OFF_WHITE,
+      main: GULF_BLUE_FADED_MORE,
       accent: GNS_BLUE, // GULF_GREEN
     },
     // Used by `getContrastText()` to maximize the contrast between
@@ -47,19 +46,6 @@ const theme = createTheme({
     },
   },
   zIndex: { modal: 120000, drawer: 110000, tooltip: 130000 },
-  // components: {
-  //   MuiMenuItem: {
-  //     styleOverrides: {
-  //       root: ({ ownerState }) => ({
-  //         ...(ownerState.variant === 'contained' &&
-  //           ownerState.color === 'primary' && {
-  //             backgroundColor: '#202020',
-  //             color: '#fff',
-  //           }),
-  //       }),
-  //     },
-  //   },
-  // },
 });
 
 theme.typography.h1 = {
