@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Box, Button, styled, TextField } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { Box, Button, styled } from '@mui/material';
 import { SelectControl } from '@gns-science/toshi-nest';
 import { toJpeg } from 'html-to-image';
 
@@ -7,11 +7,10 @@ import { flexParentCenter } from '../../utils/styleUtils';
 import { getHazardMapCSVData } from './hazardMaps.service';
 import { HazardMapsState } from './hazardMapReducer';
 import CustomControlsBar from '../../components/common/CustomControlsBar';
-import { MAP_COLOR_SCALE, MAP_IMTS, MAP_POES, MAP_STATISTICS, MAP_VS30S } from '../../utils/environmentVariables';
+import { MAP_IMTS, MAP_POES, MAP_STATISTICS, MAP_VS30S, MAP_GRID_STYLE_DEFAULT, MAP_GRID_VMAX, MAP_GRID_STROKE_WIDTH } from '../../utils/environmentVariables';
 import StyledCSVLink from '../../components/common/StyledCSVLink';
-import { getTickValues, parsePoeString, readablePoe, readablePoeArray } from './hazardMaps.service';
-import { numbersToStrings } from '../hazardCharts/hazardPage.service';
-import { statisticTooltip, colorScaleTooltip, vMaxTooltip } from './constants/hazardMaps';
+import { parsePoeString, readablePoe, readablePoeArray } from './hazardMaps.service';
+import { statisticTooltip, gridStyleOptions } from './constants/hazardMaps';
 import { imtTooltip, poeTooltip, vs30Tooltip } from '../../constants/tooltips';
 
 const StyledButton = styled(Button)(() => ({
@@ -32,10 +31,19 @@ const HazardMapsControls: React.FC<HazardMapsControlsProps> = ({ startTransition
   const [vs30, setVs30] = useState<number>(state.vs30);
   const [poe, setPoe] = useState<number>(state.poe);
   const [colorScale, setColorScale] = useState<string>('inferno');
-  const [vmax, setVMax] = useState<number>(state.color_scale_vmax);
   const [fillOpacity, setFillOpacity] = useState<string>('0.5');
-  const [strokeWidth, setStrokeWidth] = useState<string>('0.1');
   const [strokeOpacity, setStrokeOpacity] = useState<string>('0.5');
+  const [gridStyle, setGridStyle] = useState<string>(MAP_GRID_STYLE_DEFAULT);
+
+  useEffect(() => {
+    setFillOpacity(gridStyleOptions[gridStyle].opacity);
+    setStrokeOpacity(gridStyleOptions[gridStyle].strokeOpacity);
+    if (statistic === 'cov') {
+      setColorScale('viridis');
+    } else {
+      setColorScale('inferno');
+    }
+  }, [gridStyle, statistic]);
 
   const handleSubmit = () => {
     startTransition(() => {
@@ -45,9 +53,9 @@ const HazardMapsControls: React.FC<HazardMapsControlsProps> = ({ startTransition
         vs30: vs30,
         poe: poe,
         color_scale: colorScale,
-        color_scale_vmax: Number(vmax),
+        color_scale_vmax: MAP_GRID_VMAX,
         fill_opacity: Number(fillOpacity),
-        stroke_width: Number(strokeWidth),
+        stroke_width: MAP_GRID_STROKE_WIDTH,
         stroke_opacity: Number(strokeOpacity),
       });
     });
@@ -79,11 +87,7 @@ const HazardMapsControls: React.FC<HazardMapsControlsProps> = ({ startTransition
           setSelection={(newValue: string) => setPoe(parsePoeString(newValue))}
           tooltip={poeTooltip}
         />
-        <SelectControl name="Color Scale" options={MAP_COLOR_SCALE} selection={colorScale} setSelection={setColorScale} tooltip={colorScaleTooltip} />
-        <SelectControl name="VMax" options={numbersToStrings(getTickValues([0, 10]))} selection={vmax} setSelection={setVMax} tooltip={vMaxTooltip} />
-        <TextField label="Fill opacity" value={fillOpacity} onChange={(event) => setFillOpacity(event?.target.value)} variant="standard" />
-        <TextField label="Stroke opacity" value={strokeOpacity} onChange={(event) => setStrokeOpacity(event?.target.value)} variant="standard" />
-        <TextField label="Stroke width" value={strokeWidth} onChange={(event) => setStrokeWidth(event?.target.value)} variant="standard" />
+        <SelectControl name="Grid Style" options={Object.keys(gridStyleOptions)} selection={gridStyle} setSelection={setGridStyle} />
         <StyledButton disabled={isPending} variant="contained" type="submit" onClick={handleSubmit}>
           Submit
         </StyledButton>
