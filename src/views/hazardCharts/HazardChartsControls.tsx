@@ -115,14 +115,14 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, disp
           options={hazardPageOptions.locations.sort()}
           style={{ width: 230, marginLeft: 16 }}
           renderInput={(params) => (
-            <Tooltip title={locationTooltip} arrow>
+            <Tooltip title={locationTooltip} arrow placement="top">
               <TextField {...params} label="Locations" variant="standard" />
             </Tooltip>
           )}
           limitTags={1}
         />
         <FormControl sx={{ width: 200 }} variant="standard">
-          <Tooltip title={latLonTooltip} arrow>
+          <Tooltip title={latLonTooltip} arrow placement="top">
             <InputLabel shrink={true} htmlFor="component-helper">
               Coordinates (lat, lon)
             </InputLabel>
@@ -153,7 +153,7 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, disp
         />
         <SelectControlMultiple tooltip={imtTooltip} options={hazardPageOptions.imts} selection={imts} setSelection={setImts} name="Spectral Period" />
         <FormControl sx={{ width: 200 }} variant="standard">
-          <Tooltip title={poeTooltip} arrow>
+          <Tooltip title={poeTooltip} arrow placement="top">
             <InputLabel htmlFor="component-helper">Probability of Exceedance (50 Yrs)</InputLabel>
           </Tooltip>
           <Input

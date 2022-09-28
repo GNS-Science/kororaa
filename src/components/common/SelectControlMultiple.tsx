@@ -25,7 +25,7 @@ const SelectControlMultiple: React.FC<SelectControlMultiple> = ({ options, selec
     return (
       <MultiSelectContainer>
         <FormControl variant="standard" fullWidth>
-          <Tooltip title={tooltip} arrow>
+          <Tooltip title={tooltip} arrow placement="top">
             <InputLabel>{name}</InputLabel>
           </Tooltip>
           <Select

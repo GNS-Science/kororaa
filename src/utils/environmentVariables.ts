@@ -9,6 +9,10 @@ export const MAP_VS30S = process.env.REACT_APP_MAP_VS30S?.split(',') || ['250', 
 export const MAP_STATISTICS = process.env.REACT_APP_MAP_STATISTICS?.split(',') || ['mean'];
 export const MAP_POES: number[] = process.env.REACT_APP_MAP_POES?.split(',').map((poe) => Number(poe)) || [0.1, 0.02];
 export const MAP_COLOR_SCALE = process.env.REACT_APP_MAP_COLOR_SCALE?.split(',') || ['jet', 'inferno'];
+export const MAP_ZOOM_MIN = Number(process.env.REACT_APP_MAP_ZOOM_MIN) || 4;
+export const MAP_ZOOM_MAX = Number(process.env.REACT_APP_MAP_ZOOM_MAX) || 8;
+export const MAP_ZOOM_SNAP = Number(process.env.REACT_APP_MAP_ZOOM_SNAP) || 0.5;
+export const MAP_ZOOM_DELTA = Number(process.env.REACT_APP_MAP_ZOOM_DELTA) || 0.5;
 
 export const HAZARD_IMTS = process.env.REACT_APP_HAZARD_IMTS?.split(',') || [
   'PGA',

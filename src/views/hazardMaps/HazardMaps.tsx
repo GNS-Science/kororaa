@@ -4,6 +4,7 @@ import { Box } from '@mui/material';
 
 import { ColorScale } from './hazardMaps.service';
 import { HazardMapsState } from './hazardMapReducer';
+import { MAP_ZOOM_DELTA, MAP_ZOOM_MAX, MAP_ZOOM_MIN, MAP_ZOOM_SNAP } from '../../utils/environmentVariables';
 
 interface HazardMapsProps {
   state: HazardMapsState;
@@ -19,7 +20,18 @@ const HazardMaps: React.FC<HazardMapsProps> = ({ state, geoJson, fullscreen, set
 
   return (
     <Box id="map" sx={{ width: '100%', height: '80vh' }}>
-      <LeafletMap geoJsonData={geoJson} zoom={zoom} nzCentre={nzCentre} height={'80vh'} width={'100%'} setFullscreen={setFullscreen} />
+      <LeafletMap
+        geoJsonData={geoJson}
+        zoom={zoom}
+        nzCentre={nzCentre}
+        height={'80vh'}
+        width={'100%'}
+        setFullscreen={setFullscreen}
+        minZoom={MAP_ZOOM_MIN}
+        maxZoom={MAP_ZOOM_MAX}
+        zoomSnap={MAP_ZOOM_SNAP}
+        zoomDelta={MAP_ZOOM_DELTA}
+      />
       {colorScale && (
         <ColorBar
           heading={`Vs30=${state.vs30}m/s, ${state.spectralPeriod} ${state.poe * 100}% in 50 years, statistic: ${state.statistic}`}
