@@ -67,7 +67,7 @@ const EmailCard: React.FC<EmailCardProps> = ({ title, text, email }: EmailCardPr
           <FormControlLabel
             control={
               <a target="_top" rel="noopener noreferrer" href={'mailto:' + email}>
-                <IconButton color="secondary">
+                <IconButton color="primary">
                   <EmailIcon fontSize={'large'} /> {/* icon */}
                 </IconButton>
               </a>
