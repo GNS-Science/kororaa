@@ -4,7 +4,7 @@ import Grid from '@mui/material/Grid';
 import { graphql } from 'babel-plugin-relay/macro';
 import { useLazyLoadQuery } from 'react-relay/hooks';
 
-import { Card, CardContent, Typography, CircularProgress, Backdrop } from '@mui/material';
+import { Card, CardContent, Typography } from '@mui/material';
 import InfoTooltip from '../../components/common/InfoTooltip';
 import SimpleBackdrop from '../../components/common/SimpleBackdrop';
 import { infoMarkdown } from '../../utils/markdownUtils';
@@ -81,7 +81,6 @@ const ScienceReportCard: React.FC<IScienceReportCardProps> = ({ report }: IScien
 
 const ScienceReportsComponent: React.FC = () => {
   const data = useLazyLoadQuery<ScienceReportsPageQuery>(scienceReportsPageQuery, {});
-  // console.log(data);
   const published = data?.science_reports?.reports?.filter((report) => report?.status === 'Published');
   const reviewing = data?.science_reports?.reports?.filter((report) => report?.status === 'Review');
 
