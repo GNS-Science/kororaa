@@ -1,4 +1,4 @@
-import React, { useReducer, useMemo } from 'react';
+import React, { useReducer, useMemo, useRef } from 'react';
 import { Box, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { graphql } from 'babel-plugin-relay/macro';
@@ -34,6 +34,7 @@ const HazardChartsPage: React.FC = () => {
   const data = useLazyLoadQuery<HazardChartsPageQuery>(hazardChartsPageQuery, {});
   const markdown = useMemo(() => data?.textual_content?.content && data?.textual_content?.content[0]?.text, [data]);
   const content_type = useMemo(() => data?.textual_content?.content && data?.textual_content?.content[0]?.content_type, [data]);
+  const printTargetRef = useRef<HTMLDivElement>(null);
 
   return (
     <PageContainer>
@@ -43,9 +44,9 @@ const HazardChartsPage: React.FC = () => {
           <InfoTooltip content={markdown || ''} format={content_type === 'Markdown'} />
         </Typography>
       </TitleContainer>
-      <HazardChartsControls state={state} dispatch={dispatch} />
+      <HazardChartsControls state={state} dispatch={dispatch} printTargetRef={printTargetRef} />
       <React.Suspense fallback={<SimpleBackdrop />}>
-        <HazardChartsPlotsView state={state} dispatch={dispatch} />
+        <HazardChartsPlotsView state={state} dispatch={dispatch} printTargetRef={printTargetRef} />
       </React.Suspense>
     </PageContainer>
   );

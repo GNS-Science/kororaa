@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { InputAdornment, Button, Input, FormControl, InputLabel, Box, Autocomplete, TextField, FormHelperText, IconButton, Alert, Collapse, Tooltip } from '@mui/material';
+import { Fab, InputAdornment, Button, Input, FormControl, InputLabel, Box, Autocomplete, TextField, FormHelperText, IconButton, Alert, Collapse, Tooltip } from '@mui/material';
 import ClearIcon from '@mui/icons-material/Clear';
 import CloseIcon from '@mui/icons-material/Close';
+import { useReactToPrint } from 'react-to-print';
+import PrintIcon from '@mui/icons-material/Print';
 
 import CustomControlsBar from '../../components/common/CustomControlsBar';
 import { hazardPageOptions } from './constants/hazardPageOptions';
@@ -15,9 +17,10 @@ import { imtTooltip, poeTooltip, vs30Tooltip } from '../../constants/tooltips';
 interface HazardChartsControlsProps {
   state: HazardPageState;
   dispatch: React.Dispatch<Partial<HazardPageState>>;
+  printTargetRef: React.RefObject<HTMLDivElement>;
 }
 
-const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, dispatch }: HazardChartsControlsProps) => {
+const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, dispatch, printTargetRef }: HazardChartsControlsProps) => {
   const [locationData, setLocationData] = useState<LocationData[]>(state.locationData);
   const [locations, setLocations] = useState<string[]>(getNamesFromLocationData(state.locationData));
   const [latLon, setLatLon] = useState<string>(getLatLonString(state.locationData));
@@ -48,6 +51,10 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, disp
       setLatLonErrorMessage(err as string);
     }
   };
+
+  const handlePrint = useReactToPrint({
+    content: () => printTargetRef.current,
+  });
 
   const handleLatLonChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setLatLon(event.target.value);
@@ -172,6 +179,9 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, disp
         <Button variant="contained" type="submit" onClick={handleSubmit}>
           Submit
         </Button>
+        <Fab color="primary" aria-label="print" onClick={handlePrint}>
+          <PrintIcon />
+        </Fab>
       </CustomControlsBar>
     </Box>
   );

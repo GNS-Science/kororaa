@@ -14,11 +14,11 @@ const mockSubmitStateCall = {
   imts: [hazardPageOptions.imts[0]],
   poe: 0.1,
 };
-
 const mockDispatch = jest.fn();
 
 const Wrapper = () => {
-  return <HazardChartsControls state={mockState} dispatch={mockDispatch} />;
+  const printTargetRef = React.useRef<HTMLDivElement>(null);
+  return <HazardChartsControls state={mockState} dispatch={mockDispatch} printTargetRef={printTargetRef} />;
 };
 
 test('Controls renders correctly', () => {

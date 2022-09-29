@@ -70,7 +70,7 @@ const HazardCharts: React.FC<HazardChartsProps> = ({ data, state, dispatch }: Ha
     <>
       <HazardChartsContainer data-testid="hazardChartsContainer">
         <ChartContainer>
-          <HazardChartsSettings spectral={false} state={state} dispatch={dispatch} />
+          <HazardChartsSettings data={data} spectral={false} state={state} dispatch={dispatch} />
           <div id="hazardChart">
             <GroupCurveChartResponsive
               scaleType={state.hazardXScale}
@@ -90,7 +90,7 @@ const HazardCharts: React.FC<HazardChartsProps> = ({ data, state, dispatch }: Ha
         </ChartContainer>
         {state.poe && (
           <ChartContainer>
-            <HazardChartsSettings spectral={true} state={state} dispatch={dispatch} />
+            <HazardChartsSettings data={data} spectral={true} state={state} dispatch={dispatch} />
             <div id="spectraChart">
               <GroupCurveChartResponsive
                 testId="sa-chart"
