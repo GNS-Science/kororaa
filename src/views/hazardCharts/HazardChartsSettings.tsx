@@ -112,8 +112,8 @@ const HazardChartsSettings: React.FC<HazardChartsSettingsProps> = ({ data, spect
             label="linear x-scale"
           />
         </MenuItem>
-        <MenuItem>
-          <StyledIconButton onClick={downloadHazard}>
+        <MenuItem onClick={downloadHazard}>
+          <StyledIconButton>
             <ImageIcon />
           </StyledIconButton>
           get image
