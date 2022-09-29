@@ -8,6 +8,7 @@ import { getHazardMapCSVData } from './hazardMaps.service';
 import { HazardMapsState } from './hazardMapReducer';
 import CustomControlsBar from '../../components/common/CustomControlsBar';
 import { MAP_IMTS, MAP_POES, MAP_STATISTICS, MAP_VS30S, MAP_GRID_STYLE_DEFAULT, MAP_GRID_VMAX, MAP_GRID_STROKE_WIDTH } from '../../utils/environmentVariables';
+
 import StyledCSVLink from '../../components/common/StyledCSVLink';
 import { parsePoeString, readablePoe, readablePoeArray } from './hazardMaps.service';
 import { statisticTooltip, gridStyleOptions } from './constants/hazardMaps';
@@ -93,11 +94,11 @@ const HazardMapsControls: React.FC<HazardMapsControlsProps> = ({ startTransition
         </StyledButton>
         <div>
           <StyledCSVLink data={getHazardMapCSVData(geoJson, state.vs30, state.spectralPeriod, readablePoe(state.poe), state.statistic)} filename="hazard-maps.csv">
-            <StyledButton variant="contained" type="submit" color="primary">
+            <StyledButton disabled={isPending} variant="contained" type="submit" color="primary">
               Download CSV
             </StyledButton>
           </StyledCSVLink>
-          <StyledButton variant="contained" onClick={handleDownload}>
+          <StyledButton disabled={isPending} variant="contained" onClick={handleDownload}>
             Download Image
           </StyledButton>
         </div>
