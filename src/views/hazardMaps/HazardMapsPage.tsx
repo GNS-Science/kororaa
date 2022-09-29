@@ -99,9 +99,7 @@ const HazardMapsComponent: React.FC = () => {
           </Typography>
           <HazardMapsControls startTransition={startTransition} isPending={isPending} geoJson={geoJson} state={state} dispatch={dispatch} />
         </LeafletDrawer>
-        <React.Suspense fallback={<SimpleBackdrop />}>
-          <HazardMaps state={state} geoJson={geoJson} setFullscreen={setFullscreen} colorScale={colorScale} fullscreen={fullscreen} />
-        </React.Suspense>
+        <HazardMaps state={state} geoJson={geoJson} setFullscreen={setFullscreen} colorScale={colorScale} fullscreen={fullscreen} />
       </Box>
     </PageContainer>
   );
