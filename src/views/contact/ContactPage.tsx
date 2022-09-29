@@ -90,7 +90,7 @@ const ContactPage: React.FC = () => {
         </ContactContainer>
       </Grid>
       <Grid container spacing={3} columns={{ sm: 6, md: 8, lg: 12 }}>
-        <EmailCard title="Email " text="The Project team can be contacted here" email="nshm-team@gns.cri.nz" />
+        <EmailCard title="Email " text="The Project team can be contacted here" email="nshm@gns.cri.nz" />
         {/*<ContactCard title="NZSHM Science Reports" text="Scientific publications for the NZSHM." url="/Resources/ScienceReports" />*/}
         {/*<ContactCard title="Technical resources" text="Contactrmation technology used and produced by the NZHSM project. APis, Code Repositories etc." url="." />*/}
       </Grid>
