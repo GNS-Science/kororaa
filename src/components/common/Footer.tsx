@@ -25,8 +25,8 @@ const Footer: React.FC = () => {
   return (
     <FooterContainer>
       <FooterLinkItems>
-        <Link underline="hover" component={RouterLink} color="inherit" to="/Help">
-          Documentation &amp; Help
+        <Link underline="hover" component={RouterLink} color="inherit" to="/TechInfo">
+          Technical Info
         </Link>
         <Link underline="hover" component={RouterLink} color="inherit" to="/Contacts">
           Contacts

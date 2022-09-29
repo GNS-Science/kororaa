@@ -3,6 +3,7 @@ import { styled } from '@mui/material/styles';
 import { Typography, Grid } from '@mui/material';
 import { List, ListItem, ListItemButton, Link } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
+import { TypeSpecimen } from '@mui/icons-material';
 
 // const StyledCard = styled(Card)(() => ({
 //   justifyContent: 'center',
@@ -31,7 +32,7 @@ const AboutPage: React.FC = () => {
     <PageContainer>
       <Grid container spacing={3} columns={{ sm: 6, md: 8, lg: 12 }}>
         <Grid item xs={9}>
-          <Typography variant="h2">About NSHM</Typography>
+          <Typography variant="h2">About The NZ-NSHM</Typography>
         </Grid>
 
         <Grid item xs={8}>
@@ -43,22 +44,15 @@ const AboutPage: React.FC = () => {
         </Grid>
 
         <Grid item xs={8}>
-          <Typography variant="h4">Overview</Typography>
-        </Grid>
-
-        <Grid item xs={8}>
-          <Typography variant="body1">
-            GNS Science is the custodian of the Aotearoa New Zealand National Seismic Hazard Model (NSHM). Key users of the model include MBIE, EQC, local and regional authorities, Waka Kotahi NZTA,
-            structural and geotechnical engineers, land-use planners, seismic hazard consultants, risk modelling consultants, and the insurance sector.
-          </Typography>
+          <Typography variant="body1">GNS Science is the custodian of the Aotearoa New Zealand National Seismic Hazard Model (NSHM).</Typography>
         </Grid>
         <Grid item xs={8}>
           <Typography variant="body1">
-            For general information about seismic hazard models, in general, and the New Zealand National Seismic Hazard Model, specifically, fact sheets and regional information can be found on the
-            &nbsp;
+            General information can be found&nbsp;
             <Link color="secondary" target="_blank" rel="noopener" href="https://www.gns.cri.nz/research-projects/national-seismic-hazard-model/">
-              GNS NSHM project page.
+              Here
             </Link>
+            .
           </Typography>
         </Grid>
         <Grid item xs={9}>
@@ -67,69 +61,25 @@ const AboutPage: React.FC = () => {
           </Typography>
         </Grid>
         <Grid item xs={9}>
-          <Typography variant="body1">The NZ NSHM 2022 provides forecasts of ground shaking for the next 100 years in New Zealand.</Typography>
+          <Typography variant="body1">The NZ NSHM provides forecasts of ground shaking for the next 100 years in New Zealand.</Typography>
         </Grid>
         <Grid item xs={9}>
-          <List disablePadding>
-            <ListItem>
-              All results are presented in&nbsp;
-              <Link underline="hover" target="_blank" rel="noopener" color="secondary" href="https://openseespydoc.readthedocs.io/en/latest/src/exampleRotDSpectra.html">
-                RotD50
-              </Link>
-              &nbsp;orientation
-            </ListItem>
-            <ListItem>
-              Details on model development and implementation can be found in the&nbsp;
-              <Link underline="hover" component={RouterLink} color="secondary" to="/Resources/ScienceReports">
-                Science Reports
-              </Link>
-              &nbsp;page.
-            </ListItem>
-            <ListItem>
-              Planned features for the site can be found in the&nbsp;
-              <Link underline="hover" component={RouterLink} color="secondary" to="/Previews">
-                Coming Features
-              </Link>
-              &nbsp;page.
-            </ListItem>
-          </List>
+          <Typography variant="body1">
+            Details on model development and implementation can be found in the&nbsp;
+            <Link underline="hover" component={RouterLink} color="secondary" to="/Resources/ScienceReports">
+              Science Reports
+            </Link>
+            &nbsp;page.
+          </Typography>
         </Grid>
-
-        <Grid item xs={8}>
-          <Typography variant="h4">Glossary, fact sheets and helpful information</Typography>
-        </Grid>
-        <Grid item xs={6}>
-          <List disablePadding>
-            <ListItem disablePadding>
-              <ListItemButton component="a" target="_blank" rel="noopener" href="https://www.gns.cri.nz/assets/Research-projects/NSHM/Glossary-of-terms.pdf">
-                Glossary of Terms (PDF, 196 KB)
-              </ListItemButton>
-            </ListItem>
-
-            <ListItem disablePadding>
-              <ListItemButton component="a" target="_blank" rel="noopener" href="https://www.gns.cri.nz/assets/Research-projects/NSHM/Earthquake-fact-sheet.pdf">
-                A bit about earthquakes (PDF, 199 KB)
-              </ListItemButton>
-            </ListItem>
-
-            <ListItem disablePadding>
-              <ListItemButton component="a" target="_blank" rel="noopener" href="https://www.gns.cri.nz/assets/Research-projects/NSHM/Understanding-probability.pdf">
-                Understanding probability (PDF, 207 KB)
-              </ListItemButton>
-            </ListItem>
-
-            <ListItem disablePadding>
-              <ListItemButton component="a" target="_blank" rel="noopener" href="https://www.gns.cri.nz/assets/Research-projects/NSHM/Understanding-ground-shaking.pdf">
-                Understanding ground shaking (PDF, 205 KB)
-              </ListItemButton>
-            </ListItem>
-
-            <ListItem disablePadding>
-              <ListItemButton component="a" target="_blank" rel="noopener" href="https://www.gns.cri.nz/assets/Research-projects/NSHM/Understanding-hazard-impact-and-risk.pdf">
-                Understanding hazard, impact, and risk (PDF, 176 KB)
-              </ListItemButton>
-            </ListItem>
-          </List>
+        <Grid item xs={9}>
+          <Typography variant="body1">
+            Planned features for the site can be found in the&nbsp;
+            <Link underline="hover" component={RouterLink} color="secondary" to="/Previews">
+              Coming Features
+            </Link>
+            &nbsp;page.
+          </Typography>
         </Grid>
       </Grid>
     </PageContainer>
