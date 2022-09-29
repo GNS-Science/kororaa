@@ -1,14 +1,10 @@
 import React from 'react';
 import { styled } from '@mui/material/styles';
-import { Typography } from '@mui/material';
+import { Link } from '@mui/material';
+import { Link as RouterLink } from 'react-router-dom';
 
 const FooterContainer = styled('footer')(({ theme }) => ({
-  // flexShrink: 0,
-  // padding: 0,
-  // height: 50,
   width: '100%',
-  // display: 'flex',
-  // flexDirect: 'row',
   justifyContent: 'space-between',
   borderTop: `5px solid ${theme.palette.navbar.accent}`,
   [theme.breakpoints.down('md')]: {
@@ -20,8 +16,8 @@ const FooterContainer = styled('footer')(({ theme }) => ({
 }));
 
 const FooterLinkItems = styled('div')({
-  // display: 'flex',
-  // flexDirection: 'column',
+  display: 'flex',
+  flexDirection: 'column',
   padding: 15,
 });
 
@@ -29,9 +25,15 @@ const Footer: React.FC = () => {
   return (
     <FooterContainer>
       <FooterLinkItems>
-        <Typography>Documentation &amp; Help</Typography>
-        <Typography>Contact Information</Typography>
-        <Typography>About</Typography>
+        <Link underline="hover" component={RouterLink} color="inherit" to="/Help">
+          Documentation &amp; Help
+        </Link>
+        <Link underline="hover" component={RouterLink} color="inherit" to="/Contacts">
+          Contacts
+        </Link>
+        <Link underline="hover" component={RouterLink} color="inherit" to="/About">
+          About
+        </Link>
       </FooterLinkItems>
     </FooterContainer>
   );
