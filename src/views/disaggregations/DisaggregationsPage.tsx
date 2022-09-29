@@ -67,7 +67,7 @@ export const DisaggregationsComponent: React.FC = () => {
           <DisaggregationsControls data={data} state={state} dispatch={dispatch} />
         </ControlsContainer>
         {reportUrl !== '' ? (
-          <iframe src={`http://${reportUrl}`}></iframe>
+          <iframe src={`https://${reportUrl}`}></iframe>
         ) : (
           <WarningContainer>
             <Alert severity="error">No report available for this selection.</Alert>
