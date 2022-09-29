@@ -24,6 +24,7 @@ import ScienceReportsPage from './views/info/ScienceReportsPage';
 import DisaggregationsPage from './views/disaggregations/DisaggregationsPage';
 import ContactPage from './views/contact/ContactPage';
 import AboutPage from './views/about/AboutPage';
+import TechInfoPage from './views/techinfo/TechInfoPage';
 
 // The Home component needs to know how to access the Relay environment, and we
 // need to specify a fallback in case it suspends:
@@ -61,6 +62,7 @@ function App(props: { environment?: Environment }) {
                     />
                     <Route path="/Previews" element={<PreviewsPage />} />
                     <Route path="/About" element={<AboutPage />} />
+                    <Route path="/TechInfo" element={<TechInfoPage />} />
                     <Route path="/Contacts" element={<ContactPage />} />
                     <Route path="/Resources/ScienceReports" element={<ScienceReportsPage />} />
                     <Route path="/" element={<Home />} />
