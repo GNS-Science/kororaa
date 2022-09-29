@@ -39,7 +39,7 @@ const Home: React.FC = () => {
         <MenuCard title="Coming features" text="Previews from our backlog." img="/images/TUI-ruptures-0.png" url="/Previews" />
         <MenuCard title="Science Reports" text="Model reports and datasets." img="/info.jpg" url="/Resources/ScienceReports" />
         <MenuCard title="Disaggregations" text="Source details at selected sites." img="/images/disagg.png" url="/Disaggs" />
-        <MenuCard title="General Information" text="Fact Sheets & Regional Information" img="/images/NSHM_Web_logo_blue.jpg" url="/About" />
+        <MenuCard title="About" text="Background Information." img="/images/NSHM_Web_logo_blue.jpg" url="/About" />
       </Grid>
 
       <Grid container spacing={3} columns={{ sm: 6, md: 8, lg: 12 }}>
