@@ -55,6 +55,11 @@ const AboutPage: React.FC = () => {
             .
           </Typography>
         </Grid>
+
+        <Grid item xs={8}>
+          <Typography variant="body1">Looking for NSHM Results and Data? You&apos;re in the right place.</Typography>
+        </Grid>
+
         <Grid item xs={9}>
           <Typography variant="body1">
             This site provides only seismic hazard results and is not to be used for engineering design. Please see MBIE for information related to engineering design and the NSHM.
