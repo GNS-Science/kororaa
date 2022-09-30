@@ -3,8 +3,7 @@ import { styled } from '@mui/material/styles';
 import Grid from '@mui/material/Grid';
 import { graphql } from 'babel-plugin-relay/macro';
 import { useLazyLoadQuery } from 'react-relay/hooks';
-
-import { Card, CardContent, Typography } from '@mui/material';
+import { Card, CardContent, Typography, Link, Button } from '@mui/material';
 import SimpleBackdrop from '../../components/common/SimpleBackdrop';
 import { ScienceReportsPageQuery, ProjectAreaEnum, ReportStatusEnum } from './__generated__/ScienceReportsPageQuery.graphql';
 
@@ -35,6 +34,7 @@ interface IPerson {
 interface IScienceReport {
   topic?: string | null;
   title?: string | null;
+  filename?: string | null;
   status?: ReportStatusEnum | null;
   area?: ProjectAreaEnum | null;
   readonly lead_author?: IPerson | null;
@@ -49,11 +49,21 @@ interface IScienceReportCardProps {
 }
 
 const ScienceReportCard: React.FC<IScienceReportCardProps> = ({ report }: IScienceReportCardProps) => {
+  const file_url = 'https://nshm-static-reports.gns.cri.nz/NSHM/ScienceReports/' + report.filename;
   return (
-    <Grid item xs={9}>
+    <Grid item xs={12}>
       <StyledCard>
         <CardContent>
-          <Typography variant="h4">{report.title}</Typography>
+          <Grid container spacing={1} columns={{ sm: 6, md: 8, lg: 12 }}>
+            <Grid item xs={10}>
+              <Typography variant="h4">{report.title}</Typography>
+            </Grid>
+            <Grid item xs={2}>
+              <Link component={Button} target="_blank" rel="noopener" color="primary" href={file_url}>
+                View report
+              </Link>
+            </Grid>
+          </Grid>
           <Typography>
             {report.area && (
               <>
@@ -79,23 +89,22 @@ const ScienceReportCard: React.FC<IScienceReportCardProps> = ({ report }: IScien
 
 const ScienceReportsComponent: React.FC = () => {
   const data = useLazyLoadQuery<ScienceReportsPageQuery>(scienceReportsPageQuery, {});
-  const published = data?.science_reports?.reports?.filter((report) => report?.status === 'Published');
-  const reviewing = data?.science_reports?.reports?.filter((report) => report?.status === 'Review');
+  const published = data?.science_reports?.reports?.filter((report) => report?.status === 'Published' && report?.filename);
+  // const reviewing = data?.science_reports?.reports?.filter((report) => report?.status === 'Review');
 
   return (
     <PageContainer>
-      <Typography variant="h2">Science Reports</Typography>
-      <SectionContainer>
-        <Typography variant="h3">Status: Published</Typography>
-      </SectionContainer>
-      <Grid container spacing={6} columns={{ sm: 6, md: 8, lg: 12 }}>
-        {published?.map((report, i) => report && <ScienceReportCard report={report as IScienceReport} key={i} />)}
-      </Grid>
-      <SectionContainer>
-        <Typography variant="h3">Status: In Review</Typography>
-      </SectionContainer>
-      <Grid container spacing={6} columns={{ sm: 6, md: 8, lg: 12 }}>
-        {reviewing?.map((report, i) => report && <ScienceReportCard report={report as IScienceReport} key={i} />)}
+      <Grid container columns={{ sm: 6, md: 8, lg: 12 }}>
+        <Grid item xs={2} />
+        <Grid spacing={3} item xs={8}>
+          <Typography variant="h2">Science Reports</Typography>
+          <SectionContainer>
+            <Grid container spacing={3} columns={{ sm: 6, md: 8, lg: 12 }}>
+              {published?.map((report, i) => report && <ScienceReportCard report={report as IScienceReport} key={i} />)}
+            </Grid>
+          </SectionContainer>
+        </Grid>
+        <Grid item xs={2} />
       </Grid>
     </PageContainer>
   );
