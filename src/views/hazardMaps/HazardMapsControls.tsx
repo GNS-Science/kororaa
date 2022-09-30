@@ -11,7 +11,7 @@ import { MAP_IMTS, MAP_POES, MAP_STATISTICS, MAP_VS30S, MAP_GRID_STYLE_DEFAULT, 
 
 import StyledCSVLink from '../../components/common/StyledCSVLink';
 import { parsePoeString, readablePoe, readablePoeArray } from './hazardMaps.service';
-import { statisticTooltip, gridStyleOptions } from './constants/hazardMaps';
+import { statisticTooltip, gridStyleOptions, gridStyleTooltip } from './constants/hazardMaps';
 import { imtTooltip, poeTooltip, vs30Tooltip } from '../../constants/tooltips';
 
 const StyledButton = styled(Button)(() => ({
@@ -88,7 +88,7 @@ const HazardMapsControls: React.FC<HazardMapsControlsProps> = ({ startTransition
           setSelection={(newValue: string) => setPoe(parsePoeString(newValue))}
           tooltip={poeTooltip}
         />
-        <SelectControl name="Grid Style" options={Object.keys(gridStyleOptions)} selection={gridStyle} setSelection={setGridStyle} />
+        <SelectControl name="Grid Style" options={Object.keys(gridStyleOptions)} selection={gridStyle} setSelection={setGridStyle} tooltip={gridStyleTooltip} />
         <StyledButton disabled={isPending} variant="contained" type="submit" onClick={handleSubmit}>
           Submit
         </StyledButton>
