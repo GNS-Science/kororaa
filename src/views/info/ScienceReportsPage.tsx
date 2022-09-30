@@ -117,6 +117,7 @@ export const scienceReportsPageQuery = graphql`
       ok
       reports {
         topic
+        filename
         area
         title
         status

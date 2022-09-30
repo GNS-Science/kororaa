@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5a9e8aaf69ab6ea1c420657c248361b3>>
+ * @generated SignedSource<<6f084d9d2339b90519cc38d02375b8b4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,6 +17,7 @@ export type ScienceReportsPageQuery$data = {
     readonly ok: boolean | null;
     readonly reports: ReadonlyArray<{
       readonly topic: string | null;
+      readonly filename: string | null;
       readonly area: ProjectAreaEnum | null;
       readonly title: string | null;
       readonly status: ReportStatusEnum | null;
@@ -77,6 +78,13 @@ v1 = [
             "args": null,
             "kind": "ScalarField",
             "name": "topic",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "filename",
             "storageKey": null
           },
           {
@@ -173,16 +181,16 @@ return {
     "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "42fb49ddc4e5fe0a783ffdc04bd7804c",
+    "cacheID": "a5f94d819914408f7570ddb955ad4d2c",
     "id": null,
     "metadata": {},
     "name": "ScienceReportsPageQuery",
     "operationKind": "query",
-    "text": "query ScienceReportsPageQuery {\n  science_reports {\n    ok\n    reports {\n      topic\n      area\n      title\n      status\n      notes\n      report_number\n      lead_author {\n        name\n      }\n      reviewers {\n        name\n      }\n      publication_date\n      bibliographic_ref\n    }\n  }\n}\n"
+    "text": "query ScienceReportsPageQuery {\n  science_reports {\n    ok\n    reports {\n      topic\n      filename\n      area\n      title\n      status\n      notes\n      report_number\n      lead_author {\n        name\n      }\n      reviewers {\n        name\n      }\n      publication_date\n      bibliographic_ref\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "ba73c046b180d163ac8b941e4d506b93";
+(node as any).hash = "a73646df4135d82acdab7159491ea9ca";
 
 export default node;
