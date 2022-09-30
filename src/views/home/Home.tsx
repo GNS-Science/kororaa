@@ -44,7 +44,7 @@ const Home: React.FC = () => {
 
       <Grid container spacing={3} columns={{ sm: 6, md: 8, lg: 12 }}>
         <Grid item xs={12}>
-          <LogoCard title="E mahi ana me" text="In collaboration with" logos={partnersLogos} url="/Collaborators" />
+          <LogoCard title="E mahi ana me" text="In collaboration with" logos={partnersLogos} />
         </Grid>
       </Grid>
     </HomePageContainer>
