@@ -160,7 +160,7 @@ const TechInfoPage: React.FC = () => {
               <Link underline="hover" component={RouterLink} color="secondary" to="/HazardMaps">
                 Hazard Maps
               </Link>
-              &nbsp;page it is possible to select Coeficient of Variation (CoV) as one of the &quot;Statistic&quot; options. The CoV is the standard deviation of the annaual probability of exceedance
+              &nbsp;page it is possible to select Coefficient of Variation (CoV) as one of the &quot;Statistic&quot; options. The CoV is the standard deviation of the annual probability of exceedance
               divided by the probability chosen (e.g. 10% in 50 years).
             </Typography>
           </Grid>
