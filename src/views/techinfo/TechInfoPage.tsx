@@ -13,6 +13,7 @@ import TableRow from '@mui/material/TableRow';
 const PageContainer = styled('div')({
   justifyContent: 'center',
   alignItems: 'center',
+  padding: '2rem',
   marginBottom: '2rem',
 });
 
