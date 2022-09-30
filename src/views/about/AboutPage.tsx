@@ -39,12 +39,6 @@ const AboutPage: React.FC = () => {
                 . Looking for NSHM Results and Data? You&apos;re in the right place.
               </Typography>
             </Grid>
-
-            <Grid item>
-              <Typography variant="body1">
-                This site provides only seismic hazard results and is not to be used for engineering design. Please see MBIE for information related to engineering design and the NSHM.
-              </Typography>
-            </Grid>
             <Grid item>
               <Typography variant="body1">The NZ NSHM provides forecasts of ground shaking for the next 100 years in New Zealand.</Typography>
             </Grid>
