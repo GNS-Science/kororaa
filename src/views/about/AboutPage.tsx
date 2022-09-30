@@ -7,7 +7,8 @@ import { Link as RouterLink } from 'react-router-dom';
 const PageContainer = styled('div')({
   justifyContent: 'center',
   alignItems: 'center',
-  padding: '1rem',
+  padding: '2rem',
+  marginBottom: '2rem',
 });
 
 const StyledGrid = styled(Grid)(() => ({
@@ -22,9 +23,7 @@ const AboutPage: React.FC = () => {
       <StyledGrid container spacing={3} columns={{ sm: 6, md: 8, lg: 12 }}>
         <Grid item xs={2} />
         <Grid spacing={3} item xs={8}>
-          <Grid item>
-            <Typography variant="h2">About The NZ-NSHM</Typography>
-          </Grid>
+          <Typography variant="h2">About The NZ-NSHM</Typography>
 
           <Grid item>
             <Typography variant="body1">
