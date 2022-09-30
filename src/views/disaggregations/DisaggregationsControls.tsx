@@ -6,7 +6,8 @@ import { DisaggregationsPageState } from './DisaggregationsPageReducer';
 import { getVs30Options, getImtOptions, getLocationOptions, getPoeOptions } from './disaggregationPage.service';
 import { readablePoe, readablePoeArray, parsePoeString } from '../hazardMaps/hazardMaps.service';
 import CustomControlsBar from '../../components/common/CustomControlsBar';
-import { locationTooltip, vs30Tooltip, imtTooltip, poeTooltip } from './constants/disaggregations';
+import { vs30Tooltip, imtTooltip, poeTooltip } from '../../constants/tooltips';
+import { locationTooltip } from '../hazardCharts/constants/hazardCharts';
 
 export interface DisaggregationsControlsProps {
   data: DisaggregationsPageQuery$data;
