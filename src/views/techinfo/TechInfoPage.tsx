@@ -34,14 +34,47 @@ const PageContainer = styled('div')({
 //   // padding: '4rem',
 // });
 
-// function createData(name: string, lat: number, lon: number) {
-//   return { name, lat, lon };
-// }
+function createData(name: string, lat: number, lon: number) {
+  return { name, lat, lon };
+}
 
-// const rows = [
-//   createData('Auckland',-36.87,174.77),
-//   createData('Blenheim',-41.51,173.95)
-// ]
+const rows = [
+  createData('Auckland', -36.87, 174.77),
+  createData('Blenheim', -41.51, 173.95),
+  createData('Christchurch', -43.53, 172.63),
+  createData('Dunedin', -45.87, 170.5),
+  createData('Gisborne', -38.65, 178.0),
+  createData('Greymouth', -42.45, 171.21),
+  createData('Hawera', -39.59, 174.28),
+  createData('Hamilton', -37.78, 175.28),
+  createData('Invercargill', -46.43, 168.36),
+  createData('Kaikoura', -42.4, 173.68),
+  createData('Kerikeri', -35.22, 173.97),
+  createData('Levin', -40.63, 175.28),
+  createData('Mount Cook', -43.73, 170.1),
+  createData('Masterton', -40.96, 175.66),
+  createData('Napier', -39.48, 176.92),
+  createData('New Plymouth', -39.07, 174.08),
+  createData('Nelson', -41.27, 173.28),
+  createData('Palmerston North', -40.35, 175.62),
+  createData('Te Anau', -45.41, 167.72),
+  createData('Timaru', -44.4, 171.26),
+  createData('Tokoroa', -38.23, 175.87),
+  createData('Thames', -37.13, 175.53),
+  createData('Tauranga', -37.69, 176.17),
+  createData('Taupo', -38.68, 176.08),
+  createData('Rotorua', -38.14, 176.25),
+  createData('Whakatane', -37.98, 177.0),
+  createData('Franz Josef', -43.35, 170.17),
+  createData('Wellington', -41.3, 174.78),
+  createData('Westport', -41.75, 171.58),
+  createData('Whanganui', -39.93, 175.05),
+  createData('Turangi', -39.0, 175.93),
+  createData('Otira', -42.78, 171.54),
+  createData('Haast', -43.88, 169.06),
+  createData('Hanmer Springs', -42.54, 172.78),
+  createData('Queenstown', -45.02, 168.69),
+];
 
 const TechInfoPage: React.FC = () => {
   return (
@@ -160,11 +193,15 @@ const TechInfoPage: React.FC = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              <TableRow>
-                <TableCell>FooBar</TableCell>
-                <TableCell align="right">foo</TableCell>
-                <TableCell align="right">bar</TableCell>
-              </TableRow>
+              {rows.map((row) => (
+                <TableRow key={row.name} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                  <TableCell component="th" scope="row">
+                    {row.name}
+                  </TableCell>
+                  <TableCell align="right">{row.lat}</TableCell>
+                  <TableCell align="right">{row.lon}</TableCell>
+                </TableRow>
+              ))}
             </TableBody>
           </Table>
         </TableContainer>
