@@ -153,6 +153,7 @@ enum ReportStatusEnum {
 type ScienceReport {
   title: String
   topic: String
+  filename: String
   area: ProjectAreaEnum
   status: ReportStatusEnum
 
