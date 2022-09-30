@@ -155,6 +155,17 @@ const TechInfoPage: React.FC = () => {
           </Grid>
 
           <Grid item>
+            <Typography variant="body1">
+              On the&nbsp;
+              <Link underline="hover" component={RouterLink} color="secondary" to="/HazardMaps">
+                Hazard Maps
+              </Link>
+              &nbsp;page it is possible to select Coeficient of Variation (CoV) as one of the &quot;Statistic&quot; options. The CoV is the standard deviation of the annaual probability of exceedance
+              divided by the probability chosen (e.g. 10% in 50 years).
+            </Typography>
+          </Grid>
+
+          <Grid item>
             <Typography variant="h4">Calculation Grid and Location List</Typography>
           </Grid>
 
