@@ -3,15 +3,12 @@ import { styled } from '@mui/material/styles';
 
 import { PartnersLogo } from '../../constants/partnersLogos';
 import { Typography } from '@mui/material';
-import { CardActionArea } from '@mui/material';
 import { Card, CardContent } from '@mui/material';
-import { Link } from 'react-router-dom';
 
 export interface LogoCardProps {
   title: string;
   text: string;
   logos: PartnersLogo[];
-  url: string;
 }
 
 export const Logo = styled('img')(({ theme }) => ({
@@ -28,21 +25,19 @@ export const Logo = styled('img')(({ theme }) => ({
   },
 }));
 
-export const LogoCard: React.FC<LogoCardProps> = ({ title, text, logos, url }: LogoCardProps) => {
+export const LogoCard: React.FC<LogoCardProps> = ({ title, text, logos }: LogoCardProps) => {
   return (
     <Card>
-      <CardActionArea component={Link} to={url}>
-        <CardContent>
-          <Typography variant="h5">{title}</Typography>
-          <Typography>{text}</Typography>
-        </CardContent>
-        <CardContent>
-          {logos.map((logo) => (
-            <Logo key={logo.name} src={`/images/partner_logos/${logo.path}`} />
-            // <CardMedia key={logo.path} component="img" height="15px" image={`/partners/${logo.path}`} sx={{ objectFit: 'none' }} />
-          ))}
-        </CardContent>
-      </CardActionArea>
+      <CardContent>
+        <Typography variant="h5">{title}</Typography>
+        <Typography>{text}</Typography>
+      </CardContent>
+      <CardContent>
+        {logos.map((logo) => (
+          <Logo key={logo.name} src={`/images/partner_logos/${logo.path}`} />
+          // <CardMedia key={logo.path} component="img" height="15px" image={`/partners/${logo.path}`} sx={{ objectFit: 'none' }} />
+        ))}
+      </CardContent>
     </Card>
   );
 };

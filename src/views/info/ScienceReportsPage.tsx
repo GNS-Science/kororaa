@@ -5,9 +5,7 @@ import { graphql } from 'babel-plugin-relay/macro';
 import { useLazyLoadQuery } from 'react-relay/hooks';
 
 import { Card, CardContent, Typography } from '@mui/material';
-import InfoTooltip from '../../components/common/InfoTooltip';
 import SimpleBackdrop from '../../components/common/SimpleBackdrop';
-import { infoMarkdown } from '../../utils/markdownUtils';
 import { ScienceReportsPageQuery, ProjectAreaEnum, ReportStatusEnum } from './__generated__/ScienceReportsPageQuery.graphql';
 
 const StyledCard = styled(Card)(() => ({
@@ -86,10 +84,7 @@ const ScienceReportsComponent: React.FC = () => {
 
   return (
     <PageContainer>
-      <Typography variant="h2">
-        Science Reports
-        <InfoTooltip content={infoMarkdown} format={true} />
-      </Typography>
+      <Typography variant="h2">Science Reports</Typography>
       <SectionContainer>
         <Typography variant="h3">Status: Published</Typography>
       </SectionContainer>
