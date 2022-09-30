@@ -22,13 +22,14 @@ const AboutPage: React.FC = () => {
             <Grid item>
               <Typography variant="body1">
                 <strong>
-                  The National Seismic Hazard Model calculates the likelihood and strength of earthquake shaking that may occur in different parts of Aotearoa New Zealand over specified time periods.
+                  The National Seismic Hazard Model (NSHM) calculates the likelihood and strength of earthquake shaking that may occur in different parts of Aotearoa New Zealand over specified time
+                  periods. The NSHM provides forecasts of ground shaking for the next 100 years.
                 </strong>
               </Typography>
             </Grid>
 
             <Grid item>
-              <Typography variant="body1">GNS Science is the custodian of the Aotearoa New Zealand National Seismic Hazard Model (NSHM).</Typography>
+              <Typography variant="body1">GNS Science is the custodian of the Aotearoa New Zealand National Seismic Hazard Model.</Typography>
             </Grid>
             <Grid item>
               <Typography variant="body1">
@@ -38,9 +39,6 @@ const AboutPage: React.FC = () => {
                 </Link>
                 . Looking for NSHM Results and Data? You&apos;re in the right place.
               </Typography>
-            </Grid>
-            <Grid item>
-              <Typography variant="body1">The NZ NSHM provides forecasts of ground shaking for the next 100 years in New Zealand.</Typography>
             </Grid>
             <Grid item>
               <Typography variant="body1">
