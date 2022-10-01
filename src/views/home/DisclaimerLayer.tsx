@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { styled } from '@mui/material/styles';
-import { Button, Modal, Typography } from '@mui/material';
+import { Link, Button, Modal, Typography } from '@mui/material';
 
 const StyledModal = styled(Modal)({
   display: 'flex',
@@ -33,7 +33,7 @@ const DisclaimerLayer: React.FC<DisclaimerLayerProps> = ({ children }: Disclaime
 
   return (
     <>
-      <StyledModal open={open} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
+      <StyledModal open={open} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description modal-modal-description2">
         <Paper>
           <Typography id="modal-modal-title" variant="h5" component="h2">
             Disclaimer
@@ -41,7 +41,12 @@ const DisclaimerLayer: React.FC<DisclaimerLayerProps> = ({ children }: Disclaime
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
             This output has been prepared by the Institute of Geological and Nuclear Sciences Limited (GNS Science). GNS Science accepts no responsibility for any use of or reliance on any contents of
             this output by any person, on any ground, for any loss, damage or expense arising from such use or reliance.
-            <p>This site provides only seismic hazard results and is not to be used for engineering design. Please see MBIE for information related to engineering design and the NSHM.</p>
+          </Typography>
+          <Typography id="modal-modal-description2" sx={{ mt: 2 }}>
+            This site provides only seismic hazard results and is not to be used for engineering design. Please see&nbsp;
+            <Link underline="hover" color="inherit" target="_blank" rel="noopener" href="https://www.building.govt.nz/getting-started/seismic-work-programme">
+              MBIE for information related to engineering design and the NSHM.
+            </Link>
           </Typography>
           <Button onClick={handleAccept}>Accept</Button>
         </Paper>
