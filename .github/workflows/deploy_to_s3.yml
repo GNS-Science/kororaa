@@ -1,14 +1,42 @@
 name: Deploy-to-S3
 
-#https://docs.github.com/en/actions/using-workflows/reusing-workflows#calling-a-reusable-workflow
+# https://docs.github.com/en/actions/using-workflows/reusing-workflows#calling-a-reusable-workflow
+# https://colinsalmcorner.com/consuming-environment-secrets-in-reusable-workflows/
 
 on:
   workflow_call:
+    inputs:
+      environment:
+        type: string
+        description: environment to deploy to AWS_TEST or AWS_PROD
+        required: true
+    secrets:
+      REACT_APP_DISCLAIMER_VERSION:
+        required: true
+      REACT_APP_GRAPHQL_ENDPOINT:
+        required: true
+      REACT_APP_GRAPHQL_API_KEY:
+        required: true
+      REACT_APP_RESOLUTION:
+        required: true
+      REACT_APP_HAZARD_MODEL:
+        required: true
+      REACT_APP_GRID_ID:
+        required: true
+      AWS_ACCESS_KEY_ID:
+        required: true
+      AWS_SECRET_ACCESS_KEY:
+        required: true
+      AWS_REGION:
+        required: true
+      AWS_S3_BUCKET:
+        required: true
 
 jobs:
   build:
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    environment: ${{ inputs.environment }}
 
     strategy:
       matrix:
