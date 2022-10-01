@@ -2,11 +2,11 @@ name: Deploy TEST
 
 on:
   push:
-    branches: [ deploy-test ]
+    branches: [ main ]
 
 jobs:
   call-deploy-workflow:
     runs-on: ubuntu-latest
-    environment: AWS_TEST
+    environment: AWS_PROD
     #https://docs.github.com/en/actions/using-workflows/reusing-workflows#calling-a-reusable-workflow
     uses: ./.github/workflows/deploy-to-s3.yml
