@@ -9,4 +9,4 @@ jobs:
     runs-on: ubuntu-latest
     environment: AWS_TEST
     #https://docs.github.com/en/actions/using-workflows/reusing-workflows#calling-a-reusable-workflow
-    uses: ./.github/workflows/deploy-to-s3.yml
+    uses: ./.github/workflows/deploy_to_s3.yml
