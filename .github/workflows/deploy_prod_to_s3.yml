@@ -6,7 +6,18 @@ on:
 
 jobs:
   call-deploy-workflow:
-    runs-on: ubuntu-latest
-    environment: AWS_PROD
     #https://docs.github.com/en/actions/using-workflows/reusing-workflows#calling-a-reusable-workflow
-    uses: ./.github/workflows/deploy-to-s3.yml
+    uses: ./.github/workflows/deploy_to_s3.yml
+    with:
+      environment: AWS_PROD
+    secrets:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_REGION: ${{ secrets.AWS_REGION }}
+      AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
+      REACT_APP_DISCLAIMER_VERSION: ${{secrets.REACT_APP_DISCLAIMER_VERSION}}
+      REACT_APP_GRAPHQL_ENDPOINT: ${{secrets.REACT_APP_GRAPHQL_ENDPOINT}}
+      REACT_APP_GRAPHQL_API_KEY: ${{secrets.REACT_APP_GRAPHQL_API_KEY}}
+      REACT_APP_RESOLUTION: ${{secrets.REACT_APP_RESOLUTION}}
+      REACT_APP_HAZARD_MODEL: ${{secrets.REACT_APP_HAZARD_MODEL}}
+      REACT_APP_GRID_ID: ${{secrets.REACT_APP_GRID_ID}}
