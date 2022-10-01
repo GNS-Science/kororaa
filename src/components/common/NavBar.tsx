@@ -1,6 +1,7 @@
 import React from 'react';
 import { styled } from '@mui/material/styles';
-import { Link } from 'react-router-dom';
+import { Link } from '@mui/material';
+import { Link as RouterLink } from 'react-router-dom';
 import { AppBar, Typography, Container, Toolbar, IconButton, Box, Menu, MenuItem, Button } from '@mui/material';
 import { useLocation } from 'react-router-dom';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -61,7 +62,7 @@ const SubMenu: React.FC<SubMenuProps> = ({ pages, anchorElNav, setAnchorElNav, o
       onClose={handleCloseNavMenu}
     >
       {pages.map((page) => (
-        <MenuItem selected={page.path === location.pathname} key={page.name} component={Link} to={page.path || ''}>
+        <MenuItem selected={page.path === location.pathname} key={page.name} component={RouterLink} to={page.path || ''}>
           <Typography onClick={handleCloseNavMenu} variant="h5" textAlign="center">
             {page.name}
           </Typography>
@@ -97,7 +98,7 @@ const FluidMenuItem: React.FC<FluidMenuProps> = ({ page }: FluidMenuProps) => {
 
   if (page.path) {
     return (
-      <MenuItem selected={page.path === location.pathname} key={page.name} component={Link} to={page.path}>
+      <MenuItem selected={page.path === location.pathname} key={page.name} component={RouterLink} to={page.path}>
         <Typography variant="h5" textAlign="center">
           {page.name}
         </Typography>
@@ -173,10 +174,10 @@ const NavBar: React.FC = () => {
       <StyledAppBar position="static">
         <Container maxWidth={false}>
           <StyledToolbar disableGutters>
-            <Link to="/">
+            <RouterLink to="/">
               <img src="/images/NSHM_logo_black_cropped_blue.png" height="40" alt="NSHM logo" />
               {/*<img src="/images/NSHM_logo_black.png" height="70" alt="NSHM logo" />*/}
-            </Link>
+            </RouterLink>
             <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
               <HamburgerMenu pages={hamburgerPages} />
             </Box>
@@ -184,7 +185,9 @@ const NavBar: React.FC = () => {
               <MainMenu pages={pages} />
             </Box>
             {/*<CardMedia component="img" height="100" image="/images/2GNS_logo_HORZ.png" alt="GNS logo" />*/}
-            <img src="/images/2GNS_logo_HORZ.png" height="80" alt="GNS logo" />
+            <Link target="_blank" rel="noopener" href="https://www.gns.cri.nz/research-projects/national-seismic-hazard-model/">
+              <img src="/images/2GNS_logo_HORZ.png" height="80" alt="GNS logo" />
+            </Link>
           </StyledToolbar>
         </Container>
       </StyledAppBar>
