@@ -5,20 +5,97 @@ on:
     branches: [ main ]
 
 jobs:
-  call-deploy-workflow:
-    #https://docs.github.com/en/actions/using-workflows/reusing-workflows#calling-a-reusable-workflow
-    uses: ./.github/workflows/deploy_to_s3.yml
-    with:
-      environment: AWS_PROD
-    secrets:
-      NODE_AUTH_TOKEN: ${{ secrets.TOSHI_NEST_PACKAGE_TOKEN }}
-      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      AWS_REGION: ${{ secrets.AWS_REGION }}
-      AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
-      REACT_APP_DISCLAIMER_VERSION: ${{secrets.REACT_APP_DISCLAIMER_VERSION}}
-      REACT_APP_GRAPHQL_ENDPOINT: ${{secrets.REACT_APP_GRAPHQL_ENDPOINT}}
-      REACT_APP_GRAPHQL_API_KEY: ${{secrets.REACT_APP_GRAPHQL_API_KEY}}
-      REACT_APP_RESOLUTION: ${{secrets.REACT_APP_RESOLUTION}}
-      REACT_APP_HAZARD_MODEL: ${{secrets.REACT_APP_HAZARD_MODEL}}
-      REACT_APP_GRID_ID: ${{secrets.REACT_APP_GRID_ID}}
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment: AWS_PROD
+
+    strategy:
+      matrix:
+        node-version: [16]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Node Setup
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          registry-url: https://npm.pkg.github.com/
+          scope: '@gns-science'
+
+      - name: Yarn Test
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.TOSHI_NEST_PACKAGE_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CI: false
+        run: |
+          yarn install --frozen-lockfile
+          yarn test
+
+      - name: Yarn build
+        env:
+          CI: false
+        run: |
+          echo "Configure build environment"
+          touch .env
+          echo "The following settings can be exposed, and are common to PROD and TEST.."
+          echo "REACT_APP_HAZARD_COLOR_LIMIT=12" >> .env
+          echo "REACT_APP_HAZARD_COLOR_MAP=portland" >> .env
+          echo "REACT_APP_HAZARD_COLOR_UNCERTAINTY_OPACITY=0.8" >> .env
+          echo "REACT_APP_MAP_IMTS=PGA,SA(0.1),SA(0.2),SA(0.3),SA(0.4),SA(0.5),SA(0.7),SA(1.0),SA(1.5),SA(2.0),SA(3.0),SA(4.0),SA(5.0),SA(6.0),SA(7.5),SA(10.0)" >> .env
+          echo "REACT_APP_MAP_VS30S=150,175,200,225,250,275,300,350,375,400,450,600,750" >> .env
+          echo "REACT_APP_MAP_STATISTICS=mean,cov,0.1,0.2,0.5,0.8,0.9" >> .env
+          echo "REACT_APP_MAP_POES=0.1,0.02" >> .env
+          echo "REACT_APP_MAP_COLOR_SCALE=jet,inferno,viridis,plasma,magma,cividis" >> .env
+          echo "REACT_APP_MAP_ZOOM_MIN=2" >> .env
+          echo "REACT_APP_MAP_ZOOM_MAX=12" >> .env
+          echo "REACT_APP_MAP_ZOOM_SNAP=0.5" >> .env
+          echo "REACT_APP_MAP_ZOOM_DELTA=0.5" >> .env
+          echo
+          echo "REACT_APP_HAZARD_GMAX=5" >> .env
+          echo "REACT_APP_HAZARD_GMIN=0" >> .env
+          echo "REACT_APP_HAZARD_GMAX_LOG=5" >> .env
+          echo "REACT_APP_HAZARD_GMIN_LOG=0.01" >> .env
+          echo "REACT_APP_HAZARD_POEMAX=1" >> .env
+          echo "REACT_APP_HAZARD_POEMIN=0.000001" >> .env
+          echo
+          echo "REACT_APP_SA_PERIODMAX=10" >> .env
+          echo "REACT_APP_SA_PERIODMIN=0" >> .env
+          echo "REACT_APP_SA_PERIODMAX_LOG=10" >> .env
+          echo "REACT_APP_SA_PERIODMIN_LOG=0.01" >> .env
+          echo "REACT_APP_SA_GMAX=auto" >> .env
+          echo "REACT_APP_SA_GMIN=0" >> .env
+          echo "REACT_APP_SA_LOG_PGA_SUBSTITUTE=0.02" >> .env
+          echo
+          echo "REACT_APP_MEAN=mean" >> .env
+          echo "REACT_APP_UPPER1=0.9" >> .env
+          echo "REACT_APP_UPPER2=0.95" >> .env
+          echo "REACT_APP_LOWER1=0.1" >> .env
+          echo "REACT_APP_LOWER2=0.05" >> .env
+          echo
+          cat .env
+          echo "Now add the secrets.."
+          echo "REACT_APP_DISCLAIMER_VERSION=${{secrets.REACT_APP_DISCLAIMER_VERSION}}" >> .env
+          echo "REACT_APP_GRAPHQL_ENDPOINT=${{secrets.REACT_APP_GRAPHQL_ENDPOINT}}" >> .env
+          echo "REACT_APP_GRAPHQL_API_KEY=${{secrets.REACT_APP_GRAPHQL_API_KEY}}" >> .env
+          echo "REACT_APP_RESOLUTION=${{secrets.REACT_APP_RESOLUTION}}" >> .env
+          echo "REACT_APP_HAZARD_MODEL=${{secrets.REACT_APP_HAZARD_MODEL}}" >> .env
+          echo "REACT_APP_GRID_ID=${{secrets.REACT_APP_GRID_ID}}" >> .env
+          echo
+          yarn build
+
+      - name: Deploy to S3
+        uses: jakejarvis/s3-sync-action@master
+        with:
+          args: --acl public-read --delete
+        env:
+          #The following are repository secrets
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+          #The following are set up in AWS_TEST deployment environ
+          AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
+          SOURCE_DIR: "build"
