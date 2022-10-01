@@ -31,6 +31,10 @@ on:
         required: true
       AWS_S3_BUCKET:
         required: true
+      NODE_AUTH_TOKEN:
+        required: true
+      GITHUB_TOKEN:
+        required: true
 
 jobs:
   build:
