@@ -33,8 +33,6 @@ on:
         required: true
       NODE_AUTH_TOKEN:
         required: true
-      GITHUB_TOKEN:
-        required: true
 
 jobs:
   build:
