@@ -8,8 +8,7 @@ jobs:
   call-deploy-workflow:
     #https://docs.github.com/en/actions/using-workflows/reusing-workflows#calling-a-reusable-workflow
     uses: ./.github/workflows/deploy_to_s3.yml
-    with:
-      environment: AWS_TEST
+    environment: AWS_TEST
     secrets:
       NODE_AUTH_TOKEN: ${{ secrets.TOSHI_NEST_PACKAGE_TOKEN }}
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
