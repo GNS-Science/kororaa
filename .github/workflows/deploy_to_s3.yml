@@ -1,14 +1,44 @@
-name: Deploy TEST
+name: Deploy-to-S3
+
+# https://docs.github.com/en/actions/using-workflows/reusing-workflows#calling-a-reusable-workflow
+# https://colinsalmcorner.com/consuming-environment-secrets-in-reusable-workflows/
 
 on:
-  push:
-    branches: [ deploy-test ]
+  workflow_call:
+    inputs:
+      environment:
+        type: string
+        description: environment to deploy to AWS_TEST or AWS_PROD
+        required: true
+    secrets:
+      REACT_APP_DISCLAIMER_VERSION:
+        required: true
+      REACT_APP_GRAPHQL_ENDPOINT:
+        required: true
+      REACT_APP_GRAPHQL_API_KEY:
+        required: true
+      REACT_APP_RESOLUTION:
+        required: true
+      REACT_APP_HAZARD_MODEL:
+        required: true
+      REACT_APP_GRID_ID:
+        required: true
+      AWS_ACCESS_KEY_ID:
+        required: true
+      AWS_SECRET_ACCESS_KEY:
+        required: true
+      AWS_REGION:
+        required: true
+      AWS_S3_BUCKET:
+        required: true
+      NODE_AUTH_TOKEN:
+        required: true
 
 jobs:
   build:
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    environment: AWS_TEST
+    environment: ${{ inputs.environment }}
 
     strategy:
       matrix:
@@ -86,16 +116,16 @@ jobs:
           echo "REACT_APP_GRID_ID=${{secrets.REACT_APP_GRID_ID}}" >> .env
           echo
           yarn build
-
+    
       - name: Deploy to S3
         uses: jakejarvis/s3-sync-action@master
         with:
           args: --acl public-read --delete
         env:
-          #The following are repository secrets
+          #The following are repository secrets 
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_REGION: ${{ secrets.AWS_REGION }}
-          #The following are set up in AWS_TEST deployment environ
+          #The following are set up in AWS_TEST deployment environ        
           AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
           SOURCE_DIR: "build"

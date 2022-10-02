@@ -1,14 +1,14 @@
-name: Deploy TEST
+name: Deploy PROD
 
 on:
   push:
-    branches: [ deploy-test ]
+    branches: [ main ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    environment: AWS_TEST
+    environment: AWS_PROD
 
     strategy:
       matrix:
