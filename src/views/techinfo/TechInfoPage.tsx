@@ -111,8 +111,7 @@ const TechInfoPage: React.FC = () => {
             <Grid item>
               <Typography variant="body1">
                 <strong>Return period:</strong> associated with the recurrence interval of earthquakes and defined as the reciprocal of mean annual rates (i.e., number of events per year). Sometimes,
-                In terms of hazard results, the reciprocal of annual rates of exceedances is also termed as return period. However, it should be noted that the return period associated with exceedance
-                of a certain level of ground shaking does not imply a periodicity in ground shaking exceedance.
+                In terms of hazard results, the reciprocal of annual rates of exceedances is also termed as return period.
               </Typography>
             </Grid>
 
