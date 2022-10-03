@@ -27,30 +27,8 @@ const TitleContainer = styled('div')({
   paddingBottom: '2rem',
 });
 
-interface OffsiteLinkCardProps {
-  title: string;
-  text: string;
-  url: string;
-}
-
-const OffsiteLinkCard: React.FC<OffsiteLinkCardProps> = ({ title, text, url }: OffsiteLinkCardProps) => {
-  return (
-    <Grid item xs={4}>
-      <StyledCard>
-        <CardActionArea component={Link} target="_blank" rel="noopener" href={url}>
-          <CardContent>
-            <Typography variant="h4">{title}</Typography>
-            <Typography>{text}</Typography>
-          </CardContent>
-        </CardActionArea>
-      </StyledCard>
-    </Grid>
-  );
-};
-
 interface EmailCardProps {
   title: string;
-  text: string;
   email: string;
 }
 
@@ -77,7 +55,7 @@ const MenuCard: React.FC<MenuCardProps> = ({ title, text, img, url }: MenuCardPr
   );
 };
 
-const EmailCard: React.FC<EmailCardProps> = ({ title, text, email }: EmailCardProps) => {
+const EmailCard: React.FC<EmailCardProps> = ({ title, email }: EmailCardProps) => {
   return (
     <Grid item xs={12}>
       <StyledCard>
@@ -125,7 +103,7 @@ const ContactPage: React.FC = () => {
               url="https://www.gns.cri.nz/research-projects/national-seismic-hazard-model/"
             />
             <MenuCard title="GNS" text="NSHM is among the many research programmes of GNS Science." img="images/GNS-home.png" url="https://www.gns.cri.nz/" />
-            <EmailCard title="Email Address" text="The Project team can be contacted here" email="nshm@gns.cri.nz" />
+            <EmailCard title="Email Address" email="nshm@gns.cri.nz" />
           </Grid>
         </Grid>
         <Grid item xs={2} />
