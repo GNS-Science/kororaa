@@ -24,7 +24,7 @@ const TitleContainer = styled('div')({
   justifyContent: 'left',
   textAlign: 'left',
   width: '100%',
-  paddingBottom: '2rem',
+  paddingBottom: '1rem',
 });
 
 interface EmailCardProps {
@@ -86,7 +86,7 @@ const ContactPage: React.FC = () => {
       <Grid container columns={{ sm: 6, md: 8, lg: 12 }}>
         <Grid item xs={2} />
         <Grid item xs={8}>
-          <Grid container spacing={3} columns={{ sm: 6, md: 8, lg: 12 }}>
+          <Grid container spacing={2} columns={{ sm: 6, md: 8, lg: 12 }}>
             <Grid item xs={12}>
               <TitleContainer>
                 <Typography variant="h2">Contacts</Typography>
