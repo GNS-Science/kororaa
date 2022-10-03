@@ -16,7 +16,7 @@ const TitleContainer = styled('div')({
   justifyContent: 'left',
   textAlign: 'left',
   width: '100%',
-  paddingBottom: '2rem',
+  paddingBottom: '1rem',
 });
 
 const AboutPage: React.FC = () => {
@@ -25,7 +25,7 @@ const AboutPage: React.FC = () => {
       <Grid container columns={{ sm: 6, md: 8, lg: 12 }}>
         <Grid item xs={2} />
         <Grid item xs={8}>
-          <Grid container spacing={3} columns={{ sm: 6, md: 8, lg: 12 }}>
+          <Grid container spacing={2} columns={{ sm: 6, md: 8, lg: 12 }}>
             <Grid item xs={12}>
               <TitleContainer>
                 <Typography variant="h2">About The NSHM</Typography>
@@ -39,16 +39,18 @@ const AboutPage: React.FC = () => {
             </Grid>
 
             <Grid item xs={12}>
-              <Typography variant="body1">GNS Science is the custodian of the Aotearoa New Zealand National Seismic Hazard Model.</Typography>
+              <Typography variant="body1">
+                GNS Science is the custodian of the <strong>Aotearoa New Zealand National Seismic Hazard Model</strong>, also known as <strong>Te Tauira Matapae Pūmate Rū i Aotearoa.</strong>
+              </Typography>
             </Grid>
 
             <Grid item xs={12}>
               <Typography variant="body1">
-                Background information on the NSHM Project as well as educational material can be found on the&nbsp;
+                This web site provides scientists and researchers with access to the NSHM results and data. For background information and educational material please visit the&nbsp;
                 <Link color="secondary" target="_blank" rel="noopener" href="https://www.gns.cri.nz/research-projects/national-seismic-hazard-model/">
-                  GNS Page
+                  GNS NSHM project
                 </Link>
-                . Looking for NSHM Results and Data? You&apos;re in the right place.
+                .
               </Typography>
             </Grid>
             <Grid item xs={12}>
