@@ -65,7 +65,7 @@ const HazardChartsSettings: React.FC<HazardChartsSettingsProps> = ({ data, spect
         aria-expanded={open ? 'true' : undefined}
         onClick={handleClick}
       >
-        <Tooltip title="Settings" arrow placement="right">
+        <Tooltip title="Chart Settings and Downloads" arrow placement="right">
           <SettingsIcon />
         </Tooltip>
       </IconButton>

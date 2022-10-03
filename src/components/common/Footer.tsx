@@ -1,6 +1,6 @@
 import React from 'react';
 import { styled } from '@mui/material/styles';
-import { Link } from '@mui/material';
+import { Link, Grid, Typography } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 
 const FooterContainer = styled('footer')(({ theme }) => ({
@@ -24,17 +24,35 @@ const FooterLinkItems = styled('div')({
 const Footer: React.FC = () => {
   return (
     <FooterContainer>
-      <FooterLinkItems>
-        <Link underline="hover" component={RouterLink} color="inherit" to="/TechInfo">
-          Technical Info
-        </Link>
-        <Link underline="hover" component={RouterLink} color="inherit" to="/Contacts">
-          Contacts
-        </Link>
-        <Link underline="hover" component={RouterLink} color="inherit" to="/About">
-          About
-        </Link>
-      </FooterLinkItems>
+      <Grid container columns={{ sm: 6, md: 8, lg: 12 }}>
+        <Grid item xs={2}>
+          <FooterLinkItems>
+            <Link underline="hover" component={RouterLink} color="inherit" to="/TechInfo">
+              Technical Info
+            </Link>
+            <Link underline="hover" component={RouterLink} color="inherit" to="/Contacts">
+              Contacts
+            </Link>
+            <Link underline="hover" component={RouterLink} color="inherit" to="/About">
+              About
+            </Link>
+          </FooterLinkItems>
+        </Grid>
+        <Grid item xs={8}>
+          <FooterLinkItems>
+            <Typography variant="body1" textAlign="center">
+              <em>
+                This site provides only seismic hazard results and is not to be used for engineering design.
+                <br />
+                Please see &nbsp;
+                <Link underline="hover" color="inherit" target="_blank" rel="noopener" href="https://www.building.govt.nz/getting-started/seismic-work-programme">
+                  MBIE for information related to engineering design and the NSHM.
+                </Link>
+              </em>
+            </Typography>
+          </FooterLinkItems>
+        </Grid>
+      </Grid>
     </FooterContainer>
   );
 };
