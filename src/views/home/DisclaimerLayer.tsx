@@ -43,7 +43,7 @@ const DisclaimerLayer: React.FC<DisclaimerLayerProps> = ({ children }: Disclaime
             this output by any person, on any ground, for any loss, damage or expense arising from such use or reliance.
           </Typography>
           <Typography id="modal-modal-description2" sx={{ mt: 2 }}>
-            This site provides only seismic hazard results and is not to be used for engineering design. Please see&nbsp;
+            This site provides only seismic hazard results. Please see&nbsp;
             <Link underline="hover" color="inherit" target="_blank" rel="noopener" href="https://www.building.govt.nz/getting-started/seismic-work-programme">
               MBIE for information related to engineering design and the NSHM.
             </Link>
