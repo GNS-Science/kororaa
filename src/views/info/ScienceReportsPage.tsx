@@ -32,13 +32,10 @@ interface IPerson {
 }
 
 interface IScienceReport {
-  topic?: string | null;
   title?: string | null;
   filename?: string | null;
   status?: ReportStatusEnum | null;
-  area?: ProjectAreaEnum | null;
   readonly lead_author?: IPerson | null;
-  readonly reviewers?: ReadonlyArray<IPerson> | null;
   publication_date?: string | null;
   bibliographic_ref?: string | null;
 }
@@ -65,16 +62,7 @@ const ScienceReportCard: React.FC<IScienceReportCardProps> = ({ report }: IScien
             </Grid>
           </Grid>
           <Typography>
-            {report.area && (
-              <>
-                <strong>Area:</strong>&nbsp;{report.area} &nbsp; &nbsp; &nbsp;
-              </>
-            )}
-            <strong>Topic:</strong>&nbsp;{report.topic}
-          </Typography>
-          <Typography>
             <strong>Lead author:</strong>&nbsp;{report.lead_author && report.lead_author.name}&nbsp; &nbsp; &nbsp;
-            <strong>Reviewers:</strong>&nbsp;{report.reviewers && report.reviewers.map((reviewer) => reviewer.name + ', ')}
           </Typography>
           {report.bibliographic_ref && (
             <Typography>
@@ -125,17 +113,12 @@ export const scienceReportsPageQuery = graphql`
     science_reports {
       ok
       reports {
-        topic
         filename
-        area
         title
         status
         notes
         report_number
         lead_author {
-          name
-        }
-        reviewers {
           name
         }
         publication_date
