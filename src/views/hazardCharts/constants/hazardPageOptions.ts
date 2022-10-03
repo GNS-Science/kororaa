@@ -111,12 +111,6 @@ export const hazardPageLocations: HazardPageLocations[] = [
     longitude: 176.08,
   },
   {
-    id: 'WRE',
-    name: 'Whangarei',
-    latitude: -35.72,
-    longitude: 174.32,
-  },
-  {
     id: 'LVN',
     name: 'Levin',
     latitude: -40.63,
@@ -133,18 +127,6 @@ export const hazardPageLocations: HazardPageLocations[] = [
     name: 'Timaru',
     latitude: -44.4,
     longitude: 171.26,
-  },
-  {
-    id: 'OAM',
-    name: 'Oamaru',
-    latitude: -45.1,
-    longitude: 171.97,
-  },
-  {
-    id: 'PUK',
-    name: 'Pukekohe',
-    latitude: -37.2,
-    longitude: 174.9,
   },
   {
     id: 'HLZ',
@@ -187,6 +169,54 @@ export const hazardPageLocations: HazardPageLocations[] = [
     name: 'Hanmer Springs',
     latitude: -42.54,
     longitude: 172.78,
+  },
+  {
+    id: 'TKZ',
+    name: 'Tokoroa',
+    latitude: -38.23,
+    longitude: 175.87,
+  },
+  {
+    id: 'KKE',
+    name: 'Kerikeri',
+    latitude: -35.22,
+    longitude: 173.97,
+  },
+  {
+    id: 'TEU',
+    name: 'Te Anau',
+    latitude: -45.41,
+    longitude: 167.72,
+  },
+  {
+    id: 'MON',
+    name: 'Mount Cook',
+    latitude: -43.73,
+    longitude: 170.1,
+  },
+  {
+    id: 'TMZ',
+    name: 'Thames',
+    latitude: -37.13,
+    longitude: 175.53,
+  },
+  {
+    id: 'HAW',
+    name: 'Hawera',
+    latitude: -39.59,
+    longitude: 174.28,
+  },
+  {
+    id: 'WHO',
+    name: 'Franz Josef',
+    latitude: -43.35,
+    longitude: 170.17,
+  },
+  {
+    id: 'WSZ',
+    name: 'Westport',
+    latitude: -41.75,
+    longitude: 171.58,
   },
 ];
 
