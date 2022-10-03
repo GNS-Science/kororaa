@@ -111,12 +111,6 @@ export const hazardPageLocations: HazardPageLocations[] = [
     longitude: 176.08,
   },
   {
-    id: 'WRE',
-    name: 'Whangarei',
-    latitude: -35.72,
-    longitude: 174.32,
-  },
-  {
     id: 'LVN',
     name: 'Levin',
     latitude: -40.63,
