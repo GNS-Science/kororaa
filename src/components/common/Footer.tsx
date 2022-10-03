@@ -42,7 +42,7 @@ const Footer: React.FC = () => {
           <FooterLinkItems>
             <Typography variant="body1" textAlign="center">
               <em>
-                This site provides only seismic hazard results and is not to be used for engineering design.
+                This site provides only seismic hazard results.
                 <br />
                 Please see &nbsp;
                 <Link underline="hover" color="inherit" target="_blank" rel="noopener" href="https://www.building.govt.nz/getting-started/seismic-work-programme">

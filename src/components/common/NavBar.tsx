@@ -13,6 +13,12 @@ const StyledAppBar = styled(AppBar)(({ theme }) => ({
   // display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-around',
+  '&& .Mui-selected': {
+    backgroundColor: theme.palette.navbar.main,
+    textDecoration: 'underline',
+    textDecorationThickness: '2px',
+    textDecorationColor: theme.palette.navbar.accent,
+  },
 }));
 
 const StyledToolbar = styled(Toolbar)({
