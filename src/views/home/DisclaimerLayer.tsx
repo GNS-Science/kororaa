@@ -44,7 +44,7 @@ const DisclaimerLayer: React.FC<DisclaimerLayerProps> = ({ children }: Disclaime
           </Typography>
           <Typography id="modal-modal-description2" sx={{ mt: 2 }}>
             This site provides only seismic hazard results. Please see&nbsp;
-            <Link underline="hover" color="inherit" target="_blank" rel="noopener" href="https://www.building.govt.nz/getting-started/seismic-work-programme">
+            <Link underline="hover" color="inherit" target="_blank" rel="noopener" href="https://www.building.govt.nz/getting-started/seismic-work-programme/national-seismic-hazard-model">
               MBIE for information related to engineering design and the NSHM.
             </Link>
           </Typography>
