@@ -95,7 +95,18 @@ const TechInfoPage: React.FC = () => {
 
             <Grid item xs={12}>
               <Typography variant="h5">Vs30</Typography>
-              <Typography variant="body1">The NSHM does not include a national Vs30 map and a Vs30 estimate should be obtained for each site.</Typography>
+              <Typography variant="body1">
+                The NSHM does not include a national Vs30 map and a Vs30 estimate should be obtained for each site. See&nbsp;
+                <Link
+                  underline="hover"
+                  color="secondary"
+                  target="_blank"
+                  rel="noopener"
+                  href="https://www.building.govt.nz/building-code-compliance/b-stability/b1-structure/module-2-geotechnical-investigations/"
+                >
+                  MBIE for more information.
+                </Link>
+              </Typography>
             </Grid>
 
             <Grid item xs={12}>
