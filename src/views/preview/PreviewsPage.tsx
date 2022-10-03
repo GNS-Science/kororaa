@@ -50,12 +50,10 @@ const PreviewsPage: React.FC = () => {
       <Grid container columns={{ sm: 6, md: 8, lg: 12 }}>
         <Grid item xs={2} />
         <Grid spacing={3} item xs={8}>
-          <Grid item xs={12}>
-            <PreviewTitleContainer>
-              <Typography variant="h2">Coming features</Typography>
-              <Typography variant="body1">New features that we expect to include over the coming months.</Typography>
-            </PreviewTitleContainer>
-          </Grid>
+          <PreviewTitleContainer>
+            <Typography variant="h2">Coming features</Typography>
+            <Typography variant="body1">New features that we expect to include over the coming months.</Typography>
+          </PreviewTitleContainer>
           <Grid container spacing={3} columns={{ sm: 6, md: 8, lg: 12 }}>
             <PreviewCard title="Ruptures and Rates view" text="Users can explore the Rupture sets and seismic rate models that produced the NSHM." img="/images/TUI-ruptures-0.png" />
             <PreviewCard title="NSHM Public API" text="A web API providing access to the datasets and internal components of the NSHM." img="/images/K-API-igraphql-0.png" />

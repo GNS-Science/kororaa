@@ -1,6 +1,7 @@
 import React from 'react';
 import { styled } from '@mui/material/styles';
 import { Typography, Grid } from '@mui/material';
+
 import { Link } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 
@@ -11,27 +12,37 @@ const PageContainer = styled('div')({
   marginBottom: '2rem',
 });
 
+const TitleContainer = styled('div')({
+  justifyContent: 'left',
+  textAlign: 'left',
+  width: '100%',
+  paddingBottom: '2rem',
+});
+
 const AboutPage: React.FC = () => {
   return (
     <PageContainer>
       <Grid container columns={{ sm: 6, md: 8, lg: 12 }}>
         <Grid item xs={2} />
         <Grid item xs={8}>
-          <Typography variant="h2">About The NZ-NSHM</Typography>
-          <Grid container rowSpacing={1.5} direction="column">
-            <Grid item>
-              <Typography variant="body1">
-                <strong>
-                  The National Seismic Hazard Model (NSHM) calculates the likelihood and strength of earthquake shaking that may occur in different parts of Aotearoa New Zealand over specified time
-                  periods. The NSHM provides forecasts of ground shaking for the next 100 years.
-                </strong>
-              </Typography>
+          <Grid container spacing={3} columns={{ sm: 6, md: 8, lg: 12 }}>
+            <Grid item xs={12}>
+              <TitleContainer>
+                <Typography variant="h2">About The NSHM</Typography>
+                <Typography variant="body1">
+                  <strong>
+                    The National Seismic Hazard Model (NSHM) calculates the likelihood and strength of earthquake shaking that may occur in different parts of Aotearoa New Zealand over specified time
+                    periods. The NSHM provides forecasts of ground shaking for the next 100 years.
+                  </strong>
+                </Typography>
+              </TitleContainer>
             </Grid>
 
-            <Grid item>
+            <Grid item xs={12}>
               <Typography variant="body1">GNS Science is the custodian of the Aotearoa New Zealand National Seismic Hazard Model.</Typography>
             </Grid>
-            <Grid item>
+
+            <Grid item xs={12}>
               <Typography variant="body1">
                 Background information on the NSHM Project as well as educational material can be found on the&nbsp;
                 <Link color="secondary" target="_blank" rel="noopener" href="https://www.gns.cri.nz/research-projects/national-seismic-hazard-model/">
@@ -40,7 +51,7 @@ const AboutPage: React.FC = () => {
                 . Looking for NSHM Results and Data? You&apos;re in the right place.
               </Typography>
             </Grid>
-            <Grid item>
+            <Grid item xs={12}>
               <Typography variant="body1">
                 Details on model development and implementation can be found in the&nbsp;
                 <Link underline="hover" component={RouterLink} color="secondary" to="/Resources/ScienceReports">
@@ -49,7 +60,7 @@ const AboutPage: React.FC = () => {
                 &nbsp;page.
               </Typography>
             </Grid>
-            <Grid item>
+            <Grid item xs={12}>
               <Typography variant="body1">
                 Planned features for the site can be found in the&nbsp;
                 <Link underline="hover" component={RouterLink} color="secondary" to="/Previews">
