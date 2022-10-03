@@ -92,8 +92,7 @@ const TechInfoPage: React.FC = () => {
             <Grid item>
               <Typography variant="body1">
                 The NZ NSHM 2022 provides forecasts of ground shaking for the next 100 years. Time 100 year time dependence has been included in the model using time since the most recent known event
-                on faults (conditional probability of rupture) as well as increased seismicity rates in areas that have recently experienced earthquakes (e.g. Christchurch and Kaikoura). On average,
-                the time-dependence has increased the estimate of seismic hazard, though it does decrease it in some areas.
+                on faults (conditional probability of rupture) as well as increased seismicity rates in areas that have recently experienced earthquakes (e.g. Christchurch and Kaikoura).
               </Typography>
             </Grid>
 
