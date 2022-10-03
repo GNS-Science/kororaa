@@ -15,7 +15,9 @@ const StyledAppBar = styled(AppBar)(({ theme }) => ({
   justifyContent: 'space-around',
   '&& .Mui-selected': {
     backgroundColor: theme.palette.navbar.main,
-    borderBottom: `3px solid ${theme.palette.navbar.accent}`,
+    textDecoration: 'underline',
+    textDecorationThickness: '2px',
+    textDecorationColor: theme.palette.navbar.accent,
   },
 }));
 
