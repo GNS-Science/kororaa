@@ -48,7 +48,7 @@ const AboutPage: React.FC = () => {
               <Typography variant="body1">
                 This web site provides scientists and researchers with access to the NSHM results and data. For background information and educational material please visit the&nbsp;
                 <Link color="secondary" target="_blank" rel="noopener" href="https://www.gns.cri.nz/research-projects/national-seismic-hazard-model/">
-                  GNS NSHM project
+                  GNS page
                 </Link>
                 .
               </Typography>
