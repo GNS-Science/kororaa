@@ -34,12 +34,12 @@ const Home: React.FC = () => {
       </HomeTitleContainer>
 
       <Grid container spacing={3} columns={{ sm: 6, md: 8, lg: 12 }} paddingBottom="2rem">
+        <MenuCard title="About" text="Background Information." img="/images/GNS-home.png" url="/About" />
         <MenuCard title="Curves and Spectra" text="Site hazard and UHS plots." img="/images/SpectralAccelChart.png" url="/Hazardcurves" />
-        <MenuCard title="Hazard Maps" text="Hazard levels across NZ." img="/images/HazardMapExample.png" url="/HazardMaps" />
-        <MenuCard title="Coming features" text="Previews from our backlog." img="/images/TUI-ruptures-0.png" url="/Previews" />
+        <MenuCard title="Hazard Maps" text="Hazard levels across NZ." img="images/hazard_map.jpeg" url="/HazardMaps" />
+        <MenuCard title="Disaggregations" text="Source breakdowns." img="/images/disagg2.png" url="/Disaggs" />
         <MenuCard title="Science Reports" text="Model reports and datasets." img="/info.jpg" url="/Resources/ScienceReports" />
-        <MenuCard title="Disaggregations" text="Source details at selected sites." img="/images/disagg2.png" url="/Disaggs" />
-        <MenuCard title="About" text="Background Information." img="/images/NSHM_Web_logo_blue_crop.jpg" url="/About" />
+        <MenuCard title="Coming features" text="Previews from our backlog." img="/images/TUI-ruptures-0.png" url="/Previews" />
       </Grid>
 
       <Grid container spacing={3} columns={{ sm: 6, md: 8, lg: 12 }}>
