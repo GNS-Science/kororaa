@@ -29,7 +29,7 @@ export const getSpectralAccelUncertaintyCurves = (vs30s: number[], locs: string[
     vs30s.forEach((vs30) => {
       locs.forEach((loc) => {
         const location = data.hazard_curves?.locations?.filter((location) => location?.code === loc);
-        const key = `${vs30}m/s ${location && location[0]?.key ? location[0]?.key : roundLatLon(loc)}`;
+        const key = `${vs30}m/s ${location && location[0]?.key ? location[0]?.name : roundLatLon(loc)}`;
         if (!saCurveGroups[key]) {
           saCurveGroups[key] = {};
         }
