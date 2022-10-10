@@ -30,14 +30,14 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.TOSHI_NEST_PACKAGE_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          CI: false
+          GENERATE_SOURCEMAP: false
         run: |
           yarn install --frozen-lockfile
           yarn test
 
       - name: Yarn build
         env:
-          CI: false
+          GENERATE_SOURCEMAP: false
         run: |
           echo "Configure build environment"
           touch .env
