@@ -7,22 +7,8 @@ describe('Hazard Curves', () => {
     cy.get('button').contains('Accept').click();
   });
 
-  it('Displays no chart', () => {
-    cy.get('[role=curve]').should('not.exist');
-  });
-
-  it('Displays a chart after 400 vs30 is selected', () => {
-    cy.get('[id="mui-component-select-Vs30"]').click();
-    cy.get('li').contains('400').click();
-    cy.get('li').contains('250').click();
-    cy.get('body').click();
-    cy.get('[type="submit"]').click();
-    cy.get('[role=curve]').should('exist');
-  });
-
-  it('Displays chart with one curve group', () => {
-    cy.contains('Hazard Uncertainty');
-    cy.get('[role=curve]').should('have.length', 5);
+  it('Displays inital charts when first visiting page', () => {
+    cy.get('[role="curve"]').should('have.length', 9);
   });
 
   it('Displays out of range error when POE over 100 or below 0 is selected', () => {
@@ -40,13 +26,13 @@ describe('Hazard Curves', () => {
   it('Displays second chart after probability of exceedence selection, then can deselect and chart disappears', () => {
     cy.get('input[id="poe-input"]').clear().type('10');
     cy.get('[type="submit"]').click();
-    cy.contains('Spectral Acceleration Chart');
+    cy.contains('Uniform Hazard Spectra');
     cy.get('input[id="poe-input"]').clear().type('10.5');
     cy.get('[type="submit"]').click();
-    cy.contains('Spectral Acceleration Chart');
+    cy.contains('Uniform Hazard Spectra');
     cy.get('input[id="poe-input"]').clear();
     cy.get('[type="submit"]').click();
-    cy.get('Spectral Acceleration Chart').should('not.exist');
+    cy.get('Uniform Hazard Spectra').should('not.exist');
   });
 
   it('Displays multiple curves after user selects multiple spectral periods', () => {
@@ -55,7 +41,7 @@ describe('Hazard Curves', () => {
     cy.get('li[data-value="SA(0.2)"]').click();
     cy.get('li[data-value="SA(0.3)"]').click();
     cy.get('[type="submit"]').click({ force: true });
-    cy.get('[role="curve"]').should('have.length', 20);
+    cy.get('[role="curve"]').should('have.length', 16);
   });
 
   it('Displays tooltips for all selected spectral periods', () => {
@@ -66,32 +52,31 @@ describe('Hazard Curves', () => {
   });
 
   it('Displays one curve after user deselects spectral periods', () => {
-    cy.get('div').contains('Multiple selected').click();
+    cy.get('div').contains('Multiple selected').click({ force: true });
     cy.get('li[data-value="SA(0.1)"]').click();
     cy.get('li[data-value="SA(0.2)"]').click();
     cy.get('li[data-value="SA(0.3)"]').click();
     cy.get('[type="submit"]').click({ force: true });
-    cy.get('[role="curve"]').should('have.length', 5);
+    cy.get('[role="curve"]').should('have.length', 4);
+    cy.get('[role="listbox"]').focus().type('{esc}');
   });
 
   it('Displays multiple curves when user selects more than one location', () => {
-    cy.get('div[class="MuiAutocomplete-endAdornment css-1q60rmi-MuiAutocomplete-endAdornment"]').click();
-    cy.get('li').contains('Christchurch').click();
+    cy.get('[data-testid="ArrowDropDownIcon"]').first().click({ force: true });
+    cy.get('li').contains('Christchurch').click({ force: true });
     cy.get('[type="submit"]').click({ force: true });
-    cy.get('[role="curve"]').should('have.length', 10);
-    cy.get('div[class="visx-legend-label"]').should('contain.text', 'WLG PGA 400m/s ');
-    cy.get('div[class="visx-legend-label"]').should('contain.text', 'CHC PGA 400m/s');
+    cy.get('[role="curve"]').should('have.length', 8);
+    cy.get('div[class="visx-legend-label"]').should('contain.text', '400m/s PGA Wellington 400m/s PGA Christchurch');
   });
 
   it('Displays curve when user inputs arbitrary latlon value', () => {
-    cy.get('div[class="MuiAutocomplete-endAdornment css-1q60rmi-MuiAutocomplete-endAdornment"]').click();
-    cy.get('li').contains('Christchurch').click();
-    cy.get('div[class="MuiAutocomplete-endAdornment css-1q60rmi-MuiAutocomplete-endAdornment"]').click();
-    cy.get('li').contains('Wellington').click();
+    cy.get('[data-testid="ArrowDropDownIcon"]').first().click({ force: true });
+    cy.get('li').contains('Christchurch').click({ force: true });
+    cy.get('li').contains('Wellington').click({ force: true });
     cy.get('[class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-1x51dt5-MuiInputBase-input-MuiInput-input"]').first().type('-42, 173');
     cy.get('[type="submit"]').click({ force: true });
-    cy.get('[role="curve"]').should('have.length', 5);
-    cy.get('div[class="visx-legend-label"]').should('contain.text', '-42.0, 173.0 PGA 400m/s');
+    cy.get('[role="curve"]').should('have.length', 4);
+    cy.get('div[class="visx-legend-label"]').should('contain.text', '400m/s PGA -42.0, 173.0');
   });
 
   it.skip('Displays multiple curves when user selects more than one VS30', () => {
@@ -99,10 +84,12 @@ describe('Hazard Curves', () => {
     cy.get('li').contains('350').click();
     cy.get('[type="submit"]').click({ force: true });
     cy.get('[role="curve"]').should('have.length', 4);
+    cy.get('[role="listbox"]').focus().type('{esc}');
   });
 
   it.skip('When the save data button is clicked, a CSV file is downloaded', () => {
-    cy.get('button').contains('Save Data').click();
-    cy.readFile('hazard-curves.csv');
+    cy.get('button[class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-9z10d6-MuiButtonBase-root-MuiIconButton-root"]').click();
+    cy.get('li').contains('get CSV').click();
+    cy.readFile('./hazard-curves.csv');
   });
 });

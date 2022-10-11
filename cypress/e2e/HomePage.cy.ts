@@ -20,61 +20,91 @@ describe('Home Page', () => {
   });
 
   it('Displays the nav bar', () => {
-    cy.get('header').contains('Hazard Curves');
-    cy.get('header').contains('Rupture Sets');
+    cy.get('header').contains('Site Hazard');
     cy.get('header').contains('Hazard Maps');
-    cy.get('header').contains('Info & Input Files');
+    cy.get('header').contains('Coming Features');
+    cy.get('header').contains('Resources');
+    cy.get('header').contains('Help');
   });
 
   it('Displays h1', () => {
     cy.get('h1').contains('National Seismic Hazard Model');
   });
 
-  it('displays intro text', () => {
-    cy.get('p').contains('Welcome to the New Zealand NSHM. This is the 2022 revision to the model. Here’s a link back to the explanation and background info on the model.');
-  });
-
   it('displays hazard card', () => {
-    cy.get('div').contains('Hazard Curves to view');
+    cy.get('div').contains('Site hazard and UHS plots.');
   });
 
-  it('displays hazard map card', () => {
-    cy.get('div').contains('Hazard Maps to view');
+  it('displays hazard about card', () => {
+    cy.get('div').contains('Background Information.');
   });
 
-  it('displays rupture set card', () => {
-    cy.get('div').contains('Rupture Sets to view');
+  it('displays hazard maps card', () => {
+    cy.get('div').contains('Hazard levels across NZ.');
   });
 
-  it('displays info card', () => {
-    cy.get('div').contains('Model Information, Reports, and Input Files');
+  it('displays disaggregations card', () => {
+    cy.get('div').contains('Source breakdowns.');
+  });
+
+  it('displays science reports card', () => {
+    cy.get('div').contains('Model reports and datasets.');
+  });
+
+  it('displays coming features card', () => {
+    cy.get('div').contains('Previews from our backlog');
+  });
+});
+
+describe('NavBarLinks', () => {
+  beforeEach(() => {
+    cy.visit('/');
+    cy.get('button').contains('Accept').click();
   });
 
   it('Hazard Curves Nav Link works', () => {
-    cy.visit('/');
-    cy.get('button').contains('Accept').click();
-    cy.get('header').contains('Hazard Curves').click();
+    cy.get('header').contains('Site Hazard').click();
+    cy.get('[role="menuitem"]').contains('Curves and Spectra').click({ force: true });
     cy.url().should('include', '/HazardCurves');
   });
 
+  it('Disaggregations Nav Link works', () => {
+    cy.get('header').contains('Site Hazard').click();
+    cy.get('[role="menuitem"]').contains('Disaggregations').click({ force: true });
+    cy.url().should('include', '/Disaggs');
+  });
+
   it('Hazard Map Nav Link works', () => {
-    cy.visit('/');
-    cy.get('button').contains('Accept').click();
     cy.get('header').contains('Hazard Maps').click();
     cy.url().should('include', '/HazardMaps');
   });
 
-  it('Rupture Set Nav Link works', () => {
-    cy.visit('/');
-    cy.get('button').contains('Accept').click();
-    cy.get('header').contains('Rupture Sets').click();
-    cy.url().should('include', '/RuptureSets');
+  it('Coming Features Nav Link works', () => {
+    cy.get('header').contains('Coming Features').click({ force: true });
+    cy.url().should('include', '/Previews');
   });
 
-  it('Hazard Map Nav Link works', () => {
-    cy.visit('/');
-    cy.get('button').contains('Accept').click();
-    cy.get('header').contains('Info & Input Files').click();
-    cy.url().should('include', '/info');
+  it('Science Reports Link works', () => {
+    cy.get('header').contains('Resources').click();
+    cy.get('[role="menuitem"]').contains('Science reports').click({ force: true });
+    cy.url().should('include', '/Resources/ScienceReports');
+  });
+
+  it('About Link works', () => {
+    cy.get('header').contains('Help').click();
+    cy.get('[role="menuitem"]').contains('About').click({ force: true });
+    cy.url().should('include', '/About');
+  });
+
+  it('Technical Info Link works', () => {
+    cy.get('header').contains('Help').click();
+    cy.get('[role="menuitem"]').contains('Technical Info').click({ force: true });
+    cy.url().should('include', '/TechInfo');
+  });
+
+  it('Contacts Link works', () => {
+    cy.get('header').contains('Help').click();
+    cy.get('[role="menuitem"]').contains('Contacts').click({ force: true });
+    cy.url().should('include', '/Contacts');
   });
 });
