@@ -5,7 +5,7 @@ import { graphql } from 'babel-plugin-relay/macro';
 import { useLazyLoadQuery } from 'react-relay/hooks';
 import { Card, CardContent, Typography, Link, Button } from '@mui/material';
 import SimpleBackdrop from '../../components/common/SimpleBackdrop';
-import { ScienceReportsPageQuery, ProjectAreaEnum, ReportStatusEnum } from './__generated__/ScienceReportsPageQuery.graphql';
+import { ScienceReportsPageQuery, ReportStatusEnum } from './__generated__/ScienceReportsPageQuery.graphql';
 
 const StyledCard = styled(Card)(() => ({
   justifyContent: 'center',
