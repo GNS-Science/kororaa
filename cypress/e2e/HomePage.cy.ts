@@ -90,18 +90,6 @@ describe('NavBarLinks', () => {
     cy.url().should('include', '/Resources/ScienceReports');
   });
 
-  it('Science Reports Link works', () => {
-    cy.get('header').contains('Resources').click();
-    cy.get('[role="menuitem"]').contains('Science reports').click({ force: true });
-    cy.url().should('include', '/Resources/ScienceReports');
-  });
-
-  it('Science Reports Link works', () => {
-    cy.get('header').contains('Resources').click();
-    cy.get('[role="menuitem"]').contains('Science reports').click({ force: true });
-    cy.url().should('include', '/Resources/ScienceReports');
-  });
-
   it('About Link works', () => {
     cy.get('header').contains('Help').click();
     cy.get('[role="menuitem"]').contains('About').click({ force: true });

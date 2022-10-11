@@ -8,7 +8,7 @@ describe('Hazard Curves', () => {
   });
 
   it('Displays inital charts when first visiting page', () => {
-    cy.get('[role=curve]').should('have.length', 9);
+    cy.get('[role="curve"]').should('have.length', 9);
   });
 
   it('Displays out of range error when POE over 100 or below 0 is selected', () => {

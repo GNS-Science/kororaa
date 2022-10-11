@@ -1,10 +1,10 @@
 describe('HazardMapsPage', () => {
   before(() => {
     cy.visit('/HazardMaps');
-    cy.get('button').contains('Accept').click();
   });
-
+  
   it('Map renders', () => {
+    cy.get('button').contains('Accept').click({ force: true });
     cy.get('[id="leaflet-map-container"]').should('exist');
   });
 
