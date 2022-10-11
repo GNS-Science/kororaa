@@ -80,7 +80,7 @@ describe('NavBarLinks', () => {
   });
 
   it('Coming Features Nav Link works', () => {
-    cy.get('header').contains('Coming Features').click();
+    cy.get('header').contains('Coming Features').click({ force: true });
     cy.url().should('include', '/Previews');
   });
 
