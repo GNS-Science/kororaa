@@ -5,6 +5,7 @@ on:
     branches:
       - main
       - deploy-test
+      - fix/255_cypress_catchup
 
 jobs:
   cypress-run:
