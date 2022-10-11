@@ -1,6 +1,6 @@
-describe('LeafletPage', () => {
+describe('HazardMapsPage', () => {
   before(() => {
-    cy.visit('/RuptureSets');
+    cy.visit('/HazardMaps');
     cy.get('button').contains('Accept').click();
   });
 

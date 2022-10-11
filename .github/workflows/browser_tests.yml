@@ -19,6 +19,7 @@ jobs:
           echo REACT_APP_DISCLAIMER_VERSION=versionOne >> .env
           echo REACT_APP_GRAPHQL_ENDPOINT=..../graphql >> .env
           echo REACT_APP_GRAPHQL_API_KEY=$##@! >> .env
+          echo GENERATE_SOURCEMAP=false >> .env
           cat .env
       - name: Node Setup
         uses: actions/setup-node@v3
