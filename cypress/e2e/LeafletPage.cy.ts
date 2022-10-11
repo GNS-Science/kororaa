@@ -17,8 +17,7 @@ describe('HazardMapsPage', () => {
 
   it('Renders drawer button and opens the drawer when clicked, drawer close button closes drawer', () => {
     cy.get('[data-testid="ChevronRightIcon"]').click();
-    cy.get('h4').contains('Hazard Maps').scrollIntoView()
-    cy.get('h4').contains('Hazard Maps').should('be.visible');
+    cy.get('h4').contains('Hazard Maps').should('exist');
     cy.get('[data-testid="ChevronLeftIcon"]').click({ force: true });
     cy.get('h4').contains('Hazard Maps').should('not.be.visible');
   });
