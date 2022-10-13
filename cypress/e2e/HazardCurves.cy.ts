@@ -66,7 +66,7 @@ describe('Hazard Curves', () => {
     cy.get('li').contains('Christchurch').click({ force: true });
     cy.get('[type="submit"]').click({ force: true });
     cy.get('[role="curve"]').should('have.length', 8);
-    cy.get('div[class="visx-legend-label"]').should('contain.text', '400m/s PGA Wellington 400m/s PGA Christchurch');
+    cy.get('div[class="visx-legend-label"]').should('contain.text', '400m/s PGA Christchurch 400m/s PGA Wellington');
   });
 
   it('Displays curve when user inputs arbitrary latlon value', () => {
