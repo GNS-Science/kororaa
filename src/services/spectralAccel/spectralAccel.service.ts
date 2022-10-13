@@ -108,6 +108,27 @@ export const addColorsToCurves = (curveGroups: UncertaintyChartData): Uncertaint
   return curveGroups;
 };
 
+export const sortSACurveGroups = (curveGroups: UncertaintyChartData): UncertaintyChartData => {
+  const sortedCurveGroups: UncertaintyChartData = {};
+  Object.keys(curveGroups)
+    .sort((a, b) => {
+      const aSplit = a.split(' ');
+      const bSplit = b.split(' ');
+      const aVs30 = parseFloat(aSplit[0]);
+      const bVs30 = parseFloat(bSplit[0]);
+      const aLoc = aSplit[1];
+      const bLoc = bSplit[1];
+      if (aLoc === bLoc) {
+        return aVs30 - bVs30;
+      }
+      return aLoc.localeCompare(bLoc);
+    })
+    .forEach((key) => {
+      sortedCurveGroups[key] = curveGroups[key];
+    });
+  return sortedCurveGroups;
+};
+
 export const tryParseLatLon = (loc: string): string[] => {
   if (loc.split(',').length === 1) {
     return getLatLonFromLocationKey(loc).split(',');

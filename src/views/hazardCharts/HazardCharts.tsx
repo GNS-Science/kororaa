@@ -4,9 +4,9 @@ import { styled } from '@mui/material/styles';
 import { GroupCurveChartResponsive } from '@gns-science/toshi-nest';
 
 import { HazardChartsPlotsViewQuery$data } from './__generated__/HazardChartsPlotsViewQuery.graphql';
-import { getAllCurveGroups, getFilteredCurveGroups, getLocationList, getYScale } from './hazardPage.service';
+import { getAllCurveGroups, getFilteredCurveGroups, getLocationList, getYScale, sortCurveGroups } from './hazardPage.service';
 import { HazardPageState } from './hazardPageReducer';
-import { addColorsToCurves, getSpectralAccelUncertaintyCurves } from '../../services/spectralAccel/spectralAccel.service';
+import { addColorsToCurves, getSpectralAccelUncertaintyCurves, sortSACurveGroups } from '../../services/spectralAccel/spectralAccel.service';
 import HazardChartsSettings from './HazardChartsSettings';
 import {
   HAZARD_GMAX,
@@ -34,8 +34,10 @@ const HazardCharts: React.FC<HazardChartsProps> = ({ data, state, dispatch }: Ha
   const allCurveGroups = useMemo(() => getAllCurveGroups(data), [data]);
   const filteredCurveGroups = useMemo(() => getFilteredCurveGroups(allCurveGroups, state.imts), [allCurveGroups, state.imts]);
   const curveGroupWithColors = useMemo(() => addColorsToCurves(filteredCurveGroups), [filteredCurveGroups]);
+  const sortedCurveGroup = useMemo(() => sortCurveGroups(curveGroupWithColors), [curveGroupWithColors]);
   const saCurvesUncertainty = useMemo(() => getSpectralAccelUncertaintyCurves(state.vs30s, locationList, data, state.poe, state.spectraXScale), [locationList, state, data]);
   const saCurvesWithColors = useMemo(() => addColorsToCurves(saCurvesUncertainty), [saCurvesUncertainty]);
+  const sortedSaCurves = useMemo(() => sortSACurveGroups(saCurvesWithColors), [saCurvesWithColors]);
 
   const spectralYLimits = useMemo(() => {
     if (SA_GMAX === 'auto') {
@@ -82,7 +84,7 @@ const HazardCharts: React.FC<HazardChartsProps> = ({ data, state, dispatch }: Ha
               tooltip={true}
               crosshair={true}
               heading="Hazard Curve"
-              curves={curveGroupWithColors}
+              curves={sortedCurveGroup}
               poe={state.poe}
               uncertainty={state.hazardUncertainty}
             />
@@ -105,7 +107,7 @@ const HazardCharts: React.FC<HazardChartsProps> = ({ data, state, dispatch }: Ha
                 crosshair={true}
                 heading="Uniform Hazard Spectrum"
                 subHeading={`${(state.poe * 100).toFixed(1)}% in 50 years`}
-                curves={saCurvesWithColors}
+                curves={sortedSaCurves}
                 poe={state.poe}
                 uncertainty={state.spectralUncertainty}
               />
