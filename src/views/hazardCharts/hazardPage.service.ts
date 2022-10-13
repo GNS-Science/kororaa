@@ -185,3 +185,25 @@ export const getYScale = (data: HazardUncertaintyChartData, min: number): number
   const yMax = 1.2 * Math.max(...largestY);
   return [min, yMax];
 };
+
+export const sortCurveGroups = (curveGroups: HazardUncertaintyChartData): HazardUncertaintyChartData => {
+  const sortedCurves: HazardUncertaintyChartData = {};
+
+  const curveKeyObjects = Object.keys(curveGroups).map((key) => {
+    const keyArray = key.split(' ');
+    const keyObject = { key: key, vs30: keyArray[0], imt: keyArray[1], location: keyArray.length === 3 ? keyArray[2] : `${keyArray[2]} ${keyArray[3]}` };
+    return keyObject;
+  });
+
+  const sortedCurveKeys = curveKeyObjects.sort((a, b) => {
+    return a.location.localeCompare(b.location) || a.vs30.localeCompare(b.vs30) || a.imt.localeCompare(b.imt);
+  });
+
+  const sortedCurveKeyStrings = sortedCurveKeys.map((key) => key.key);
+
+  sortedCurveKeyStrings.forEach(function (key) {
+    sortedCurves[key] = curveGroups[key];
+  });
+
+  return sortedCurves;
+};
