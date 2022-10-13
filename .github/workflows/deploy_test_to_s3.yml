@@ -84,6 +84,7 @@ jobs:
           echo "REACT_APP_RESOLUTION=${{secrets.REACT_APP_RESOLUTION}}" >> .env
           echo "REACT_APP_HAZARD_MODEL=${{secrets.REACT_APP_HAZARD_MODEL}}" >> .env
           echo "REACT_APP_GRID_ID=${{secrets.REACT_APP_GRID_ID}}" >> .env
+          echo "REACT_APP_GA_ID=G-KH8FMZ92QW"
           echo
           yarn build
 
