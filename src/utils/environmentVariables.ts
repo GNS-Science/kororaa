@@ -59,4 +59,4 @@ export const UPPER2: string = process.env.REACT_APP_UPPER2 || '0.95';
 export const LOWER1: string = process.env.REACT_APP_LOWER1 || '0.1';
 export const LOWER2: string = process.env.REACT_APP_LOWER2 || '0.05';
 
-export const GA_ID: string = process.env.REACT_APP_GA_ID || 'G-XXXXXXXX';
+export const GA_ID: string | undefined = process.env.REACT_APP_GA_ID;

@@ -13,7 +13,9 @@ if (process.env.REACT_APP_MSW === 'test') {
   worker.start();
 }
 
-ReactGA.initialize(GA_ID);
+if (GA_ID) {
+  ReactGA.initialize(GA_ID);
+}
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(<App />);
