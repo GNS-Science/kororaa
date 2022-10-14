@@ -5,6 +5,10 @@ import { Link as RouterLink } from 'react-router-dom';
 import { AppBar, Typography, Container, Toolbar, IconButton, Box, Menu, MenuItem, Button } from '@mui/material';
 import { useLocation } from 'react-router-dom';
 import MenuIcon from '@mui/icons-material/Menu';
+import ReactGA from 'react-ga4';
+import { useDetectAdBlock } from 'adblock-detect-react';
+import usePageTracking from '../../utils/usePageTracking';
+import { GA_ID, GA_DEBUG_MODE } from '../../utils/environmentVariables';
 
 const StyledAppBar = styled(AppBar)(({ theme }) => ({
   backgroundColor: theme.palette.navbar.main,
@@ -140,6 +144,24 @@ const MainMenu: React.FC<MenuProps> = ({ pages }: MenuProps) => {
 };
 
 const NavBar: React.FC = () => {
+  const adBlockDetected = useDetectAdBlock();
+  usePageTracking();
+  React.useEffect(() => {
+    if (!adBlockDetected && GA_ID) {
+      ReactGA.initialize([
+        {
+          trackingId: GA_ID,
+          gaOptions: {
+            debug_mode: GA_DEBUG_MODE,
+          },
+          gtagOptions: {
+            debug_mode: GA_DEBUG_MODE,
+          },
+        },
+      ]);
+    }
+  }, [adBlockDetected]);
+
   const pages = [
     {
       name: 'Site Hazard',

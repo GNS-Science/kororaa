@@ -60,3 +60,4 @@ export const LOWER1: string = process.env.REACT_APP_LOWER1 || '0.1';
 export const LOWER2: string = process.env.REACT_APP_LOWER2 || '0.05';
 
 export const GA_ID: string | undefined = process.env.REACT_APP_GA_ID;
+export const GA_DEBUG_MODE: boolean = process.env.REACT_APP_GA_DEBUG_MODE === 'true';
