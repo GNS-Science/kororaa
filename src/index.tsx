@@ -1,20 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import ReactGA from 'react-ga4';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { GA_ID } from './utils/environmentVariables';
 
-//uncommnet lines below to start msw for browser
 import { worker } from './mocks/browser';
 
 if (process.env.REACT_APP_MSW === 'test') {
   worker.start();
-}
-
-if (GA_ID) {
-  ReactGA.initialize(GA_ID);
 }
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
