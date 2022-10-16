@@ -1,6 +1,6 @@
 {
   "name": "kororaa",
-  "version": "0.2.0",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.9.0",
@@ -35,7 +35,8 @@
     "eject": "react-scripts eject",
     "lint": "eslint ./src/**/*.{ts,tsx} --quiet --fix",
     "prepush": "yarn test",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "version": "auto-changelog -p && git add CHANGELOG.md"
   },
   "lint-staged": {
     "./src/**/*.{ts,tsx}": [
@@ -81,6 +82,7 @@
     "@types/yup": "^0.29.14",
     "@typescript-eslint/eslint-plugin": "^5.22.0",
     "@typescript-eslint/parser": "^5.22.0",
+    "auto-changelog": "^2.4.0",
     "babel-plugin-relay": "^13.2.0",
     "cypress": "^10.1.0",
     "cypress-localstorage-commands": "^2.1.0",
