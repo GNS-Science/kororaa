@@ -182,6 +182,7 @@ const NavBar: React.FC = () => {
         { name: 'About', path: '/About' },
         { name: 'Technical Info', path: '/TechInfo' },
         { name: 'Contacts', path: '/Contacts' },
+        { name: 'Releases', path: '/Releases' },
       ],
     },
   ];
@@ -195,6 +196,7 @@ const NavBar: React.FC = () => {
     { name: 'About', path: '/About' },
     { name: 'Technical Info', path: '/TechInfo' },
     { name: 'Contacts', path: '/Contacts' },
+    { name: 'Releases', path: '/Releases' },
   ];
 
   return (
