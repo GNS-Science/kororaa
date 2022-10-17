@@ -76,6 +76,8 @@ jobs:
           echo "REACT_APP_LOWER1=0.1" >> .env
           echo "REACT_APP_LOWER2=0.05" >> .env
           echo
+          echo "REACT_APP_GA_ID=G-JRRN2P89FB" >> .env
+          echo "REACT_APP_GA_DEBUG_MODE=true" >> .env
           cat .env
           echo "Now add the secrets.."
           echo "REACT_APP_DISCLAIMER_VERSION=${{secrets.REACT_APP_DISCLAIMER_VERSION}}" >> .env
@@ -84,8 +86,7 @@ jobs:
           echo "REACT_APP_RESOLUTION=${{secrets.REACT_APP_RESOLUTION}}" >> .env
           echo "REACT_APP_HAZARD_MODEL=${{secrets.REACT_APP_HAZARD_MODEL}}" >> .env
           echo "REACT_APP_GRID_ID=${{secrets.REACT_APP_GRID_ID}}" >> .env
-          echo "REACT_APP_GA_ID=G-KH8FMZ92QW" >> .env
-          echo "REACT_APP_GA_DEBUG_MODE=true" >> .env
+
           echo
           yarn build
 
