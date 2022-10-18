@@ -30,14 +30,14 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.TOSHI_NEST_PACKAGE_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          CI: false
+          GENERATE_SOURCEMAP: false
         run: |
           yarn install --frozen-lockfile
           yarn test
 
       - name: Yarn build
         env:
-          CI: false
+          GENERATE_SOURCEMAP: false
         run: |
           echo "Configure build environment"
           touch .env
@@ -76,6 +76,8 @@ jobs:
           echo "REACT_APP_LOWER1=0.1" >> .env
           echo "REACT_APP_LOWER2=0.05" >> .env
           echo
+          echo "REACT_APP_GA_ID=G-JRRN2P89FB" >> .env
+          echo "REACT_APP_GA_DEBUG_MODE=false" >> .env
           cat .env
           echo "Now add the secrets.."
           echo "REACT_APP_DISCLAIMER_VERSION=${{secrets.REACT_APP_DISCLAIMER_VERSION}}" >> .env

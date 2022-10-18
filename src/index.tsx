@@ -4,7 +4,6 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
-//uncommnet lines below to start msw for browser
 import { worker } from './mocks/browser';
 
 if (process.env.REACT_APP_MSW === 'test') {

@@ -1,5 +1,6 @@
 import { graphql } from 'msw';
 import { wellington400Response, wellingtonChristchurchResponse, arbitraryLatLonResponse, initialResponse } from './mockData/HazardChartsPlotsViewMockData';
+import { hazardMapMockData } from './mockData/HazardMapMockData';
 
 export const handlers = [
   graphql.query('HazardChartsPlotsViewQuery', (req, res, ctx) => {
@@ -41,5 +42,8 @@ export const handlers = [
         },
       }),
     );
+  }),
+  graphql.query('HazardMapsPageQuery', (req, res, ctx) => {
+    return res(ctx.data(hazardMapMockData));
   }),
 ];
