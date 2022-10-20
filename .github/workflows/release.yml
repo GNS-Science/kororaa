@@ -17,11 +17,11 @@ jobs:
     name: Create Release
     runs-on: ubuntu-20.04
     steps:
-      - name: Get version from tag
-        id: tag_name
-        run: |
-          echo ::set-output name=current_version::${GITHUB_REF#refs/tags/v}
-        shell: bash
+      # - name: Get version from tag
+      #   id: tag_name
+      #   run: |
+      #     echo ::set-output name=current_version::${GITHUB_REF#refs/tags/v}
+      #   shell: bash
 
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Checkout code
@@ -33,7 +33,7 @@ jobs:
         uses: mindsers/changelog-reader-action@v2
         with:
           validation_depth: 10
-          version: ${{ steps.tag_name.outputs.current_version }}
+          version: ${{ github.ref_name }}
           path: ./src/CHANGELOG.md
           debug: true
 
