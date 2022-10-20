@@ -35,11 +35,12 @@ jobs:
           version: ${{ steps.tag_name.outputs.current_version }}
           path: ./src/CHANGELOG.md
           debug: true
-
+      - name: echo version  
+        run: echo ${{ steps.tag_name.outputs.current_version }}
+        
       - name: create github release
         id: create_release
         uses: softprops/action-gh-release@v1
-        run: echo ${{ steps.tag_name.outputs.current_version }}
         with:
           tag_name: ${{ steps.tag_name.outputs.current_version }}
           body: ${{ steps.changelog_reader.outputs.changes }}
