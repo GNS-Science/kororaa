@@ -24,7 +24,7 @@ const ChangelogPage: React.FC = () => {
   useEffect(() => {
     fetch(CHANGELOG)
       .then((res) => res.text())
-      .then((text) => setMarkdown(text));
+      .then((text) => setMarkdown(text.replace('# Changelog', '')));
   }, []);
 
   return (
