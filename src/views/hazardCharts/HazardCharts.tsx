@@ -77,7 +77,7 @@ const HazardCharts: React.FC<HazardChartsProps> = ({ data, state, dispatch }: Ha
             <GroupCurveChartResponsive
               scaleType={state.hazardXScale}
               yScaleType={'log'}
-              xLabel=" Acceleration (g)"
+              xLabel="Acceleration (g)"
               yLabel="Annual Probability of Exceedance"
               xLimits={state.hazardXScale === 'linear' ? [HAZARD_GMIN, HAZARD_GMAX] : [HAZARD_GMIN_LOG, HAZARD_GMAX_LOG]}
               yLimits={[HAZARD_POEMIN, HAZARD_POEMAX]}
@@ -100,7 +100,7 @@ const HazardCharts: React.FC<HazardChartsProps> = ({ data, state, dispatch }: Ha
                 scaleType={state.spectraXScale}
                 yScaleType={'linear'}
                 xLabel="Period (s)"
-                yLabel="Shaking Intensity (g)"
+                yLabel="Acceleration (g)"
                 xLimits={state.spectraXScale === 'linear' ? [SA_PERIODMIN, SA_PERIODMAX] : [SA_PERIODMIN_LOG, SA_PERIODMAX_LOG]}
                 yLimits={spectralYLimits}
                 tooltip={true}
