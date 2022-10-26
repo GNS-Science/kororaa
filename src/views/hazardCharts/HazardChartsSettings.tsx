@@ -4,7 +4,7 @@ import { styled } from '@mui/material';
 import ImageIcon from '@mui/icons-material/Image';
 import TextSnippetIcon from '@mui/icons-material/TextSnippet';
 import SettingsIcon from '@mui/icons-material/Settings';
-import { toJpeg } from 'html-to-image';
+import { toPng } from 'html-to-image';
 
 import StyledCSVLink from '../../components/common/StyledCSVLink';
 import { getHazardCSVData, getLocationList } from './hazardPage.service';
@@ -46,9 +46,9 @@ const HazardChartsSettings: React.FC<HazardChartsSettingsProps> = ({ data, spect
       setAnchorEl(null);
       return;
     }
-    toJpeg(element, { quality: 0.95 }).then((dataUrl: string) => {
+    toPng(element, { quality: 0.95 }).then((dataUrl: string) => {
       const link = document.createElement('a');
-      link.download = spectral ? `UHS_${state.poe}_in_50yr.jpeg` : 'hazard_chart.jpeg';
+      link.download = spectral ? `UHS_${state.poe}_in_50yr.png` : 'hazard_chart.png';
       link.href = dataUrl;
       link.click();
     });
