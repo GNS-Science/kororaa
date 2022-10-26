@@ -40,7 +40,7 @@ const HazardMapsComponent: React.FC = () => {
   }, []);
 
   const colorScaleNormalise = useMemo<ColourScaleNormalise>(() => {
-    if (state.statistic[0] === 'cov') {
+    if (state.statistic === 'cov') {
       return 'LIN';
     } else {
       return 'LOG';
@@ -99,7 +99,7 @@ const HazardMapsComponent: React.FC = () => {
           </Typography>
           <HazardMapsControls startTransition={startTransition} isPending={isPending} geoJson={geoJson} state={state} dispatch={dispatch} />
         </LeafletDrawer>
-        <HazardMaps state={state} geoJson={geoJson} setFullscreen={setFullscreen} colorScale={colorScale} fullscreen={fullscreen} />
+        <HazardMaps state={state} geoJson={geoJson} setFullscreen={setFullscreen} colorScale={colorScale} fullscreen={fullscreen} cov={state.statistic === 'cov'} />
       </Box>
     </PageContainer>
   );

@@ -12,9 +12,10 @@ interface HazardMapsProps {
   colorScale: ColorScale | undefined;
   fullscreen: boolean;
   setFullscreen: (value: boolean) => void;
+  cov: boolean;
 }
 
-const HazardMaps: React.FC<HazardMapsProps> = ({ state, geoJson, fullscreen, setFullscreen, colorScale }: HazardMapsProps) => {
+const HazardMaps: React.FC<HazardMapsProps> = ({ state, geoJson, fullscreen, setFullscreen, colorScale, cov }: HazardMapsProps) => {
   const zoom = 5;
   const nzCentre = [-40.946, 174.167];
 
@@ -31,6 +32,7 @@ const HazardMaps: React.FC<HazardMapsProps> = ({ state, geoJson, fullscreen, set
         maxZoom={MAP_ZOOM_MAX}
         zoomSnap={MAP_ZOOM_SNAP}
         zoomDelta={MAP_ZOOM_DELTA}
+        cov={cov}
       />
       {colorScale && (
         <ColorBar
