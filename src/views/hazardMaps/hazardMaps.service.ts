@@ -9,6 +9,10 @@ export const getHazardMapCSVData = (data: string[], vs30: number, imt: string, p
     ['lon', 'lat', 'shaking intensity(g)'],
   ];
 
+  if (statistic === 'cov') {
+    csvData[1][2] = 'coefficient of variation';
+  }
+
   data.forEach((geojsonString) => {
     const geojsonObject = JSON.parse(geojsonString);
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

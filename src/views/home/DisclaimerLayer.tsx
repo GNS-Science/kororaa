@@ -14,6 +14,9 @@ const Paper = styled('div')(({ theme }) => ({
   backgroundColor: theme.palette.navbar.main,
   padding: theme.spacing(2, 4, 5),
   border: 'none',
+  '@media (max-width: 600px)': {
+    width: '80%',
+  },
 }));
 
 interface DisclaimerLayerProps {

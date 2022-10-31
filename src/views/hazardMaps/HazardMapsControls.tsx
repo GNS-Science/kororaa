@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Button, styled } from '@mui/material';
 import { SelectControl } from '@gns-science/toshi-nest';
-import { toJpeg } from 'html-to-image';
+import { toPng } from 'html-to-image';
 
 import { flexParentCenter } from '../../utils/styleUtils';
 import { getHazardMapCSVData } from './hazardMaps.service';
@@ -67,9 +67,9 @@ const HazardMapsControls: React.FC<HazardMapsControlsProps> = ({ startTransition
     if (element === null) {
       return;
     }
-    toJpeg(element, { quality: 0.95 }).then((dataUrl: string) => {
+    toPng(element, { quality: 0.95 }).then((dataUrl: string) => {
       const link = document.createElement('a');
-      link.download = `hazard map.jpeg`;
+      link.download = `hazard map.png`;
       link.href = dataUrl;
       link.click();
     });
