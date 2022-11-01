@@ -37,7 +37,7 @@ const OtherDocumentsPage: React.FC = () => {
                   <CardContent>
                     <Grid container spacing={1} columns={{ sm: 6, md: 8, lg: 12 }}>
                       <Grid item xs={10}>
-                        <Typography variant="h4">NSHM Project Assurance report</Typography>
+                        <Typography variant="h4">NSHM Project Assurance Review</Typography>
                       </Grid>
                       <Grid item xs={2}>
                         <Link
