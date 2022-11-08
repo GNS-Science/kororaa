@@ -177,6 +177,7 @@ const NavBar: React.FC = () => {
       submenu: [
         { name: 'Science reports', path: '/Resources/ScienceReports' },
         { name: 'Other Documents', path: '/Resources/OtherDocuments' },
+        { name: 'Model Components', path: '/Resources/ModelComponents' },
       ],
     },
     {
@@ -197,6 +198,7 @@ const NavBar: React.FC = () => {
     { name: 'Coming Features', path: '/Previews' },
     { name: 'Science Reports', path: '/Resources/ScienceReports' },
     { name: 'Other Documents', path: '/Resources/OtherDocuments' },
+    { name: 'Model Components', path: '/Resources/ModelComponents' },
     { name: 'About', path: '/About' },
     { name: 'Technical Info', path: '/TechInfo' },
     { name: 'Contacts', path: '/Contacts' },

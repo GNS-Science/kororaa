@@ -1,70 +1,43 @@
 import React from 'react';
 import { styled } from '@mui/material/styles';
 import Grid from '@mui/material/Grid';
-import { Link } from 'react-router-dom';
 
-import { Paper, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 
 const PageContainer = styled('div')({
-  width: '100%',
-  // display: 'flex',
-  // flexDirection: 'column',
   justifyContent: 'center',
   alignItems: 'center',
-  padding: '4rem',
+  padding: '2rem',
+  marginBottom: '2rem',
 });
 
-const InfoContainer = styled('div')({
-  // display: 'flex',
-  // flexDirection: 'column',
+const TitleContainer = styled('div')({
   justifyContent: 'left',
   textAlign: 'left',
   width: '100%',
-  // padding: '4rem',
+  paddingBottom: '1rem',
 });
-
-interface InfoCardProps {
-  title: string;
-  text: string;
-}
-
-const ModelComponent: React.FC<InfoCardProps> = ({ title, text }: InfoCardProps) => {
-  return (
-    <Grid item xs={12}>
-      <Paper>
-        <Grid container spacing={3}>
-          <Grid item xs={2}>
-            <Typography variant="h5">{title}</Typography>
-          </Grid>
-          <Grid item xs={4}>
-            <Typography>{text}</Typography>
-          </Grid>
-        </Grid>
-      </Paper>
-    </Grid>
-  );
-};
 
 const ModelComponentsPage: React.FC = () => {
   return (
     <PageContainer>
-      <Grid container spacing={3} columns={{ sm: 6, md: 8, lg: 12 }}>
-        <Grid item xs={12}>
-          <InfoContainer>
-            <Typography variant="h2">
-              <Link to="/Resources">Resources :: </Link>
-              Model Components
-            </Typography>
-          </InfoContainer>
+      <Grid container columns={{ sm: 6, md: 8, lg: 12 }}>
+        <Grid item xs={2} />
+        <Grid item xs={8}>
+          <Grid container spacing={2} columns={{ sm: 6, md: 8, lg: 12 }}>
+            <Grid item xs={12}>
+              <TitleContainer>
+                <Typography variant="h2">Model Components</Typography>
+              </TitleContainer>
+            </Grid>
+            <Grid item xs={12}>
+              <Typography variant="body1">
+                Please contact us at <a href="mailto:nshm@gns.cri.nz">nshm@gns.cri.nz</a> for OpenQuake input files and instructions on how to run the NSHM.
+              </Typography>
+            </Grid>
+          </Grid>
         </Grid>
-        <Grid item xs={12}>
-          <InfoContainer>
-            <Typography variant="h3">Source Models</Typography>
-          </InfoContainer>
-        </Grid>
-        <ModelComponent title="Source 1" text="from json." />
-        <ModelComponent title="Source 2 " text="from json." />
-        {/*<InfoCard title="Model Information, Reports, and Input Files" text="More Information" />*/}
+        <Grid item xs={2} />
       </Grid>
     </PageContainer>
   );
