@@ -32,8 +32,7 @@ const ModelComponentsPage: React.FC = () => {
             </Grid>
             <Grid item xs={12}>
               <Typography variant="body1">
-                Please contact us at <a href="mailto:nshm@gns.cri.nz">nshm@gns.cri.nz</a> for OpenQuake input files and instructions on how to run the NSHM. The model is too large to run as a single
-                oq-engine job without sub-sampling the logic tree. We are working on tools to make it possible for users to run the complete model and reproduce NSHM results.{' '}
+                Please contact us at <a href="mailto:nshm@gns.cri.nz">nshm@gns.cri.nz</a> for OpenQuake input files and instructions on how to run the NSHM.
               </Typography>
             </Grid>
           </Grid>
