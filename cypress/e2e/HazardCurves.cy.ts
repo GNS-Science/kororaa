@@ -8,7 +8,7 @@ describe('Hazard Curves', () => {
   });
 
   it('Displays inital charts when first visiting page', () => {
-    cy.get('[role="curve"]').should('have.length', 9);
+    cy.get('[role="curve"]').should('have.length', 10);
   });
 
   it('Displays out of range error when POE over 100 or below 0 is selected', () => {
@@ -40,8 +40,9 @@ describe('Hazard Curves', () => {
     cy.get('li[data-value="SA(0.1)"]').click();
     cy.get('li[data-value="SA(0.2)"]').click();
     cy.get('li[data-value="SA(0.3)"]').click();
+    cy.get('body').click();
     cy.get('[type="submit"]').click({ force: true });
-    cy.get('[role="curve"]').should('have.length', 16);
+    cy.get('[role="curve"]').should('have.length', 20);
   });
 
   it('Displays tooltips for all selected spectral periods', () => {
@@ -56,8 +57,9 @@ describe('Hazard Curves', () => {
     cy.get('li[data-value="SA(0.1)"]').click();
     cy.get('li[data-value="SA(0.2)"]').click();
     cy.get('li[data-value="SA(0.3)"]').click();
+    cy.get('body').click();
     cy.get('[type="submit"]').click({ force: true });
-    cy.get('[role="curve"]').should('have.length', 4);
+    cy.get('[role="curve"]').should('have.length', 5);
     cy.get('[role="listbox"]').focus().type('{esc}');
   });
 
@@ -65,7 +67,7 @@ describe('Hazard Curves', () => {
     cy.get('[data-testid="ArrowDropDownIcon"]').first().click({ force: true });
     cy.get('li').contains('Christchurch').click({ force: true });
     cy.get('[type="submit"]').click({ force: true });
-    cy.get('[role="curve"]').should('have.length', 8);
+    cy.get('[role="curve"]').should('have.length', 10);
     cy.get('div[class="visx-legend-label"]').should('contain.text', '400m/s PGA Christchurch 400m/s PGA Wellington');
   });
 
@@ -75,7 +77,7 @@ describe('Hazard Curves', () => {
     cy.get('li').contains('Wellington').click({ force: true });
     cy.get('[class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-1x51dt5-MuiInputBase-input-MuiInput-input"]').first().type('-42, 173');
     cy.get('[type="submit"]').click({ force: true });
-    cy.get('[role="curve"]').should('have.length', 4);
+    cy.get('[role="curve"]').should('have.length', 5);
     cy.get('div[class="visx-legend-label"]').should('contain.text', '400m/s PGA -42.0, 173.0');
   });
 
@@ -83,7 +85,7 @@ describe('Hazard Curves', () => {
     cy.get('div').contains('400').click();
     cy.get('li').contains('350').click();
     cy.get('[type="submit"]').click({ force: true });
-    cy.get('[role="curve"]').should('have.length', 4);
+    cy.get('[role="curve"]').should('have.length', 5);
     cy.get('[role="listbox"]').focus().type('{esc}');
   });
 
