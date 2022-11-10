@@ -95,10 +95,10 @@ jobs:
           echo "REACT_APP_SA_PERIODMAX=10" >> .env
           echo "REACT_APP_SA_PERIODMIN=0" >> .env
           echo "REACT_APP_SA_PERIODMAX_LOG=10" >> .env
-          echo "REACT_APP_SA_PERIODMIN_LOG=0.01" >> .env
+          echo "REACT_APP_SA_PERIODMIN_LOG=0.03" >> .env
           echo "REACT_APP_SA_GMAX=auto" >> .env
           echo "REACT_APP_SA_GMIN=0" >> .env
-          echo "REACT_APP_SA_LOG_PGA_SUBSTITUTE=0.02" >> .env
+          echo "REACT_APP_SA_LOG_PGA_SUBSTITUTE=0.04" >> .env
           echo
           echo "REACT_APP_MEAN=mean" >> .env
           echo "REACT_APP_UPPER1=0.9" >> .env
