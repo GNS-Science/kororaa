@@ -120,7 +120,7 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, disp
             setInputValue(newInputValue);
           }}
           options={hazardPageOptions.locations.sort()}
-          style={{ width: 230, marginLeft: 16 }}
+          style={{ minWidth: 240, maxWidth: 270, marginLeft: 16 }}
           renderInput={(params) => (
             <Tooltip title={locationTooltip} arrow placement="top">
               <TextField {...params} label="Locations" variant="standard" />

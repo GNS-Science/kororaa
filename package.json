@@ -1,11 +1,11 @@
 {
   "name": "kororaa",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
-    "@gns-science/toshi-nest": "^3.6.3",
+    "@gns-science/toshi-nest": "^3.6.5",
     "@mui/icons-material": "^5.6.2",
     "@mui/material": "^5.6.4",
     "adblock-detect-react": "^1.1.0",

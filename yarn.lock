@@ -1360,10 +1360,10 @@
     minimatch "^3.1.2"
     strip-json-comments "^3.1.1"
 
-"@gns-science/toshi-nest@^3.6.3":
-  version "3.6.3"
-  resolved "https://npm.pkg.github.com/download/@GNS-Science/toshi-nest/3.6.3/052faf31684eeffba01e46813744cd65bd38191d#052faf31684eeffba01e46813744cd65bd38191d"
-  integrity sha512-nVfqCJ8kvHAJuk69shr2GgNr1dsspN/4GkIT7mgHT+mpFnAqFF5ZuK6KodHaGXl6Ucz5Y2RcRozyGKD6rEdPWg==
+"@gns-science/toshi-nest@^3.6.5":
+  version "3.6.5"
+  resolved "https://npm.pkg.github.com/download/@GNS-Science/toshi-nest/3.6.5/5599f8727dbef2390969578f94a0fbc916bd6231#5599f8727dbef2390969578f94a0fbc916bd6231"
+  integrity sha512-oxoLMlg3XID+qDjNicetn0oIcWHyE7qERP8/04GmM89bAszIsvuCF90NomyxYeTUB7+K8lIOqZ2hmpu89Vw28g==
   dependencies:
     "@emotion/react" "^11.8.2"
     "@emotion/styled" "^11.8.1"
@@ -1381,6 +1381,7 @@
     "@visx/responsive" "^2.8.0"
     "@visx/scale" "^2.2.2"
     "@visx/shape" "^2.11.1"
+    "@visx/stats" "^2.10.0"
     "@visx/threshold" "^2.11.1"
     "@visx/tooltip" "^2.10.0"
     "@visx/xychart" "^2.9.0"
@@ -2450,7 +2451,7 @@
   dependencies:
     "@types/d3-time" "^2"
 
-"@types/d3-shape@^1.3.1":
+"@types/d3-shape@^1.3.1", "@types/d3-shape@^1.3.2":
   version "1.3.8"
   resolved "https://registry.yarnpkg.com/@types/d3-shape/-/d3-shape-1.3.8.tgz#c3c15ec7436b4ce24e38de517586850f1fea8e89"
   integrity sha512-gqfnMz6Fd5H6GOLYixOZP/xlrMtJms9BaS+6oWxTKHNqPGZ93BkWWupQSCYm6YHqx6h9wjRupuJb90bun6ZaYg==
@@ -3131,6 +3132,19 @@
     d3-path "^1.0.5"
     d3-shape "^1.2.0"
     lodash "^4.17.21"
+    prop-types "^15.5.10"
+
+"@visx/stats@^2.10.0":
+  version "2.10.0"
+  resolved "https://registry.yarnpkg.com/@visx/stats/-/stats-2.10.0.tgz#890272dbeb10467c98d6c2785bbc2216f60003eb"
+  integrity sha512-4p8rQamOc1IC3IkqTHgfMHbSXvRl9DMWFCglJy+DmbH6Wx1TaWt2nj/N0Ttp350UTRzBy4o5ou/D4Gts8LZHuA==
+  dependencies:
+    "@types/d3-shape" "^1.3.2"
+    "@types/react" "*"
+    "@visx/group" "2.10.0"
+    "@visx/scale" "2.2.2"
+    classnames "^2.3.1"
+    d3-shape "^1.2.0"
     prop-types "^15.5.10"
 
 "@visx/text@2.12.2":

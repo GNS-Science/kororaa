@@ -26,6 +26,8 @@ import ContactPage from './views/contact/ContactPage';
 import AboutPage from './views/about/AboutPage';
 import TechInfoPage from './views/techinfo/TechInfoPage';
 import ChangelogPage from './views/changelog/ChangelogPage';
+import OtherDocumentsPage from './views/info/OtherDocumentsPage';
+import ModelComponentsPage from './views/info/ModelComponentsPage';
 
 // The Home component needs to know how to access the Relay environment, and we
 // need to specify a fallback in case it suspends:
@@ -67,6 +69,8 @@ function App(props: { environment?: Environment }) {
                     <Route path="/Contacts" element={<ContactPage />} />
                     <Route path="/Releases" element={<ChangelogPage />} />
                     <Route path="/Resources/ScienceReports" element={<ScienceReportsPage />} />
+                    <Route path="/Resources/OtherDocuments" element={<OtherDocumentsPage />} />
+                    <Route path="/Resources/ModelComponents" element={<ModelComponentsPage />} />
                     <Route path="/" element={<Home />} />
                   </Routes>
                 </DisclaimerLayer>
