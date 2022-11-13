@@ -1,5 +1,5 @@
 import React from 'react';
-import { Checkbox, FormControl, Input, InputLabel, MenuItem, Select, SelectChangeEvent, Tooltip } from '@mui/material';
+import { Checkbox, FormControl, Input, InputLabel, MenuItem, Select, SelectChangeEvent, Tooltip, FormHelperText } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
 const MultiSelectContainer = styled('div')({
@@ -14,9 +14,11 @@ export interface SelectControlMultiple {
   setSelection: (selections: string[]) => void;
   name: string;
   tooltip?: string;
+  error?: boolean;
+  errorMessage?: string;
 }
 
-const SelectControlMultiple: React.FC<SelectControlMultiple> = ({ options, selection, setSelection, name, tooltip = '' }: SelectControlMultiple) => {
+const SelectControlMultiple: React.FC<SelectControlMultiple> = ({ options, selection, setSelection, name, tooltip = '', error = false, errorMessage = '' }: SelectControlMultiple) => {
   const handleChange = (event: SelectChangeEvent<string[]>) => {
     setSelection(event.target.value as string[]);
   };
@@ -48,6 +50,7 @@ const SelectControlMultiple: React.FC<SelectControlMultiple> = ({ options, selec
               </MenuItem>
             ))}
           </Select>
+          {error && <FormHelperText id="component-helper-text">{errorMessage}</FormHelperText>}
         </FormControl>
       </MultiSelectContainer>
     );
@@ -76,6 +79,7 @@ const SelectControlMultiple: React.FC<SelectControlMultiple> = ({ options, selec
               </MenuItem>
             ))}
           </Select>
+          {error && <FormHelperText id="component-helper-text">{errorMessage}</FormHelperText>}
         </FormControl>
       </MultiSelectContainer>
     );

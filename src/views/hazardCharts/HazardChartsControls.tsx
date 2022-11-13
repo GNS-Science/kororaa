@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Fab, InputAdornment, Button, Input, FormControl, InputLabel, Box, Autocomplete, TextField, FormHelperText, IconButton, Alert, Collapse, Tooltip } from '@mui/material';
+import { styled } from '@mui/material/styles';
 import ClearIcon from '@mui/icons-material/Clear';
 import CloseIcon from '@mui/icons-material/Close';
 import { useReactToPrint } from 'react-to-print';
@@ -7,11 +8,11 @@ import PrintIcon from '@mui/icons-material/Print';
 
 import CustomControlsBar from '../../components/common/CustomControlsBar';
 import { hazardPageOptions } from './constants/hazardPageOptions';
-import { getPoeInputDisplay, numbersToStrings, stringsToNumbers, validateCurveGroupLength, validatePoeValue } from './hazardPage.service';
+import { getPoeInputDisplay, numbersToStrings, stringsToNumbers, validateCurveGroupLength, validateImts, validateLocationData, validatePoeValue, validateVs30s } from './hazardPage.service';
 import { HazardPageState, LocationData } from './hazardPageReducer';
 import SelectControlMultiple from '../../components/common/SelectControlMultiple';
 import { getLatLonString, combineLocationData, getNamesFromLocationData, validateLatLon } from '../../services/latLon/latLon.service';
-import { locationTooltip, tooManyCurves, latLonTooltip } from './constants/hazardCharts';
+import { locationTooltip, tooManyCurves, latLonTooltip, noLocations, noVs30s, noImts } from './constants/hazardCharts';
 import { imtTooltip, poeTooltip, vs30Tooltip } from '../../constants/tooltips';
 
 interface HazardChartsControlsProps {
@@ -19,6 +20,18 @@ interface HazardChartsControlsProps {
   dispatch: React.Dispatch<Partial<HazardPageState>>;
   printTargetRef: React.RefObject<HTMLDivElement>;
 }
+
+const TextFieldWithGreyErrors = styled(TextField)(() => ({
+  '& .MuiFormLabel-root.Mui-error': {
+    color: 'rgba(0, 0, 0, 0.6) !important',
+  },
+  '& .MuiInput-underline.Mui-error:after': {
+    borderBottomColor: 'rgba(0, 0, 0, 0.6) !important',
+  },
+  '& .MuiFormHelperText-root.Mui-error': {
+    color: 'rgba(0, 0, 0, 0.6) !important',
+  },
+}));
 
 const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, dispatch, printTargetRef }: HazardChartsControlsProps) => {
   const [locationData, setLocationData] = useState<LocationData[]>(state.locationData);
@@ -36,6 +49,10 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, disp
 
   const [controlsError, setControlsError] = useState<boolean>(false);
   const [controlsErrorMessage, setControlsErrorMessage] = useState<string>('');
+
+  const [locationError, setLocationError] = useState<boolean>(false);
+  const [vs30Error, setVs30Error] = useState<boolean>(false);
+  const [imtError, setImtError] = useState<boolean>(false);
 
   useEffect(() => {
     const combinedLocationData = combineLocationData(locations, latLon);
@@ -72,6 +89,9 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, disp
     try {
       validatePoeValue(poeInput);
       validateLatLon(latLon);
+      validateLocationData(locationData, setLocationError);
+      validateVs30s(vs30s, setVs30Error);
+      validateImts(imts, setImtError);
       validateCurveGroupLength(locationData, vs30s, imts);
       dispatch({ locationData, vs30s, imts, poe: poeInput.length === 0 || poeInput === ' ' ? undefined : Number(poeInput) / 100 });
     } catch (err) {
@@ -81,6 +101,12 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, disp
       } else if (err === tooManyCurves) {
         setControlsError(true);
         setControlsErrorMessage(err as string);
+      } else if (err === noLocations) {
+        setLocationError(true);
+      } else if (err === noVs30s) {
+        setVs30Error(true);
+      } else if (err === noImts) {
+        setImtError(true);
       } else {
         setPoeInputError(true);
         setPoeInputErrorMessage(err as string);
@@ -123,7 +149,7 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, disp
           style={{ minWidth: 240, maxWidth: 270, marginLeft: 16 }}
           renderInput={(params) => (
             <Tooltip title={locationTooltip} arrow placement="top">
-              <TextField {...params} label="Locations" variant="standard" />
+              <TextFieldWithGreyErrors {...params} label="Locations" variant="standard" error={locationError} helperText={locationError ? 'Enter atleast one location' : ''} />
             </Tooltip>
           )}
           limitTags={1}
@@ -150,15 +176,28 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, disp
             }
           />
           {latLonError && <FormHelperText id="component-helper-text">{latLonErrorMessage}</FormHelperText>}
+          {locationError && <FormHelperText id="component-helper-text">Enter atleast one location</FormHelperText>}
+        </FormControl>
+        <FormControl sx={{ width: 200 }} variant="standard">
+          <SelectControlMultiple
+            options={hazardPageOptions.vs30s}
+            selection={numbersToStrings(vs30s)}
+            setSelection={(newValue: string[]) => setVs30s(stringsToNumbers(newValue))}
+            name="Vs30 (m/s)"
+            tooltip={vs30Tooltip}
+            error={vs30Error}
+            errorMessage="Select atleast one Vs30"
+          />
         </FormControl>
         <SelectControlMultiple
-          options={hazardPageOptions.vs30s}
-          selection={numbersToStrings(vs30s)}
-          setSelection={(newValue: string[]) => setVs30s(stringsToNumbers(newValue))}
-          name="Vs30 (m/s)"
-          tooltip={vs30Tooltip}
+          tooltip={imtTooltip}
+          options={hazardPageOptions.imts}
+          selection={imts}
+          setSelection={setImts}
+          name="Spectral Period"
+          error={imtError}
+          errorMessage={'Select atleast one spectral period'}
         />
-        <SelectControlMultiple tooltip={imtTooltip} options={hazardPageOptions.imts} selection={imts} setSelection={setImts} name="Spectral Period" />
         <FormControl sx={{ width: 200 }} variant="standard">
           <Tooltip title={poeTooltip} arrow placement="top">
             <InputLabel htmlFor="component-helper">Probability of Exceedance (50 Yrs)</InputLabel>
