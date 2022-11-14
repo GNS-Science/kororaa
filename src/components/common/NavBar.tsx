@@ -1,4 +1,5 @@
 import React from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import { styled } from '@mui/material/styles';
 import { Link } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
@@ -8,6 +9,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ReactGA from 'react-ga4';
 import { useDetectAdBlock } from 'adblock-detect-react';
 import usePageTracking from '../../utils/usePageTracking';
+import { NestedMenuItem } from 'mui-nested-menu';
 import { GA_ID, GA_DEBUG_MODE } from '../../utils/environmentVariables';
 
 const StyledAppBar = styled(AppBar)(({ theme }) => ({
@@ -71,13 +73,41 @@ const SubMenu: React.FC<SubMenuProps> = ({ pages, anchorElNav, setAnchorElNav, o
       open={open}
       onClose={handleCloseNavMenu}
     >
-      {pages.map((page) => (
-        <MenuItem selected={page.path === location.pathname} key={page.name} component={RouterLink} to={page.path || ''}>
-          <Typography onClick={handleCloseNavMenu} variant="h5" textAlign="center">
-            {page.name}
-          </Typography>
-        </MenuItem>
-      ))}
+      {pages.map((page) => {
+        if (page.submenu) {
+          return (
+            <NestedMenuItem key={page.name} label={page.name} parentMenuOpen={open} onClick={handleCloseNavMenu} nonce={uuidv4()}>
+              {page.submenu.map((subpage) => (
+                <MenuItem
+                  key={subpage.name}
+                  component={RouterLink}
+                  to={subpage.path || ''}
+                  onClick={() => {
+                    handleCloseNavMenu();
+                  }}
+                  selected={location.pathname === subpage.path}
+                >
+                  {subpage.name}
+                </MenuItem>
+              ))}
+            </NestedMenuItem>
+          );
+        } else {
+          return (
+            <MenuItem
+              key={page.name}
+              component={RouterLink}
+              to={page.path || ''}
+              onClick={() => {
+                handleCloseNavMenu();
+              }}
+              selected={location.pathname === page.path}
+            >
+              {page.name}
+            </MenuItem>
+          );
+        }
+      })}
     </Menu>
   );
 };
@@ -91,7 +121,7 @@ const HamburgerMenu: React.FC<MenuProps> = ({ pages }: MenuProps) => {
 
   return (
     <>
-      <IconButton size="large" aria-label="account of current user" aria-controls="menu-appbar" aria-haspopup="true" onClick={handleOpenNavMenu} color="inherit">
+      <IconButton size="large" aria-label="hamburger menu" aria-controls="menu-appbar" aria-haspopup="true" onClick={handleOpenNavMenu} color="inherit">
         <MenuIcon />
       </IconButton>
       <SubMenu open={Boolean(anchorElNav)} pages={pages} anchorElNav={anchorElNav} setAnchorElNav={setAnchorElNav} />
@@ -191,20 +221,6 @@ const NavBar: React.FC = () => {
     },
   ];
 
-  const hamburgerPages = [
-    { name: 'Curves and Spectra', path: '/HazardCurves' },
-    { name: 'Disaggregations', path: '/Disaggs' },
-    { name: 'Hazard Maps', path: '/HazardMaps' },
-    { name: 'Coming Features', path: '/Previews' },
-    { name: 'Science Reports', path: '/Resources/ScienceReports' },
-    { name: 'Other Documents', path: '/Resources/OtherDocuments' },
-    { name: 'Model Components', path: '/Resources/ModelComponents' },
-    { name: 'About', path: '/About' },
-    { name: 'Technical Info', path: '/TechInfo' },
-    { name: 'Contacts', path: '/Contacts' },
-    { name: 'Releases', path: '/Releases' },
-  ];
-
   return (
     <React.StrictMode>
       <StyledAppBar position="static">
@@ -215,7 +231,7 @@ const NavBar: React.FC = () => {
               {/*<img src="/images/NSHM_logo_black.png" height="70" alt="NSHM logo" />*/}
             </RouterLink>
             <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-              <HamburgerMenu pages={hamburgerPages} />
+              <HamburgerMenu pages={pages} />
             </Box>
             <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
               <MainMenu pages={pages} />
