@@ -8,3 +8,9 @@ export const locationTooltip = 'Standard model locations are provided for larger
 
 export const latLonTooltip = `Coordinates in lat,lon form. For multiple locations use the \`;\` separator.
      Values will be rounded to the nearest location on the NSHM model grid.`;
+
+export const noLocations = 'Please enter at least one location';
+
+export const noVs30s = 'Please select at least one Vs30';
+
+export const noImts = 'Please select at least one spectral period';
