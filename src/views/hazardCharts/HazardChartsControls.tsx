@@ -103,10 +103,13 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, disp
         setControlsErrorMessage(err as string);
       } else if (err === noLocations) {
         setLocationError(true);
+        setControlsErrorMessage(err as string);
       } else if (err === noVs30s) {
         setVs30Error(true);
+        setControlsErrorMessage(err as string);
       } else if (err === noImts) {
         setImtError(true);
+        setControlsErrorMessage(err as string);
       } else {
         setPoeInputError(true);
         setPoeInputErrorMessage(err as string);
@@ -116,7 +119,7 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, disp
 
   return (
     <Box sx={{ marginBottom: '0.5rem', width: '100%', border: 'solid 1px black', padding: '0.5rem' }}>
-      <Collapse in={controlsError}>
+      <Collapse in={controlsError || locationError || vs30Error || imtError}>
         <Alert
           severity="error"
           action={
@@ -149,7 +152,7 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, disp
           style={{ minWidth: 240, maxWidth: 270, marginLeft: 16 }}
           renderInput={(params) => (
             <Tooltip title={locationTooltip} arrow placement="top">
-              <TextFieldWithGreyErrors {...params} label="Locations" variant="standard" error={locationError} helperText={locationError ? 'Enter atleast one location' : ''} />
+              <TextField {...params} label="Locations" variant="standard" />
             </Tooltip>
           )}
           limitTags={1}
@@ -176,7 +179,6 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, disp
             }
           />
           {latLonError && <FormHelperText id="component-helper-text">{latLonErrorMessage}</FormHelperText>}
-          {locationError && <FormHelperText id="component-helper-text">Enter atleast one location</FormHelperText>}
         </FormControl>
         <FormControl sx={{ width: 200 }} variant="standard">
           <SelectControlMultiple
@@ -185,19 +187,9 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, disp
             setSelection={(newValue: string[]) => setVs30s(stringsToNumbers(newValue))}
             name="Vs30 (m/s)"
             tooltip={vs30Tooltip}
-            error={vs30Error}
-            errorMessage="Select atleast one Vs30"
           />
         </FormControl>
-        <SelectControlMultiple
-          tooltip={imtTooltip}
-          options={hazardPageOptions.imts}
-          selection={imts}
-          setSelection={setImts}
-          name="Spectral Period"
-          error={imtError}
-          errorMessage={'Select atleast one spectral period'}
-        />
+        <SelectControlMultiple tooltip={imtTooltip} options={hazardPageOptions.imts} selection={imts} setSelection={setImts} name="Spectral Period" />
         <FormControl sx={{ width: 200 }} variant="standard">
           <Tooltip title={poeTooltip} arrow placement="top">
             <InputLabel htmlFor="component-helper">Probability of Exceedance (50 Yrs)</InputLabel>
