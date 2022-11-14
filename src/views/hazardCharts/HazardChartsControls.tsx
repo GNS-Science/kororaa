@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Fab, InputAdornment, Button, Input, FormControl, InputLabel, Box, Autocomplete, TextField, FormHelperText, IconButton, Alert, Collapse, Tooltip } from '@mui/material';
-import { styled } from '@mui/material/styles';
 import ClearIcon from '@mui/icons-material/Clear';
 import CloseIcon from '@mui/icons-material/Close';
 import { useReactToPrint } from 'react-to-print';
@@ -20,18 +19,6 @@ interface HazardChartsControlsProps {
   dispatch: React.Dispatch<Partial<HazardPageState>>;
   printTargetRef: React.RefObject<HTMLDivElement>;
 }
-
-const TextFieldWithGreyErrors = styled(TextField)(() => ({
-  '& .MuiFormLabel-root.Mui-error': {
-    color: 'rgba(0, 0, 0, 0.6) !important',
-  },
-  '& .MuiInput-underline.Mui-error:after': {
-    borderBottomColor: 'rgba(0, 0, 0, 0.6) !important',
-  },
-  '& .MuiFormHelperText-root.Mui-error': {
-    color: 'rgba(0, 0, 0, 0.6) !important',
-  },
-}));
 
 const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, dispatch, printTargetRef }: HazardChartsControlsProps) => {
   const [locationData, setLocationData] = useState<LocationData[]>(state.locationData);
