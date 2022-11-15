@@ -7,11 +7,11 @@ import PrintIcon from '@mui/icons-material/Print';
 
 import CustomControlsBar from '../../components/common/CustomControlsBar';
 import { hazardPageOptions } from './constants/hazardPageOptions';
-import { getPoeInputDisplay, numbersToStrings, stringsToNumbers, validateCurveGroupLength, validatePoeValue } from './hazardPage.service';
+import { getPoeInputDisplay, numbersToStrings, stringsToNumbers, validateCurveGroupLength, validateImts, validateLocationData, validatePoeValue, validateVs30s } from './hazardPage.service';
 import { HazardPageState, LocationData } from './hazardPageReducer';
 import SelectControlMultiple from '../../components/common/SelectControlMultiple';
 import { getLatLonString, combineLocationData, getNamesFromLocationData, validateLatLon } from '../../services/latLon/latLon.service';
-import { locationTooltip, tooManyCurves, latLonTooltip } from './constants/hazardCharts';
+import { locationTooltip, tooManyCurves, latLonTooltip, noLocations, noVs30s, noImts } from './constants/hazardCharts';
 import { imtTooltip, poeTooltip, vs30Tooltip } from '../../constants/tooltips';
 
 interface HazardChartsControlsProps {
@@ -36,6 +36,10 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, disp
 
   const [controlsError, setControlsError] = useState<boolean>(false);
   const [controlsErrorMessage, setControlsErrorMessage] = useState<string>('');
+
+  const [locationError, setLocationError] = useState<boolean>(false);
+  const [vs30Error, setVs30Error] = useState<boolean>(false);
+  const [imtError, setImtError] = useState<boolean>(false);
 
   useEffect(() => {
     const combinedLocationData = combineLocationData(locations, latLon);
@@ -72,6 +76,9 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, disp
     try {
       validatePoeValue(poeInput);
       validateLatLon(latLon);
+      validateLocationData(locationData, setLocationError);
+      validateVs30s(vs30s, setVs30Error);
+      validateImts(imts, setImtError);
       validateCurveGroupLength(locationData, vs30s, imts);
       dispatch({ locationData, vs30s, imts, poe: poeInput.length === 0 || poeInput === ' ' ? undefined : Number(poeInput) / 100 });
     } catch (err) {
@@ -80,6 +87,15 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, disp
         setLatLonErrorMessage(err as string);
       } else if (err === tooManyCurves) {
         setControlsError(true);
+        setControlsErrorMessage(err as string);
+      } else if (err === noLocations) {
+        setLocationError(true);
+        setControlsErrorMessage(err as string);
+      } else if (err === noVs30s) {
+        setVs30Error(true);
+        setControlsErrorMessage(err as string);
+      } else if (err === noImts) {
+        setImtError(true);
         setControlsErrorMessage(err as string);
       } else {
         setPoeInputError(true);
@@ -90,7 +106,7 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, disp
 
   return (
     <Box sx={{ marginBottom: '0.5rem', width: '100%', border: 'solid 1px black', padding: '0.5rem' }}>
-      <Collapse in={controlsError}>
+      <Collapse in={controlsError || locationError || vs30Error || imtError}>
         <Alert
           severity="error"
           action={
@@ -151,13 +167,15 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, disp
           />
           {latLonError && <FormHelperText id="component-helper-text">{latLonErrorMessage}</FormHelperText>}
         </FormControl>
-        <SelectControlMultiple
-          options={hazardPageOptions.vs30s}
-          selection={numbersToStrings(vs30s)}
-          setSelection={(newValue: string[]) => setVs30s(stringsToNumbers(newValue))}
-          name="Vs30 (m/s)"
-          tooltip={vs30Tooltip}
-        />
+        <FormControl sx={{ width: 200 }} variant="standard">
+          <SelectControlMultiple
+            options={hazardPageOptions.vs30s}
+            selection={numbersToStrings(vs30s)}
+            setSelection={(newValue: string[]) => setVs30s(stringsToNumbers(newValue))}
+            name="Vs30 (m/s)"
+            tooltip={vs30Tooltip}
+          />
+        </FormControl>
         <SelectControlMultiple tooltip={imtTooltip} options={hazardPageOptions.imts} selection={imts} setSelection={setImts} name="Spectral Period" />
         <FormControl sx={{ width: 200 }} variant="standard">
           <Tooltip title={poeTooltip} arrow placement="top">

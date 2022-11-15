@@ -1,7 +1,7 @@
 import { roundLatLon } from '../../services/latLon/latLon.service';
 import { HAZARD_COLOR_LIMIT } from '../../utils/environmentVariables';
 
-import { tooManyCurves } from './constants/hazardCharts';
+import { tooManyCurves, noLocations, noImts, noVs30s } from './constants/hazardCharts';
 import { hazardPageLocations } from './constants/hazardPageOptions';
 import { LocationData } from './hazardPageReducer';
 import { convertAgg } from '../../services/spectralAccel/spectralAccel.service';
@@ -206,4 +206,28 @@ export const sortCurveGroups = (curveGroups: HazardUncertaintyChartData): Hazard
   });
 
   return sortedCurves;
+};
+
+export const validateLocationData = (locationData: LocationData[], setLocationError: React.Dispatch<React.SetStateAction<boolean>>) => {
+  if (locationData.length === 0) {
+    throw noLocations;
+  } else {
+    setLocationError(false);
+  }
+};
+
+export const validateVs30s = (vs30s: number[], setVs30Error: React.Dispatch<React.SetStateAction<boolean>>) => {
+  if (vs30s.length === 0) {
+    throw noVs30s;
+  } else {
+    setVs30Error(false);
+  }
+};
+
+export const validateImts = (imts: string[], setImtError: React.Dispatch<React.SetStateAction<boolean>>) => {
+  if (imts.length === 0) {
+    throw noImts;
+  } else {
+    setImtError(false);
+  }
 };
