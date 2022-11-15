@@ -1,22 +1,20 @@
 import React from 'react';
-import { v4 as uuidv4 } from 'uuid';
 import { styled } from '@mui/material/styles';
 import { Link } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
-import { AppBar, Typography, Container, Toolbar, IconButton, Box, Menu, MenuItem, Button } from '@mui/material';
+import { AppBar, Typography, Container, Toolbar, IconButton, Box, Menu, MenuItem, Button, Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useLocation } from 'react-router-dom';
 import MenuIcon from '@mui/icons-material/Menu';
 import ReactGA from 'react-ga4';
 import { useDetectAdBlock } from 'adblock-detect-react';
 import usePageTracking from '../../utils/usePageTracking';
-import { NestedMenuItem } from 'mui-nested-menu';
 import { GA_ID, GA_DEBUG_MODE } from '../../utils/environmentVariables';
 
 const StyledAppBar = styled(AppBar)(({ theme }) => ({
   backgroundColor: theme.palette.navbar.main,
   height: 100,
   borderBottom: `5px solid ${theme.palette.navbar.accent}`,
-  // display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-around',
   '&& .Mui-selected': {
@@ -29,6 +27,16 @@ const StyledAppBar = styled(AppBar)(({ theme }) => ({
 
 const StyledToolbar = styled(Toolbar)({
   justifyContent: 'space-around',
+});
+
+const StyledAccordion = styled(Accordion)({
+  boxShadow: 'none',
+  borderRadius: 0,
+  root: {
+    '&$expanded': {
+      margin: 'auto',
+    },
+  },
 });
 
 interface MenuPageItem {
@@ -76,21 +84,30 @@ const SubMenu: React.FC<SubMenuProps> = ({ pages, anchorElNav, setAnchorElNav, o
       {pages.map((page) => {
         if (page.submenu) {
           return (
-            <NestedMenuItem key={page.name} label={page.name} parentMenuOpen={open} onClick={handleCloseNavMenu} nonce={uuidv4()}>
-              {page.submenu.map((subpage) => (
-                <MenuItem
-                  key={subpage.name}
-                  component={RouterLink}
-                  to={subpage.path || ''}
-                  onClick={() => {
-                    handleCloseNavMenu();
-                  }}
-                  selected={location.pathname === subpage.path}
-                >
-                  {subpage.name}
-                </MenuItem>
-              ))}
-            </NestedMenuItem>
+            <div key={page.name}>
+              <StyledAccordion disableGutters>
+                <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel1a-content" id="panel1a-header">
+                  <Typography>{page.name}</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  {page.submenu.map((subpage) => (
+                    <MenuItem
+                      dense
+                      className="hamburger-submenu-item"
+                      key={subpage.name}
+                      component={RouterLink}
+                      to={subpage.path || ''}
+                      onClick={() => {
+                        handleCloseNavMenu();
+                      }}
+                      selected={location.pathname === subpage.path}
+                    >
+                      {subpage.name}
+                    </MenuItem>
+                  ))}
+                </AccordionDetails>
+              </StyledAccordion>
+            </div>
           );
         } else {
           return (
