@@ -2,7 +2,8 @@ import React from 'react';
 import { styled } from '@mui/material/styles';
 import { Link } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
-import { AppBar, Typography, Container, Toolbar, IconButton, Box, Menu, MenuItem, Button } from '@mui/material';
+import { AppBar, Typography, Container, Toolbar, IconButton, Box, Menu, MenuItem, Button, Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useLocation } from 'react-router-dom';
 import MenuIcon from '@mui/icons-material/Menu';
 import ReactGA from 'react-ga4';
@@ -14,7 +15,6 @@ const StyledAppBar = styled(AppBar)(({ theme }) => ({
   backgroundColor: theme.palette.navbar.main,
   height: 100,
   borderBottom: `5px solid ${theme.palette.navbar.accent}`,
-  // display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-around',
   '&& .Mui-selected': {
@@ -27,6 +27,16 @@ const StyledAppBar = styled(AppBar)(({ theme }) => ({
 
 const StyledToolbar = styled(Toolbar)({
   justifyContent: 'space-around',
+});
+
+const StyledAccordion = styled(Accordion)({
+  boxShadow: 'none',
+  borderRadius: 0,
+  root: {
+    '&$expanded': {
+      margin: 'auto',
+    },
+  },
 });
 
 interface MenuPageItem {
@@ -71,13 +81,50 @@ const SubMenu: React.FC<SubMenuProps> = ({ pages, anchorElNav, setAnchorElNav, o
       open={open}
       onClose={handleCloseNavMenu}
     >
-      {pages.map((page) => (
-        <MenuItem selected={page.path === location.pathname} key={page.name} component={RouterLink} to={page.path || ''}>
-          <Typography onClick={handleCloseNavMenu} variant="h5" textAlign="center">
-            {page.name}
-          </Typography>
-        </MenuItem>
-      ))}
+      {pages.map((page) => {
+        if (page.submenu) {
+          return (
+            <div key={page.name}>
+              <StyledAccordion disableGutters>
+                <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel1a-content" id="panel1a-header">
+                  <Typography>{page.name}</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  {page.submenu.map((subpage) => (
+                    <MenuItem
+                      dense
+                      className="hamburger-submenu-item"
+                      key={subpage.name}
+                      component={RouterLink}
+                      to={subpage.path || ''}
+                      onClick={() => {
+                        handleCloseNavMenu();
+                      }}
+                      selected={location.pathname === subpage.path}
+                    >
+                      {subpage.name}
+                    </MenuItem>
+                  ))}
+                </AccordionDetails>
+              </StyledAccordion>
+            </div>
+          );
+        } else {
+          return (
+            <MenuItem
+              key={page.name}
+              component={RouterLink}
+              to={page.path || ''}
+              onClick={() => {
+                handleCloseNavMenu();
+              }}
+              selected={location.pathname === page.path}
+            >
+              {page.name}
+            </MenuItem>
+          );
+        }
+      })}
     </Menu>
   );
 };
@@ -91,7 +138,7 @@ const HamburgerMenu: React.FC<MenuProps> = ({ pages }: MenuProps) => {
 
   return (
     <>
-      <IconButton size="large" aria-label="account of current user" aria-controls="menu-appbar" aria-haspopup="true" onClick={handleOpenNavMenu} color="inherit">
+      <IconButton size="large" aria-label="hamburger menu" aria-controls="menu-appbar" aria-haspopup="true" onClick={handleOpenNavMenu} color="inherit">
         <MenuIcon />
       </IconButton>
       <SubMenu open={Boolean(anchorElNav)} pages={pages} anchorElNav={anchorElNav} setAnchorElNav={setAnchorElNav} />
@@ -191,20 +238,6 @@ const NavBar: React.FC = () => {
     },
   ];
 
-  const hamburgerPages = [
-    { name: 'Curves and Spectra', path: '/HazardCurves' },
-    { name: 'Disaggregations', path: '/Disaggs' },
-    { name: 'Hazard Maps', path: '/HazardMaps' },
-    { name: 'Coming Features', path: '/Previews' },
-    { name: 'Science Reports', path: '/Resources/ScienceReports' },
-    { name: 'Other Documents', path: '/Resources/OtherDocuments' },
-    { name: 'Model Components', path: '/Resources/ModelComponents' },
-    { name: 'About', path: '/About' },
-    { name: 'Technical Info', path: '/TechInfo' },
-    { name: 'Contacts', path: '/Contacts' },
-    { name: 'Releases', path: '/Releases' },
-  ];
-
   return (
     <React.StrictMode>
       <StyledAppBar position="static">
@@ -215,7 +248,7 @@ const NavBar: React.FC = () => {
               {/*<img src="/images/NSHM_logo_black.png" height="70" alt="NSHM logo" />*/}
             </RouterLink>
             <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-              <HamburgerMenu pages={hamburgerPages} />
+              <HamburgerMenu pages={pages} />
             </Box>
             <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
               <MainMenu pages={pages} />
