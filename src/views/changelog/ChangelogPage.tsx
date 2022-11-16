@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { Typography, Grid } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import CHANGELOG from '../../CHANGELOG.md';
@@ -47,8 +48,8 @@ const ChangelogPage: React.FC = () => {
                 <Typography variant="h2">Releases</Typography>
                 <Typography variant="body1">
                   <strong>
-                    This is a changelog for the NSHM webapp service. The changelog tracks updates only to the web interface and not to the model itself. Updates to the model can be found on the Model
-                    Versions page.
+                    This is a changelog for the NSHM webapp service. The changelog tracks updates only to the web interface and not to the model itself. Updates to the model can be found on the{' '}
+                    <Link to={'/Resources/ModelVersions'}>Model Versions page.</Link>
                   </strong>
                 </Typography>
               </TitleContainer>

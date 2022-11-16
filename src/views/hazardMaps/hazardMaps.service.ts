@@ -1,11 +1,11 @@
-import { HAZARD_MODEL } from '../../utils/environmentVariables';
+import { HAZARD_MODEL_VERSION } from '../../utils/environmentVariables';
 export interface ColorScale {
   levels: number[];
   hexrgbs: (string | undefined)[];
 }
 
 export const getHazardMapCSVData = (data: string[], vs30: number, imt: string, poe: string, statistic: string) => {
-  const datetimeAndVersion = [`date-time: ${new Date().toLocaleString('en-GB', { timeZone: 'UTC' })}, (UTC)`, `NSHM model version: ${HAZARD_MODEL}`];
+  const datetimeAndVersion = [`date-time: ${new Date().toLocaleString('en-GB', { timeZone: 'UTC' })}, (UTC)`, `NSHM model version: ${HAZARD_MODEL_VERSION}`];
   const csvData: (number | string)[][] = [
     [`vs30=${vs30}`, `spectral period=${imt}`, `Poe=${poe}`, `Statistic=${statistic}`],
     ['lon', 'lat', 'shaking intensity(g)'],
