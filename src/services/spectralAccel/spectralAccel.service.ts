@@ -4,7 +4,7 @@ import { hazardPageOptions } from '../../views/hazardCharts/constants/hazardPage
 import { HazardChartsPlotsViewQuery$data } from '../../views/hazardCharts/__generated__/HazardChartsPlotsViewQuery.graphql';
 import { getLatLonFromLocationKey, roundLatLon } from '../latLon/latLon.service';
 import { getColor } from '../../utils/colorUtils';
-import { SA_LOG_PGA_SUBSTITUTE, HAZARD_IMTS, MEAN, LOWER1, LOWER2, UPPER1, UPPER2 } from '../../utils/environmentVariables';
+import { SA_LOG_PGA_SUBSTITUTE, HAZARD_IMTS, MEAN, LOWER1, LOWER2, UPPER1, UPPER2, HAZARD_MODEL } from '../../utils/environmentVariables';
 
 export interface UncertaintyCurve {
   strokeSize?: number;
@@ -136,6 +136,7 @@ export const tryParseLatLon = (loc: string): string[] => {
 };
 
 export const getSpectralCSVData = (curves: UncertaintyChartData, poe: number | undefined): string[][] => {
+  const datetimeAndVersion = [`date-time: ${new Date().toLocaleString('en-GB', { timeZone: 'UTC' })}, (UTC)`, `NSHM model version: ${HAZARD_MODEL}`];
   const saHeaderArray = ['lat', 'lon', 'vs30', 'PoE (% in 50 years)', 'statistic', ...HAZARD_IMTS];
   const csvData: string[][] = [];
   Object.fromEntries(
@@ -157,6 +158,7 @@ export const getSpectralCSVData = (curves: UncertaintyChartData, poe: number | u
     }),
   );
   csvData.unshift(saHeaderArray);
+  csvData.unshift(datetimeAndVersion);
   return csvData;
 };
 

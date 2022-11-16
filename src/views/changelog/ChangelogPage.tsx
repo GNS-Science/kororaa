@@ -46,7 +46,10 @@ const ChangelogPage: React.FC = () => {
               <TitleContainer>
                 <Typography variant="h2">Releases</Typography>
                 <Typography variant="body1">
-                  <strong>This is a changelog for the NSHM webapp service. The changelog tracks updates only to the web interface and not to the model itself.</strong>
+                  <strong>
+                    This is a changelog for the NSHM webapp service. The changelog tracks updates only to the web interface and not to the model itself. Updates to the model can be found on the Model
+                    Versions page.
+                  </strong>
                 </Typography>
               </TitleContainer>
             </Grid>
