@@ -1,5 +1,5 @@
 import { roundLatLon } from '../../services/latLon/latLon.service';
-import { HAZARD_COLOR_LIMIT } from '../../utils/environmentVariables';
+import { HAZARD_COLOR_LIMIT, HAZARD_MODEL_VERSION } from '../../utils/environmentVariables';
 
 import { tooManyCurves, noLocations, noImts, noVs30s } from './constants/hazardCharts';
 import { hazardPageLocations } from './constants/hazardPageOptions';
@@ -74,6 +74,7 @@ export const getFilteredCurveGroups = (curveGroups: HazardUncertaintyChartData, 
 };
 
 export const getHazardCSVData = (data: HazardChartsPlotsViewQuery$data): string[][] => {
+  const datetimeAndVersion = [`date-time: ${new Date().toLocaleString('en-GB', { timeZone: 'UTC' })}, (UTC)`, `NSHM model version: ${HAZARD_MODEL_VERSION}`];
   const CSVData = data.hazard_curves?.curves?.map((curve) => {
     const latLonArray = curve?.loc?.split('~');
     if (latLonArray && curve?.curve?.values && curve?.vs30) {
@@ -96,6 +97,7 @@ export const getHazardCSVData = (data: HazardChartsPlotsViewQuery$data): string[
       });
     }
     CSVData.unshift(headings);
+    CSVData.unshift(datetimeAndVersion);
   }
   return CSVData as string[][];
 };

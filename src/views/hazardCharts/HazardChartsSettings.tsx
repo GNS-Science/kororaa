@@ -12,6 +12,7 @@ import { getSpectralCSVData } from '../../services/spectralAccel/spectralAccel.s
 import { getSpectralAccelUncertaintyCurves } from '../../services/spectralAccel/spectralAccel.service';
 import { HazardPageState } from './hazardPageReducer';
 import { HazardChartsPlotsViewQuery$data } from './__generated__/HazardChartsPlotsViewQuery.graphql';
+import { HAZARD_MODEL_VERSION } from '../../utils/environmentVariables';
 
 interface HazardChartsSettingsProps {
   data: HazardChartsPlotsViewQuery$data;
@@ -48,7 +49,7 @@ const HazardChartsSettings: React.FC<HazardChartsSettingsProps> = ({ data, spect
     }
     toPng(element, { quality: 0.95 }).then((dataUrl: string) => {
       const link = document.createElement('a');
-      link.download = spectral ? `UHS_${state.poe}_in_50yr.png` : 'hazard_chart.png';
+      link.download = spectral ? `UHS_${state.poe}_in_50yr-${HAZARD_MODEL_VERSION}.png` : `hazard_chart-${HAZARD_MODEL_VERSION}.png`;
       link.href = dataUrl;
       link.click();
     });
