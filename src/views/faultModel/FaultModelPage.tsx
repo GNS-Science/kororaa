@@ -41,7 +41,7 @@ const FaultModelComponent: React.FC = () => {
     <PageContainer>
       {isPending && <SimpleBackdrop />}
       <Box role="faultModelView" sx={{ ...flexParentCenter, justifyContent: 'center', height: '100%', width: '100%' }}>
-        <LeafletDrawer drawerHeight={'80vh'} headerHeight={`${100 - scrollHeight}px`} width={'400px'} fullscreen={fullscreen}>
+        <LeafletDrawer drawerHeight={'80vh'} headerHeight={`${100 - scrollHeight}px`} width={'500px'} fullscreen={fullscreen}>
           <Typography variant="h4" sx={{ textAlign: 'center' }}>
             Inversion Fault Model
             <InfoTooltip content={markdown || ''} format={content_type === 'Markdown'} />
