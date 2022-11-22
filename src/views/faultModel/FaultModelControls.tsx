@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState, useCallback } from 'react';
 import { Box, Button, styled } from '@mui/material';
-import { SelectControl } from '@gns-science/toshi-nest';
+import { SelectControl, RangeSliderWithInputs } from '@gns-science/toshi-nest';
 import { toPng } from 'html-to-image';
 import { AxiosError } from 'axios';
 import { flexParentCenter } from '../../utils/styleUtils';
@@ -11,6 +11,21 @@ import SelectControlMultiple from '../../components/common/SelectControlMultiple
 
 const StyledButton = styled(Button)(() => ({
   margin: '0 0 0 10px',
+}));
+
+const StyledRangeSliderDiv = styled('div')(() => ({
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  justifyContent: 'center',
+  '& p': {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  '& .css-7ai7qk': {
+    marginRight: '0px',
+  },
 }));
 
 interface FaultModelControlsProps {
@@ -96,8 +111,22 @@ const FaultModelControls: React.FC<FaultModelControlsProps> = ({ startTransition
   return (
     <Box sx={{ width: '100%', ...flexParentCenter, flexDirection: 'column' }}>
       <CustomControlsBar direction="column">
+        <SelectControl name="Slip Rate" value={slipRate} onChange={setSlipRate} options={['1', '2', '3', '4', '5']} />
+        <SelectControl name="Time Dependence" value={timeDependence} onChange={setTimeDependence} options={['1', '2', '3', '4', '5']} />
+        <SelectControl name="MFD Value" value={mfdValue} onChange={setMfdValue} options={['1', '2', '3', '4', '5']} />
+        <SelectControl name="Moment Scaling" value={momentScaling} onChange={setMomentScaling} options={['1', '2', '3', '4', '5']} />
         <SelectControlMultiple name="Locations" selection={locations} options={locationOptions} setSelection={setLocations} />
         <SelectControl name="Radii" selection={radius} options={radiiOptions} setSelection={setRadius} />
+        <StyledRangeSliderDiv>
+          <RangeSliderWithInputs label="Magnitude Range" valuesRange={magnitudeRange} setValues={setMagnitudeRange} inputProps={{ step: 0.1, min: 6, max: 10, type: 'number' }} />
+          <RangeSliderWithInputs label="Rate Range (1/yr)" valuesRange={rateRange} setValues={setRateRange} inputProps={{ step: 0.1, min: -20, max: 0, type: 'number' }} />
+        </StyledRangeSliderDiv>
+        <StyledButton disabled={isPending} variant="contained" type="submit" onClick={() => console.log('submit')}>
+          Submit
+        </StyledButton>
+        <StyledButton disabled={isPending} variant="contained" type="submit" onClick={() => console.log('download table')}>
+          Download Table
+        </StyledButton>
       </CustomControlsBar>
     </Box>
   );
