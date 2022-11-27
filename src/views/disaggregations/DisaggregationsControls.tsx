@@ -1,9 +1,10 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { SelectControl } from '@gns-science/toshi-nest';
+import { Button } from '@mui/material';
 
 import { DisaggregationsPageQuery$data } from './__generated__/DisaggregationsPageQuery.graphql';
 import { DisaggregationsPageState } from './DisaggregationsPageReducer';
-import { getVs30Options, getImtOptions, getLocationOptions, getPoeOptions } from './disaggregationPage.service';
+import { getVs30Options, getImtOptions, getLocationOptions, getPoeOptions, getReportUrl } from './disaggregationPage.service';
 import { readablePoe, readablePoeArray, parsePoeString } from '../hazardMaps/hazardMaps.service';
 import CustomControlsBar from '../../components/common/CustomControlsBar';
 import { vs30Tooltip, imtTooltip, poeTooltip } from '../../constants/tooltips';
@@ -29,6 +30,14 @@ export const DisaggregationsControls: React.FC<DisaggregationsControlsProps> = (
     dispatch({ vs30, poe, location, imt });
   }, [vs30, poe, location, imt, dispatch]);
 
+  const handleDownloadCsv = () => {
+    const csvLink = getReportUrl(data, state);
+    const link = document.createElement('a');
+    link.download = `disagg.csv`;
+    link.href = `${csvLink}/data/disagg.csv`;
+    link.click();
+  };
+
   return (
     <CustomControlsBar direction="column">
       <SelectControl name="Location" options={locationOptions.sort()} selection={location} setSelection={setLocation} tooltip={locationTooltip} />
@@ -41,6 +50,9 @@ export const DisaggregationsControls: React.FC<DisaggregationsControlsProps> = (
         setSelection={(newValue: string) => setPoe(parsePoeString(newValue))}
         tooltip={poeTooltip}
       />
+      <Button variant="contained" onClick={handleDownloadCsv}>
+        Download CSV
+      </Button>
     </CustomControlsBar>
   );
 };
