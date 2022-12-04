@@ -1,4 +1,4 @@
-import React, { useReducer, useState, useMemo, useTransition, useEffect } from 'react';
+import React, { useReducer, useState, useTransition, useEffect } from 'react';
 import { Box, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { LeafletDrawer } from '@gns-science/toshi-nest';
@@ -10,6 +10,7 @@ import { faultModelReducer, initialState } from './faultModelReducer';
 import SimpleBackdrop from '../../components/common/SimpleBackdrop';
 import sampleData from './constants/sampleData';
 import FaultModelControls from './FaultModelControls';
+import { FaultModelTableContainer } from './FaultModelTableContainer';
 
 const PageContainer = styled(Box)(({ theme }) => ({
   ...flexParentCenter,
@@ -52,6 +53,7 @@ const FaultModelComponent: React.FC = () => {
         </LeafletDrawer>
         <FaultModel geoJson={[sampleData.ruptures, sampleData.locations]} setFullscreen={setFullscreen} />
       </Box>
+      <FaultModelTableContainer data={sampleData.ruptures} id="faultModelTable" />
     </PageContainer>
   );
 };

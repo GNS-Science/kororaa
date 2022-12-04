@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { LeafletMap, ColorBar } from '@gns-science/toshi-nest';
 import { Box } from '@mui/material';
 
@@ -16,6 +16,7 @@ interface HazardMapsProps {
 }
 
 const HazardMaps: React.FC<HazardMapsProps> = ({ state, geoJson, fullscreen, setFullscreen, colorScale, cov }: HazardMapsProps) => {
+  const [zoomLevel, setZoomLevel] = useState<number>(5);
   const zoom = 5;
   const nzCentre = [-40.946, 174.167];
 
@@ -33,6 +34,8 @@ const HazardMaps: React.FC<HazardMapsProps> = ({ state, geoJson, fullscreen, set
         zoomSnap={MAP_ZOOM_SNAP}
         zoomDelta={MAP_ZOOM_DELTA}
         cov={cov}
+        zoomLevel={zoomLevel}
+        setZoomLevel={setZoomLevel}
       />
       {colorScale && (
         <ColorBar

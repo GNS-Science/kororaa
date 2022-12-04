@@ -1043,10 +1043,17 @@
   dependencies:
     regenerator-runtime "^0.13.4"
 
+<<<<<<< HEAD
 "@babel/runtime@^7.20.6":
   version "7.20.7"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.20.7.tgz#fcb41a5a70550e04a7b708037c7c32f7f356d8fd"
   integrity sha512-UF0tvkUtxwAgZ5W/KrkHf0Rn0fdnLDU9ScxBrEVNUprE/MzirjK4MJUX1/BVDv00Sv8cljtukVK1aky++X1SjQ==
+=======
+"@babel/runtime@^7.20.1":
+  version "7.20.6"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.20.6.tgz#facf4879bfed9b5326326273a64220f099b0fce3"
+  integrity sha512-Q+8MqP7TiHMWzSfwiJwXCjyf4GYA4Dgw3emg/7xmwsdLJOZUp+nMqcOwOzzYheuM1rhDu8FSj2l0aoMygEuXuA==
+>>>>>>> 7dc7033 (update toshi-nest; reactive line thickness for IFM map; styling for fault model table; add fault name to IFM tooltips;)
   dependencies:
     regenerator-runtime "^0.13.11"
 
@@ -1367,10 +1374,10 @@
     minimatch "^3.1.2"
     strip-json-comments "^3.1.1"
 
-"@gns-science/toshi-nest@^3.6.8":
-  version "3.6.8"
-  resolved "https://npm.pkg.github.com/download/@GNS-Science/toshi-nest/3.6.8/da258df4e975fd3ee70d0e21ac04db4c9b9a9ce4#da258df4e975fd3ee70d0e21ac04db4c9b9a9ce4"
-  integrity sha512-Ox0tK4xedlqXfttW5OTtaEPOycB/IXrvdqwimiHWGb6u3/OmuVl5uEKgd3M7X4ogLyI+cez8C8+Vl86n3JyL0g==
+"@gns-science/toshi-nest@^3.7.0":
+  version "3.7.0"
+  resolved "https://npm.pkg.github.com/download/@GNS-Science/toshi-nest/3.7.0/aa19aa6fc9ed90c0419f3cb3808d275085fcf2c2#aa19aa6fc9ed90c0419f3cb3808d275085fcf2c2"
+  integrity sha512-nKU1oEOixRlsZ0S5JHINL9s5gsCPbhyOzZbb2SIRw+l3/OeHYHHUFcQTeGx+2MKMsTO0hzqVNhDFpjlM6PcNZg==
   dependencies:
     "@emotion/react" "^11.8.2"
     "@emotion/styled" "^11.8.1"
@@ -1903,9 +1910,9 @@
     react-is "^18.2.0"
 
 "@mui/x-data-grid@^5.17.13":
-  version "5.17.17"
-  resolved "https://registry.yarnpkg.com/@mui/x-data-grid/-/x-data-grid-5.17.17.tgz#c26111536e43d243c5657c4225d399a89d6ae152"
-  integrity sha512-03XwKeZ5q93CUf7EdJTBfqf3y3cd0vOEH1dXnusk0NaNROW/uBcnwTix9/1D7hhlCNs+Unq98Qffe2W/sR++Xg==
+  version "5.17.13"
+  resolved "https://registry.yarnpkg.com/@mui/x-data-grid/-/x-data-grid-5.17.13.tgz#efee3b9ebbb868cc4a174da4a0db08c75e46a194"
+  integrity sha512-Z2DSQA8O2ZPKat6URO9nEpKn8Wszuiz/OJQq5aW3so3KPunb8IJV30h94Kc+Su9ng6mdknCpimrnN2EBibznFA==
   dependencies:
     "@babel/runtime" "^7.18.9"
     "@mui/utils" "^5.10.3"
@@ -5372,10 +5379,17 @@ decimal.js@^10.2.1, decimal.js@^10.3.1:
   resolved "https://registry.yarnpkg.com/decimal.js/-/decimal.js-10.4.0.tgz#97a7448873b01e92e5ff9117d89a7bca8e63e0fe"
   integrity sha512-Nv6ENEzyPQ6AItkGwLE2PGKinZZ9g59vSh2BeH6NqPu0OTKZ5ruJsVqh/orbAnqXc9pBbgXAIrc2EyaCj8NpGg==
 
+<<<<<<< HEAD
 decimal.js@^10.4.3:
   version "10.4.3"
   resolved "https://registry.yarnpkg.com/decimal.js/-/decimal.js-10.4.3.tgz#1044092884d245d1b7f65725fa4ad4c6f781cc23"
   integrity sha512-VBBaLc1MgL5XpzgIP7ny5Z6Nx3UrRkIViUkPUdtl9aya5amy3De1gsUUSB1g3+3sExYNjCAsAznmukyxCb1GRA==
+=======
+decimal.js@^10.4.2:
+  version "10.4.2"
+  resolved "https://registry.yarnpkg.com/decimal.js/-/decimal.js-10.4.2.tgz#0341651d1d997d86065a2ce3a441fbd0d8e8b98e"
+  integrity sha512-ic1yEvwT6GuvaYwBLLY6/aFFgjZdySKTE8en/fkU3QICTmRtgtSlFn0u0BXN06InZwtfCelR7j8LRiDI/02iGA==
+>>>>>>> 7dc7033 (update toshi-nest; reactive line thickness for IFM map; styling for fault model table; add fault name to IFM tooltips;)
 
 decode-named-character-reference@^1.0.0:
   version "1.0.2"
@@ -8963,6 +8977,7 @@ math-log2@^1.0.1:
   integrity sha512-9W0yGtkaMAkf74XGYVy4Dqw3YUMnTNB2eeiw9aQbUl4A3KmuCEHTt2DgAB07ENzOYAjsYSAYufkAq0Zd+jU7zA==
 
 mathjs@*, mathjs@^11.4.0:
+<<<<<<< HEAD
   version "11.5.0"
   resolved "https://registry.yarnpkg.com/mathjs/-/mathjs-11.5.0.tgz#5cacad7affa2c804ad3f09efa5d53f0ffcb79493"
   integrity sha512-vJ/+SqWtxjW6/aeDRt8xL3TlOVKqwN15BIyTGVqGbIWuiqgY4SxZ0yLuna82YH9CB757iFP7uJ4m3KvVBX7Qcg==
@@ -8970,6 +8985,15 @@ mathjs@*, mathjs@^11.4.0:
     "@babel/runtime" "^7.20.6"
     complex.js "^2.1.1"
     decimal.js "^10.4.3"
+=======
+  version "11.4.0"
+  resolved "https://registry.yarnpkg.com/mathjs/-/mathjs-11.4.0.tgz#9dadfac3470ffcbeeff4abf53a0c7b93bb3a7a02"
+  integrity sha512-SGhKmXnwsPWrLHvhzm849RJPMjFTgLgVwKtv2L+IY7XHB4nuzyZLfV2eHT1HtBZ4yzsLHgcqak47zMmxuEIIUg==
+  dependencies:
+    "@babel/runtime" "^7.20.1"
+    complex.js "^2.1.1"
+    decimal.js "^10.4.2"
+>>>>>>> 7dc7033 (update toshi-nest; reactive line thickness for IFM map; styling for fault model table; add fault name to IFM tooltips;)
     escape-latex "^1.2.0"
     fraction.js "^4.2.0"
     javascript-natural-sort "^0.7.1"
