@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { Box, Button, styled } from '@mui/material';
 import { SelectControl, RangeSliderWithInputs } from '@gns-science/toshi-nest';
 import { toPng } from 'html-to-image';
@@ -124,8 +124,8 @@ const FaultModelControls: React.FC<FaultModelControlsProps> = ({ startTransition
         <StyledButton disabled={isPending} variant="contained" type="submit" onClick={() => console.log('submit')}>
           Submit
         </StyledButton>
-        <StyledButton disabled={isPending} variant="contained" type="submit" onClick={() => console.log('download table')}>
-          Download Table
+        <StyledButton disabled={isPending} variant="contained" onClick={handleDownload}>
+          Download Image
         </StyledButton>
       </CustomControlsBar>
     </Box>

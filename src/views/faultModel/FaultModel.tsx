@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { LeafletMap } from '@gns-science/toshi-nest';
 import { Box } from '@mui/material';
 
@@ -10,6 +10,7 @@ export interface FaultModelProps {
 }
 
 const FaultModel: React.FC<FaultModelProps> = ({ geoJson, setFullscreen }) => {
+  const [zoomLevel, setZoomLevel] = useState<number>(5);
   const zoom = 5;
   const nzCentre = [-40.946, 174.167];
 
@@ -29,11 +30,13 @@ const FaultModel: React.FC<FaultModelProps> = ({ geoJson, setFullscreen }) => {
         style={{
           stroke: '#f21616',
           color: '#f21616',
-          weight: 1,
+          weight: 2,
           opacity: 0.75,
           fillOpacity: 0.6,
         }}
         overlay={false}
+        zoomLevel={zoomLevel}
+        setZoomLevel={setZoomLevel}
       />
     </Box>
   );
