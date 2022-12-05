@@ -35,9 +35,7 @@ export const DisaggregationsControls: React.FC<DisaggregationsControlsProps> = (
     const link = document.createElement('a');
     link.download = `disagg.csv`;
     link.href = `https://${csvLink}/data/disagg.csv`;
-    // document.body.appendChild(link);
     link.click();
-    // document.body.removeChild(link);
   };
 
   return (
