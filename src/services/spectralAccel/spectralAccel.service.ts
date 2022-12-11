@@ -146,7 +146,6 @@ export const getSpectralCSVData = (curves: UncertaintyChartData, poe: number | u
       const vs30 = curve[0].split(' ')[0].replace('m/s', '');
       const location = curve[0].split(' ').length === 3 ? `${curve[0].split(' ')[1]} ${curve[0].split(' ')[2]}` : curve[0].split(' ')[1];
       const latLon = tryParseLatLon(location);
-      console.log(latLon);
       Object.entries(curve[1])?.forEach((value) => {
         const curveCSVData = [latLon[0], latLon[1], vs30, (poe && poe * 100)?.toString() || ''];
         curveCSVData.push(convertAgg(value[0]));
