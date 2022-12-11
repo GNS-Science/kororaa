@@ -131,8 +131,10 @@ export const sortSACurveGroups = (curveGroups: UncertaintyChartData): Uncertaint
 
 export const tryParseLatLon = (loc: string): string[] => {
   if (loc.split(',').length === 1) {
-    return getLatLonFromLocationName(loc).split(',');
-  } else return loc.split(',');
+    return getLatLonFromLocationName(loc)
+      .split(',')
+      .map((l) => l.trim());
+  } else return loc.split(',').map((l) => l.trim());
 };
 
 export const getSpectralCSVData = (curves: UncertaintyChartData, poe: number | undefined): string[][] => {
