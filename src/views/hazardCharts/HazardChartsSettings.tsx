@@ -121,7 +121,7 @@ const HazardChartsSettings: React.FC<HazardChartsSettingsProps> = ({ data, spect
         </MenuItem>
         <MenuItem>
           {spectral ? (
-            <StyledCSVLink data={saCSVData} filename="spectral-acceleration-curves.csv">
+            <StyledCSVLink data={saCSVData} filename="UHS-curves.csv">
               <StyledIconButton>
                 <TextSnippetIcon />
               </StyledIconButton>
