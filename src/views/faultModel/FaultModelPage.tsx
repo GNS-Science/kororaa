@@ -2,6 +2,8 @@ import React, { useReducer, useState, useTransition, useEffect } from 'react';
 import { Box, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { LeafletDrawer } from '@gns-science/toshi-nest';
+import { graphql } from 'babel-plugin-relay/macro';
+import { useLazyLoadQuery } from 'react-relay';
 
 import FaultModel from './FaultModel';
 import { flexParentCenter } from '../../utils/styleUtils';
@@ -11,6 +13,7 @@ import SimpleBackdrop from '../../components/common/SimpleBackdrop';
 import sampleData from './constants/sampleData';
 import FaultModelControls from './FaultModelControls';
 import { FaultModelTableContainer } from './FaultModelTableContainer';
+import { FaultModelPageQuery } from './__generated__/FaultModelPageQuery.graphql';
 
 const PageContainer = styled(Box)(({ theme }) => ({
   ...flexParentCenter,
@@ -28,7 +31,11 @@ const FaultModelComponent: React.FC = () => {
   const [scrollHeight, setScrollHeight] = useState<number>(0);
   const markdown = '## Fault Model\n\nThis is the fault model.';
   const content_type = 'Markdown';
-
+  const data = useLazyLoadQuery<FaultModelPageQuery>(faultModelPageQuery, {});
+  // console.log(data);
+  const faultSystemBranches =
+    data?.nzshm_model?.model?.source_logic_tree_spec?.fault_system_branches &&
+    data?.nzshm_model?.model?.source_logic_tree_spec?.fault_system_branches.filter((branch) => branch && branch?.short_name === 'CRU')[0]?.branches;
   useEffect(() => {
     function updateScrollHeight() {
       setScrollHeight(window.scrollY);
@@ -48,7 +55,14 @@ const FaultModelComponent: React.FC = () => {
             <InfoTooltip content={markdown || ''} format={content_type === 'Markdown'} />
           </Typography>
           <React.Suspense fallback={<SimpleBackdrop />}>
-            <FaultModelControls state={state} dispatch={dispatch} startTransition={startTransition} isPending={isPending} geoJson={[sampleData.ruptures, sampleData.locations]} />
+            <FaultModelControls
+              state={state}
+              dispatch={dispatch}
+              startTransition={startTransition}
+              isPending={isPending}
+              geoJson={[sampleData.ruptures, sampleData.locations]}
+              options={faultSystemBranches}
+            />
           </React.Suspense>
         </LeafletDrawer>
         <FaultModel geoJson={[sampleData.ruptures, sampleData.locations]} setFullscreen={setFullscreen} />
@@ -67,3 +81,25 @@ const FaultModelPage: React.FC = () => {
 };
 
 export default FaultModelPage;
+
+export const faultModelPageQuery = graphql`
+  query FaultModelPageQuery {
+    nzshm_model(version: "NSHM_1.0.0") {
+      model {
+        version
+        title
+        source_logic_tree_spec {
+          fault_system_branches {
+            short_name
+            long_name
+            branches {
+              name
+              long_name
+              value_options
+            }
+          }
+        }
+      }
+    }
+  }
+`;
