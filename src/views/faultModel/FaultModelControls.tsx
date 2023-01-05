@@ -34,6 +34,14 @@ interface FaultModelControlsProps {
   geoJson: string[];
   state: FaultModelState;
   dispatch: React.Dispatch<Partial<FaultModelState>>;
+  options:
+    | ({
+        readonly name: string | null;
+        readonly long_name: string | null;
+        readonly value_options: string | null;
+      } | null)[]
+    | null
+    | undefined;
 }
 
 interface solvisLocation {
@@ -44,7 +52,7 @@ interface solvisLocation {
   population: number;
 }
 
-const FaultModelControls: React.FC<FaultModelControlsProps> = ({ startTransition, isPending, geoJson, state, dispatch }: FaultModelControlsProps) => {
+const FaultModelControls: React.FC<FaultModelControlsProps> = ({ startTransition, isPending, geoJson, state, dispatch, options }: FaultModelControlsProps) => {
   const [slipRate, setSlipRate] = useState<string>(state.slipRate);
   const [timeDependence, setTimeDependence] = useState<string>(state.timeDependence);
   const [mfdValue, setMfdValue] = useState<string>(state.mfdValue);

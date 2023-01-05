@@ -2,6 +2,18 @@ schema {
   query: QueryRoot
 }
 
+type BranchAttributeValue {
+  name: String
+  long_name: String
+  json_value: JSONString
+}
+
+type BranchAttributeValueSpec {
+  name: String
+  long_name: String
+  value_options: JSONString
+}
+
 enum ColourScaleNormalise {
   LOG
   LIN
@@ -40,6 +52,18 @@ type DisaggregationReport {
 type DisaggregationReportResult {
   ok: Boolean
   reports: [DisaggregationReport]
+}
+
+type FaultSystemLogicTree {
+  short_name: String
+  long_name: String
+  branches: [SourceLogicTreeBranch]
+}
+
+type FaultSystemLogicTreeSpec {
+  short_name: String
+  long_name: String
+  branches: [BranchAttributeValueSpec]
 }
 
 type GeoJsonHazardMap {
@@ -107,6 +131,18 @@ interface Node {
   id: ID!
 }
 
+type NzshmModel {
+  version: String
+  title: String
+  source_logic_tree: SourceLogicTree
+  source_logic_tree_spec: SourceLogicTreeSpec
+}
+
+type NzshmModelResult {
+  model: NzshmModel
+  ok: Boolean
+}
+
 type Person {
   name: String
 }
@@ -126,6 +162,8 @@ type QueryRoot {
 
   """About this API """
   about: String
+  nzshm_model(version: String): NzshmModelResult
+  nzshm_models: [NzshmModelResult]
   disaggregation_reports: DisaggregationReportResult
   science_reports: ScienceReportResult
   textual_content(index: String, tags: [String]): TextualContentResult
@@ -171,6 +209,23 @@ type ScienceReport {
 type ScienceReportResult {
   ok: Boolean
   reports: [ScienceReport]
+}
+
+type SourceLogicTree {
+  fault_system_branches: [FaultSystemLogicTree]
+}
+
+type SourceLogicTreeBranch {
+  weight: Float
+  onfault_nrml_id: String
+  distributed_nrml_id: String
+  inversion_solution_id: String
+  inversion_solution_type: String
+  values: [BranchAttributeValue]
+}
+
+type SourceLogicTreeSpec {
+  fault_system_branches: [FaultSystemLogicTreeSpec]
 }
 
 """NSHM textual content details."""
