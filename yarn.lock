@@ -1367,10 +1367,10 @@
     minimatch "^3.1.2"
     strip-json-comments "^3.1.1"
 
-"@gns-science/toshi-nest@^3.7.0":
-  version "3.7.0"
-  resolved "https://npm.pkg.github.com/download/@GNS-Science/toshi-nest/3.7.0/aa19aa6fc9ed90c0419f3cb3808d275085fcf2c2#aa19aa6fc9ed90c0419f3cb3808d275085fcf2c2"
-  integrity sha512-nKU1oEOixRlsZ0S5JHINL9s5gsCPbhyOzZbb2SIRw+l3/OeHYHHUFcQTeGx+2MKMsTO0hzqVNhDFpjlM6PcNZg==
+"@gns-science/toshi-nest@^3.7.1":
+  version "3.7.1"
+  resolved "https://npm.pkg.github.com/download/@GNS-Science/toshi-nest/3.7.1/5b8d98befed70d8465caf8dd274246e893ab7661#5b8d98befed70d8465caf8dd274246e893ab7661"
+  integrity sha512-XkUNpAfigCLWdmwZlKWHqongoQ9V5y8XAfO/f83UJPNEUXzk7MV0TsQDfSQwRpLEhtSKdNupZM4Qo6fNzrA7Ew==
   dependencies:
     "@emotion/react" "^11.8.2"
     "@emotion/styled" "^11.8.1"
@@ -3795,10 +3795,19 @@ axe-core@^4.4.3:
   resolved "https://registry.yarnpkg.com/axe-core/-/axe-core-4.4.3.tgz#11c74d23d5013c0fa5d183796729bc3482bd2f6f"
   integrity sha512-32+ub6kkdhhWick/UjvEwRchgoetXqTK14INLqbGm5U2TzBkBNF3nQtLYm8ovxSkQWArjEQvftCKryjZaATu3w==
 
-axios@*, axios@^1.1.3:
+axios@*:
   version "1.1.3"
   resolved "https://registry.yarnpkg.com/axios/-/axios-1.1.3.tgz#8274250dada2edf53814ed7db644b9c2866c1e35"
   integrity sha512-00tXVRwKx/FZr/IDVFt4C+f9FYairX517WoGCL6dpOntqLkZofjhu43F/Xl44UOpqa+9sLFDrG/XAnFsUYgkDA==
+  dependencies:
+    follow-redirects "^1.15.0"
+    form-data "^4.0.0"
+    proxy-from-env "^1.1.0"
+
+axios@^1.2.2:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-1.2.2.tgz#72681724c6e6a43a9fea860fc558127dbe32f9f1"
+  integrity sha512-bz/J4gS2S3I7mpN/YZfGFTqhXTYzRho8Ay38w2otuuDR322KzFIWm/4W2K6gIwvWaws5n+mnb7D1lN9uD+QH6Q==
   dependencies:
     follow-redirects "^1.15.0"
     form-data "^4.0.0"

@@ -14,10 +14,10 @@ export const solvisApiService = {
     const res = await axios.get(`${solvisEndpoint}/radii/${radiiID}`);
     return res;
   },
-  // getSolutionAnalysis: async (id: string, locationSelections: string, radii: string, magRange: number[], rateRange: number[]): Promise<AxiosResponse> => {
-  //   const res = await axios.get(
-  //     `${solvisEndpoint}/solution_analysis/${id}/loc/${locationSelections}/rad/${radii}?max_mag=${magRange[1]}&min_mag=${magRange[0]}&max_rate=1e${rateRange[1]}&min_rate=1e${rateRange[0]}`,
-  //   );
-  //   return res;
-  // },
+  getSolutionAnalysis: async (id: string, locationSelections: string, radii: string, magRange: number[], rateRange: number[]): Promise<AxiosResponse> => {
+    const res = await axios.get(
+      `${solvisEndpoint}/solution_analysis/${id}/loc/${locationSelections}/rad/${radii}?max_mag=${magRange[1]}&min_mag=${magRange[0]}&max_rate=1e${rateRange[1]}&min_rate=1e${rateRange[0]}`,
+    );
+    return res;
+  },
 };

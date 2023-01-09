@@ -1,8 +1,9 @@
 export type FaultModelState = {
-  slipRate: string;
+  deformationModel: string;
   timeDependence: string;
-  mfdValue: string;
+  bNPair: string;
   momentScaling: string;
+  areaMagnitudeScaling: string;
   locations: string[];
   radius: number;
   magnitudeRange: number[];
@@ -17,10 +18,11 @@ export const faultModelReducer = (state: FaultModelState, newState: Partial<Faul
 };
 
 export const initialState: FaultModelState = {
-  slipRate: '',
+  deformationModel: '',
   timeDependence: '',
-  mfdValue: '',
+  bNPair: '',
   momentScaling: '',
+  areaMagnitudeScaling: '',
   locations: [],
   radius: 0,
   magnitudeRange: [6, 10],

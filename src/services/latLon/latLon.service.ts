@@ -34,6 +34,12 @@ export const getLatLonFromLocationKey = (locationKey: string): string => {
   return `${currentLocation?.latitude}, ${currentLocation?.longitude}`;
 };
 
+export const getLocationKeyFromLocationName = (locationName: string): string => {
+  const currentLocation = hazardPageLocations.find((location) => locationName === location.name);
+  if (currentLocation) return currentLocation.id;
+  return '';
+};
+
 export const getLatLonString = (locations: LocationData[]): string => {
   let latLonString = '';
   const filteredLocations = locations.filter((location) => location.name === null);
