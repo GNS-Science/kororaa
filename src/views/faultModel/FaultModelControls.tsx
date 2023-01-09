@@ -3,11 +3,15 @@ import { Box, Button, styled } from '@mui/material';
 import { SelectControl, RangeSliderWithInputs } from '@gns-science/toshi-nest';
 import { toPng } from 'html-to-image';
 import { AxiosError } from 'axios';
+
 import { flexParentCenter } from '../../utils/styleUtils';
+
 import { FaultModelState } from './faultModelReducer';
 import CustomControlsBar from '../../components/common/CustomControlsBar';
 import { solvisApiService } from './faultModel.service';
 import SelectControlMultiple from '../../components/common/SelectControlMultiple';
+import { getLocationKeyFromLocationName } from '../../services/latLon/latLon.service';
+import { SolvisResponse } from './FaultModelPage';
 
 const StyledButton = styled(Button)(() => ({
   margin: '0 0 0 10px',
@@ -55,12 +59,12 @@ interface Branches {
 interface FaultModelControlsProps {
   startTransition: React.TransitionStartFunction;
   isPending: boolean;
-  geoJson: string[] | null;
   state: FaultModelState;
   dispatch: React.Dispatch<Partial<FaultModelState>>;
   options: FaultModelOption[] | null | undefined;
   logicTreeBranches: Branches | null | undefined;
-  setSolutionId: (value: string) => void;
+  // setSolutionId: (value: string) => void;
+  setGeoJson: React.Dispatch<React.SetStateAction<SolvisResponse | null>>;
 }
 
 interface solvisLocation {
@@ -71,12 +75,13 @@ interface solvisLocation {
   population: number;
 }
 
-const FaultModelControls: React.FC<FaultModelControlsProps> = ({ startTransition, isPending, geoJson, state, dispatch, options, logicTreeBranches, setSolutionId }: FaultModelControlsProps) => {
-  const [deformationModel, setDeformationModel] = useState<string>(state.deformationModel);
-  const [timeDependence, setTimeDependence] = useState<string>(state.timeDependence);
-  const [bNPair, setBNPair] = useState<string>(state.bNPair);
-  const [momentScaling, setMomentScaling] = useState<string>(state.momentScaling);
-  const [areaMagnitudeScaling, setAreaMagnitudeScaling] = useState<string>(state.areaMagnitudeScaling);
+const FaultModelControls: React.FC<FaultModelControlsProps> = ({ startTransition, isPending, state, dispatch, options, logicTreeBranches, setGeoJson }: FaultModelControlsProps) => {
+  const [deformationModel, setDeformationModel] = useState<string>('');
+  const [timeDependence, setTimeDependence] = useState<string>('');
+  const [bNPair, setBNPair] = useState<string>('');
+  const [momentScaling, setMomentScaling] = useState<string>('');
+  const [areaMagnitudeScaling, setAreaMagnitudeScaling] = useState<string>('');
+  const [solutionId, setSolutionId] = useState<string>(state.solutionId);
   const [locations, setLocations] = useState<string[]>(state.locations);
   const [radius, setRadius] = useState<number>(state.radius);
   const [magnitudeRange, setMagnitudeRange] = useState<number[]>(state.magnitudeRange);
@@ -123,6 +128,31 @@ const FaultModelControls: React.FC<FaultModelControlsProps> = ({ startTransition
       });
   }, []);
 
+  const getGeoJson = useCallback(() => {
+    if (!solutionId) return;
+    solvisApiService
+      .getSolutionAnalysis(
+        solutionId,
+        state.locations.map((location) => getLocationKeyFromLocationName(location)).join(','),
+        state.radius.toString().replace('km', ''),
+        state.magnitudeRange,
+        state.rateRange,
+      )
+      .then((response) => {
+        const geoJson = response.data;
+        setGeoJson(geoJson);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [solutionId, state.locations, state.radius, state.magnitudeRange, state.rateRange, setGeoJson]);
+
+  useEffect(() => {
+    if (solutionId) {
+      getGeoJson();
+    }
+  }, [solutionId, getGeoJson]);
+
   useEffect(() => {
     getLocationOptions();
     getRadiiOptions();
@@ -155,11 +185,7 @@ const FaultModelControls: React.FC<FaultModelControlsProps> = ({ startTransition
   const handleSubmit = () => {
     startTransition(() => {
       dispatch({
-        deformationModel: deformationModel,
-        timeDependence: timeDependence,
-        bNPair: bNPair,
-        areaMagnitudeScaling: areaMagnitudeScaling,
-        momentScaling: momentScaling,
+        solutionId: solutionId,
         locations: locations,
         radius: radius,
         magnitudeRange: magnitudeRange,
@@ -193,7 +219,7 @@ const FaultModelControls: React.FC<FaultModelControlsProps> = ({ startTransition
         <SelectControl name="Radii" selection={radius} options={radiiOptions} setSelection={setRadius} />
         <StyledRangeSliderDiv>
           <RangeSliderWithInputs label="Magnitude Range" valuesRange={magnitudeRange} setValues={setMagnitudeRange} inputProps={{ step: 0.1, min: 6, max: 10, type: 'number' }} />
-          <RangeSliderWithInputs label="Rate Range (1/yr)" valuesRange={rateRange} setValues={setRateRange} inputProps={{ step: 0.1, min: -20, max: 0, type: 'number' }} />
+          <RangeSliderWithInputs label="Rate Range (1/yr)" valuesRange={rateRange} setValues={setRateRange} inputProps={{ step: 1, min: -20, max: 0, type: 'number' }} />
         </StyledRangeSliderDiv>
         <StyledButton disabled={isPending} variant="contained" type="submit" onClick={handleSubmit}>
           Submit

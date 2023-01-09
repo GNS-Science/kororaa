@@ -1,4 +1,4 @@
-import React, { useReducer, useState, useTransition, useEffect, useCallback } from 'react';
+import React, { useReducer, useState, useTransition, useEffect } from 'react';
 import { Box, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { LeafletDrawer } from '@gns-science/toshi-nest';
@@ -10,12 +10,9 @@ import { flexParentCenter } from '../../utils/styleUtils';
 import { InfoTooltip } from '../../components/common/InfoTooltip';
 import { faultModelReducer, initialState } from './faultModelReducer';
 import SimpleBackdrop from '../../components/common/SimpleBackdrop';
-import sampleData from './constants/sampleData';
 import FaultModelControls from './FaultModelControls';
 import { FaultModelTableContainer } from './FaultModelTableContainer';
 import { FaultModelPageQuery } from './__generated__/FaultModelPageQuery.graphql';
-import { solvisApiService } from './faultModel.service';
-import { getLocationKeyFromLocationName } from '../../services/latLon/latLon.service';
 
 const PageContainer = styled(Box)(({ theme }) => ({
   ...flexParentCenter,
@@ -26,7 +23,7 @@ const PageContainer = styled(Box)(({ theme }) => ({
   },
 }));
 
-interface SolvisResponse {
+export interface SolvisResponse {
   solution_id: string;
   location_ids: string;
   radius_km: string;
@@ -41,7 +38,6 @@ const FaultModelComponent: React.FC = () => {
   const [fullscreen, setFullscreen] = useState<boolean>(false);
   const [isPending, startTransition] = useTransition();
   const [scrollHeight, setScrollHeight] = useState<number>(0);
-  const [solutionId, setSolutionId] = useState<string | null>(null);
   const [geoJson, setGeoJson] = useState<SolvisResponse | null>(null);
   const markdown = '## Fault Model\n\nThis is the fault model.';
   const content_type = 'Markdown';
@@ -59,31 +55,6 @@ const FaultModelComponent: React.FC = () => {
   });
   const logicTreeBranches = data?.nzshm_model?.model?.source_logic_tree?.fault_system_branches?.filter((branch) => branch && branch?.short_name === 'CRU')[0];
 
-  const getGeoJson = useCallback(() => {
-    if (!solutionId) return;
-    solvisApiService
-      .getSolutionAnalysis(
-        solutionId,
-        state.locations.map((location) => getLocationKeyFromLocationName(location)).join(','),
-        state.radius.toString().replace('km', ''),
-        state.magnitudeRange,
-        state.rateRange,
-      )
-      .then((response) => {
-        const geoJson = response.data;
-        setGeoJson(geoJson);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, [solutionId, state.locations, state.radius, state.magnitudeRange, state.rateRange]);
-
-  useEffect(() => {
-    if (solutionId) {
-      getGeoJson();
-    }
-  }, [solutionId, getGeoJson]);
-
   useEffect(() => {
     function updateScrollHeight() {
       setScrollHeight(window.scrollY);
@@ -92,7 +63,7 @@ const FaultModelComponent: React.FC = () => {
     updateScrollHeight();
     return () => window.removeEventListener('scroll', updateScrollHeight);
   }, []);
-  console.log(solutionId);
+
   return (
     <PageContainer>
       {isPending && <SimpleBackdrop />}
@@ -108,16 +79,15 @@ const FaultModelComponent: React.FC = () => {
               dispatch={dispatch}
               startTransition={startTransition}
               isPending={isPending}
-              geoJson={geoJson && [geoJson.ruptures, geoJson.locations]}
               options={options}
               logicTreeBranches={logicTreeBranches}
-              setSolutionId={setSolutionId}
+              setGeoJson={setGeoJson}
             />
           </React.Suspense>
         </LeafletDrawer>
-        <FaultModel geoJson={geoJson && [geoJson.ruptures, geoJson.locations]} setFullscreen={setFullscreen} />
+        <FaultModel geoJson={geoJson && [geoJson.locations, geoJson.ruptures]} setFullscreen={setFullscreen} />
       </Box>
-      <FaultModelTableContainer data={sampleData.ruptures} id="faultModelTable" />
+      <FaultModelTableContainer data={geoJson ? geoJson.ruptures : ''} id="faultModelTable" />
     </PageContainer>
   );
 };
