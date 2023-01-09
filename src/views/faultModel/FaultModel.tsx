@@ -5,7 +5,7 @@ import { Box } from '@mui/material';
 import { MAP_ZOOM_DELTA, MAP_ZOOM_MAX, MAP_ZOOM_MIN, MAP_ZOOM_SNAP } from '../../utils/environmentVariables';
 
 export interface FaultModelProps {
-  geoJson: string[];
+  geoJson: string[] | null;
   setFullscreen: (value: boolean) => void;
 }
 
@@ -13,11 +13,12 @@ const FaultModel: React.FC<FaultModelProps> = ({ geoJson, setFullscreen }) => {
   const [zoomLevel, setZoomLevel] = useState<number>(5);
   const zoom = 5;
   const nzCentre = [-40.946, 174.167];
+  // const parsedGeoJson = geoJson && geoJson.map((element) => JSON.parse(element));
 
   return (
     <Box id="map" sx={{ width: '100%', height: '80vh' }}>
       <LeafletMap
-        geoJsonData={geoJson}
+        geoJsonData={geoJson || []}
         zoom={zoom}
         nzCentre={nzCentre}
         height={'80vh'}

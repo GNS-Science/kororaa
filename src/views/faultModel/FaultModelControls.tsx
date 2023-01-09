@@ -28,20 +28,39 @@ const StyledRangeSliderDiv = styled('div')(() => ({
   },
 }));
 
+interface FaultModelOption {
+  value: string | null | undefined;
+  label: string | null | undefined;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  value_options: any;
+}
+
+interface Branch {
+  readonly weight: number | null;
+  readonly inversion_solution_id: string | null;
+  readonly inversion_solution_type: string | null;
+  readonly onfault_nrml_id: string | null;
+  readonly distributed_nrml_id: string | null;
+  readonly values: ReadonlyArray<{
+    readonly long_name: string | null;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    readonly json_value: any | null;
+  } | null> | null;
+}
+
+interface Branches {
+  readonly branches: ReadonlyArray<Branch | null> | null;
+}
+
 interface FaultModelControlsProps {
   startTransition: React.TransitionStartFunction;
   isPending: boolean;
-  geoJson: string[];
+  geoJson: string[] | null;
   state: FaultModelState;
   dispatch: React.Dispatch<Partial<FaultModelState>>;
-  options:
-    | ({
-        readonly name: string | null;
-        readonly long_name: string | null;
-        readonly value_options: string | null;
-      } | null)[]
-    | null
-    | undefined;
+  options: FaultModelOption[] | null | undefined;
+  logicTreeBranches: Branches | null | undefined;
+  setSolutionId: (value: string) => void;
 }
 
 interface solvisLocation {
@@ -52,17 +71,23 @@ interface solvisLocation {
   population: number;
 }
 
-const FaultModelControls: React.FC<FaultModelControlsProps> = ({ startTransition, isPending, geoJson, state, dispatch, options }: FaultModelControlsProps) => {
-  const [slipRate, setSlipRate] = useState<string>(state.slipRate);
+const FaultModelControls: React.FC<FaultModelControlsProps> = ({ startTransition, isPending, geoJson, state, dispatch, options, logicTreeBranches, setSolutionId }: FaultModelControlsProps) => {
+  const [deformationModel, setDeformationModel] = useState<string>(state.deformationModel);
   const [timeDependence, setTimeDependence] = useState<string>(state.timeDependence);
-  const [mfdValue, setMfdValue] = useState<string>(state.mfdValue);
+  const [bNPair, setBNPair] = useState<string>(state.bNPair);
   const [momentScaling, setMomentScaling] = useState<string>(state.momentScaling);
+  const [areaMagnitudeScaling, setAreaMagnitudeScaling] = useState<string>(state.areaMagnitudeScaling);
   const [locations, setLocations] = useState<string[]>(state.locations);
   const [radius, setRadius] = useState<number>(state.radius);
   const [magnitudeRange, setMagnitudeRange] = useState<number[]>(state.magnitudeRange);
   const [rateRange, setRateRange] = useState<number[]>(state.rateRange);
   const [locationOptions, setLocationOptions] = useState<string[]>([]);
   const [radiiOptions, setRadiiOptions] = useState<number[]>([]);
+  const deformationModelOptions = JSON.parse(options?.filter((option) => option.value === 'dm')?.[0]?.value_options);
+  const timeDependenceOptions = JSON.parse(options?.filter((option) => option.value === 'td')?.[0]?.value_options).map((option: boolean) => (option ? 'True' : 'False'));
+  const bNPairOptions = JSON.parse(options?.filter((option) => option.value === 'bN')?.[0]?.value_options).map((option: string[]) => option.join(', '));
+  const areaMagnitudeScalingOptions = JSON.parse(options?.filter((option) => option.value === 'C')?.[0]?.value_options);
+  const momentRateScalingOptions = JSON.parse(options?.filter((option) => option.value === 's')?.[0]?.value_options);
 
   const getLocationOptions = useCallback(() => {
     solvisApiService
@@ -103,6 +128,46 @@ const FaultModelControls: React.FC<FaultModelControlsProps> = ({ startTransition
     getRadiiOptions();
   }, [getLocationOptions, getRadiiOptions]);
 
+  useEffect(() => {
+    const filterSolutionId = (branches: Branches | null | undefined) => {
+      if (branches === null || branches === undefined) {
+        return [];
+      }
+      if (branches?.branches !== null && branches?.branches !== undefined) {
+        const filteredBranches = branches?.branches
+          .filter((branch) => branch !== null && JSON.parse(branch?.values?.find((value) => value?.long_name === 'deformation model')?.json_value) === deformationModel)
+          .filter((branch) => branch !== null && JSON.parse(branch?.values?.find((value) => value?.long_name === 'time dependent')?.json_value) === (timeDependence === 'True'))
+          .filter((branch) => branch !== null && branch?.values?.find((value) => value?.long_name === 'bN pair')?.json_value === `[${bNPair}]`)
+          .filter((branch) => branch !== null && JSON.parse(branch?.values?.find((value) => value?.long_name === 'area-magnitude scaling')?.json_value) === areaMagnitudeScaling)
+          .filter((branch) => branch !== null && JSON.parse(branch?.values?.find((value) => value?.long_name === 'moment rate scaling')?.json_value) === momentScaling);
+        return filteredBranches;
+      }
+    };
+
+    const filteredBranches = filterSolutionId(logicTreeBranches);
+    if (filteredBranches !== undefined && filteredBranches.length > 0) {
+      if (filteredBranches[0]?.inversion_solution_id) {
+        setSolutionId(filteredBranches[0]?.inversion_solution_id);
+      }
+    }
+  }, [deformationModel, timeDependence, bNPair, areaMagnitudeScaling, momentScaling, setSolutionId, logicTreeBranches]);
+
+  const handleSubmit = () => {
+    startTransition(() => {
+      dispatch({
+        deformationModel: deformationModel,
+        timeDependence: timeDependence,
+        bNPair: bNPair,
+        areaMagnitudeScaling: areaMagnitudeScaling,
+        momentScaling: momentScaling,
+        locations: locations,
+        radius: radius,
+        magnitudeRange: magnitudeRange,
+        rateRange: rateRange,
+      });
+    });
+  };
+
   const handleDownload = () => {
     const element = document.getElementById('map');
     if (element === null) {
@@ -119,17 +184,18 @@ const FaultModelControls: React.FC<FaultModelControlsProps> = ({ startTransition
   return (
     <Box sx={{ width: '100%', ...flexParentCenter, flexDirection: 'column' }}>
       <CustomControlsBar direction="column">
-        <SelectControl name="Slip Rate" value={slipRate} onChange={setSlipRate} options={['1', '2', '3', '4', '5']} />
-        <SelectControl name="Time Dependence" value={timeDependence} onChange={setTimeDependence} options={['1', '2', '3', '4', '5']} />
-        <SelectControl name="MFD Value" value={mfdValue} onChange={setMfdValue} options={['1', '2', '3', '4', '5']} />
-        <SelectControl name="Moment Scaling" value={momentScaling} onChange={setMomentScaling} options={['1', '2', '3', '4', '5']} />
+        <SelectControl name="Deformation Model" selection={deformationModel} setSelection={setDeformationModel} options={deformationModelOptions} />
+        <SelectControl name="Time Dependence" selection={timeDependence} setSelection={setTimeDependence} options={timeDependenceOptions} />
+        <SelectControl name="bN Pair" selection={bNPair} setSelection={setBNPair} options={bNPairOptions} />
+        <SelectControl name="Moment Scaling" selection={momentScaling} setSelection={setMomentScaling} options={momentRateScalingOptions} />
+        <SelectControl name="Area-Magnitude Scaling" selection={areaMagnitudeScaling} setSelection={setAreaMagnitudeScaling} options={areaMagnitudeScalingOptions} />
         <SelectControlMultiple name="Locations" selection={locations} options={locationOptions} setSelection={setLocations} />
         <SelectControl name="Radii" selection={radius} options={radiiOptions} setSelection={setRadius} />
         <StyledRangeSliderDiv>
           <RangeSliderWithInputs label="Magnitude Range" valuesRange={magnitudeRange} setValues={setMagnitudeRange} inputProps={{ step: 0.1, min: 6, max: 10, type: 'number' }} />
           <RangeSliderWithInputs label="Rate Range (1/yr)" valuesRange={rateRange} setValues={setRateRange} inputProps={{ step: 0.1, min: -20, max: 0, type: 'number' }} />
         </StyledRangeSliderDiv>
-        <StyledButton disabled={isPending} variant="contained" type="submit" onClick={() => console.log('submit')}>
+        <StyledButton disabled={isPending} variant="contained" type="submit" onClick={handleSubmit}>
           Submit
         </StyledButton>
         <StyledButton disabled={isPending} variant="contained" onClick={handleDownload}>
