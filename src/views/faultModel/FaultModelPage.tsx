@@ -37,9 +37,9 @@ const FaultModelComponent: React.FC = () => {
   const [isPending, startTransition] = useTransition();
   const [scrollHeight, setScrollHeight] = useState<number>(0);
   const [geoJson, setGeoJson] = useState<SolvisResponse | null>(null);
-  const markdown = '## Fault Model\n\nThis is the fault model.';
-  const content_type = 'Markdown';
   const data = useLazyLoadQuery<FaultModelPageQuery>(faultModelPageQuery, {});
+  const markdown = data?.textual_content?.content && data.textual_content?.content[0]?.text;
+  const content_type = data?.textual_content?.content && data.textual_content?.content[0]?.content_type;
   const faultSystemBranches =
     data?.nzshm_model?.model?.source_logic_tree_spec?.fault_system_branches &&
     data?.nzshm_model?.model?.source_logic_tree_spec?.fault_system_branches.filter((branch) => branch && branch?.short_name === 'CRU')[0]?.branches;
@@ -94,6 +94,18 @@ export default FaultModelPage;
 
 export const faultModelPageQuery = graphql`
   query FaultModelPageQuery {
+    textual_content(index: "ifm_analysis_help.md") {
+      ok
+      content {
+        index
+        content_type
+        text
+        created
+        author
+        tags
+        status
+      }
+    }
     nzshm_model(version: "NSHM_1.0.0") {
       model {
         version

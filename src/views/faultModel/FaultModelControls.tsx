@@ -6,7 +6,7 @@ import { AxiosError } from 'axios';
 
 import { flexParentCenter } from '../../utils/styleUtils';
 import CustomControlsBar from '../../components/common/CustomControlsBar';
-import { solvisApiService, getLocationIdArray } from './faultModel.service';
+import { solvisApiService, getLocationIdString } from './faultModel.service';
 import SelectControlMultiple from '../../components/common/SelectControlMultiple';
 import { SolvisResponse } from './FaultModelPage';
 
@@ -94,7 +94,7 @@ const FaultModelControls: React.FC<FaultModelControlsProps> = ({ startTransition
       .getLocationList()
       .then((locs) => {
         setLocationOptions(locs.data.map((location: SolvisLocation) => location.name));
-        setLocationString(getLocationIdArray(locations, locs.data).join(','));
+        setLocationString(getLocationIdString(locations, locs.data));
       })
       .catch((error: AxiosError) => {
         if (error.response) {
