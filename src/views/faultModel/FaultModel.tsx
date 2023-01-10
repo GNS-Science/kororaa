@@ -13,7 +13,6 @@ const FaultModel: React.FC<FaultModelProps> = ({ geoJson, setFullscreen }) => {
   const [zoomLevel, setZoomLevel] = useState<number>(5);
   const zoom = 5;
   const nzCentre = [-40.946, 174.167];
-  // const parsedGeoJson = geoJson && geoJson.map((element) => JSON.parse(element));
 
   return (
     <Box id="map" sx={{ width: '100%', height: '80vh' }}>
