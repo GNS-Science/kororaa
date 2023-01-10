@@ -5,12 +5,9 @@ import { toPng } from 'html-to-image';
 import { AxiosError } from 'axios';
 
 import { flexParentCenter } from '../../utils/styleUtils';
-
-import { FaultModelState } from './faultModelReducer';
 import CustomControlsBar from '../../components/common/CustomControlsBar';
-import { solvisApiService } from './faultModel.service';
+import { solvisApiService, getLocationIdArray } from './faultModel.service';
 import SelectControlMultiple from '../../components/common/SelectControlMultiple';
-import { getLocationKeyFromLocationName } from '../../services/latLon/latLon.service';
 import { SolvisResponse } from './FaultModelPage';
 
 const StyledButton = styled(Button)(() => ({
@@ -59,15 +56,12 @@ interface Branches {
 interface FaultModelControlsProps {
   startTransition: React.TransitionStartFunction;
   isPending: boolean;
-  state: FaultModelState;
-  dispatch: React.Dispatch<Partial<FaultModelState>>;
   options: FaultModelOption[] | null | undefined;
   logicTreeBranches: Branches | null | undefined;
-  // setSolutionId: (value: string) => void;
   setGeoJson: React.Dispatch<React.SetStateAction<SolvisResponse | null>>;
 }
 
-interface solvisLocation {
+export interface SolvisLocation {
   id: string;
   name: string;
   latitude: number;
@@ -75,18 +69,19 @@ interface solvisLocation {
   population: number;
 }
 
-const FaultModelControls: React.FC<FaultModelControlsProps> = ({ startTransition, isPending, state, dispatch, options, logicTreeBranches, setGeoJson }: FaultModelControlsProps) => {
+const FaultModelControls: React.FC<FaultModelControlsProps> = ({ startTransition, isPending, options, logicTreeBranches, setGeoJson }: FaultModelControlsProps) => {
   const [deformationModel, setDeformationModel] = useState<string>('');
   const [timeDependence, setTimeDependence] = useState<string>('');
   const [bNPair, setBNPair] = useState<string>('');
   const [momentScaling, setMomentScaling] = useState<string>('');
   const [areaMagnitudeScaling, setAreaMagnitudeScaling] = useState<string>('');
-  const [solutionId, setSolutionId] = useState<string>(state.solutionId);
-  const [locations, setLocations] = useState<string[]>(state.locations);
-  const [radius, setRadius] = useState<number>(state.radius);
-  const [magnitudeRange, setMagnitudeRange] = useState<number[]>(state.magnitudeRange);
-  const [rateRange, setRateRange] = useState<number[]>(state.rateRange);
+  const [solutionId, setSolutionId] = useState<string>('');
+  const [locations, setLocations] = useState<string[]>([]);
+  const [radius, setRadius] = useState<string>('');
+  const [magnitudeRange, setMagnitudeRange] = useState<number[]>([6, 10]);
+  const [rateRange, setRateRange] = useState<number[]>([-20, 0]);
   const [locationOptions, setLocationOptions] = useState<string[]>([]);
+  const [locationString, setLocationString] = useState<string>('');
   const [radiiOptions, setRadiiOptions] = useState<number[]>([]);
   const deformationModelOptions = JSON.parse(options?.filter((option) => option.value === 'dm')?.[0]?.value_options);
   const timeDependenceOptions = JSON.parse(options?.filter((option) => option.value === 'td')?.[0]?.value_options).map((option: boolean) => (option ? 'True' : 'False'));
@@ -97,8 +92,9 @@ const FaultModelControls: React.FC<FaultModelControlsProps> = ({ startTransition
   const getLocationOptions = useCallback(() => {
     solvisApiService
       .getLocationList()
-      .then((locations) => {
-        setLocationOptions(locations.data.map((location: solvisLocation) => location.name));
+      .then((locs) => {
+        setLocationOptions(locs.data.map((location: SolvisLocation) => location.name));
+        setLocationString(getLocationIdArray(locations, locs.data).join(','));
       })
       .catch((error: AxiosError) => {
         if (error.response) {
@@ -109,7 +105,7 @@ const FaultModelControls: React.FC<FaultModelControlsProps> = ({ startTransition
           console.log(`Error: ${error.message}`);
         }
       });
-  }, []);
+  }, [locations]);
 
   const getRadiiOptions = useCallback(() => {
     solvisApiService
@@ -131,27 +127,21 @@ const FaultModelControls: React.FC<FaultModelControlsProps> = ({ startTransition
   const getGeoJson = useCallback(() => {
     if (!solutionId) return;
     solvisApiService
-      .getSolutionAnalysis(
-        solutionId,
-        state.locations.map((location) => getLocationKeyFromLocationName(location)).join(','),
-        state.radius.toString().replace('km', ''),
-        state.magnitudeRange,
-        state.rateRange,
-      )
+      .getSolutionAnalysis(solutionId, locationString, radius.replace('km', ''), magnitudeRange, rateRange)
       .then((response) => {
         const geoJson = response.data;
         setGeoJson(geoJson);
       })
-      .catch((error) => {
-        console.log(error);
+      .catch((error: AxiosError) => {
+        if (error.response) {
+          console.log(`Error: ${error.response.status}`);
+        } else if (error.request) {
+          console.log(`Error: request failed`);
+        } else {
+          console.log(`Error: ${error.message}`);
+        }
       });
-  }, [solutionId, state.locations, state.radius, state.magnitudeRange, state.rateRange, setGeoJson]);
-
-  useEffect(() => {
-    if (solutionId) {
-      getGeoJson();
-    }
-  }, [solutionId, getGeoJson]);
+  }, [radius, magnitudeRange, rateRange, solutionId, locationString, setGeoJson]);
 
   useEffect(() => {
     getLocationOptions();
@@ -182,15 +172,9 @@ const FaultModelControls: React.FC<FaultModelControlsProps> = ({ startTransition
     }
   }, [deformationModel, timeDependence, bNPair, areaMagnitudeScaling, momentScaling, setSolutionId, logicTreeBranches]);
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     startTransition(() => {
-      dispatch({
-        solutionId: solutionId,
-        locations: locations,
-        radius: radius,
-        magnitudeRange: magnitudeRange,
-        rateRange: rateRange,
-      });
+      getGeoJson();
     });
   };
 

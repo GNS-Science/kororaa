@@ -1,4 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
+import { SolvisLocation } from './FaultModelControls';
 
 const solvisEndpoint = process.env.REACT_APP_SOLVIS_ENDPOINT as string;
 const radiiID = process.env.REACT_APP_RADII_ID;
@@ -20,4 +21,12 @@ export const solvisApiService = {
     );
     return res;
   },
+};
+
+export const getLocationIdArray = (locations: string[], locationData: SolvisLocation[]): string[] => {
+  const locationString = locations.map((location) => {
+    const locationDataItem = locationData.find((item) => item.name === location);
+    return locationDataItem ? locationDataItem.id : '';
+  });
+  return locationString;
 };

@@ -1,4 +1,4 @@
-import React, { useReducer, useState, useTransition, useEffect } from 'react';
+import React, { useState, useTransition, useEffect } from 'react';
 import { Box, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { LeafletDrawer } from '@gns-science/toshi-nest';
@@ -8,7 +8,6 @@ import { useLazyLoadQuery } from 'react-relay';
 import FaultModel from './FaultModel';
 import { flexParentCenter } from '../../utils/styleUtils';
 import { InfoTooltip } from '../../components/common/InfoTooltip';
-import { faultModelReducer, initialState } from './faultModelReducer';
 import SimpleBackdrop from '../../components/common/SimpleBackdrop';
 import FaultModelControls from './FaultModelControls';
 import { FaultModelTableContainer } from './FaultModelTableContainer';
@@ -34,7 +33,6 @@ export interface SolvisResponse {
 }
 
 const FaultModelComponent: React.FC = () => {
-  const [state, dispatch] = useReducer(faultModelReducer, initialState);
   const [fullscreen, setFullscreen] = useState<boolean>(false);
   const [isPending, startTransition] = useTransition();
   const [scrollHeight, setScrollHeight] = useState<number>(0);
@@ -74,15 +72,7 @@ const FaultModelComponent: React.FC = () => {
             <InfoTooltip content={markdown || ''} format={content_type === 'Markdown'} />
           </Typography>
           <React.Suspense fallback={<SimpleBackdrop />}>
-            <FaultModelControls
-              state={state}
-              dispatch={dispatch}
-              startTransition={startTransition}
-              isPending={isPending}
-              options={options}
-              logicTreeBranches={logicTreeBranches}
-              setGeoJson={setGeoJson}
-            />
+            <FaultModelControls startTransition={startTransition} isPending={isPending} options={options} logicTreeBranches={logicTreeBranches} setGeoJson={setGeoJson} />
           </React.Suspense>
         </LeafletDrawer>
         <FaultModel geoJson={geoJson && [geoJson.locations, geoJson.ruptures]} setFullscreen={setFullscreen} />
