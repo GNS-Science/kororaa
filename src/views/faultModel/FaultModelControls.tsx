@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { Box, Button, styled } from '@mui/material';
+import { Box, Button, Alert, styled } from '@mui/material';
 import { SelectControl, RangeSliderWithInputs } from '@gns-science/toshi-nest';
 import { toPng } from 'html-to-image';
 import { AxiosError } from 'axios';
@@ -74,7 +74,6 @@ const FaultModelControls: React.FC<FaultModelControlsProps> = ({ startTransition
   const [timeDependence, setTimeDependence] = useState<string>('');
   const [bNPair, setBNPair] = useState<string>('');
   const [momentScaling, setMomentScaling] = useState<string>('');
-  const [areaMagnitudeScaling, setAreaMagnitudeScaling] = useState<string>('');
   const [solutionId, setSolutionId] = useState<string>('');
   const [locations, setLocations] = useState<string[]>([]);
   const [radius, setRadius] = useState<string>('');
@@ -83,10 +82,10 @@ const FaultModelControls: React.FC<FaultModelControlsProps> = ({ startTransition
   const [locationOptions, setLocationOptions] = useState<string[]>([]);
   const [locationString, setLocationString] = useState<string>('');
   const [radiiOptions, setRadiiOptions] = useState<number[]>([]);
+  const [optionsValid, setOptionsValid] = useState<boolean>(false);
   const deformationModelOptions = JSON.parse(options?.filter((option) => option.value === 'dm')?.[0]?.value_options);
-  const timeDependenceOptions = JSON.parse(options?.filter((option) => option.value === 'td')?.[0]?.value_options).map((option: boolean) => (option ? 'True' : 'False'));
-  const bNPairOptions = JSON.parse(options?.filter((option) => option.value === 'bN')?.[0]?.value_options).map((option: string[]) => option.join(', '));
-  const areaMagnitudeScalingOptions = JSON.parse(options?.filter((option) => option.value === 'C')?.[0]?.value_options);
+  const timeDependenceOptions = JSON.parse(options?.filter((option) => option.value === 'td')?.[0]?.value_options).map((option: boolean) => (option ? 'Time Dependent' : 'Time Independent'));
+  const bNPairOptions = JSON.parse(options?.filter((option) => option.value === 'bN')?.[0]?.value_options).map((option: string[]) => option[0]);
   const momentRateScalingOptions = JSON.parse(options?.filter((option) => option.value === 's')?.[0]?.value_options);
 
   const getLocationOptions = useCallback(() => {
@@ -125,7 +124,7 @@ const FaultModelControls: React.FC<FaultModelControlsProps> = ({ startTransition
   }, []);
 
   const getGeoJson = useCallback(() => {
-    if (!solutionId) return;
+    if (solutionId === '') return;
     solvisApiService
       .getSolutionAnalysis(solutionId, locationString, radius.replace('km', ''), magnitudeRange, rateRange)
       .then((response) => {
@@ -149,6 +148,14 @@ const FaultModelControls: React.FC<FaultModelControlsProps> = ({ startTransition
   }, [getLocationOptions, getRadiiOptions]);
 
   useEffect(() => {
+    if (deformationModel !== '' && timeDependence !== '' && bNPair !== '' && momentScaling !== '' && locations.length > 0 && radius !== '') {
+      setOptionsValid(true);
+    } else {
+      setOptionsValid(false);
+    }
+  }, [deformationModel, timeDependence, bNPair, momentScaling, locations, radius]);
+
+  useEffect(() => {
     const filterSolutionId = (branches: Branches | null | undefined) => {
       if (branches === null || branches === undefined) {
         return [];
@@ -156,21 +163,19 @@ const FaultModelControls: React.FC<FaultModelControlsProps> = ({ startTransition
       if (branches?.branches !== null && branches?.branches !== undefined) {
         const filteredBranches = branches?.branches
           .filter((branch) => branch !== null && JSON.parse(branch?.values?.find((value) => value?.long_name === 'deformation model')?.json_value) === deformationModel)
-          .filter((branch) => branch !== null && JSON.parse(branch?.values?.find((value) => value?.long_name === 'time dependent')?.json_value) === (timeDependence === 'True'))
-          .filter((branch) => branch !== null && branch?.values?.find((value) => value?.long_name === 'bN pair')?.json_value === `[${bNPair}]`)
-          .filter((branch) => branch !== null && JSON.parse(branch?.values?.find((value) => value?.long_name === 'area-magnitude scaling')?.json_value) === areaMagnitudeScaling)
+          .filter((branch) => branch !== null && JSON.parse(branch?.values?.find((value) => value?.long_name === 'time dependent')?.json_value) === (timeDependence === 'Time Dependent'))
+          .filter((branch) => branch !== null && JSON.parse(branch?.values?.find((value) => value?.long_name === 'bN pair')?.json_value)[0] === bNPair)
           .filter((branch) => branch !== null && JSON.parse(branch?.values?.find((value) => value?.long_name === 'moment rate scaling')?.json_value) === momentScaling);
         return filteredBranches;
       }
     };
-
     const filteredBranches = filterSolutionId(logicTreeBranches);
     if (filteredBranches !== undefined && filteredBranches.length > 0) {
       if (filteredBranches[0]?.inversion_solution_id) {
         setSolutionId(filteredBranches[0]?.inversion_solution_id);
       }
     }
-  }, [deformationModel, timeDependence, bNPair, areaMagnitudeScaling, momentScaling, setSolutionId, logicTreeBranches]);
+  }, [deformationModel, timeDependence, bNPair, momentScaling, setSolutionId, logicTreeBranches]);
 
   const handleSubmit = async () => {
     startTransition(() => {
@@ -196,16 +201,16 @@ const FaultModelControls: React.FC<FaultModelControlsProps> = ({ startTransition
       <CustomControlsBar direction="column">
         <SelectControl name="Deformation Model" selection={deformationModel} setSelection={setDeformationModel} options={deformationModelOptions} />
         <SelectControl name="Time Dependence" selection={timeDependence} setSelection={setTimeDependence} options={timeDependenceOptions} />
-        <SelectControl name="bN Pair" selection={bNPair} setSelection={setBNPair} options={bNPairOptions} />
-        <SelectControl name="Moment Scaling" selection={momentScaling} setSelection={setMomentScaling} options={momentRateScalingOptions} />
-        <SelectControl name="Area-Magnitude Scaling" selection={areaMagnitudeScaling} setSelection={setAreaMagnitudeScaling} options={areaMagnitudeScalingOptions} />
+        <SelectControl name="Gutenberg-Richter b value" selection={bNPair} setSelection={setBNPair} options={bNPairOptions} />
+        <SelectControl name="Moment Rate Scaling" selection={momentScaling} setSelection={setMomentScaling} options={momentRateScalingOptions} />
         <SelectControlMultiple name="Locations" selection={locations} options={locationOptions} setSelection={setLocations} />
-        <SelectControl name="Radii" selection={radius} options={radiiOptions} setSelection={setRadius} />
+        <SelectControl name="Radius" selection={radius} options={radiiOptions} setSelection={setRadius} />
         <StyledRangeSliderDiv>
           <RangeSliderWithInputs label="Magnitude Range" valuesRange={magnitudeRange} setValues={setMagnitudeRange} inputProps={{ step: 0.1, min: 6, max: 10, type: 'number' }} />
           <RangeSliderWithInputs label="Rate Range (1/yr)" valuesRange={rateRange} setValues={setRateRange} inputProps={{ step: 1, min: -20, max: 0, type: 'number' }} />
         </StyledRangeSliderDiv>
-        <StyledButton disabled={isPending} variant="contained" type="submit" onClick={handleSubmit}>
+        {!optionsValid && <Alert severity="warning">Enter selections for all fields</Alert>}
+        <StyledButton disabled={isPending || !optionsValid} variant="contained" type="submit" onClick={handleSubmit}>
           Submit
         </StyledButton>
         <StyledButton disabled={isPending} variant="contained" onClick={handleDownload}>
