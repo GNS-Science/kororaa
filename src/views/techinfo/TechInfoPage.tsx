@@ -177,6 +177,15 @@ const TechInfoPage: React.FC = () => {
             </Grid>
 
             <Grid item xs={12}>
+              <Typography variant="h5">Disaggregations</Typography>
+              <Typography variant="body1">
+                Disaggregations are calculated in terms of exceedance. Sources contributions are calculated conditional on exceeding the relevant intensity measure rather than equaling it (the latter
+                would result in a disaggregation in terms of occurrence). See Baker, J., Bradley, B., & Stafford, P. (2021). <i>Seismic Hazard and Risk Analysis.</i> Cambridge: Cambridge University
+                Press. doi:10.1017/9781108425056 for discussion.
+              </Typography>
+            </Grid>
+
+            <Grid item xs={12}>
               <Typography variant="h5">Calculation Grid and Location List</Typography>
               <Typography variant="body1">
                 The NZ-NSHM has been calculated on a 0.1 deg grid (approximately 11km resolution). In addition, hazard curves and spectra are available for a number of population centres listed under
