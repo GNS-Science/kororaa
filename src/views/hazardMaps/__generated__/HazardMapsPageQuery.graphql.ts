@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d91b895bc300712a3719859dbeb4e13b>>
+ * @generated SignedSource<<c8b1a3b17b6eddfa21c4c726474564e5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -386,7 +386,7 @@ return {
     "metadata": null,
     "name": "HazardMapsPageQuery",
     "selections": (v13/*: any*/),
-    "type": "QueryRoot",
+    "type": "Query",
     "abstractKey": null
   },
   "kind": "Request",

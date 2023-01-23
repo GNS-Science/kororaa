@@ -36,22 +36,10 @@ const FaultModelComponent: React.FC = () => {
   const [fullscreen, setFullscreen] = useState<boolean>(false);
   const [isPending, startTransition] = useTransition();
   const [scrollHeight, setScrollHeight] = useState<number>(0);
-  const [geoJson, setGeoJson] = useState<SolvisResponse | null>(null);
+  const [geoJson, setGeoJson] = useState<string[] | null>(null);
   const data = useLazyLoadQuery<FaultModelPageQuery>(faultModelPageQuery, {});
   const markdown = data?.textual_content?.content && data.textual_content?.content[0]?.text;
   const content_type = data?.textual_content?.content && data.textual_content?.content[0]?.content_type;
-  const faultSystemBranches =
-    data?.nzshm_model?.model?.source_logic_tree_spec?.fault_system_branches &&
-    data?.nzshm_model?.model?.source_logic_tree_spec?.fault_system_branches.filter((branch) => branch && branch?.short_name === 'CRU')[0]?.branches;
-
-  const options = faultSystemBranches?.map((branch) => {
-    return {
-      value: branch?.name,
-      label: branch?.long_name,
-      value_options: branch?.value_options,
-    };
-  });
-  const logicTreeBranches = data?.nzshm_model?.model?.source_logic_tree?.fault_system_branches?.filter((branch) => branch && branch?.short_name === 'CRU')[0];
 
   useEffect(() => {
     function updateScrollHeight() {
@@ -66,18 +54,16 @@ const FaultModelComponent: React.FC = () => {
     <PageContainer>
       {isPending && <SimpleBackdrop />}
       <Box role="faultModelView" sx={{ ...flexParentCenter, justifyContent: 'center', height: '100%', width: '100%' }}>
-        <LeafletDrawer drawerHeight={'80vh'} headerHeight={`${100 - scrollHeight}px`} width={'400px'} fullscreen={fullscreen}>
+        <LeafletDrawer drawerHeight={'80vh'} headerHeight={`${100 - scrollHeight}px`} width={'700px'} fullscreen={fullscreen}>
           <Typography variant="h4" sx={{ textAlign: 'center' }}>
             Inversion Fault Model
             <InfoTooltip content={markdown || ''} format={content_type === 'Markdown'} />
           </Typography>
-          <React.Suspense fallback={<SimpleBackdrop />}>
-            <FaultModelControls startTransition={startTransition} isPending={isPending} options={options} logicTreeBranches={logicTreeBranches} setGeoJson={setGeoJson} />
-          </React.Suspense>
+          <FaultModelControls startTransition={startTransition} isPending={isPending} setGeoJson={setGeoJson} />
         </LeafletDrawer>
-        <FaultModel geoJson={geoJson && [geoJson.locations, geoJson.ruptures]} setFullscreen={setFullscreen} />
+        <FaultModel geoJson={geoJson} setFullscreen={setFullscreen} />
       </Box>
-      <FaultModelTableContainer data={geoJson ? geoJson.ruptures : ''} id="faultModelTable" />
+      <FaultModelTableContainer data={geoJson ? geoJson[0] : ''} id="faultModelTable" />
     </PageContainer>
   );
 };
@@ -104,40 +90,6 @@ export const faultModelPageQuery = graphql`
         author
         tags
         status
-      }
-    }
-    nzshm_model(version: "NSHM_1.0.0") {
-      model {
-        version
-        title
-        source_logic_tree {
-          fault_system_branches {
-            long_name
-            short_name
-            branches {
-              weight
-              inversion_solution_id
-              inversion_solution_type
-              onfault_nrml_id
-              distributed_nrml_id
-              values {
-                long_name
-                json_value
-              }
-            }
-          }
-        }
-        source_logic_tree_spec {
-          fault_system_branches {
-            short_name
-            long_name
-            branches {
-              name
-              long_name
-              value_options
-            }
-          }
-        }
       }
     }
   }

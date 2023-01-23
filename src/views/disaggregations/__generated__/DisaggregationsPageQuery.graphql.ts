@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<57e833097692abee536b5aac397dbefb>>
+ * @generated SignedSource<<bf8799c29252a757ce1316af46476224>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -244,7 +244,7 @@ return {
     "metadata": null,
     "name": "DisaggregationsPageQuery",
     "selections": (v0/*: any*/),
-    "type": "QueryRoot",
+    "type": "Query",
     "abstractKey": null
   },
   "kind": "Request",
