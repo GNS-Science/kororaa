@@ -1,17 +1,24 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { Box, Button, Alert, styled } from '@mui/material';
+import { Box, Button, Alert, styled, Typography } from '@mui/material';
 import { SelectControl, RangeSliderWithInputs } from '@gns-science/toshi-nest';
 import { toPng } from 'html-to-image';
 import { AxiosError } from 'axios';
+import { graphql } from 'babel-plugin-relay/macro';
+import { useLazyLoadQuery } from 'react-relay';
+import { FaultModelControlsQuery, FaultModelControlsQuery$data } from './__generated__/FaultModelControlsQuery.graphql';
 
 import { flexParentCenter } from '../../utils/styleUtils';
 import CustomControlsBar from '../../components/common/CustomControlsBar';
-import { solvisApiService, getLocationIdString } from './faultModel.service';
+import { solvisApiService, getLocationIdArray } from './faultModel.service';
 import SelectControlMultiple from '../../components/common/SelectControlMultiple';
 import { SolvisResponse } from './FaultModelPage';
 
 const StyledButton = styled(Button)(() => ({
   margin: '0 0 0 10px',
+}));
+
+const StyledCustomControlsBar = styled(CustomControlsBar)(() => ({
+  margin: '0 0 10px 0',
 }));
 
 const StyledRangeSliderDiv = styled('div')(() => ({
@@ -56,9 +63,7 @@ interface Branches {
 interface FaultModelControlsProps {
   startTransition: React.TransitionStartFunction;
   isPending: boolean;
-  options: FaultModelOption[] | null | undefined;
-  logicTreeBranches: Branches | null | undefined;
-  setGeoJson: React.Dispatch<React.SetStateAction<SolvisResponse | null>>;
+  setGeoJson: React.Dispatch<React.SetStateAction<string[] | null>>;
 }
 
 export interface SolvisLocation {
@@ -69,7 +74,7 @@ export interface SolvisLocation {
   population: number;
 }
 
-const FaultModelControls: React.FC<FaultModelControlsProps> = ({ startTransition, isPending, options, logicTreeBranches, setGeoJson }: FaultModelControlsProps) => {
+const FaultModelControls: React.FC<FaultModelControlsProps> = ({ startTransition, isPending, setGeoJson }: FaultModelControlsProps) => {
   const [deformationModel, setDeformationModel] = useState<string>('');
   const [timeDependence, setTimeDependence] = useState<string>('');
   const [bNPair, setBNPair] = useState<string>('');
@@ -80,9 +85,32 @@ const FaultModelControls: React.FC<FaultModelControlsProps> = ({ startTransition
   const [magnitudeRange, setMagnitudeRange] = useState<number[]>([6, 10]);
   const [rateRange, setRateRange] = useState<number[]>([-20, 0]);
   const [locationOptions, setLocationOptions] = useState<string[]>([]);
-  const [locationString, setLocationString] = useState<string>('');
+  const [locationIdArray, setLocationIdArray] = useState<string[]>([]);
   const [radiiOptions, setRadiiOptions] = useState<number[]>([]);
   const [optionsValid, setOptionsValid] = useState<boolean>(false);
+  const data = useLazyLoadQuery<FaultModelControlsQuery>(faultModelControlsQuery, {
+    solution_id: solutionId,
+    location_codes: locationIdArray,
+    radius_km: Number(radius.replace('km', '')),
+    minimum_mag: magnitudeRange[0],
+    maximum_mag: magnitudeRange[1],
+    minimum_rate: rateRange[0],
+    maximum_rate: rateRange[1],
+  });
+
+  const faultSystemBranches =
+    data?.nzshm_model?.model?.source_logic_tree_spec?.fault_system_branches &&
+    data?.nzshm_model?.model?.source_logic_tree_spec?.fault_system_branches.filter((branch) => branch && branch?.short_name === 'CRU')[0]?.branches;
+
+  const options = faultSystemBranches?.map((branch) => {
+    return {
+      value: branch?.name,
+      label: branch?.long_name,
+      value_options: branch?.value_options,
+    };
+  });
+
+  const logicTreeBranches = data?.nzshm_model?.model?.source_logic_tree?.fault_system_branches?.filter((branch) => branch && branch?.short_name === 'CRU')[0];
   const deformationModelOptions = JSON.parse(options?.filter((option) => option.value === 'dm')?.[0]?.value_options);
   const timeDependenceOptions = JSON.parse(options?.filter((option) => option.value === 'td')?.[0]?.value_options).map((option: boolean) => (option ? 'Time Dependent' : 'Time Independent'));
   const bNPairOptions = JSON.parse(options?.filter((option) => option.value === 'bN')?.[0]?.value_options).map((option: string[]) => option[0]);
@@ -93,7 +121,7 @@ const FaultModelControls: React.FC<FaultModelControlsProps> = ({ startTransition
       .getLocationList()
       .then((locs) => {
         setLocationOptions(locs.data.map((location: SolvisLocation) => location.name));
-        setLocationString(getLocationIdString(locations, locs.data));
+        setLocationIdArray(getLocationIdArray(locations, locs.data));
       })
       .catch((error: AxiosError) => {
         if (error.response) {
@@ -123,32 +151,13 @@ const FaultModelControls: React.FC<FaultModelControlsProps> = ({ startTransition
       });
   }, []);
 
-  const getGeoJson = useCallback(() => {
-    if (solutionId === '') return;
-    solvisApiService
-      .getSolutionAnalysis(solutionId, locationString, radius.replace('km', ''), magnitudeRange, rateRange)
-      .then((response) => {
-        const geoJson = response.data;
-        setGeoJson(geoJson);
-      })
-      .catch((error: AxiosError) => {
-        if (error.response) {
-          console.log(`Error: ${error.response.status}`);
-        } else if (error.request) {
-          console.log(`Error: request failed`);
-        } else {
-          console.log(`Error: ${error.message}`);
-        }
-      });
-  }, [radius, magnitudeRange, rateRange, solutionId, locationString, setGeoJson]);
-
   useEffect(() => {
     getLocationOptions();
     getRadiiOptions();
   }, [getLocationOptions, getRadiiOptions]);
 
   useEffect(() => {
-    if (deformationModel !== '' && timeDependence !== '' && bNPair !== '' && momentScaling !== '' && locations.length > 0 && radius !== '') {
+    if (deformationModel !== '' && timeDependence !== '' && bNPair !== '' && momentScaling !== '' && locations.length > 0 && radius) {
       setOptionsValid(true);
     } else {
       setOptionsValid(false);
@@ -179,7 +188,7 @@ const FaultModelControls: React.FC<FaultModelControlsProps> = ({ startTransition
 
   const handleSubmit = async () => {
     startTransition(() => {
-      getGeoJson();
+      setGeoJson([data?.SOLVIS_analyse_solution?.analysis?.geojson]);
     });
   };
 
@@ -198,27 +207,95 @@ const FaultModelControls: React.FC<FaultModelControlsProps> = ({ startTransition
 
   return (
     <Box sx={{ width: '100%', ...flexParentCenter, flexDirection: 'column' }}>
-      <CustomControlsBar direction="column">
-        <SelectControl name="Deformation Model" selection={deformationModel} setSelection={setDeformationModel} options={deformationModelOptions} />
-        <SelectControl name="Time Dependence" selection={timeDependence} setSelection={setTimeDependence} options={timeDependenceOptions} />
-        <SelectControl name="Gutenberg-Richter b value" selection={bNPair} setSelection={setBNPair} options={bNPairOptions} />
-        <SelectControl name="Moment Rate Scaling" selection={momentScaling} setSelection={setMomentScaling} options={momentRateScalingOptions} />
-        <SelectControlMultiple name="Locations" selection={locations} options={locationOptions} setSelection={setLocations} />
-        <SelectControl name="Radius" selection={radius} options={radiiOptions} setSelection={setRadius} />
-        <StyledRangeSliderDiv>
-          <RangeSliderWithInputs label="Magnitude Range" valuesRange={magnitudeRange} setValues={setMagnitudeRange} inputProps={{ step: 0.1, min: 6, max: 10, type: 'number' }} />
-          <RangeSliderWithInputs label="Rate Range (1/yr)" valuesRange={rateRange} setValues={setRateRange} inputProps={{ step: 1, min: -20, max: 0, type: 'number' }} />
-        </StyledRangeSliderDiv>
-        {!optionsValid && <Alert severity="warning">Enter selections for all fields</Alert>}
+      <Box sx={{ width: '100%', ...flexParentCenter, flexDirection: 'row' }}>
+        <Box sx={{ width: '100%', ...flexParentCenter, flexDirection: 'column' }}>
+          <Typography variant="h6">Logic Tree Branch Selection</Typography>
+          <StyledCustomControlsBar direction="column">
+            <SelectControl name="Deformation Model" selection={deformationModel} setSelection={setDeformationModel} options={deformationModelOptions} />
+            <SelectControl name="Time Dependence" selection={timeDependence} setSelection={setTimeDependence} options={timeDependenceOptions} />
+            <SelectControl name="Gutenberg-Richter b value" selection={bNPair} setSelection={setBNPair} options={bNPairOptions} />
+            <SelectControl name="Moment Rate Scaling" selection={momentScaling} setSelection={setMomentScaling} options={momentRateScalingOptions} />
+          </StyledCustomControlsBar>
+        </Box>
+        <Box sx={{ width: '100%', ...flexParentCenter, flexDirection: 'column' }}>
+          <Typography variant="h6">Ruptures Filter</Typography>
+          <StyledCustomControlsBar direction="column">
+            <SelectControlMultiple name="Locations" selection={locations} options={locationOptions} setSelection={setLocations} />
+            <SelectControl name="Radius" selection={radius} options={radiiOptions} setSelection={setRadius} />
+            <StyledRangeSliderDiv>
+              <RangeSliderWithInputs label="Magnitude Range" valuesRange={magnitudeRange} setValues={setMagnitudeRange} inputProps={{ step: 0.1, min: 6, max: 10, type: 'number' }} />
+              <RangeSliderWithInputs label="Rate Range (1/yr)" valuesRange={rateRange} setValues={setRateRange} inputProps={{ step: 1, min: -20, max: 0, type: 'number' }} />
+            </StyledRangeSliderDiv>
+          </StyledCustomControlsBar>
+        </Box>
+      </Box>
+      {!optionsValid && <Alert severity="warning">Enter selections for all fields</Alert>}
+      <Box sx={{ width: '40%', ...flexParentCenter, flexDirection: 'row', marginTop: '2vh' }}>
         <StyledButton disabled={isPending || !optionsValid} variant="contained" type="submit" onClick={handleSubmit}>
           Submit
         </StyledButton>
         <StyledButton disabled={isPending} variant="contained" onClick={handleDownload}>
           Download Image
         </StyledButton>
-      </CustomControlsBar>
+      </Box>
     </Box>
   );
 };
 
 export default FaultModelControls;
+
+export const faultModelControlsQuery = graphql`
+  query FaultModelControlsQuery($solution_id: ID!, $location_codes: [String], $radius_km: Int, $minimum_mag: Float, $maximum_mag: Float, $minimum_rate: Float, $maximum_rate: Float) {
+    nzshm_model(version: "NSHM_1.0.0") {
+      model {
+        version
+        title
+        source_logic_tree {
+          fault_system_branches {
+            long_name
+            short_name
+            branches {
+              weight
+              inversion_solution_id
+              inversion_solution_type
+              onfault_nrml_id
+              distributed_nrml_id
+              values {
+                long_name
+                json_value
+              }
+            }
+          }
+        }
+        source_logic_tree_spec {
+          fault_system_branches {
+            short_name
+            long_name
+            branches {
+              name
+              long_name
+              value_options
+            }
+          }
+        }
+      }
+    }
+    SOLVIS_about
+    SOLVIS_analyse_solution(
+      input: {
+        solution_id: $solution_id
+        location_codes: $location_codes
+        radius_km: $radius_km
+        minimum_mag: $minimum_mag
+        maximum_mag: $maximum_mag
+        minimum_rate: $minimum_rate
+        maximum_rate: $maximum_rate
+      }
+    ) {
+      analysis {
+        geojson
+        solution_id
+      }
+    }
+  }
+`;

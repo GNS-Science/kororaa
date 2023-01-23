@@ -23,12 +23,10 @@ export const solvisApiService = {
   },
 };
 
-export const getLocationIdString = (locations: string[], locationData: SolvisLocation[]): string => {
-  const locationString = locations
-    .map((location) => {
-      const locationDataItem = locationData.find((item) => item.name === location);
-      return locationDataItem ? locationDataItem.id : '';
-    })
-    .join(',');
-  return locationString;
+export const getLocationIdArray = (locations: string[], locationData: SolvisLocation[]): string[] => {
+  const locationArray = locations.map((location) => {
+    const locationDataItem = locationData.find((item) => item.name === location);
+    return locationDataItem ? locationDataItem.id : '';
+  });
+  return locationArray;
 };
