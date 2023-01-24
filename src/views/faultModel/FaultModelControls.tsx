@@ -5,13 +5,14 @@ import { toPng } from 'html-to-image';
 import { AxiosError } from 'axios';
 import { graphql } from 'babel-plugin-relay/macro';
 import { useLazyLoadQuery } from 'react-relay';
-import { FaultModelControlsQuery, FaultModelControlsQuery$data } from './__generated__/FaultModelControlsQuery.graphql';
+
+import { FaultModelControlsQuery } from './__generated__/FaultModelControlsQuery.graphql';
 
 import { flexParentCenter } from '../../utils/styleUtils';
 import CustomControlsBar from '../../components/common/CustomControlsBar';
 import { solvisApiService, getLocationIdArray } from './faultModel.service';
 import SelectControlMultiple from '../../components/common/SelectControlMultiple';
-import { SolvisResponse } from './FaultModelPage';
+import { FaultModelPageState } from './faultModelPageReducer';
 
 const StyledButton = styled(Button)(() => ({
   margin: '0 0 0 10px',
@@ -36,13 +37,6 @@ const StyledRangeSliderDiv = styled('div')(() => ({
   },
 }));
 
-interface FaultModelOption {
-  value: string | null | undefined;
-  label: string | null | undefined;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  value_options: any;
-}
-
 interface Branch {
   readonly weight: number | null;
   readonly inversion_solution_id: string | null;
@@ -63,7 +57,7 @@ interface Branches {
 interface FaultModelControlsProps {
   startTransition: React.TransitionStartFunction;
   isPending: boolean;
-  setGeoJson: React.Dispatch<React.SetStateAction<string[] | null>>;
+  dispatch: React.Dispatch<Partial<FaultModelPageState>>;
 }
 
 export interface SolvisLocation {
@@ -74,7 +68,7 @@ export interface SolvisLocation {
   population: number;
 }
 
-const FaultModelControls: React.FC<FaultModelControlsProps> = ({ startTransition, isPending, setGeoJson }: FaultModelControlsProps) => {
+const FaultModelControls: React.FC<FaultModelControlsProps> = ({ startTransition, isPending, dispatch }: FaultModelControlsProps) => {
   const [deformationModel, setDeformationModel] = useState<string>('');
   const [timeDependence, setTimeDependence] = useState<string>('');
   const [bNPair, setBNPair] = useState<string>('');
@@ -88,15 +82,7 @@ const FaultModelControls: React.FC<FaultModelControlsProps> = ({ startTransition
   const [locationIdArray, setLocationIdArray] = useState<string[]>([]);
   const [radiiOptions, setRadiiOptions] = useState<number[]>([]);
   const [optionsValid, setOptionsValid] = useState<boolean>(false);
-  const data = useLazyLoadQuery<FaultModelControlsQuery>(faultModelControlsQuery, {
-    solution_id: solutionId,
-    location_codes: locationIdArray,
-    radius_km: Number(radius.replace('km', '')),
-    minimum_mag: magnitudeRange[0],
-    maximum_mag: magnitudeRange[1],
-    minimum_rate: rateRange[0],
-    maximum_rate: rateRange[1],
-  });
+  const data = useLazyLoadQuery<FaultModelControlsQuery>(faultModelControlsQuery, {});
 
   const faultSystemBranches =
     data?.nzshm_model?.model?.source_logic_tree_spec?.fault_system_branches &&
@@ -188,7 +174,13 @@ const FaultModelControls: React.FC<FaultModelControlsProps> = ({ startTransition
 
   const handleSubmit = async () => {
     startTransition(() => {
-      setGeoJson([data?.SOLVIS_analyse_solution?.analysis?.geojson]);
+      dispatch({
+        solutionId: solutionId,
+        locationCodes: locationIdArray,
+        radius: Number(radius.replace('km', '')),
+        magnitudeRange: magnitudeRange,
+        rateRange: rateRange,
+      });
     });
   };
 
@@ -245,7 +237,7 @@ const FaultModelControls: React.FC<FaultModelControlsProps> = ({ startTransition
 export default FaultModelControls;
 
 export const faultModelControlsQuery = graphql`
-  query FaultModelControlsQuery($solution_id: ID!, $location_codes: [String], $radius_km: Int, $minimum_mag: Float, $maximum_mag: Float, $minimum_rate: Float, $maximum_rate: Float) {
+  query FaultModelControlsQuery {
     nzshm_model(version: "NSHM_1.0.0") {
       model {
         version
@@ -278,23 +270,6 @@ export const faultModelControlsQuery = graphql`
             }
           }
         }
-      }
-    }
-    SOLVIS_about
-    SOLVIS_analyse_solution(
-      input: {
-        solution_id: $solution_id
-        location_codes: $location_codes
-        radius_km: $radius_km
-        minimum_mag: $minimum_mag
-        maximum_mag: $maximum_mag
-        minimum_rate: $minimum_rate
-        maximum_rate: $maximum_rate
-      }
-    ) {
-      analysis {
-        geojson
-        solution_id
       }
     }
   }
