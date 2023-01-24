@@ -20,6 +20,7 @@ const StyledButton = styled(Button)(() => ({
 
 const StyledCustomControlsBar = styled(CustomControlsBar)(() => ({
   margin: '0 0 10px 0',
+  maxHeight: '320px!important',
 }));
 
 const StyledRangeSliderDiv = styled('div')(() => ({
@@ -199,10 +200,10 @@ const FaultModelControls: React.FC<FaultModelControlsProps> = ({ startTransition
 
   return (
     <Box sx={{ width: '100%', ...flexParentCenter, flexDirection: 'column' }}>
-      <Box sx={{ width: '100%', ...flexParentCenter, flexDirection: 'row' }}>
+      <Box sx={{ width: '100%', ...flexParentCenter, flexDirection: 'row', alignItems: 'top' }}>
         <Box sx={{ width: '100%', ...flexParentCenter, flexDirection: 'column' }}>
-          <Typography variant="h6">Logic Tree Branch Selection</Typography>
           <StyledCustomControlsBar direction="column">
+            <Typography variant="h6">Logic Tree Branch Selection</Typography>
             <SelectControl name="Deformation Model" selection={deformationModel} setSelection={setDeformationModel} options={deformationModelOptions} />
             <SelectControl name="Time Dependence" selection={timeDependence} setSelection={setTimeDependence} options={timeDependenceOptions} />
             <SelectControl name="Gutenberg-Richter b value" selection={bNPair} setSelection={setBNPair} options={bNPairOptions} />
@@ -210,8 +211,8 @@ const FaultModelControls: React.FC<FaultModelControlsProps> = ({ startTransition
           </StyledCustomControlsBar>
         </Box>
         <Box sx={{ width: '100%', ...flexParentCenter, flexDirection: 'column' }}>
-          <Typography variant="h6">Ruptures Filter</Typography>
           <StyledCustomControlsBar direction="column">
+            <Typography variant="h6">Ruptures Filter</Typography>
             <SelectControlMultiple name="Locations" selection={locations} options={locationOptions} setSelection={setLocations} />
             <SelectControl name="Radius" selection={radius} options={radiiOptions} setSelection={setRadius} />
             <StyledRangeSliderDiv>
