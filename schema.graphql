@@ -1365,6 +1365,33 @@ type Query {
   """About this Solvis API """
   SOLVIS_about: String
   SOLVIS_analyse_solution(input: SOLVIS_InversionSolutionAnalysisArguments!): SOLVIS_FilterInversionSolution
+
+  """Return ad single radii_set for the id passed in"""
+  SOLVIS_get_radii_set(
+    """the integer ID for the desired radii_set"""
+    radii_set_id: Int!
+  ): SOLVIS_RadiiSet
+
+  """Return all the available radii_set"""
+  SOLVIS_get_radii_sets: [SOLVIS_RadiiSet]
+
+  """Return a single location."""
+  SOLVIS_get_location(
+    """the location code of the desired location"""
+    location_code: String!
+  ): SOLVIS_Location
+
+  """Return all the available locations"""
+  SOLVIS_get_locations: [SOLVIS_Location]
+
+  """Return a single location list."""
+  SOLVIS_get_location_list(
+    """the id of the desired location_list"""
+    list_id: String!
+  ): SOLVIS_LocationList
+
+  """Return all the available location lists"""
+  SOLVIS_get_location_lists: [SOLVIS_LocationList]
 }
 
 """An enumeration."""
@@ -1594,13 +1621,55 @@ type SOLVIS_FilterInversionSolution {
 }
 
 """
+Defines styling arguments for geojson features,
+ref https://academy.datawrapper.de/article/177-how-to-style-your-markers-before-importing-them-to-datawrapper
+"""
+input SOLVIS_GeojsonAreaStyleArguments {
+  """
+  stroke (line) colour as hex code ("#cc0000") or HTML color name ("royalblue")
+  """
+  stroke_color: String
+
+  """a number between 0 and 20."""
+  stroke_width: Int
+
+  """a number between 0 and 1.0"""
+  stroke_opacity: Float
+
+  """
+  fill colour as Hex code ("#cc0000") or HTML color names ("royalblue") )
+  """
+  fill_color: String = "green"
+
+  """0-1.0"""
+  fill_opacity: Float = 1
+}
+
+"""
+Defines styling arguments for geojson features,
+
+ref https://academy.datawrapper.de/article/177-how-to-style-your-markers-before-importing-them-to-datawrapper
+"""
+input SOLVIS_GeojsonLineStyleArguments {
+  """
+  stroke (line) colour as hex code ("#cc0000") or HTML color name ("royalblue")
+  """
+  stroke_color: String
+
+  """a number between 0 and 20."""
+  stroke_width: Int
+
+  """a number between 0 and 1.0"""
+  stroke_opacity: Float
+}
+
+"""
 Represents the internal details of a given solution or filtered solution
 """
 type SOLVIS_InversionSolutionAnalysis {
   solution_id: ID
-  fault_sections: [SOLVIS_InversionSolutionFaultSection]
-  ruptures: [SOLVIS_InversionSolutionRupture]
-  geojson: SOLVIS_JSONString
+  fault_sections_geojson: SOLVIS_JSONString
+  location_geojson: SOLVIS_JSONString
 }
 
 """Defines filter arguments for Inversions analysis"""
@@ -1616,30 +1685,31 @@ input SOLVIS_InversionSolutionAnalysisArguments {
   """The rupture/location intersection radius in km"""
   radius_km: Int
 
-  """Constrain to ruptures having a annual rate above the value supplied."""
+  """
+  Constrain to fault_sections having a annual rate above the value supplied.
+  """
   minimum_rate: Float
 
-  """Constrain to ruptures having a annual rate below the value supplied."""
+  """
+  Constrain to fault_sections having a annual rate below the value supplied.
+  """
   maximum_rate: Float
 
-  """Constrain to ruptures having a magnitude above the value supplied."""
+  """
+  Constrain to fault_sections having a magnitude above the value supplied.
+  """
   minimum_mag: Float
 
-  """Constrain to ruptures having a magnitude below the value supplied."""
+  """
+  Constrain to fault_sections having a magnitude below the value supplied.
+  """
   maximum_mag: Float
-}
 
-type SOLVIS_InversionSolutionFaultSection {
-  """Unique ID of the fault section eg WHV1"""
-  fault_id: String
-}
+  """feature style for rupture trace geojson."""
+  fault_trace_style: SOLVIS_GeojsonLineStyleArguments = {stroke_color: "black", stroke_width: 1, stroke_opacity: 1}
 
-type SOLVIS_InversionSolutionRupture {
-  """Unique ID of the rupture within this solution"""
-  fault_id: Int
-
-  """rupture magnitude"""
-  magnitude: Float
+  """feature style for location polygons."""
+  location_area_style: SOLVIS_GeojsonAreaStyleArguments = {stroke_color: "lightblue", stroke_width: 1, stroke_opacity: 1, fill_color: "lightblue", fill_opacity: 0.7}
 }
 
 """
@@ -1650,10 +1720,43 @@ schema (one of the key benefits of GraphQL).
 """
 scalar SOLVIS_JSONString
 
+type SOLVIS_Location {
+  """unique location code."""
+  code: String
+
+  """location name."""
+  name: String
+
+  """location latitude."""
+  latitude: Float
+
+  """location longitude"""
+  longitude: Float
+}
+
+type SOLVIS_LocationList {
+  """The unique location_list_id"""
+  list_id: String
+
+  """list of location codes."""
+  location_codes: [String]
+
+  """the locations in this list."""
+  locations: [SOLVIS_Location]
+}
+
 """An object with an ID"""
 interface SOLVIS_Node {
   """The ID of the object."""
   id: ID!
+}
+
+type SOLVIS_RadiiSet {
+  """The unique radii_set_id"""
+  radii_set_id: Int
+
+  """list of dimension in metres defined by the radii set."""
+  radii: [Int]
 }
 
 type SourceLogicTree {

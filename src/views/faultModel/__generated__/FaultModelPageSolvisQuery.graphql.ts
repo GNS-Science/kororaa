@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9ff00704c33ededed089afb14d888b01>>
+ * @generated SignedSource<<3e5e0f78982e9b7c4e48d5f6770338ab>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -22,7 +22,7 @@ export type FaultModelPageSolvisQuery$data = {
   readonly SOLVIS_about: string | null;
   readonly SOLVIS_analyse_solution: {
     readonly analysis: {
-      readonly geojson: any | null;
+      readonly fault_sections_geojson: any | null;
       readonly solution_id: string | null;
     } | null;
   } | null;
@@ -138,7 +138,7 @@ v7 = [
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "geojson",
+            "name": "fault_sections_geojson",
             "storageKey": null
           },
           {
@@ -189,16 +189,16 @@ return {
     "selections": (v7/*: any*/)
   },
   "params": {
-    "cacheID": "0d4bfa7adfe880989f2a1cd6862d5dc9",
+    "cacheID": "2ba2befc589cd9f9f2b3d02e41e2e17a",
     "id": null,
     "metadata": {},
     "name": "FaultModelPageSolvisQuery",
     "operationKind": "query",
-    "text": "query FaultModelPageSolvisQuery(\n  $solution_id: ID!\n  $location_codes: [String]\n  $radius_km: Int\n  $minimum_mag: Float\n  $maximum_mag: Float\n  $minimum_rate: Float\n  $maximum_rate: Float\n) {\n  SOLVIS_about\n  SOLVIS_analyse_solution(input: {solution_id: $solution_id, location_codes: $location_codes, radius_km: $radius_km, minimum_mag: $minimum_mag, maximum_mag: $maximum_mag, minimum_rate: $minimum_rate, maximum_rate: $maximum_rate}) {\n    analysis {\n      geojson\n      solution_id\n    }\n  }\n}\n"
+    "text": "query FaultModelPageSolvisQuery(\n  $solution_id: ID!\n  $location_codes: [String]\n  $radius_km: Int\n  $minimum_mag: Float\n  $maximum_mag: Float\n  $minimum_rate: Float\n  $maximum_rate: Float\n) {\n  SOLVIS_about\n  SOLVIS_analyse_solution(input: {solution_id: $solution_id, location_codes: $location_codes, radius_km: $radius_km, minimum_mag: $minimum_mag, maximum_mag: $maximum_mag, minimum_rate: $minimum_rate, maximum_rate: $maximum_rate}) {\n    analysis {\n      fault_sections_geojson\n      solution_id\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "e1eb84acc014828caa13713b0e29a0b5";
+(node as any).hash = "a854a99c50b58d35e77eb853fc02e281";
 
 export default node;

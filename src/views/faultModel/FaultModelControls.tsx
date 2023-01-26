@@ -1,8 +1,7 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, Button, Alert, styled, Typography } from '@mui/material';
 import { SelectControl, RangeSliderWithInputs } from '@gns-science/toshi-nest';
 import { toPng } from 'html-to-image';
-import { AxiosError } from 'axios';
 import { graphql } from 'babel-plugin-relay/macro';
 import { useLazyLoadQuery } from 'react-relay';
 
@@ -10,9 +9,9 @@ import { FaultModelControlsQuery } from './__generated__/FaultModelControlsQuery
 
 import { flexParentCenter } from '../../utils/styleUtils';
 import CustomControlsBar from '../../components/common/CustomControlsBar';
-import { solvisApiService, getLocationIdArray } from './faultModel.service';
 import SelectControlMultiple from '../../components/common/SelectControlMultiple';
 import { FaultModelPageState } from './faultModelPageReducer';
+import { SOLVIS_LOCATION_LIST, SOLVIS_RADII_ID } from '../../utils/environmentVariables';
 
 const StyledButton = styled(Button)(() => ({
   margin: '0 0 0 10px',
@@ -59,17 +58,17 @@ interface FaultModelControlsProps {
   startTransition: React.TransitionStartFunction;
   isPending: boolean;
   dispatch: React.Dispatch<Partial<FaultModelPageState>>;
+  geoJsonError: string | null;
 }
 
 export interface SolvisLocation {
-  id: string;
-  name: string;
-  latitude: number;
-  longitude: number;
-  population: number;
+  code: string | null;
+  name: string | null;
+  latitude: number | null;
+  longitude: number | null;
 }
 
-const FaultModelControls: React.FC<FaultModelControlsProps> = ({ startTransition, isPending, dispatch }: FaultModelControlsProps) => {
+const FaultModelControls: React.FC<FaultModelControlsProps> = ({ startTransition, isPending, dispatch, geoJsonError }: FaultModelControlsProps) => {
   const [deformationModel, setDeformationModel] = useState<string>('');
   const [timeDependence, setTimeDependence] = useState<string>('');
   const [bNPair, setBNPair] = useState<string>('');
@@ -81,10 +80,11 @@ const FaultModelControls: React.FC<FaultModelControlsProps> = ({ startTransition
   const [rateRange, setRateRange] = useState<number[]>([-20, 0]);
   const [locationOptions, setLocationOptions] = useState<string[]>([]);
   const [locationIdArray, setLocationIdArray] = useState<string[]>([]);
-  const [radiiOptions, setRadiiOptions] = useState<number[]>([]);
+  const [radiiOptions, setRadiiOptions] = useState<string[]>([]);
   const [optionsValid, setOptionsValid] = useState<boolean>(false);
-  const data = useLazyLoadQuery<FaultModelControlsQuery>(faultModelControlsQuery, {});
-
+  const data = useLazyLoadQuery<FaultModelControlsQuery>(faultModelControlsQuery, { radiiSetId: SOLVIS_RADII_ID, locationListId: SOLVIS_LOCATION_LIST });
+  const locationData = data?.SOLVIS_get_location_list?.locations;
+  const radiiData = data?.SOLVIS_get_radii_set?.radii;
   const faultSystemBranches =
     data?.nzshm_model?.model?.source_logic_tree_spec?.fault_system_branches &&
     data?.nzshm_model?.model?.source_logic_tree_spec?.fault_system_branches.filter((branch) => branch && branch?.short_name === 'CRU')[0]?.branches;
@@ -103,45 +103,27 @@ const FaultModelControls: React.FC<FaultModelControlsProps> = ({ startTransition
   const bNPairOptions = JSON.parse(options?.filter((option) => option.value === 'bN')?.[0]?.value_options).map((option: string[]) => option[0]);
   const momentRateScalingOptions = JSON.parse(options?.filter((option) => option.value === 's')?.[0]?.value_options);
 
-  const getLocationOptions = useCallback(() => {
-    solvisApiService
-      .getLocationList()
-      .then((locs) => {
-        setLocationOptions(locs.data.map((location: SolvisLocation) => location.name));
-        setLocationIdArray(getLocationIdArray(locations, locs.data));
-      })
-      .catch((error: AxiosError) => {
-        if (error.response) {
-          console.log(`Error: ${error.response.status}`);
-        } else if (error.request) {
-          console.log(`Error: request failed`);
-        } else {
-          console.log(`Error: ${error.message}`);
-        }
+  useEffect(() => {
+    if (locationData) {
+      const locationNameArray: string[] = [];
+      const locationIdArray: string[] = [];
+      locationData.forEach((location) => {
+        location?.name !== undefined && location?.name !== null ? locationNameArray.push(location?.name) : locationNameArray.push('');
       });
-  }, [locations]);
-
-  const getRadiiOptions = useCallback(() => {
-    solvisApiService
-      .getRadiiList()
-      .then((radii) => {
-        setRadiiOptions(radii.data.radii.map((radius: number) => `${radius / 1000}km`));
-      })
-      .catch((error: AxiosError) => {
-        if (error.response) {
-          console.log(`Error: ${error.response.status}`);
-        } else if (error.request) {
-          console.log(`Error: request failed`);
-        } else {
-          console.log(`Error: ${error.message}`);
-        }
+      locations.map((location) => {
+        const locationDataItem = locationData?.find((item) => item?.name === location);
+        locationIdArray.push(locationDataItem && locationDataItem?.code !== null ? locationDataItem?.code : '');
       });
-  }, []);
+      setLocationOptions(locationNameArray);
+      setLocationIdArray(locationIdArray);
+    }
+  }, [locationData, locations]);
 
   useEffect(() => {
-    getLocationOptions();
-    getRadiiOptions();
-  }, [getLocationOptions, getRadiiOptions]);
+    if (radiiData) {
+      setRadiiOptions(radiiData?.map((radius) => (radius ? `${radius / 1000}km` : '')));
+    }
+  }, [radiiData]);
 
   useEffect(() => {
     if (deformationModel !== '' && timeDependence !== '' && bNPair !== '' && momentScaling !== '' && locations.length > 0 && radius) {
@@ -223,6 +205,7 @@ const FaultModelControls: React.FC<FaultModelControlsProps> = ({ startTransition
         </Box>
       </Box>
       {!optionsValid && <Alert severity="warning">Enter selections for all fields</Alert>}
+      {geoJsonError && <Alert severity="error">{geoJsonError}</Alert>}
       <Box sx={{ width: '40%', ...flexParentCenter, flexDirection: 'row', marginTop: '2vh' }}>
         <StyledButton disabled={isPending || !optionsValid} variant="contained" type="submit" onClick={handleSubmit}>
           Submit
@@ -238,7 +221,7 @@ const FaultModelControls: React.FC<FaultModelControlsProps> = ({ startTransition
 export default FaultModelControls;
 
 export const faultModelControlsQuery = graphql`
-  query FaultModelControlsQuery {
+  query FaultModelControlsQuery($radiiSetId: Int!, $locationListId: String!) {
     nzshm_model(version: "NSHM_1.0.0") {
       model {
         version
@@ -271,6 +254,18 @@ export const faultModelControlsQuery = graphql`
             }
           }
         }
+      }
+    }
+    SOLVIS_get_radii_set(radii_set_id: $radiiSetId) {
+      radii
+    }
+    SOLVIS_get_location_list(list_id: $locationListId) {
+      list_id
+      locations {
+        code
+        name
+        latitude
+        longitude
       }
     }
   }

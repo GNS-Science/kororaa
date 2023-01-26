@@ -61,3 +61,6 @@ export const LOWER2: string = process.env.REACT_APP_LOWER2 || '0.05';
 
 export const GA_ID: string | undefined = process.env.REACT_APP_GA_ID;
 export const GA_DEBUG_MODE: boolean = process.env.REACT_APP_GA_DEBUG_MODE === 'true';
+
+export const SOLVIS_LOCATION_LIST: string = process.env.REACT_APP_ANALYSIS_LOC_LIST_ID || 'NZ';
+export const SOLVIS_RADII_ID: number = Number(process.env.REACT_APP_RADII_ID) || 6;
