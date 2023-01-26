@@ -43,6 +43,7 @@ const FaultModelComponent: React.FC = () => {
   const data = useLazyLoadQuery<FaultModelPageQuery>(faultModelPageQuery, {});
   const markdown = data?.textual_content?.content && data.textual_content?.content[0]?.text;
   const content_type = data?.textual_content?.content && data.textual_content?.content[0]?.content_type;
+  const [geoJsonError, setGeoJsonError] = useState<string | null>(null);
   const solvisData = useLazyLoadQuery<FaultModelPageSolvisQuery>(faultModelPageSolvisQuery, {
     solution_id: state.solutionId,
     location_codes: state.locationCodes,
@@ -55,9 +56,13 @@ const FaultModelComponent: React.FC = () => {
 
   useEffect(() => {
     if (solvisData?.SOLVIS_analyse_solution?.analysis) {
-      setGeoJson([solvisData.SOLVIS_analyse_solution.analysis.geojson]);
+      setGeoJson([solvisData?.SOLVIS_analyse_solution?.analysis?.fault_sections_geojson]);
+      setGeoJsonError(null);
+    } else if (state.solutionId && !solvisData?.SOLVIS_analyse_solution?.analysis) {
+      setGeoJson(null);
+      setGeoJsonError('No fault sections satisfy the filter.');
     }
-  }, [solvisData]);
+  }, [solvisData, state.solutionId]);
 
   useEffect(() => {
     function updateScrollHeight() {
@@ -77,7 +82,7 @@ const FaultModelComponent: React.FC = () => {
             Inversion Fault Model
             <InfoTooltip content={markdown || ''} format={content_type === 'Markdown'} />
           </Typography>
-          <FaultModelControls startTransition={startTransition} isPending={isPending} dispatch={dispatch} />
+          <FaultModelControls startTransition={startTransition} isPending={isPending} dispatch={dispatch} geoJsonError={geoJsonError} />
         </LeafletDrawer>
         <FaultModel geoJson={geoJson} setFullscreen={setFullscreen} />
       </Box>
@@ -128,7 +133,7 @@ const faultModelPageSolvisQuery = graphql`
       }
     ) {
       analysis {
-        geojson
+        fault_sections_geojson
         solution_id
       }
     }

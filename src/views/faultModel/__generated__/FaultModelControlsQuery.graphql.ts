@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<caeb302470dd90ceea4aeed0275e4638>>
+ * @generated SignedSource<<85b15e2815387a7e6be6b8652198ecfa>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,7 +9,10 @@
 // @ts-nocheck
 
 import { ConcreteRequest, Query } from 'relay-runtime';
-export type FaultModelControlsQuery$variables = {};
+export type FaultModelControlsQuery$variables = {
+  radiiSetId: number;
+  locationListId: string;
+};
 export type FaultModelControlsQuery$data = {
   readonly nzshm_model: {
     readonly model: {
@@ -45,6 +48,18 @@ export type FaultModelControlsQuery$data = {
       } | null;
     } | null;
   } | null;
+  readonly SOLVIS_get_radii_set: {
+    readonly radii: ReadonlyArray<number | null> | null;
+  } | null;
+  readonly SOLVIS_get_location_list: {
+    readonly list_id: string | null;
+    readonly locations: ReadonlyArray<{
+      readonly code: string | null;
+      readonly name: string | null;
+      readonly latitude: number | null;
+      readonly longitude: number | null;
+    } | null> | null;
+  } | null;
 };
 export type FaultModelControlsQuery = {
   variables: FaultModelControlsQuery$variables;
@@ -53,20 +68,37 @@ export type FaultModelControlsQuery = {
 
 const node: ConcreteRequest = (function(){
 var v0 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
+  "name": "locationListId"
+},
+v1 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
+  "name": "radiiSetId"
+},
+v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "long_name",
   "storageKey": null
 },
-v1 = {
+v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "short_name",
   "storageKey": null
 },
-v2 = [
+v4 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "name",
+  "storageKey": null
+},
+v5 = [
   {
     "alias": null,
     "args": [
@@ -119,8 +151,8 @@ v2 = [
                 "name": "fault_system_branches",
                 "plural": true,
                 "selections": [
-                  (v0/*: any*/),
-                  (v1/*: any*/),
+                  (v2/*: any*/),
+                  (v3/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -172,7 +204,7 @@ v2 = [
                         "name": "values",
                         "plural": true,
                         "selections": [
-                          (v0/*: any*/),
+                          (v2/*: any*/),
                           {
                             "alias": null,
                             "args": null,
@@ -208,8 +240,8 @@ v2 = [
                 "name": "fault_system_branches",
                 "plural": true,
                 "selections": [
-                  (v1/*: any*/),
-                  (v0/*: any*/),
+                  (v3/*: any*/),
+                  (v2/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -218,14 +250,8 @@ v2 = [
                     "name": "branches",
                     "plural": true,
                     "selections": [
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "name",
-                        "storageKey": null
-                      },
-                      (v0/*: any*/),
+                      (v4/*: any*/),
+                      (v2/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -247,36 +273,123 @@ v2 = [
       }
     ],
     "storageKey": "nzshm_model(version:\"NSHM_1.0.0\")"
+  },
+  {
+    "alias": null,
+    "args": [
+      {
+        "kind": "Variable",
+        "name": "radii_set_id",
+        "variableName": "radiiSetId"
+      }
+    ],
+    "concreteType": "SOLVIS_RadiiSet",
+    "kind": "LinkedField",
+    "name": "SOLVIS_get_radii_set",
+    "plural": false,
+    "selections": [
+      {
+        "alias": null,
+        "args": null,
+        "kind": "ScalarField",
+        "name": "radii",
+        "storageKey": null
+      }
+    ],
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": [
+      {
+        "kind": "Variable",
+        "name": "list_id",
+        "variableName": "locationListId"
+      }
+    ],
+    "concreteType": "SOLVIS_LocationList",
+    "kind": "LinkedField",
+    "name": "SOLVIS_get_location_list",
+    "plural": false,
+    "selections": [
+      {
+        "alias": null,
+        "args": null,
+        "kind": "ScalarField",
+        "name": "list_id",
+        "storageKey": null
+      },
+      {
+        "alias": null,
+        "args": null,
+        "concreteType": "SOLVIS_Location",
+        "kind": "LinkedField",
+        "name": "locations",
+        "plural": true,
+        "selections": [
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "code",
+            "storageKey": null
+          },
+          (v4/*: any*/),
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "latitude",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "longitude",
+            "storageKey": null
+          }
+        ],
+        "storageKey": null
+      }
+    ],
+    "storageKey": null
   }
 ];
 return {
   "fragment": {
-    "argumentDefinitions": [],
+    "argumentDefinitions": [
+      (v0/*: any*/),
+      (v1/*: any*/)
+    ],
     "kind": "Fragment",
     "metadata": null,
     "name": "FaultModelControlsQuery",
-    "selections": (v2/*: any*/),
+    "selections": (v5/*: any*/),
     "type": "Query",
     "abstractKey": null
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": [],
+    "argumentDefinitions": [
+      (v1/*: any*/),
+      (v0/*: any*/)
+    ],
     "kind": "Operation",
     "name": "FaultModelControlsQuery",
-    "selections": (v2/*: any*/)
+    "selections": (v5/*: any*/)
   },
   "params": {
-    "cacheID": "2de8ee1f2c5f686a37ceaf6d274924c8",
+    "cacheID": "316ac8ad73221fca1d2e070545fbda17",
     "id": null,
     "metadata": {},
     "name": "FaultModelControlsQuery",
     "operationKind": "query",
-    "text": "query FaultModelControlsQuery {\n  nzshm_model(version: \"NSHM_1.0.0\") {\n    model {\n      version\n      title\n      source_logic_tree {\n        fault_system_branches {\n          long_name\n          short_name\n          branches {\n            weight\n            inversion_solution_id\n            inversion_solution_type\n            onfault_nrml_id\n            distributed_nrml_id\n            values {\n              long_name\n              json_value\n            }\n          }\n        }\n      }\n      source_logic_tree_spec {\n        fault_system_branches {\n          short_name\n          long_name\n          branches {\n            name\n            long_name\n            value_options\n          }\n        }\n      }\n    }\n  }\n}\n"
+    "text": "query FaultModelControlsQuery(\n  $radiiSetId: Int!\n  $locationListId: String!\n) {\n  nzshm_model(version: \"NSHM_1.0.0\") {\n    model {\n      version\n      title\n      source_logic_tree {\n        fault_system_branches {\n          long_name\n          short_name\n          branches {\n            weight\n            inversion_solution_id\n            inversion_solution_type\n            onfault_nrml_id\n            distributed_nrml_id\n            values {\n              long_name\n              json_value\n            }\n          }\n        }\n      }\n      source_logic_tree_spec {\n        fault_system_branches {\n          short_name\n          long_name\n          branches {\n            name\n            long_name\n            value_options\n          }\n        }\n      }\n    }\n  }\n  SOLVIS_get_radii_set(radii_set_id: $radiiSetId) {\n    radii\n  }\n  SOLVIS_get_location_list(list_id: $locationListId) {\n    list_id\n    locations {\n      code\n      name\n      latitude\n      longitude\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "1c01469b474176571aac66d7cbdd61cb";
+(node as any).hash = "98bd8026d03ef8058cc0c21b36854a8c";
 
 export default node;
