@@ -53,16 +53,17 @@ const FaultModelComponent: React.FC = () => {
     minimum_rate: state.rateRange[0],
     maximum_rate: state.rateRange[1],
   });
+  const solvisSolutionAnalysis = solvisData?.SOLVIS_analyse_solution?.analysis;
 
   useEffect(() => {
-    if (solvisData?.SOLVIS_analyse_solution?.analysis) {
-      setGeoJson([solvisData?.SOLVIS_analyse_solution?.analysis?.fault_sections_geojson]);
+    if (solvisSolutionAnalysis) {
+      setGeoJson([solvisSolutionAnalysis?.fault_sections_geojson, solvisSolutionAnalysis?.location_geojson]);
       setGeoJsonError(null);
-    } else if (state.solutionId && !solvisData?.SOLVIS_analyse_solution?.analysis) {
+    } else if (state.solutionId && !solvisSolutionAnalysis) {
       setGeoJson(null);
       setGeoJsonError('No fault sections satisfy the filter.');
     }
-  }, [solvisData, state.solutionId]);
+  }, [solvisSolutionAnalysis, state.solutionId]);
 
   useEffect(() => {
     function updateScrollHeight() {
@@ -120,7 +121,6 @@ export const faultModelPageQuery = graphql`
 
 const faultModelPageSolvisQuery = graphql`
   query FaultModelPageSolvisQuery($solution_id: ID!, $location_codes: [String], $radius_km: Int, $minimum_mag: Float, $maximum_mag: Float, $minimum_rate: Float, $maximum_rate: Float) {
-    SOLVIS_about
     SOLVIS_analyse_solution(
       input: {
         solution_id: $solution_id
@@ -130,11 +130,14 @@ const faultModelPageSolvisQuery = graphql`
         maximum_mag: $maximum_mag
         minimum_rate: $minimum_rate
         maximum_rate: $maximum_rate
+        location_area_style: { stroke_color: "gold", stroke_width: 1, stroke_opacity: 0.5, fill_color: "gold", fill_opacity: 0.5 }
+        fault_trace_style: { stroke_color: "silver", stroke_width: 3, stroke_opacity: 1 }
       }
     ) {
       analysis {
         fault_sections_geojson
         solution_id
+        location_geojson
       }
     }
   }

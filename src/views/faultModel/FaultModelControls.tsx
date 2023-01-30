@@ -126,7 +126,7 @@ const FaultModelControls: React.FC<FaultModelControlsProps> = ({ startTransition
   }, [radiiData]);
 
   useEffect(() => {
-    if (deformationModel !== '' && timeDependence !== '' && bNPair !== '' && momentScaling !== '' && locations.length > 0 && radius) {
+    if (deformationModel !== '' && timeDependence !== '' && bNPair !== '' && momentScaling !== '' && radius) {
       setOptionsValid(true);
     } else {
       setOptionsValid(false);
