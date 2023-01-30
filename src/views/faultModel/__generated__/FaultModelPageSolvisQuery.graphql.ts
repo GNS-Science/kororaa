@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3e5e0f78982e9b7c4e48d5f6770338ab>>
+ * @generated SignedSource<<deb4d3cac579457bda29ef1b9129d882>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,11 +19,11 @@ export type FaultModelPageSolvisQuery$variables = {
   maximum_rate?: number | null;
 };
 export type FaultModelPageSolvisQuery$data = {
-  readonly SOLVIS_about: string | null;
   readonly SOLVIS_analyse_solution: {
     readonly analysis: {
       readonly fault_sections_geojson: any | null;
       readonly solution_id: string | null;
+      readonly location_geojson: any | null;
     } | null;
   } | null;
 };
@@ -71,16 +71,29 @@ v6 = {
 v7 = [
   {
     "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "SOLVIS_about",
-    "storageKey": null
-  },
-  {
-    "alias": null,
     "args": [
       {
         "fields": [
+          {
+            "kind": "Literal",
+            "name": "fault_trace_style",
+            "value": {
+              "stroke_color": "silver",
+              "stroke_opacity": 1,
+              "stroke_width": 3
+            }
+          },
+          {
+            "kind": "Literal",
+            "name": "location_area_style",
+            "value": {
+              "fill_color": "gold",
+              "fill_opacity": 0.5,
+              "stroke_color": "gold",
+              "stroke_opacity": 0.5,
+              "stroke_width": 1
+            }
+          },
           {
             "kind": "Variable",
             "name": "location_codes",
@@ -147,6 +160,13 @@ v7 = [
             "kind": "ScalarField",
             "name": "solution_id",
             "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "location_geojson",
+            "storageKey": null
           }
         ],
         "storageKey": null
@@ -189,16 +209,16 @@ return {
     "selections": (v7/*: any*/)
   },
   "params": {
-    "cacheID": "2ba2befc589cd9f9f2b3d02e41e2e17a",
+    "cacheID": "846bfecbee2706d98f38357b105530a3",
     "id": null,
     "metadata": {},
     "name": "FaultModelPageSolvisQuery",
     "operationKind": "query",
-    "text": "query FaultModelPageSolvisQuery(\n  $solution_id: ID!\n  $location_codes: [String]\n  $radius_km: Int\n  $minimum_mag: Float\n  $maximum_mag: Float\n  $minimum_rate: Float\n  $maximum_rate: Float\n) {\n  SOLVIS_about\n  SOLVIS_analyse_solution(input: {solution_id: $solution_id, location_codes: $location_codes, radius_km: $radius_km, minimum_mag: $minimum_mag, maximum_mag: $maximum_mag, minimum_rate: $minimum_rate, maximum_rate: $maximum_rate}) {\n    analysis {\n      fault_sections_geojson\n      solution_id\n    }\n  }\n}\n"
+    "text": "query FaultModelPageSolvisQuery(\n  $solution_id: ID!\n  $location_codes: [String]\n  $radius_km: Int\n  $minimum_mag: Float\n  $maximum_mag: Float\n  $minimum_rate: Float\n  $maximum_rate: Float\n) {\n  SOLVIS_analyse_solution(input: {solution_id: $solution_id, location_codes: $location_codes, radius_km: $radius_km, minimum_mag: $minimum_mag, maximum_mag: $maximum_mag, minimum_rate: $minimum_rate, maximum_rate: $maximum_rate, location_area_style: {stroke_color: \"gold\", stroke_width: 1, stroke_opacity: 0.5, fill_color: \"gold\", fill_opacity: 0.5}, fault_trace_style: {stroke_color: \"silver\", stroke_width: 3, stroke_opacity: 1}}) {\n    analysis {\n      fault_sections_geojson\n      solution_id\n      location_geojson\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "a854a99c50b58d35e77eb853fc02e281";
+(node as any).hash = "36a50c13c5196b96e3f4a541ce30ba19";
 
 export default node;
