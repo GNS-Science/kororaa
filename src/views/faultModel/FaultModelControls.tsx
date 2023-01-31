@@ -10,6 +10,7 @@ import { FaultModelControlsQuery } from './__generated__/FaultModelControlsQuery
 import { flexParentCenter } from '../../utils/styleUtils';
 import CustomControlsBar from '../../components/common/CustomControlsBar';
 import SelectControlMultiple from '../../components/common/SelectControlMultiple';
+import SelectControlWithDisable from '../../components/common/SelectControlWithDisable';
 import { FaultModelPageState } from './faultModelPageReducer';
 import { SOLVIS_LOCATION_LIST, SOLVIS_RADII_ID } from '../../utils/environmentVariables';
 
@@ -126,7 +127,7 @@ const FaultModelControls: React.FC<FaultModelControlsProps> = ({ startTransition
   }, [radiiData]);
 
   useEffect(() => {
-    if (deformationModel !== '' && timeDependence !== '' && bNPair !== '' && momentScaling !== '' && radius) {
+    if (deformationModel !== '' && timeDependence !== '' && bNPair !== '' && momentScaling !== '') {
       setOptionsValid(true);
     } else {
       setOptionsValid(false);
@@ -196,7 +197,7 @@ const FaultModelControls: React.FC<FaultModelControlsProps> = ({ startTransition
           <StyledCustomControlsBar direction="column">
             <Typography variant="h6">Ruptures Filter</Typography>
             <SelectControlMultiple name="Locations" selection={locations} options={locationOptions} setSelection={setLocations} />
-            <SelectControl name="Radius" selection={radius} options={radiiOptions} setSelection={setRadius} />
+            <SelectControlWithDisable disabled={locations.length === 0} name="Radius" selection={radius} options={radiiOptions} setSelection={setRadius} />
             <StyledRangeSliderDiv>
               <RangeSliderWithInputs label="Magnitude Range" valuesRange={magnitudeRange} setValues={setMagnitudeRange} inputProps={{ step: 0.1, min: 6, max: 10, type: 'number' }} />
               <RangeSliderWithInputs label="Rate Range (1/yr)" valuesRange={rateRange} setValues={setRateRange} inputProps={{ step: 1, min: -20, max: 0, type: 'number' }} />

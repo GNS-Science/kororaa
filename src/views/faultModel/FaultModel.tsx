@@ -27,13 +27,6 @@ const FaultModel: React.FC<FaultModelProps> = ({ geoJson, setFullscreen }) => {
         maxZoom={MAP_ZOOM_MAX}
         zoomSnap={MAP_ZOOM_SNAP}
         zoomDelta={MAP_ZOOM_DELTA}
-        style={{
-          stroke: '#f21616',
-          color: '#f21616',
-          weight: 2,
-          opacity: 0.75,
-          fillOpacity: 0.6,
-        }}
         overlay={false}
         zoomLevel={zoomLevel}
         setZoomLevel={setZoomLevel}
