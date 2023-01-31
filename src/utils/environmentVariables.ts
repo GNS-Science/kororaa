@@ -66,3 +66,6 @@ export const GA_DEBUG_MODE: boolean = process.env.REACT_APP_GA_DEBUG_MODE === 't
 export const HAZARD_MODEL_VERSION = 'NSHM_v1.0.0';
 export const SOLVIS_LOCATION_LIST: string = process.env.REACT_APP_ANALYSIS_LOC_LIST_ID || 'NZ';
 export const SOLVIS_RADII_ID: number = Number(process.env.REACT_APP_RADII_ID) || 6;
+
+export const IFM_FAULT_COLOUR = process.env.REACT_APP_IFM_FAULT_COLOUR || 'red';
+export const IFM_LOCATION_COLOUR = process.env.REACT_APP_IFM_LOCATION_COLOUR || 'grey';

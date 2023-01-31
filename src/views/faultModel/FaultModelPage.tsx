@@ -14,6 +14,7 @@ import { FaultModelTableContainer } from './FaultModelTableContainer';
 import { FaultModelPageQuery } from './__generated__/FaultModelPageQuery.graphql';
 import { faultModelPageReducer, faultModelPageReducerInitialState } from './faultModelPageReducer';
 import { FaultModelPageSolvisQuery } from './__generated__/FaultModelPageSolvisQuery.graphql';
+import { IFM_FAULT_COLOUR, IFM_LOCATION_COLOUR } from '../../utils/environmentVariables';
 
 const PageContainer = styled(Box)(({ theme }) => ({
   ...flexParentCenter,
@@ -52,12 +53,14 @@ const FaultModelComponent: React.FC = () => {
     maximum_mag: state.magnitudeRange[1],
     minimum_rate: state.rateRange[0],
     maximum_rate: state.rateRange[1],
+    location_colour: IFM_LOCATION_COLOUR,
+    fault_colour: IFM_FAULT_COLOUR,
   });
   const solvisSolutionAnalysis = solvisData?.SOLVIS_analyse_solution?.analysis;
 
   useEffect(() => {
     if (solvisSolutionAnalysis) {
-      setGeoJson([solvisSolutionAnalysis?.fault_sections_geojson, solvisSolutionAnalysis?.location_geojson]);
+      setGeoJson([solvisSolutionAnalysis?.location_geojson, solvisSolutionAnalysis?.fault_sections_geojson]);
       setGeoJsonError(null);
     } else if (state.solutionId && !solvisSolutionAnalysis) {
       setGeoJson(null);
@@ -87,7 +90,7 @@ const FaultModelComponent: React.FC = () => {
         </LeafletDrawer>
         <FaultModel geoJson={geoJson} setFullscreen={setFullscreen} />
       </Box>
-      <FaultModelTableContainer data={geoJson ? geoJson[0] : ''} id="faultModelTable" />
+      <FaultModelTableContainer data={geoJson ? geoJson[1] : ''} id="faultModelTable" />
     </PageContainer>
   );
 };
@@ -120,7 +123,17 @@ export const faultModelPageQuery = graphql`
 `;
 
 const faultModelPageSolvisQuery = graphql`
-  query FaultModelPageSolvisQuery($solution_id: ID!, $location_codes: [String], $radius_km: Int, $minimum_mag: Float, $maximum_mag: Float, $minimum_rate: Float, $maximum_rate: Float) {
+  query FaultModelPageSolvisQuery(
+    $solution_id: ID!
+    $location_codes: [String]
+    $radius_km: Int
+    $minimum_mag: Float
+    $maximum_mag: Float
+    $minimum_rate: Float
+    $maximum_rate: Float
+    $location_colour: String
+    $fault_colour: String
+  ) {
     SOLVIS_analyse_solution(
       input: {
         solution_id: $solution_id
@@ -130,8 +143,8 @@ const faultModelPageSolvisQuery = graphql`
         maximum_mag: $maximum_mag
         minimum_rate: $minimum_rate
         maximum_rate: $maximum_rate
-        location_area_style: { stroke_color: "gold", stroke_width: 1, stroke_opacity: 0.5, fill_color: "gold", fill_opacity: 0.5 }
-        fault_trace_style: { stroke_color: "silver", stroke_width: 3, stroke_opacity: 1 }
+        location_area_style: { stroke_color: $location_colour, stroke_width: 1, stroke_opacity: 0.5, fill_color: $location_colour, fill_opacity: 0.5 }
+        fault_trace_style: { stroke_color: $fault_colour, stroke_width: 3, stroke_opacity: 1 }
       }
     ) {
       analysis {
