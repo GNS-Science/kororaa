@@ -83,6 +83,7 @@ const FaultModelControls: React.FC<FaultModelControlsProps> = ({ startTransition
   const [locationIdArray, setLocationIdArray] = useState<string[]>([]);
   const [radiiOptions, setRadiiOptions] = useState<string[]>([]);
   const [optionsValid, setOptionsValid] = useState<boolean>(false);
+  const [radiusError, setRadiusError] = useState<string | null>(null);
   const data = useLazyLoadQuery<FaultModelControlsQuery>(faultModelControlsQuery, { radiiSetId: SOLVIS_RADII_ID, locationListId: SOLVIS_LOCATION_LIST });
   const locationData = data?.SOLVIS_get_location_list?.locations;
   const radiiData = data?.SOLVIS_get_radii_set?.radii;
@@ -125,6 +126,14 @@ const FaultModelControls: React.FC<FaultModelControlsProps> = ({ startTransition
       setRadiiOptions(radiiData?.map((radius) => (radius ? `${radius / 1000}km` : '')));
     }
   }, [radiiData]);
+
+  useEffect(() => {
+    if (locations.length > 0 && radius === '') {
+      setRadiusError('Select a radius option.');
+    } else {
+      setRadiusError(null);
+    }
+  }, [locations, radius]);
 
   useEffect(() => {
     if (deformationModel !== '' && timeDependence !== '' && bNPair !== '' && momentScaling !== '') {
@@ -205,6 +214,7 @@ const FaultModelControls: React.FC<FaultModelControlsProps> = ({ startTransition
           </StyledCustomControlsBar>
         </Box>
       </Box>
+      {radiusError && <Alert severity="warning">{radiusError}</Alert>}
       {!optionsValid && <Alert severity="warning">Enter selections for all fields</Alert>}
       {geoJsonError && <Alert severity="error">{geoJsonError}</Alert>}
       <Box sx={{ width: '40%', ...flexParentCenter, flexDirection: 'row', marginTop: '2vh' }}>

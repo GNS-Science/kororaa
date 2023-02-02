@@ -1,6 +1,11 @@
 import { graphql } from 'msw';
 import { wellington400Response, wellingtonChristchurchResponse, arbitraryLatLonResponse, initialResponse } from './mockData/HazardChartsPlotsViewMockData';
 import { hazardMapMockData } from './mockData/HazardMapMockData';
+import { IFMAllLocationsMockData } from './mockData/IFMAllLocationsMockData';
+import { IFMControlsMockData } from './mockData/IFMControlsMockData';
+import { IFMEmptyMockData } from './mockData/IFMEmptyMockData';
+import { IFMTextualContentMockData } from './mockData/IFMTextualContentMockData';
+import { IFMWellington100kmMockData } from './mockData/IFMWellington100kmMockData';
 
 export const handlers = [
   graphql.query('HazardChartsPlotsViewQuery', (req, res, ctx) => {
@@ -45,5 +50,24 @@ export const handlers = [
   }),
   graphql.query('HazardMapsPageQuery', (req, res, ctx) => {
     return res(ctx.data(hazardMapMockData));
+  }),
+  graphql.query('FaultModelPageQuery', (req, res, ctx) => {
+    return res(ctx.data(IFMTextualContentMockData));
+  }),
+  graphql.query('FaultModelPageSolvisQuery', (req, res, ctx) => {
+    const locations = req.variables.location_codes;
+    const id = req.variables.solution_id;
+    if (id === '') {
+      return res(ctx.data(IFMEmptyMockData));
+    }
+    if (locations.length === 0 && id !== '') {
+      return res(ctx.data(IFMAllLocationsMockData));
+    }
+    if (locations.includes('WLG')) {
+      return res(ctx.data(IFMWellington100kmMockData));
+    }
+  }),
+  graphql.query('FaultModelControlsQuery', (req, res, ctx) => {
+    return res(ctx.data(IFMControlsMockData));
   }),
 ];
