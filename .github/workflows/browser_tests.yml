@@ -5,6 +5,7 @@ on:
     branches:
       - main
       - deploy-test
+      - feature/294_IFM
 
 jobs:
   cypress-run:
