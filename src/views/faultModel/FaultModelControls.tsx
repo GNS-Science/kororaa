@@ -218,7 +218,7 @@ const FaultModelControls: React.FC<FaultModelControlsProps> = ({ startTransition
       {!optionsValid && <Alert severity="warning">Enter selections for all fields</Alert>}
       {geoJsonError && <Alert severity="error">{geoJsonError}</Alert>}
       <Box sx={{ width: '40%', ...flexParentCenter, flexDirection: 'row', marginTop: '2vh' }}>
-        <StyledButton disabled={isPending || !optionsValid} variant="contained" type="submit" onClick={handleSubmit}>
+        <StyledButton disabled={isPending || !optionsValid || !!radiusError} variant="contained" type="submit" onClick={handleSubmit}>
           Submit
         </StyledButton>
         <StyledButton disabled={isPending} variant="contained" onClick={handleDownload}>
