@@ -1043,10 +1043,11 @@
   dependencies:
     regenerator-runtime "^0.13.4"
 
-"@babel/runtime@^7.20.1":
-  version "7.20.6"
-  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.20.6.tgz#facf4879bfed9b5326326273a64220f099b0fce3"
-  integrity sha512-Q+8MqP7TiHMWzSfwiJwXCjyf4GYA4Dgw3emg/7xmwsdLJOZUp+nMqcOwOzzYheuM1rhDu8FSj2l0aoMygEuXuA==
+
+"@babel/runtime@^7.20.6":
+  version "7.20.7"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.20.7.tgz#fcb41a5a70550e04a7b708037c7c32f7f356d8fd"
+  integrity sha512-UF0tvkUtxwAgZ5W/KrkHf0Rn0fdnLDU9ScxBrEVNUprE/MzirjK4MJUX1/BVDv00Sv8cljtukVK1aky++X1SjQ==
   dependencies:
     regenerator-runtime "^0.13.11"
 
@@ -1366,6 +1367,7 @@
     js-yaml "^4.1.0"
     minimatch "^3.1.2"
     strip-json-comments "^3.1.1"
+
 
 "@gns-science/toshi-nest@^3.7.3":
   version "3.7.3"
@@ -1906,6 +1908,7 @@
   version "5.17.13"
   resolved "https://registry.yarnpkg.com/@mui/x-data-grid/-/x-data-grid-5.17.13.tgz#efee3b9ebbb868cc4a174da4a0db08c75e46a194"
   integrity sha512-Z2DSQA8O2ZPKat6URO9nEpKn8Wszuiz/OJQq5aW3so3KPunb8IJV30h94Kc+Su9ng6mdknCpimrnN2EBibznFA==
+
   dependencies:
     "@babel/runtime" "^7.18.9"
     "@mui/utils" "^5.10.3"
@@ -8972,13 +8975,13 @@ math-log2@^1.0.1:
   integrity sha512-9W0yGtkaMAkf74XGYVy4Dqw3YUMnTNB2eeiw9aQbUl4A3KmuCEHTt2DgAB07ENzOYAjsYSAYufkAq0Zd+jU7zA==
 
 mathjs@*, mathjs@^11.4.0:
-  version "11.4.0"
-  resolved "https://registry.yarnpkg.com/mathjs/-/mathjs-11.4.0.tgz#9dadfac3470ffcbeeff4abf53a0c7b93bb3a7a02"
-  integrity sha512-SGhKmXnwsPWrLHvhzm849RJPMjFTgLgVwKtv2L+IY7XHB4nuzyZLfV2eHT1HtBZ4yzsLHgcqak47zMmxuEIIUg==
+  version "11.5.0"
+  resolved "https://registry.yarnpkg.com/mathjs/-/mathjs-11.5.0.tgz#5cacad7affa2c804ad3f09efa5d53f0ffcb79493"
+  integrity sha512-vJ/+SqWtxjW6/aeDRt8xL3TlOVKqwN15BIyTGVqGbIWuiqgY4SxZ0yLuna82YH9CB757iFP7uJ4m3KvVBX7Qcg==
   dependencies:
-    "@babel/runtime" "^7.20.1"
+    "@babel/runtime" "^7.20.6"
     complex.js "^2.1.1"
-    decimal.js "^10.4.2"
+    decimal.js "^10.4.3"
     escape-latex "^1.2.0"
     fraction.js "^4.2.0"
     javascript-natural-sort "^0.7.1"

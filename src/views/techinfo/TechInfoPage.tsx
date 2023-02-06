@@ -89,8 +89,11 @@ const TechInfoPage: React.FC = () => {
             </Grid>
 
             <Grid item xs={12}>
-              <Typography variant="h5">Orientation</Typography>
-              <Typography variant="body1">All results are provided in RotD50 orientation.</Typography>
+              <Typography variant="h5">Ground Motion Component</Typography>
+              <Typography variant="body1">
+                All results are provided in RotD50. The RotD50 is an orientation independent combination of the two horizontal component ground-motions. The two horizontal components are combined for
+                a range of rotation angles. Subsequently, at each spectral period, the combined ground-motions are sorted and the 50th percentile is chosen.
+              </Typography>
             </Grid>
 
             <Grid item xs={12}>

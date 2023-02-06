@@ -2,6 +2,7 @@ import React from 'react';
 import { styled } from '@mui/material/styles';
 import { Link, Grid, Typography } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
+import { HAZARD_MODEL_VERSION } from '../../utils/environmentVariables';
 
 const FooterContainer = styled('footer')(({ theme }) => ({
   width: '100%',
@@ -48,6 +49,8 @@ const Footer: React.FC = () => {
                 <Link underline="hover" color="inherit" target="_blank" rel="noopener" href="https://www.building.govt.nz/getting-started/seismic-work-programme/national-seismic-hazard-model">
                   MBIE for information related to engineering design and the NSHM.
                 </Link>
+                <br />
+                You are viewing version {HAZARD_MODEL_VERSION} of the NSHM.
               </em>
             </Typography>
           </FooterLinkItems>

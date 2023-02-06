@@ -2,9 +2,9 @@ import * as mathjs from 'mathjs';
 
 import { hazardPageOptions } from '../../views/hazardCharts/constants/hazardPageOptions';
 import { HazardChartsPlotsViewQuery$data } from '../../views/hazardCharts/__generated__/HazardChartsPlotsViewQuery.graphql';
-import { getLatLonFromLocationKey, roundLatLon } from '../latLon/latLon.service';
+import { getLatLonFromLocationName, roundLatLon } from '../latLon/latLon.service';
 import { getColor } from '../../utils/colorUtils';
-import { SA_LOG_PGA_SUBSTITUTE, HAZARD_IMTS, MEAN, LOWER1, LOWER2, UPPER1, UPPER2 } from '../../utils/environmentVariables';
+import { SA_LOG_PGA_SUBSTITUTE, HAZARD_IMTS, MEAN, LOWER1, LOWER2, UPPER1, UPPER2, HAZARD_MODEL_VERSION } from '../../utils/environmentVariables';
 
 export interface UncertaintyCurve {
   strokeSize?: number;
@@ -131,17 +131,20 @@ export const sortSACurveGroups = (curveGroups: UncertaintyChartData): Uncertaint
 
 export const tryParseLatLon = (loc: string): string[] => {
   if (loc.split(',').length === 1) {
-    return getLatLonFromLocationKey(loc).split(',');
-  } else return loc.split(',');
+    return getLatLonFromLocationName(loc)
+      .split(',')
+      .map((l) => l.trim());
+  } else return loc.split(',').map((l) => l.trim());
 };
 
 export const getSpectralCSVData = (curves: UncertaintyChartData, poe: number | undefined): string[][] => {
+  const datetimeAndVersion = [`date-time: ${new Date().toLocaleString('en-GB', { timeZone: 'UTC' })}, (UTC)`, `NSHM model version: ${HAZARD_MODEL_VERSION}`];
   const saHeaderArray = ['lat', 'lon', 'vs30', 'PoE (% in 50 years)', 'statistic', ...HAZARD_IMTS];
   const csvData: string[][] = [];
   Object.fromEntries(
     Object.entries(curves).map((curve) => {
       const vs30 = curve[0].split(' ')[0].replace('m/s', '');
-      const location = curve[0].split(' ').length === 3 ? curve[0].split(' ')[1] + curve[0].split(' ')[2] : curve[0].split(' ')[1];
+      const location = curve[0].split(' ').length === 3 ? `${curve[0].split(' ')[1]} ${curve[0].split(' ')[2]}` : curve[0].split(' ')[1];
       const latLon = tryParseLatLon(location);
       Object.entries(curve[1])?.forEach((value) => {
         const curveCSVData = [latLon[0], latLon[1], vs30, (poe && poe * 100)?.toString() || ''];
@@ -157,6 +160,7 @@ export const getSpectralCSVData = (curves: UncertaintyChartData, poe: number | u
     }),
   );
   csvData.unshift(saHeaderArray);
+  csvData.unshift(datetimeAndVersion);
   return csvData;
 };
 

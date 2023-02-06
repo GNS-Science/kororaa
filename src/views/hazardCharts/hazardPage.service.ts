@@ -1,5 +1,5 @@
 import { roundLatLon } from '../../services/latLon/latLon.service';
-import { HAZARD_COLOR_LIMIT } from '../../utils/environmentVariables';
+import { HAZARD_COLOR_LIMIT, HAZARD_MODEL_VERSION } from '../../utils/environmentVariables';
 
 import { tooManyCurves, noLocations, noImts, noVs30s } from './constants/hazardCharts';
 import { hazardPageLocations } from './constants/hazardPageOptions';
@@ -19,6 +19,18 @@ export interface HazardUncertaintyChart {
   strokeColor?: string;
   strokeStyle?: string;
   data: UncertaintyDatum[];
+}
+
+export interface HazardCurve {
+  readonly hazard_model: string | null;
+  readonly imt: string | null;
+  readonly loc: string | null;
+  readonly agg: string | null;
+  readonly vs30: number | null;
+  readonly curve: {
+    readonly levels: ReadonlyArray<number | null> | null;
+    readonly values: ReadonlyArray<number | null> | null;
+  } | null;
 }
 
 export type HazardUncertaintyChartCurveGroup = Record<string, HazardUncertaintyChart>;
@@ -74,7 +86,45 @@ export const getFilteredCurveGroups = (curveGroups: HazardUncertaintyChartData, 
 };
 
 export const getHazardCSVData = (data: HazardChartsPlotsViewQuery$data): string[][] => {
-  const CSVData = data.hazard_curves?.curves?.map((curve) => {
+  const regExp = /\(([^)]+)\)/g;
+  const hazardCurves: HazardCurve[] = [];
+  //create mutable copy of hazard curves
+  data.hazard_curves?.curves && data.hazard_curves?.curves.forEach((val) => hazardCurves.push(Object.assign({}, val)));
+  //separate hazard curves by location
+  const hazardCurvesByLoc: HazardCurve[][] = [];
+  hazardCurves.forEach((curve) => {
+    const latLon = curve?.loc;
+    if (latLon) {
+      const index = hazardCurvesByLoc.findIndex((curve) => curve[0]?.loc === latLon);
+      if (index === -1) {
+        hazardCurvesByLoc.push([curve]);
+      } else {
+        hazardCurvesByLoc[index].push(curve);
+      }
+    }
+  });
+  //sort hazard curves by imt, parsing imts number value to sort the 10.0 properly
+  const sortedHazardCurves: HazardCurve[] = hazardCurvesByLoc
+    .map((a) =>
+      a.sort((a, b) => {
+        if (a?.imt && b?.imt) {
+          const aMatch = a?.imt.match(regExp);
+          const bMatch = b?.imt.match(regExp);
+          if (aMatch && bMatch) {
+            const aMatchNumber = parseFloat(aMatch[0].replace(/[()]/g, ''));
+            const bMatchNumber = parseFloat(bMatch[0].replace(/[()]/g, ''));
+            if (aMatchNumber && bMatchNumber) {
+              return aMatchNumber - bMatchNumber;
+            }
+          }
+        }
+        return 0;
+      }),
+    )
+    .flat();
+
+  const datetimeAndVersion = [`date-time: ${new Date().toLocaleString('en-GB', { timeZone: 'UTC' })}, (UTC)`, `NSHM model version: ${HAZARD_MODEL_VERSION}`];
+  const CSVData = sortedHazardCurves.map((curve) => {
     const latLonArray = curve?.loc?.split('~');
     if (latLonArray && curve?.curve?.values && curve?.vs30) {
       const curveCSVData = [latLonArray[0], latLonArray[1], curve?.vs30.toString(), curve?.imt, curve?.agg];
@@ -96,6 +146,7 @@ export const getHazardCSVData = (data: HazardChartsPlotsViewQuery$data): string[
       });
     }
     CSVData.unshift(headings);
+    CSVData.unshift(datetimeAndVersion);
   }
   return CSVData as string[][];
 };
