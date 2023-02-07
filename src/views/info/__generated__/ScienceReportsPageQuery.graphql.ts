@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c769dc633d91184f088f0aad8dc5bdac>>
+ * @generated SignedSource<<c9e3a67e07ee6ac6d9e1172f6526ace1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -139,7 +139,7 @@ return {
     "metadata": null,
     "name": "ScienceReportsPageQuery",
     "selections": (v0/*: any*/),
-    "type": "QueryRoot",
+    "type": "Query",
     "abstractKey": null
   },
   "kind": "Request",

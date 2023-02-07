@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9c1628f544854e8827c1f00474cd4ef6>>
+ * @generated SignedSource<<1fd06fd69d134d9849a08daab995c9f8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -266,7 +266,7 @@ return {
     "metadata": null,
     "name": "HazardChartsPlotsViewQuery",
     "selections": (v6/*: any*/),
-    "type": "QueryRoot",
+    "type": "Query",
     "abstractKey": null
   },
   "kind": "Request",
