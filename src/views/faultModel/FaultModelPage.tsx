@@ -1,4 +1,4 @@
-import React, { useState, useTransition, useEffect, useReducer } from 'react';
+import React, { useState, useMemo, useTransition, useEffect, useReducer } from 'react';
 import { Box, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { LeafletDrawer } from '@gns-science/toshi-nest';
@@ -45,6 +45,7 @@ const FaultModelComponent: React.FC = () => {
   const markdown = data?.textual_content?.content && data.textual_content?.content[0]?.text;
   const content_type = data?.textual_content?.content && data.textual_content?.content[0]?.content_type;
   const [geoJsonError, setGeoJsonError] = useState<string | null>(null);
+  const [geoJsonForTable, setGeoJsonForTable] = useState<string>('');
   const solvisData = useLazyLoadQuery<FaultModelPageSolvisQuery>(faultModelPageSolvisQuery, {
     solution_id: state.solutionId,
     location_codes: state.locationCodes,
@@ -56,7 +57,15 @@ const FaultModelComponent: React.FC = () => {
     location_colour: IFM_LOCATION_COLOUR,
     fault_colour: IFM_FAULT_COLOUR,
   });
-  const solvisSolutionAnalysis = solvisData?.SOLVIS_analyse_solution?.analysis;
+  const solvisSolutionAnalysis = useMemo(() => solvisData?.SOLVIS_analyse_solution?.analysis, [solvisData]);
+
+  useEffect(() => {
+    if (geoJson) {
+      setGeoJsonForTable(geoJson[1]);
+    } else {
+      setGeoJsonForTable('');
+    }
+  }, [geoJson]);
 
   useEffect(() => {
     if (solvisSolutionAnalysis) {
@@ -90,7 +99,7 @@ const FaultModelComponent: React.FC = () => {
         </LeafletDrawer>
         <FaultModel geoJson={geoJson} setFullscreen={setFullscreen} />
       </Box>
-      <FaultModelTableContainer data={geoJson ? geoJson[1] : ''} id="faultModelTable" />
+      <FaultModelTableContainer disabled={!geoJsonForTable} data={geoJsonForTable} id="faultModelTable" />
     </PageContainer>
   );
 };
