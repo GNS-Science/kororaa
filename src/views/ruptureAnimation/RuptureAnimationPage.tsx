@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { LeafletMap } from '@gns-science/toshi-nest';
-import '../../../node_modules/leaflet-timedimension/src/leaflet.timedimension.control.css';
+import '../../css/leaflet.timedimension.control.css';
 
 import timeDimensionData from '../../mocks/mockData/puysegur_rupture_surfaces_above_2e-4.json';
 import timeDimensionUnderlay from '../../mocks/mockData/surfaces_puysegur.json';
