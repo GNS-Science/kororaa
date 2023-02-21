@@ -30,6 +30,7 @@ import OtherDocumentsPage from './views/info/OtherDocumentsPage';
 import ModelComponentsPage from './views/info/ModelComponentsPage';
 import FaultModelPage from './views/faultModel/FaultModelPage';
 import ModelVersionsPage from './views/info/ModelVersionsPage';
+import { RuptureAnimationPage } from './views/ruptureAnimation/RuptureAnimationPage';
 
 // The Home component needs to know how to access the Relay environment, and we
 // need to specify a fallback in case it suspends:
@@ -66,6 +67,7 @@ function App(props: { environment?: Environment }) {
                       }
                     />
                     <Route path="/Previews" element={<PreviewsPage />} />
+                    <Route path="/Previews/RuptureAnimation" element={<RuptureAnimationPage />} />
                     <Route path="/About" element={<AboutPage />} />
                     <Route path="/TechInfo" element={<TechInfoPage />} />
                     <Route path="/Contacts" element={<ContactPage />} />
