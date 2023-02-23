@@ -218,7 +218,10 @@ const NavBar: React.FC = () => {
       ],
     },
     { name: 'Hazard Maps', path: '/HazardMaps' },
-    { name: 'Coming Features', path: '/Previews' },
+    {
+      name: 'Coming Features',
+      path: '/Previews',
+    },
     {
       name: 'Resources',
       submenu: [
