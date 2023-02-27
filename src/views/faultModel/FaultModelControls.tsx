@@ -158,7 +158,6 @@ const FaultModelControls: React.FC<FaultModelControlsProps> = ({ startTransition
       }
     };
     const filteredBranches = filterSolutionId(logicTreeBranches);
-    console.log(filteredBranches);
     if (filteredBranches !== undefined && filteredBranches.length > 0) {
       if (filteredBranches[0]?.inversion_solution_id) {
         setSolutionId(filteredBranches[0]?.inversion_solution_id);
