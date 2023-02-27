@@ -103,6 +103,7 @@ export const getHazardCSVData = (data: HazardChartsPlotsViewQuery$data): string[
       }
     }
   });
+
   //sort hazard curves by imt, parsing imts number value to sort the 10.0 properly
   const sortedHazardCurves: HazardCurve[] = hazardCurvesByLoc
     .map((a) =>

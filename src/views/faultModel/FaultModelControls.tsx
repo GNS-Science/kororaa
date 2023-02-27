@@ -158,6 +158,7 @@ const FaultModelControls: React.FC<FaultModelControlsProps> = ({ startTransition
       }
     };
     const filteredBranches = filterSolutionId(logicTreeBranches);
+    console.log(filteredBranches);
     if (filteredBranches !== undefined && filteredBranches.length > 0) {
       if (filteredBranches[0]?.inversion_solution_id) {
         setSolutionId(filteredBranches[0]?.inversion_solution_id);
@@ -209,7 +210,7 @@ const FaultModelControls: React.FC<FaultModelControlsProps> = ({ startTransition
             <SelectControlWithDisable disabled={locations.length === 0} name="Radius" selection={radius} options={radiiOptions} setSelection={setRadius} />
             <StyledRangeSliderDiv>
               <RangeSliderWithInputs label="Magnitude Range" valuesRange={magnitudeRange} setValues={setMagnitudeRange} inputProps={{ step: 0.1, min: 6, max: 10, type: 'number' }} />
-              <RangeSliderWithInputs label="Rate Range (1/yr)" valuesRange={rateRange} setValues={setRateRange} inputProps={{ step: 1, min: -20, max: 0, type: 'number' }} />
+              <RangeSliderWithInputs label="Rate Range (1/yr)" valuesRange={rateRange} setValues={setRateRange} inputProps={{ step: 0.01, min: -20, max: 0, type: 'number' }} />
             </StyledRangeSliderDiv>
           </StyledCustomControlsBar>
         </Box>
