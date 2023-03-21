@@ -1367,10 +1367,10 @@
     minimatch "^3.1.2"
     strip-json-comments "^3.1.1"
 
-"@gns-science/toshi-nest@^3.7.6":
-  version "3.7.6"
-  resolved "https://npm.pkg.github.com/download/@GNS-Science/toshi-nest/3.7.6/afe0ea2ab58485e7837ba7f3a2a0045232e6a6c1#afe0ea2ab58485e7837ba7f3a2a0045232e6a6c1"
-  integrity sha512-lZTgrJn6cBryshuRpt+C9oUfXU2bARC5igSx3GgqCGv1DnQMgGWsRej5MdGcQA5VKh89OuPVPA1cAfKuDjnFXw==
+"@gns-science/toshi-nest@^3.7.10":
+  version "3.7.10"
+  resolved "https://npm.pkg.github.com/download/@GNS-Science/toshi-nest/3.7.10/8dfc2912b31f22a0b56898e619ae6da1ea1ec39d#8dfc2912b31f22a0b56898e619ae6da1ea1ec39d"
+  integrity sha512-QHPKy3cztR3DSgBfensGDEd4f1J0r25FysHN7WUMmvgX0il8sduiHsy27HFqzmXLXQp4QbgZbbMZatFOcSL6kQ==
   dependencies:
     "@emotion/react" "^11.8.2"
     "@emotion/styled" "^11.8.1"
@@ -1384,8 +1384,10 @@
     "@visx/axis" "^2.11.1"
     "@visx/clip-path" "^2.1.0"
     "@visx/event" "^2.6.0"
+    "@visx/gradient" "^3.0.0"
     "@visx/grid" "^2.11.1"
     "@visx/group" "^2.1.0"
+    "@visx/heatmap" "^3.0.0"
     "@visx/legend" "^2.2.2"
     "@visx/responsive" "^2.8.0"
     "@visx/scale" "^2.2.2"
@@ -3070,6 +3072,14 @@
     d3-shape "^1.2.0"
     prop-types "^15.6.2"
 
+"@visx/gradient@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@visx/gradient/-/gradient-3.0.0.tgz#39b55dd5a0b34feb219fcb2ea5525388c5ae0c1b"
+  integrity sha512-UoM9R9PIPLO/w7hCW9gFncrLdpKNqh13sLS9/0Iy6b75uP2l05FLG2HX4kXljeyOrj4/XyzRCMYm0HHk/p5iMA==
+  dependencies:
+    "@types/react" "*"
+    prop-types "^15.5.7"
+
 "@visx/grid@2.12.2", "@visx/grid@^2.11.1":
   version "2.12.2"
   resolved "https://registry.yarnpkg.com/@visx/grid/-/grid-2.12.2.tgz#32956dbb2ca88b24a057a7d559a46ba5e617df08"
@@ -3092,6 +3102,25 @@
     "@types/react" "*"
     classnames "^2.3.1"
     prop-types "^15.6.2"
+
+"@visx/group@3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@visx/group/-/group-3.0.0.tgz#e7f9752599bcc7e141ff5317a2a9a502577ab8df"
+  integrity sha512-SFjXhTMcsaVAb1/TVL1KM5vn8gQTIVgSx0ATdDl4BJSFp2ym1lO8LY4jpV4SFweaHnWxVwrrfGLTn5QsYnvmjQ==
+  dependencies:
+    "@types/react" "*"
+    classnames "^2.3.1"
+    prop-types "^15.6.2"
+
+"@visx/heatmap@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@visx/heatmap/-/heatmap-3.0.0.tgz#27cbc258a726000021c236c74f62a168e6dc0475"
+  integrity sha512-q6XQvIdaSbYRO2jyOpvHR0cdinqhgjZ3/7h42vFdqyglByfGJNAnGJ9wOEikGml9DDoLarcaPE0r4Qsq2QMwBw==
+  dependencies:
+    "@types/react" "*"
+    "@visx/group" "3.0.0"
+    classnames "^2.3.1"
+    prop-types "^15.6.1"
 
 "@visx/legend@^2.2.2":
   version "2.10.0"
@@ -10895,7 +10924,7 @@ prompts@^2.0.1, prompts@^2.4.2:
     kleur "^3.0.3"
     sisteransi "^1.0.5"
 
-prop-types@^15.0.0, prop-types@^15.5.10, prop-types@^15.6.0, prop-types@^15.6.1, prop-types@^15.6.2, prop-types@^15.7.2, prop-types@^15.8.1:
+prop-types@^15.0.0, prop-types@^15.5.10, prop-types@^15.5.7, prop-types@^15.6.0, prop-types@^15.6.1, prop-types@^15.6.2, prop-types@^15.7.2, prop-types@^15.8.1:
   version "15.8.1"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.8.1.tgz#67d87bf1a694f48435cf332c24af10214a3140b5"
   integrity sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==

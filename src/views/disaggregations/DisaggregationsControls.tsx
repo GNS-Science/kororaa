@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { SelectControl } from '@gns-science/toshi-nest';
-import { Button } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 
 import { DisaggregationsPageQuery$data } from './__generated__/DisaggregationsPageQuery.graphql';
 import { DisaggregationsPageState } from './DisaggregationsPageReducer';
@@ -39,21 +39,35 @@ export const DisaggregationsControls: React.FC<DisaggregationsControlsProps> = (
   };
 
   return (
-    <CustomControlsBar direction="column">
-      <SelectControl name="Location" options={locationOptions.sort()} selection={location} setSelection={setLocation} tooltip={locationTooltip} />
-      <SelectControl name="Vs30" options={vs30Options} selection={vs30} setSelection={setVs30} tooltip={vs30Tooltip} />
-      <SelectControl name="Spectral Period" options={imtOptions} selection={imt} setSelection={setImt} tooltip={imtTooltip} />
-      <SelectControl
-        name="PoE"
-        options={readablePoeArray(poeOptions as number[])}
-        selection={readablePoe(poe)}
-        setSelection={(newValue: string) => setPoe(parsePoeString(newValue))}
-        tooltip={poeTooltip}
-      />
-      <Button variant="contained" onClick={handleDownloadCsv}>
-        Download CSV
-      </Button>
-    </CustomControlsBar>
+    <div>
+      <CustomControlsBar direction="row">
+        <SelectControl name="Location" options={locationOptions.sort()} selection={location} setSelection={setLocation} tooltip={locationTooltip} />
+        <SelectControl name="Vs30" options={vs30Options} selection={vs30} setSelection={setVs30} tooltip={vs30Tooltip} />
+        <SelectControl name="Spectral Period" options={imtOptions} selection={imt} setSelection={setImt} tooltip={imtTooltip} />
+        <SelectControl
+          name="PoE"
+          options={readablePoeArray(poeOptions as number[])}
+          selection={readablePoe(poe)}
+          setSelection={(newValue: string) => setPoe(parsePoeString(newValue))}
+          tooltip={poeTooltip}
+        />
+        <Button variant="contained" onClick={() => console.log('submit')}>
+          Submit
+        </Button>
+      </CustomControlsBar>
+      <CustomControlsBar direction="row">
+        <Typography variant="body1">Intensity Measure Level: {state.iml}g</Typography>
+        <Typography variant="body1">Mean Source:</Typography>
+        <Box>
+          <Typography variant="body2">Distance: {state.meanSource.distance}km</Typography>
+          <Typography variant="body2">Magnitude: {state.meanSource.magnitude}</Typography>
+          <Typography variant="body2">Epsilon: {state.meanSource.epsilon}σ</Typography>
+        </Box>
+        <Button variant="contained" onClick={handleDownloadCsv}>
+          Download CSV
+        </Button>
+      </CustomControlsBar>
+    </div>
   );
 };
 
