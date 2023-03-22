@@ -8,7 +8,7 @@ import { useLazyLoadQuery } from 'react-relay';
 import { DisaggregationsPageQuery } from './__generated__/DisaggregationsPageQuery.graphql';
 import { disaggregationsPageReducer, disaggregationsPageReducerInitialState } from './DisaggregationsPageReducer';
 import DisaggregationsControls from './DisaggregationsControls';
-import { getReportUrl } from './disaggregationPage.service';
+// import { getReportUrl } from './disaggregationPage.service';
 import { InfoTooltip } from '../../components/common/InfoTooltip';
 import SimpleBackdrop from '../../components/common/SimpleBackdrop';
 import { DisaggregationsFilter } from './DisaggregationsFilter';
@@ -53,7 +53,7 @@ export const DisaggregationsComponent: React.FC = () => {
   const [state, dispatch] = useReducer(disaggregationsPageReducer, disaggregationsPageReducerInitialState);
   const [xAxis, setXAxis] = useState<string>('Magnitude');
   const [colourBy, setColourBy] = useState<string>('Distance');
-  const reportUrl = useMemo(() => getReportUrl(data, state), [data, state]);
+  // const reportUrl = useMemo(() => getReportUrl(data, state), [data, state]);
   const markdown = useMemo(() => data?.textual_content?.content && data?.textual_content?.content[0]?.text, [data]);
   const content_type = useMemo(() => data?.textual_content?.content && data?.textual_content?.content[0]?.content_type, [data]);
   const dropDownOptions = ['Tectonic Region Type', 'Distance', 'Magnitude', 'Epsilon'];
@@ -70,7 +70,9 @@ export const DisaggregationsComponent: React.FC = () => {
         <DisaggregationsControls data={data} state={state} dispatch={dispatch} />
       </ControlsContainer>
       <DisaggregationsContainer>
-        <DisaggregationsFilter tectonicRegionTypeOptions={['Tectonic Region Type', 'Distance', 'Magnitude', 'Epsilon']} />
+        <DropDownContainer>
+          <DisaggregationsFilter tectonicRegionTypeOptions={['Tectonic Region Type', 'Distance', 'Magnitude', 'Epsilon']} />
+        </DropDownContainer>
         <div style={{ height: '50vh', width: '50vw', padding: '10px' }}>
           <ParentSize>
             {({ width, height }) => (

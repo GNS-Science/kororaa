@@ -11,6 +11,9 @@ const DisaggregationsFilterContainer = styled(Box)(() => ({
   display: 'flex',
   flexDirection: 'column',
   height: '30vh',
+  '> div': {
+    margin: '10px',
+  },
 }));
 
 export const DisaggregationsFilter = ({ tectonicRegionTypeOptions }: DisaggregationsFilterProps) => {
