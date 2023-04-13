@@ -38,7 +38,7 @@ const DisclaimerLayer: React.FC<DisclaimerLayerProps> = ({ children }: Disclaime
     <>
       <StyledModal open={open} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description modal-modal-description2">
         <Paper>
-          <Typography id="modal-modal-title" variant="h5" component="h2">
+          <Typography id="modal-modal-title" variant="h5" sx={{ mt: 2 }}>
             Disclaimer
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
@@ -56,8 +56,10 @@ const DisclaimerLayer: React.FC<DisclaimerLayerProps> = ({ children }: Disclaime
             We have identified some errors in the current model (NSHM_v1.0.0) that impact hazard levels around Fiordland, South Island. This warning will removed once the revised model is
             released to the web portal, which is expected in the next few weeks. For model version details and changes please see the Resources : Model Versions page.
           </Typography>*/}
+          <Typography id="modal-modal-bugfix--title" variant="h5" sx={{ mt: 2 }}>
+            Bug fix notice: April 15, 2023
+          </Typography>
           <Typography id="modal-modal-description-bugfix" sx={{ mt: 2 }}>
-            <h4>BUG FIX NOTICE: April 13, 2023</h4>
             NSHM model and forecast errors resulting from a bug identified in the source code have been fixed, and the related data sets (hazard curves, maps etc) are now being corrected. This notice
             will be removed once all the data sets are corrected on the web portal – expected in the next few weeks. For model version details and changes please see the Resources : Model Versions
             page.
