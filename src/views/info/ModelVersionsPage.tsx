@@ -32,7 +32,7 @@ Initial release of the NZ NSHM 2022 revision
 We have identified some errors in **NSHM_v1.0.0**. These errors are being corrected and are unlikely to affect any NSHM results-based decision making.
 
 A bug in internationally sourced computer modelling code affected fault dips in the final step of the hazard calculations and affected
-every result from the modelling however tests show that the correction will introduce negligible hazard changes for most of the country.
+every result from the modelling. However, tests show that the correction will introduce negligible hazard changes for most of the country.
 
 More information will follow as it is available.
 `;
