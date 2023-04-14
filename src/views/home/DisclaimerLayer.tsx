@@ -60,9 +60,9 @@ const DisclaimerLayer: React.FC<DisclaimerLayerProps> = ({ children }: Disclaime
             Bug fix notice: April 15, 2023
           </Typography>
           <Typography id="modal-modal-description-bugfix" sx={{ mt: 2 }}>
-            NSHM model and forecast errors resulting from a bug identified in the source code have been fixed, and the related data sets (hazard curves, maps etc) are now being corrected. This notice
-            will be removed once all the data sets are corrected on the web portal – expected in the next few weeks. For model version details and changes please see the Resources : Model Versions
-            page.
+            NSHM model and forecast errors resulting from a bug in internationally sourced computer modelling code have been fixed, and the related data sets (hazard curves, maps etc) are now being
+            corrected. This notice will be removed once all the data sets are corrected on the web portal – expected in the next few weeks. For model version details and changes please see the
+            Resources, Model Versions page.
           </Typography>
           <Button onClick={handleAccept}>Accept</Button>
         </Paper>

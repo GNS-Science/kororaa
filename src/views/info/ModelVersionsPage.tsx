@@ -29,11 +29,12 @@ const markdown = `
 Initial release of the NZ NSHM 2022 revision
 
 ### Bug Advisory: April 2023
-We have identified some errors in **NSHM_v1.0.0** that will impact hazard levels in some locations, mainly around the Fiordland region of the South Island, Aotearoa.
-These errors are unlikely to affect any NSHM results-based decision making.
+We have identified some errors in **NSHM_v1.0.0**. These errors are being corrected and are unlikely to affect any NSHM results-based decision making.
 
-The issue was an incorrect dip direction (slope) on the Puysegur subduction fault system and on some specific faults in the Crustal system. Our tests have shown that
-corrections will introduce neglibible hazard changes for most of the country. The Franz Joseph area will see some decrease in known hazard and Mt Cook, some increase.
+A bug in internationally sourced computer modelling code affected fault dips in the final step of the hazard calculations and affected
+every result from the modelling however tests show that the correction will introduce negligible hazard changes for most of the country.
+
+More information will follow as it is available.
 `;
 
 const ModelVersionsComponent: React.FC = () => {
