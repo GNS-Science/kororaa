@@ -2,9 +2,9 @@ import React, { useMemo } from 'react';
 import { styled } from '@mui/material/styles';
 import Grid from '@mui/material/Grid';
 import ReactMarkdown from 'react-markdown';
-import { graphql } from 'babel-plugin-relay/macro';
-import { useLazyLoadQuery } from 'react-relay';
-import { ModelVersionsPageQuery } from './__generated__/ModelVersionsPageQuery.graphql';
+// import { graphql } from 'babel-plugin-relay/macro';
+// import { useLazyLoadQuery } from 'react-relay';
+// import { ModelVersionsPageQuery } from './__generated__/ModelVersionsPageQuery.graphql';
 import SimpleBackdrop from '../../components/common/SimpleBackdrop';
 
 import { Typography } from '@mui/material';
@@ -23,9 +23,22 @@ const TitleContainer = styled('div')({
   paddingBottom: '1rem',
 });
 
+const markdown = `
+## NSHM_v1.0.0 - 2022-10-04
+
+Initial release of the NZ NSHM 2022 revision
+
+### Bug Advisory: April 2023
+We have identified some errors in **NSHM_v1.0.0** that will impact hazard levels in some locations, mainly around the Fiordland region of the South Island, Aotearoa.
+These errors are unlikely to affect any NSHM results-based decision making.
+
+The issue was an incorrect dip direction (slope) on the Puysegur subduction fault system and on some specific faults in the Crustal system. Our tests have shown that
+corrections will introduce neglibible hazard changes for most of the country. The Franz Joseph area will see some decrease in known hazard and Mt Cook, some increase.
+`;
+
 const ModelVersionsComponent: React.FC = () => {
-  const data = useLazyLoadQuery<ModelVersionsPageQuery>(modelVersionsPageQuery, {});
-  const markdown = useMemo(() => data?.textual_content?.content && data?.textual_content?.content[0]?.text, [data]);
+  // const data = useLazyLoadQuery<ModelVersionsPageQuery>(modelVersionsPageQuery, {});
+  // const markdown = useMemo(() => data?.textual_content?.content && data?.textual_content?.content[0]?.text, [data]);
 
   return (
     <PageContainer>
@@ -42,7 +55,7 @@ const ModelVersionsComponent: React.FC = () => {
               </TitleContainer>
             </Grid>
             <Grid item xs={12}>
-              <ReactMarkdown>{markdown?.replace('Changelog', '') || ''}</ReactMarkdown>
+              <ReactMarkdown>{markdown}</ReactMarkdown>
             </Grid>
           </Grid>
         </Grid>
@@ -60,20 +73,20 @@ const ModelVersionsPage: React.FC = () => {
   );
 };
 
-export const modelVersionsPageQuery = graphql`
-  query ModelVersionsPageQuery {
-    textual_content(index: "CHANGELOG.md") {
-      ok
-      content {
-        index
-        content_type
-        text
-        created
-        author
-        tags
-        status
-      }
-    }
-  }
-`;
+// export const modelVersionsPageQuery = graphql`
+//   query ModelVersionsPageQuery {
+//     textual_content(index: "CHANGELOG.md") {
+//       ok
+//       content {
+//         index
+//         content_type
+//         text
+//         created
+//         author
+//         tags
+//         status
+//       }
+//     }
+//   }
+// `;
 export default ModelVersionsPage;
