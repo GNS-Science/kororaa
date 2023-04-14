@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<85b15e2815387a7e6be6b8652198ecfa>>
+ * @generated SignedSource<<71eea7195f51366ebe20bf9bfe931da6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -54,7 +54,7 @@ export type FaultModelControlsQuery$data = {
   readonly SOLVIS_get_location_list: {
     readonly list_id: string | null;
     readonly locations: ReadonlyArray<{
-      readonly code: string | null;
+      readonly location_id: string | null;
       readonly name: string | null;
       readonly latitude: number | null;
       readonly longitude: number | null;
@@ -100,7 +100,7 @@ v4 = {
 },
 v5 = [
   {
-    "alias": null,
+    "alias": "nzshm_model",
     "args": [
       {
         "kind": "Literal",
@@ -110,7 +110,7 @@ v5 = [
     ],
     "concreteType": "NzshmModelResult",
     "kind": "LinkedField",
-    "name": "nzshm_model",
+    "name": "KORORAA_nzshm_model",
     "plural": false,
     "selections": [
       {
@@ -272,7 +272,7 @@ v5 = [
         "storageKey": null
       }
     ],
-    "storageKey": "nzshm_model(version:\"NSHM_1.0.0\")"
+    "storageKey": "KORORAA_nzshm_model(version:\"NSHM_1.0.0\")"
   },
   {
     "alias": null,
@@ -283,7 +283,7 @@ v5 = [
         "variableName": "radiiSetId"
       }
     ],
-    "concreteType": "SOLVIS_RadiiSet",
+    "concreteType": "RadiiSet",
     "kind": "LinkedField",
     "name": "SOLVIS_get_radii_set",
     "plural": false,
@@ -307,7 +307,7 @@ v5 = [
         "variableName": "locationListId"
       }
     ],
-    "concreteType": "SOLVIS_LocationList",
+    "concreteType": "LocationList",
     "kind": "LinkedField",
     "name": "SOLVIS_get_location_list",
     "plural": false,
@@ -322,7 +322,7 @@ v5 = [
       {
         "alias": null,
         "args": null,
-        "concreteType": "SOLVIS_Location",
+        "concreteType": "Location",
         "kind": "LinkedField",
         "name": "locations",
         "plural": true,
@@ -331,7 +331,7 @@ v5 = [
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "code",
+            "name": "location_id",
             "storageKey": null
           },
           (v4/*: any*/),
@@ -380,16 +380,16 @@ return {
     "selections": (v5/*: any*/)
   },
   "params": {
-    "cacheID": "316ac8ad73221fca1d2e070545fbda17",
+    "cacheID": "3493b8f04cf1be4683a3146f9b16368a",
     "id": null,
     "metadata": {},
     "name": "FaultModelControlsQuery",
     "operationKind": "query",
-    "text": "query FaultModelControlsQuery(\n  $radiiSetId: Int!\n  $locationListId: String!\n) {\n  nzshm_model(version: \"NSHM_1.0.0\") {\n    model {\n      version\n      title\n      source_logic_tree {\n        fault_system_branches {\n          long_name\n          short_name\n          branches {\n            weight\n            inversion_solution_id\n            inversion_solution_type\n            onfault_nrml_id\n            distributed_nrml_id\n            values {\n              long_name\n              json_value\n            }\n          }\n        }\n      }\n      source_logic_tree_spec {\n        fault_system_branches {\n          short_name\n          long_name\n          branches {\n            name\n            long_name\n            value_options\n          }\n        }\n      }\n    }\n  }\n  SOLVIS_get_radii_set(radii_set_id: $radiiSetId) {\n    radii\n  }\n  SOLVIS_get_location_list(list_id: $locationListId) {\n    list_id\n    locations {\n      code\n      name\n      latitude\n      longitude\n    }\n  }\n}\n"
+    "text": "query FaultModelControlsQuery(\n  $radiiSetId: Int!\n  $locationListId: String!\n) {\n  nzshm_model: KORORAA_nzshm_model(version: \"NSHM_1.0.0\") {\n    model {\n      version\n      title\n      source_logic_tree {\n        fault_system_branches {\n          long_name\n          short_name\n          branches {\n            weight\n            inversion_solution_id\n            inversion_solution_type\n            onfault_nrml_id\n            distributed_nrml_id\n            values {\n              long_name\n              json_value\n            }\n          }\n        }\n      }\n      source_logic_tree_spec {\n        fault_system_branches {\n          short_name\n          long_name\n          branches {\n            name\n            long_name\n            value_options\n          }\n        }\n      }\n    }\n  }\n  SOLVIS_get_radii_set(radii_set_id: $radiiSetId) {\n    radii\n  }\n  SOLVIS_get_location_list(list_id: $locationListId) {\n    list_id\n    locations {\n      location_id\n      name\n      latitude\n      longitude\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "98bd8026d03ef8058cc0c21b36854a8c";
+(node as any).hash = "fc842283e16dafeab9af8a4357db7f82";
 
 export default node;

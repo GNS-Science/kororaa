@@ -207,6 +207,58 @@ enum ColourScaleNormalise {
   LIN
 }
 
+type CompositeRuptureDetail implements Node {
+  id: ID!
+  model_id: String
+
+  """Unique ID of the fault system e.g. `PUY`"""
+  fault_system: String
+  rupture_index: Int
+  magnitude: Float
+
+  """Rupture length in kilometres^2"""
+  area: Float
+
+  """Rupture length in kilometres)"""
+  length: Float
+
+  """average rake angle (degrees) of the entire rupture"""
+  rake_mean: Float
+
+  """mean of `rate` * `branch weight` of the contributing solutions"""
+  rate_weighted_mean: Float
+
+  """maximum rate from contributing solutions"""
+  rate_max: Float
+
+  """minimum rate from contributing solutions"""
+  rate_min: Float
+
+  """count of model solutions that include this rupture"""
+  rate_count: Int
+  fault_traces: JSONString
+  fault_surfaces(
+    """feature style for rupture trace geojson."""
+    style: GeojsonAreaStyleArguments = {stroke_color: "black", stroke_width: 1, stroke_opacity: 1, fill_color: "green", fill_opacity: 1}
+  ): JSONString
+}
+
+input CompositeRuptureDetailArgs {
+  model_id: String
+
+  """Unique ID of the fault system e.g. `PUY`"""
+  fault_system: String
+  rupture_index: Int
+
+  """feature style for rupture trace geojson."""
+  fault_trace_style: GeojsonLineStyleArguments = {stroke_color: "black", stroke_width: 1, stroke_opacity: 1}
+}
+
+type CompositeSolution {
+  model_id: String
+  fault_systems: [String]
+}
+
 enum ContentFormatEnum {
   Raw
   Markdown
@@ -727,6 +779,53 @@ enum FileRole {
 
 union FileUnion = SmsFile | File | InversionSolution | ScaledInversionSolution | AggregateInversionSolution | InversionSolutionNrml | TimeDependentInversionSolution
 
+type FilterInversionSolution {
+  analysis: InversionSolutionAnalysis
+}
+
+"""Defines filter arguments for Inversions analysis"""
+input FilterRupturesArgs {
+  """The ID of NSHM model"""
+  model_id: String!
+
+  """One or more fault systems to consider from [`HIK`, `PUY`, `CRU`]"""
+  fault_system: String!
+
+  """
+  Optional list of locations ids for proximity filtering e.g. `WLG,PMR,ZQN`
+  """
+  location_ids: [String] = []
+
+  """The rupture/location intersection radius in km"""
+  radius_km: Int
+
+  """
+  Constrain to fault_sections having a annual rate above the value supplied.
+  """
+  minimum_rate: Float
+
+  """
+  Constrain to fault_sections having a annual rate below the value supplied.
+  """
+  maximum_rate: Float
+
+  """
+  Constrain to fault_sections having a magnitude above the value supplied.
+  """
+  minimum_mag: Float
+
+  """
+  Constrain to fault_sections having a magnitude below the value supplied.
+  """
+  maximum_mag: Float
+
+  """feature style for rupture trace geojson."""
+  fault_trace_style: GeojsonLineStyleArguments = {stroke_color: "black", stroke_width: 1, stroke_opacity: 1}
+
+  """feature style for rupture surface geojson."""
+  fault_surface_style: GeojsonAreaStyleArguments
+}
+
 type GeneralTask implements Node & Thing {
   id: ID!
 
@@ -773,9 +872,52 @@ type GeneralTask implements Node & Thing {
   subtask_result: EventResult
 }
 
+"""
+Defines styling arguments for geojson features,
+ref https://academy.datawrapper.de/article/177-how-to-style-your-markers-before-importing-them-to-datawrapper
+"""
+input GeojsonAreaStyleArguments {
+  """
+  stroke (line) colour as hex code ("#cc0000") or HTML color name ("royalblue")
+  """
+  stroke_color: String
+
+  """a number between 0 and 20."""
+  stroke_width: Int
+
+  """a number between 0 and 1.0"""
+  stroke_opacity: Float
+
+  """
+  fill colour as Hex code ("#cc0000") or HTML color names ("royalblue") )
+  """
+  fill_color: String = "green"
+
+  """0-1.0"""
+  fill_opacity: Float = 1
+}
+
 type GeoJsonHazardMap {
   geojson: JSONString
   colour_scale: HexRgbValueMapping
+}
+
+"""
+Defines styling arguments for geojson features,
+
+ref https://academy.datawrapper.de/article/177-how-to-style-your-markers-before-importing-them-to-datawrapper
+"""
+input GeojsonLineStyleArguments {
+  """
+  stroke (line) colour as hex code ("#cc0000") or HTML color name ("royalblue")
+  """
+  stroke_color: String
+
+  """a number between 0 and 20."""
+  stroke_width: Int
+
+  """a number between 0 and 1.0"""
+  stroke_opacity: Float
 }
 
 type GriddedHazard {
@@ -868,6 +1010,55 @@ type InversionSolution implements Node & InversionSolutionInterface & FileInterf
 
   """list of predecessor info"""
   predecessors: [Predecessor]
+}
+
+"""
+Represents the internal details of a given solution or filtered solution
+"""
+type InversionSolutionAnalysis {
+  solution_id: ID
+  fault_sections_geojson: JSONString
+  location_geojson: JSONString
+}
+
+"""Defines filter arguments for Inversions analysis"""
+input InversionSolutionAnalysisArguments {
+  """The ID of the InversionSolution"""
+  solution_id: ID!
+
+  """
+  Optional list of locations codes for proximity filtering e.g. `WLG,PMR,ZQN`
+  """
+  location_ids: [String] = []
+
+  """The rupture/location intersection radius in km"""
+  radius_km: Int
+
+  """
+  Constrain to fault_sections having a annual rate above the value supplied.
+  """
+  minimum_rate: Float
+
+  """
+  Constrain to fault_sections having a annual rate below the value supplied.
+  """
+  maximum_rate: Float
+
+  """
+  Constrain to fault_sections having a magnitude above the value supplied.
+  """
+  minimum_mag: Float
+
+  """
+  Constrain to fault_sections having a magnitude below the value supplied.
+  """
+  maximum_mag: Float
+
+  """feature style for rupture trace geojson."""
+  fault_trace_style: GeojsonLineStyleArguments = {stroke_color: "black", stroke_width: 1, stroke_opacity: 1}
+
+  """feature style for location polygons."""
+  location_area_style: GeojsonAreaStyleArguments = {stroke_color: "lightblue", stroke_width: 1, stroke_opacity: 1, fill_color: "lightblue", fill_opacity: 0.7}
 }
 
 """A interface for things like Inversion Solution"""
@@ -1018,6 +1209,64 @@ input LabelledTableRelationInput {
   dimensions: [KeyValueListPairInput]
 }
 
+type Location {
+  """unique location location_id."""
+  location_id: String
+
+  """location name."""
+  name: String
+
+  """location latitude."""
+  latitude: Float
+
+  """location longitude"""
+  longitude: Float
+}
+
+type LocationDetail implements Node {
+  id: ID!
+  location_id: String
+  name: String
+  latitude: Float
+  longitude: Float
+  radius_geojson(
+    """polygon radius (km)."""
+    radius_km: Int!
+
+    """feature style for the geojson."""
+    style: GeojsonAreaStyleArguments = {stroke_color: "black", stroke_width: 1, stroke_opacity: 1, fill_color: "green", fill_opacity: 1}
+  ): JSONString
+}
+
+type LocationDetailConnection {
+  """Pagination data for this connection."""
+  pageInfo: PageInfo!
+
+  """Contains the nodes in this connection."""
+  edges: [LocationDetailEdge]!
+  total_count: Int
+}
+
+"""A Relay edge containing a `LocationDetail` and its cursor."""
+type LocationDetailEdge {
+  """The item at the end of the edge"""
+  node: LocationDetail
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
+type LocationList {
+  """The unique location_list_id"""
+  list_id: String
+
+  """list of location codes."""
+  location_ids: [String]
+
+  """the locations in this list."""
+  locations: [Location]
+}
+
 enum ModelType {
   CRUSTAL
   SUBDUCTION
@@ -1026,9 +1275,9 @@ enum ModelType {
 
 type Mutation {
   """Append LabelledTableRelationTable to an existing Inversion Solution"""
-  append_inversion_solution_tables(input: AppendInversionSolutionTablesInput!): AppendInversionSolutionTablesPayload
-  create_automation_task(input: NewAutomationTaskInput!): CreateAutomationTask
-  create_file(
+  TOSHI_append_inversion_solution_tables(input: AppendInversionSolutionTablesInput!): AppendInversionSolutionTablesPayload
+  TOSHI_create_automation_task(input: NewAutomationTaskInput!): CreateAutomationTask
+  TOSHI_create_file(
     file_name: String
     file_size: BigInt
     md5_digest: String = "The base64-encoded md5 digest of the file"
@@ -1039,37 +1288,37 @@ type Mutation {
     """list of predecessors"""
     predecessors: [PredecessorInput]
   ): CreateFile
-  create_file_relation(file_id: ID!, role: FileRole!, thing_id: ID!): CreateFileRelation
-  create_general_task(input: CreateGeneralTaskInput!): CreateGeneralTaskPayload
+  TOSHI_create_file_relation(file_id: ID!, role: FileRole!, thing_id: ID!): CreateFileRelation
+  TOSHI_create_general_task(input: CreateGeneralTaskInput!): CreateGeneralTaskPayload
 
   """Create an Inversion Solution file"""
-  create_inversion_solution(input: CreateInversionSolutionInput!): CreateInversionSolutionPayload
-  create_rupture_generation_task(input: AutomationTaskInput!): CreateRuptureGenerationTask
-  create_sms_file(file_name: String, file_size: BigInt, file_type: SmsFileType!, md5_digest: String = "The base64-encoded md5 digest of the file"): CreateSmsFile
-  create_strong_motion_station(input: CreateStrongMotionStationInput!): CreateStrongMotionStationPayload
-  create_table(input: CreateTableInput!): CreateTablePayload
-  create_task_relation(child_id: ID!, parent_id: ID!): CreateTaskTaskRelation
-  update_automation_task(input: AutomationTaskUpdateInput!): UpdateAutomationTask
-  update_general_task(input: UpdateGeneralTaskInput!): UpdateGeneralTaskPayload
-  update_rupture_generation_task(input: AutomationTaskUpdateInput!): UpdateRuptureGenerationTask
+  TOSHI_create_inversion_solution(input: CreateInversionSolutionInput!): CreateInversionSolutionPayload
+  TOSHI_create_rupture_generation_task(input: AutomationTaskInput!): CreateRuptureGenerationTask
+  TOSHI_create_sms_file(file_name: String, file_size: BigInt, file_type: SmsFileType!, md5_digest: String = "The base64-encoded md5 digest of the file"): CreateSmsFile
+  TOSHI_create_strong_motion_station(input: CreateStrongMotionStationInput!): CreateStrongMotionStationPayload
+  TOSHI_create_table(input: CreateTableInput!): CreateTablePayload
+  TOSHI_create_task_relation(child_id: ID!, parent_id: ID!): CreateTaskTaskRelation
+  TOSHI_update_automation_task(input: AutomationTaskUpdateInput!): UpdateAutomationTask
+  TOSHI_update_general_task(input: UpdateGeneralTaskInput!): UpdateGeneralTaskPayload
+  TOSHI_update_rupture_generation_task(input: AutomationTaskUpdateInput!): UpdateRuptureGenerationTask
 
   """Create a AggregateInversionSolution file"""
-  create_aggregate_inversion_solution(input: CreateAggregateInversionSolutionInput!): CreateAggregateInversionSolutionPayload
+  TOSHI_create_aggregate_inversion_solution(input: CreateAggregateInversionSolutionInput!): CreateAggregateInversionSolutionPayload
 
   """Create a ScaledInversionSolution file"""
-  create_scaled_inversion_solution(input: CreateScaledInversionSolutionInput!): CreateScaledInversionSolutionPayload
+  TOSHI_create_scaled_inversion_solution(input: CreateScaledInversionSolutionInput!): CreateScaledInversionSolutionPayload
 
   """Create a TimeDependentInversionSolution file"""
-  create_time_dependent_inversion_solution(input: CreateTimeDependentInversionSolutionInput!): CreateTimeDependentInversionSolutionPayload
+  TOSHI_create_time_dependent_inversion_solution(input: CreateTimeDependentInversionSolutionInput!): CreateTimeDependentInversionSolutionPayload
 
   """Create a InversionSolutionNrml file"""
-  create_inversion_solution_nrml(input: CreateInversionSolutionNrmlInput!): CreateInversionSolutionNrmlPayload
+  TOSHI_create_inversion_solution_nrml(input: CreateInversionSolutionNrmlInput!): CreateInversionSolutionNrmlPayload
 
   """Create an OpenquakeHazardSolution"""
-  create_openquake_hazard_solution(input: CreateOpenquakeHazardSolutionInput!): CreateOpenquakeHazardSolutionPayload
-  create_openquake_hazard_config(input: CreateOpenquakeHazardConfigInput!): CreateOpenquakeHazardConfigPayload
-  create_openquake_hazard_task(input: OpenquakeHazardTaskInput!): CreateOpenquakeHazardTask
-  update_openquake_hazard_task(input: OpenquakeHazardTaskUpdateInput!): UpdateOpenquakeHazardTask
+  TOSHI_create_openquake_hazard_solution(input: CreateOpenquakeHazardSolutionInput!): CreateOpenquakeHazardSolutionPayload
+  TOSHI_create_openquake_hazard_config(input: CreateOpenquakeHazardConfigInput!): CreateOpenquakeHazardConfigPayload
+  TOSHI_create_openquake_hazard_task(input: OpenquakeHazardTaskInput!): CreateOpenquakeHazardTask
+  TOSHI_update_openquake_hazard_task(input: OpenquakeHazardTaskUpdateInput!): UpdateOpenquakeHazardTask
 }
 
 input NewAutomationTaskInput {
@@ -1335,63 +1584,89 @@ enum ProjectAreaEnum {
 
 type Query {
   """List Opensha Rupture Generation tasks."""
-  rupture_generation_tasks(before: String, after: String, first: Int, last: Int): RuptureGenerationTaskConnection
+  TOSHI_rupture_generation_tasks(before: String, after: String, first: Int, last: Int): RuptureGenerationTaskConnection
 
   """The files."""
-  files(before: String, after: String, first: Int, last: Int): FileConnection
-  node(id: ID!): Node
-  nodes(id_in: [ID]): NodeFilter
-  search(search_term: String): Search
-  strong_motion_station(id: ID!): StrongMotionStation
+  TOSHI_files(before: String, after: String, first: Int, last: Int): FileConnection
+  TOSHI_node(
+    """The ID of the object"""
+    id: ID!
+  ): Node
+  TOSHI_nodes(id_in: [ID]): NodeFilter
+  TOSHI_search(search_term: String): Search
+  TOSHI_strong_motion_station(id: ID!): StrongMotionStation
 
   """The list of strong motion stations"""
-  strong_motion_stations(before: String, after: String, first: Int, last: Int): StrongMotionStationConnection
+  TOSHI_strong_motion_stations(before: String, after: String, first: Int, last: Int): StrongMotionStationConnection
+  KORORAA_node(
+    """The ID of the object"""
+    id: ID!
+  ): Node
 
   """About this API """
-  about: String
-  nzshm_model(version: String): NzshmModelResult
-  nzshm_models: [NzshmModelResult]
-  disaggregation_reports: DisaggregationReportResult
-  science_reports: ScienceReportResult
-  textual_content(index: String, tags: [String]): TextualContentResult
-  gridded_location(lat: Float, lon: Float, resolution: Float): GriddedLocationResult
-  hazard_curves(hazard_model: String, imts: [String], locs: [String], aggs: [String], vs30s: [Int], resolution: Float = 0.1): ToshiHazardCurveResult
-  gridded_hazard(grid_id: RegionGrid, hazard_model_id: String, imt: String, loc: String, agg: String, vs30: Int, poe: Float): GriddedHazardResult
+  KORORAA_about: String
+  KORORAA_nzshm_model(version: String): NzshmModelResult
+  KORORAA_nzshm_models: [NzshmModelResult]
+  KORORAA_disaggregation_reports: DisaggregationReportResult
+  KORORAA_science_reports: ScienceReportResult
+  KORORAA_textual_content(index: String, tags: [String]): TextualContentResult
+  KORORAA_gridded_location(lat: Float, lon: Float, resolution: Float): GriddedLocationResult
+  KORORAA_hazard_curves(hazard_model: String, imts: [String], locs: [String], aggs: [String], vs30s: [Int], resolution: Float = 0.1): ToshiHazardCurveResult
+  KORORAA_gridded_hazard(grid_id: RegionGrid, hazard_model_id: String, imt: String, loc: String, agg: String, vs30: Int, poe: Float): GriddedHazardResult
   SOLVIS_node(
     """The ID of the object"""
     id: ID!
-  ): SOLVIS_Node
+  ): Node
 
   """About this Solvis API """
   SOLVIS_about: String
-  SOLVIS_analyse_solution(input: SOLVIS_InversionSolutionAnalysisArguments!): SOLVIS_FilterInversionSolution
+  SOLVIS_inversion_solution(filter: InversionSolutionAnalysisArguments!): FilterInversionSolution
+  SOLVIS_locations_by_id(
+    """list of nzshm_common.location_ids e.g. `["WLG","PMR","ZQN"]`"""
+    location_ids: [String]!
+  ): LocationDetailConnection
+  SOLVIS_composite_solution(
+    """A valid NSHM model id e.g. `NSHM_1.0.0`"""
+    model_id: String!
+  ): CompositeSolution
+  SOLVIS_composite_rupture_detail(filter: CompositeRuptureDetailArgs!): CompositeRuptureDetail
+  SOLVIS_filter_ruptures(filter: FilterRupturesArgs!, sortby: [SimpleSortRupturesArgs] = [], before: String, after: String, first: Int, last: Int): RuptureDetailConnection
 
   """Return ad single radii_set for the id passed in"""
   SOLVIS_get_radii_set(
     """the integer ID for the desired radii_set"""
     radii_set_id: Int!
-  ): SOLVIS_RadiiSet
+  ): RadiiSet
 
   """Return all the available radii_set"""
-  SOLVIS_get_radii_sets: [SOLVIS_RadiiSet]
+  SOLVIS_get_radii_sets: [RadiiSet]
 
   """Return a single location."""
   SOLVIS_get_location(
     """the location code of the desired location"""
-    location_code: String!
-  ): SOLVIS_Location
+    location_id: String!
+  ): Location
 
   """Return all the available locations"""
-  SOLVIS_get_locations: [SOLVIS_Location]
+  SOLVIS_get_locations: [Location]
 
   """Return a single location list."""
   SOLVIS_get_location_list(
     """the id of the desired location_list"""
     list_id: String!
-  ): SOLVIS_LocationList
+  ): LocationList
 
   """Return all the available location lists"""
-  SOLVIS_get_location_lists: [SOLVIS_LocationList]
+  SOLVIS_get_location_lists: [LocationList]
+  node(id: ID!): Node
+}
+
+type RadiiSet {
+  """The unique radii_set_id"""
+  radii_set_id: Int
+
+  """list of dimension in metres defined by the radii set."""
+  radii: [Int]
 }
 
 """An enumeration."""
@@ -1415,6 +1690,24 @@ enum RowItemType {
   double
   string
   boolean
+}
+
+type RuptureDetailConnection {
+  """Pagination data for this connection."""
+  pageInfo: PageInfo!
+
+  """Contains the nodes in this connection."""
+  edges: [RuptureDetailEdge]!
+  total_count: Int
+}
+
+"""A Relay edge containing a `RuptureDetail` and its cursor."""
+type RuptureDetailEdge {
+  """The item at the end of the edge"""
+  node: CompositeRuptureDetail
+
+  """A cursor for use in pagination"""
+  cursor: String!
 }
 
 type RuptureGenerationTask implements Node & Thing & AutomationTaskInterface {
@@ -1566,6 +1859,11 @@ type SearchResultEdge {
   cursor: String!
 }
 
+input SimpleSortRupturesArgs {
+  attribute: String
+  ascending: Boolean
+}
+
 type SmsFile implements Node & FileInterface {
   id: ID!
 
@@ -1614,149 +1912,6 @@ enum SmsSiteClassBasis {
   Vs
   SPT
   su
-}
-
-type SOLVIS_FilterInversionSolution {
-  analysis: SOLVIS_InversionSolutionAnalysis
-}
-
-"""
-Defines styling arguments for geojson features,
-ref https://academy.datawrapper.de/article/177-how-to-style-your-markers-before-importing-them-to-datawrapper
-"""
-input SOLVIS_GeojsonAreaStyleArguments {
-  """
-  stroke (line) colour as hex code ("#cc0000") or HTML color name ("royalblue")
-  """
-  stroke_color: String
-
-  """a number between 0 and 20."""
-  stroke_width: Int
-
-  """a number between 0 and 1.0"""
-  stroke_opacity: Float
-
-  """
-  fill colour as Hex code ("#cc0000") or HTML color names ("royalblue") )
-  """
-  fill_color: String = "green"
-
-  """0-1.0"""
-  fill_opacity: Float = 1
-}
-
-"""
-Defines styling arguments for geojson features,
-
-ref https://academy.datawrapper.de/article/177-how-to-style-your-markers-before-importing-them-to-datawrapper
-"""
-input SOLVIS_GeojsonLineStyleArguments {
-  """
-  stroke (line) colour as hex code ("#cc0000") or HTML color name ("royalblue")
-  """
-  stroke_color: String
-
-  """a number between 0 and 20."""
-  stroke_width: Int
-
-  """a number between 0 and 1.0"""
-  stroke_opacity: Float
-}
-
-"""
-Represents the internal details of a given solution or filtered solution
-"""
-type SOLVIS_InversionSolutionAnalysis {
-  solution_id: ID
-  fault_sections_geojson: SOLVIS_JSONString
-  location_geojson: SOLVIS_JSONString
-}
-
-"""Defines filter arguments for Inversions analysis"""
-input SOLVIS_InversionSolutionAnalysisArguments {
-  """The ID of the InversionSolution"""
-  solution_id: ID!
-
-  """
-  Optional list of locations codes for proximity filtering e.g. `WLG,PMR,ZQN`
-  """
-  location_codes: [String]
-
-  """The rupture/location intersection radius in km"""
-  radius_km: Int
-
-  """
-  Constrain to fault_sections having a annual rate above the value supplied.
-  """
-  minimum_rate: Float
-
-  """
-  Constrain to fault_sections having a annual rate below the value supplied.
-  """
-  maximum_rate: Float
-
-  """
-  Constrain to fault_sections having a magnitude above the value supplied.
-  """
-  minimum_mag: Float
-
-  """
-  Constrain to fault_sections having a magnitude below the value supplied.
-  """
-  maximum_mag: Float
-
-  """feature style for rupture trace geojson."""
-  fault_trace_style: SOLVIS_GeojsonLineStyleArguments = {stroke_color: "black", stroke_width: 1, stroke_opacity: 1}
-
-  """feature style for location polygons."""
-  location_area_style: SOLVIS_GeojsonAreaStyleArguments = {stroke_color: "lightblue", stroke_width: 1, stroke_opacity: 1, fill_color: "lightblue", fill_opacity: 0.7}
-}
-
-"""
-Allows use of a JSON String for input / output from the GraphQL schema.
-
-Use of this type is *not recommended* as you lose the benefits of having a defined, static
-schema (one of the key benefits of GraphQL).
-"""
-scalar SOLVIS_JSONString
-
-type SOLVIS_Location {
-  """unique location code."""
-  code: String
-
-  """location name."""
-  name: String
-
-  """location latitude."""
-  latitude: Float
-
-  """location longitude"""
-  longitude: Float
-}
-
-type SOLVIS_LocationList {
-  """The unique location_list_id"""
-  list_id: String
-
-  """list of location codes."""
-  location_codes: [String]
-
-  """the locations in this list."""
-  locations: [SOLVIS_Location]
-}
-
-"""An object with an ID"""
-interface SOLVIS_Node {
-  """The ID of the object."""
-  id: ID!
-}
-
-type SOLVIS_RadiiSet {
-  """The unique radii_set_id"""
-  radii_set_id: Int
-
-  """list of dimension in metres defined by the radii set."""
-  radii: [Int]
 }
 
 type SourceLogicTree {

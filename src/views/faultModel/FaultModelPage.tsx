@@ -48,7 +48,7 @@ const FaultModelComponent: React.FC = () => {
   const [geoJsonForTable, setGeoJsonForTable] = useState<string>('');
   const solvisData = useLazyLoadQuery<FaultModelPageSolvisQuery>(faultModelPageSolvisQuery, {
     solution_id: state.solutionId,
-    location_codes: state.locationCodes,
+    location_ids: state.locationCodes,
     radius_km: state.radius,
     minimum_mag: state.magnitudeRange[0],
     maximum_mag: state.magnitudeRange[1],
@@ -57,7 +57,7 @@ const FaultModelComponent: React.FC = () => {
     location_colour: IFM_LOCATION_COLOUR,
     fault_colour: IFM_FAULT_COLOUR,
   });
-  const solvisSolutionAnalysis = useMemo(() => solvisData?.SOLVIS_analyse_solution?.analysis, [solvisData]);
+  const solvisSolutionAnalysis = useMemo(() => solvisData?.inversion_solution?.analysis, [solvisData]);
 
   useEffect(() => {
     if (geoJson) {
@@ -116,7 +116,7 @@ export default FaultModelPage;
 
 export const faultModelPageQuery = graphql`
   query FaultModelPageQuery {
-    textual_content(index: "ifm_analysis_help.md") {
+    textual_content: KORORAA_textual_content(index: "ifm_analysis_help.md") {
       ok
       content {
         index
@@ -134,7 +134,7 @@ export const faultModelPageQuery = graphql`
 const faultModelPageSolvisQuery = graphql`
   query FaultModelPageSolvisQuery(
     $solution_id: ID!
-    $location_codes: [String]
+    $location_ids: [String]
     $radius_km: Int
     $minimum_mag: Float
     $maximum_mag: Float
@@ -143,10 +143,10 @@ const faultModelPageSolvisQuery = graphql`
     $location_colour: String
     $fault_colour: String
   ) {
-    SOLVIS_analyse_solution(
-      input: {
+    inversion_solution: SOLVIS_inversion_solution(
+      filter: {
         solution_id: $solution_id
-        location_codes: $location_codes
+        location_ids: $location_ids
         radius_km: $radius_km
         minimum_mag: $minimum_mag
         maximum_mag: $maximum_mag

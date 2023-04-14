@@ -114,7 +114,7 @@ const FaultModelControls: React.FC<FaultModelControlsProps> = ({ startTransition
       });
       locations.map((location) => {
         const locationDataItem = locationData?.find((item) => item?.name === location);
-        locationIdArray.push(locationDataItem && locationDataItem?.code !== null ? locationDataItem?.code : '');
+        locationIdArray.push(locationDataItem && locationDataItem?.location_id !== null ? locationDataItem?.location_id : '');
       });
       setLocationOptions(locationNameArray);
       setLocationIdArray(locationIdArray);
@@ -233,7 +233,7 @@ export default FaultModelControls;
 
 export const faultModelControlsQuery = graphql`
   query FaultModelControlsQuery($radiiSetId: Int!, $locationListId: String!) {
-    nzshm_model(version: "NSHM_1.0.0") {
+    nzshm_model: KORORAA_nzshm_model(version: "NSHM_1.0.0") {
       model {
         version
         title
@@ -273,7 +273,7 @@ export const faultModelControlsQuery = graphql`
     SOLVIS_get_location_list(list_id: $locationListId) {
       list_id
       locations {
-        code
+        location_id
         name
         latitude
         longitude

@@ -130,7 +130,7 @@ export const hazardMapsPageQuery = graphql`
     $stroke_opacity: Float
     $color_scale_normalise: ColourScaleNormalise
   ) {
-    gridded_hazard(grid_id: $grid_id, hazard_model_id: $hazard_model_id, imt: $imt, agg: $agg, vs30: $vs30, poe: $poe) {
+    gridded_hazard: KORORAA_gridded_hazard(grid_id: $grid_id, hazard_model_id: $hazard_model_id, imt: $imt, agg: $agg, vs30: $vs30, poe: $poe) {
       ok
       gridded_hazard {
         grid_id
@@ -153,7 +153,7 @@ export const hazardMapsPageQuery = graphql`
         }
       }
     }
-    textual_content(index: "hazmap_help.md") {
+    textual_content: KORORAA_textual_content(index: "hazmap_help.md") {
       ok
       content {
         index

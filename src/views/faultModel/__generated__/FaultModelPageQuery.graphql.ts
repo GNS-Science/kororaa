@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6a4852282d994408e1ef1e207c0934a7>>
+ * @generated SignedSource<<494911cc1c2d69a02411379f64a9ac94>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -34,7 +34,7 @@ export type FaultModelPageQuery = {
 const node: ConcreteRequest = (function(){
 var v0 = [
   {
-    "alias": null,
+    "alias": "textual_content",
     "args": [
       {
         "kind": "Literal",
@@ -44,7 +44,7 @@ var v0 = [
     ],
     "concreteType": "TextualContentResult",
     "kind": "LinkedField",
-    "name": "textual_content",
+    "name": "KORORAA_textual_content",
     "plural": false,
     "selections": [
       {
@@ -115,7 +115,7 @@ var v0 = [
         "storageKey": null
       }
     ],
-    "storageKey": "textual_content(index:\"ifm_analysis_help.md\")"
+    "storageKey": "KORORAA_textual_content(index:\"ifm_analysis_help.md\")"
   }
 ];
 return {
@@ -136,16 +136,16 @@ return {
     "selections": (v0/*: any*/)
   },
   "params": {
-    "cacheID": "51d9c2134da83fa976d4a40b2572379f",
+    "cacheID": "571692b8a18f8e39fd4f465bb79017f5",
     "id": null,
     "metadata": {},
     "name": "FaultModelPageQuery",
     "operationKind": "query",
-    "text": "query FaultModelPageQuery {\n  textual_content(index: \"ifm_analysis_help.md\") {\n    ok\n    content {\n      index\n      content_type\n      text\n      created\n      author\n      tags\n      status\n    }\n  }\n}\n"
+    "text": "query FaultModelPageQuery {\n  textual_content: KORORAA_textual_content(index: \"ifm_analysis_help.md\") {\n    ok\n    content {\n      index\n      content_type\n      text\n      created\n      author\n      tags\n      status\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "778bf819cc5ef1c6e404c1a0eaf00921";
+(node as any).hash = "605f29ad476b16e9eaa637d1221af5a2";
 
 export default node;

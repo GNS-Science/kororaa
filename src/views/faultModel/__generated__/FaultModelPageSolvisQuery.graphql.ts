@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d50e330e44fb5c47f115ab2ad7612620>>
+ * @generated SignedSource<<11f80e20af7a230f9993cc25a7a287ce>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,7 +11,7 @@
 import { ConcreteRequest, Query } from 'relay-runtime';
 export type FaultModelPageSolvisQuery$variables = {
   solution_id: string;
-  location_codes?: ReadonlyArray<string | null> | null;
+  location_ids?: ReadonlyArray<string | null> | null;
   radius_km?: number | null;
   minimum_mag?: number | null;
   maximum_mag?: number | null;
@@ -21,7 +21,7 @@ export type FaultModelPageSolvisQuery$variables = {
   fault_colour?: string | null;
 };
 export type FaultModelPageSolvisQuery$data = {
-  readonly SOLVIS_analyse_solution: {
+  readonly inversion_solution: {
     readonly analysis: {
       readonly fault_sections_geojson: any | null;
       readonly solution_id: string | null;
@@ -43,12 +43,12 @@ var v0 = {
 v1 = {
   "defaultValue": null,
   "kind": "LocalArgument",
-  "name": "location_codes"
+  "name": "location_colour"
 },
 v2 = {
   "defaultValue": null,
   "kind": "LocalArgument",
-  "name": "location_colour"
+  "name": "location_ids"
 },
 v3 = {
   "defaultValue": null,
@@ -82,7 +82,7 @@ v8 = {
 },
 v9 = [
   {
-    "alias": null,
+    "alias": "inversion_solution",
     "args": [
       {
         "fields": [
@@ -140,8 +140,8 @@ v9 = [
           },
           {
             "kind": "Variable",
-            "name": "location_codes",
-            "variableName": "location_codes"
+            "name": "location_ids",
+            "variableName": "location_ids"
           },
           {
             "kind": "Variable",
@@ -175,18 +175,18 @@ v9 = [
           }
         ],
         "kind": "ObjectValue",
-        "name": "input"
+        "name": "filter"
       }
     ],
-    "concreteType": "SOLVIS_FilterInversionSolution",
+    "concreteType": "FilterInversionSolution",
     "kind": "LinkedField",
-    "name": "SOLVIS_analyse_solution",
+    "name": "SOLVIS_inversion_solution",
     "plural": false,
     "selections": [
       {
         "alias": null,
         "args": null,
-        "concreteType": "SOLVIS_InversionSolutionAnalysis",
+        "concreteType": "InversionSolutionAnalysis",
         "kind": "LinkedField",
         "name": "analysis",
         "plural": false,
@@ -243,13 +243,13 @@ return {
   "operation": {
     "argumentDefinitions": [
       (v8/*: any*/),
-      (v1/*: any*/),
+      (v2/*: any*/),
       (v7/*: any*/),
       (v5/*: any*/),
       (v3/*: any*/),
       (v6/*: any*/),
       (v4/*: any*/),
-      (v2/*: any*/),
+      (v1/*: any*/),
       (v0/*: any*/)
     ],
     "kind": "Operation",
@@ -257,16 +257,16 @@ return {
     "selections": (v9/*: any*/)
   },
   "params": {
-    "cacheID": "668a77c79a082db5d5caf463f0c80567",
+    "cacheID": "3621021c587fc079cc6b51060991550a",
     "id": null,
     "metadata": {},
     "name": "FaultModelPageSolvisQuery",
     "operationKind": "query",
-    "text": "query FaultModelPageSolvisQuery(\n  $solution_id: ID!\n  $location_codes: [String]\n  $radius_km: Int\n  $minimum_mag: Float\n  $maximum_mag: Float\n  $minimum_rate: Float\n  $maximum_rate: Float\n  $location_colour: String\n  $fault_colour: String\n) {\n  SOLVIS_analyse_solution(input: {solution_id: $solution_id, location_codes: $location_codes, radius_km: $radius_km, minimum_mag: $minimum_mag, maximum_mag: $maximum_mag, minimum_rate: $minimum_rate, maximum_rate: $maximum_rate, location_area_style: {stroke_color: $location_colour, stroke_width: 1, stroke_opacity: 0.5, fill_color: $location_colour, fill_opacity: 0.5}, fault_trace_style: {stroke_color: $fault_colour, stroke_width: 3, stroke_opacity: 1}}) {\n    analysis {\n      fault_sections_geojson\n      solution_id\n      location_geojson\n    }\n  }\n}\n"
+    "text": "query FaultModelPageSolvisQuery(\n  $solution_id: ID!\n  $location_ids: [String]\n  $radius_km: Int\n  $minimum_mag: Float\n  $maximum_mag: Float\n  $minimum_rate: Float\n  $maximum_rate: Float\n  $location_colour: String\n  $fault_colour: String\n) {\n  inversion_solution: SOLVIS_inversion_solution(filter: {solution_id: $solution_id, location_ids: $location_ids, radius_km: $radius_km, minimum_mag: $minimum_mag, maximum_mag: $maximum_mag, minimum_rate: $minimum_rate, maximum_rate: $maximum_rate, location_area_style: {stroke_color: $location_colour, stroke_width: 1, stroke_opacity: 0.5, fill_color: $location_colour, fill_opacity: 0.5}, fault_trace_style: {stroke_color: $fault_colour, stroke_width: 3, stroke_opacity: 1}}) {\n    analysis {\n      fault_sections_geojson\n      solution_id\n      location_geojson\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "77ffb513fef2ac96022c4560ef70adac";
+(node as any).hash = "a3f0fd9dd28c56fcc7694376c6a9445c";
 
 export default node;

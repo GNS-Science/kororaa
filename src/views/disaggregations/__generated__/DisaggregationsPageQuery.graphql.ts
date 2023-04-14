@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<bf8799c29252a757ce1316af46476224>>
+ * @generated SignedSource<<46b0d9b42eaa95db24b97b5e332c8eb2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -50,11 +50,11 @@ export type DisaggregationsPageQuery = {
 const node: ConcreteRequest = (function(){
 var v0 = [
   {
-    "alias": null,
+    "alias": "disaggregation_reports",
     "args": null,
     "concreteType": "DisaggregationReportResult",
     "kind": "LinkedField",
-    "name": "disaggregation_reports",
+    "name": "KORORAA_disaggregation_reports",
     "plural": false,
     "selections": [
       {
@@ -153,7 +153,7 @@ var v0 = [
     "storageKey": null
   },
   {
-    "alias": null,
+    "alias": "textual_content",
     "args": [
       {
         "kind": "Literal",
@@ -163,7 +163,7 @@ var v0 = [
     ],
     "concreteType": "TextualContentResult",
     "kind": "LinkedField",
-    "name": "textual_content",
+    "name": "KORORAA_textual_content",
     "plural": false,
     "selections": [
       {
@@ -234,7 +234,7 @@ var v0 = [
         "storageKey": null
       }
     ],
-    "storageKey": "textual_content(index:\"disagg_help.md\")"
+    "storageKey": "KORORAA_textual_content(index:\"disagg_help.md\")"
   }
 ];
 return {
@@ -255,16 +255,16 @@ return {
     "selections": (v0/*: any*/)
   },
   "params": {
-    "cacheID": "fe0d98b4ced808ea20a6d020e830527a",
+    "cacheID": "1f632c68cdf7354b9b087b86ff3d1d96",
     "id": null,
     "metadata": {},
     "name": "DisaggregationsPageQuery",
     "operationKind": "query",
-    "text": "query DisaggregationsPageQuery {\n  disaggregation_reports {\n    reports {\n      location {\n        name\n        key\n        code\n        lat\n        lon\n      }\n      vs30\n      inv_time\n      poe\n      imt\n      report_url\n    }\n  }\n  textual_content(index: \"disagg_help.md\") {\n    ok\n    content {\n      index\n      content_type\n      text\n      created\n      author\n      tags\n      status\n    }\n  }\n}\n"
+    "text": "query DisaggregationsPageQuery {\n  disaggregation_reports: KORORAA_disaggregation_reports {\n    reports {\n      location {\n        name\n        key\n        code\n        lat\n        lon\n      }\n      vs30\n      inv_time\n      poe\n      imt\n      report_url\n    }\n  }\n  textual_content: KORORAA_textual_content(index: \"disagg_help.md\") {\n    ok\n    content {\n      index\n      content_type\n      text\n      created\n      author\n      tags\n      status\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "8b27f6243efd285a9c7280cc04bda78a";
+(node as any).hash = "4ea262e142b0a8f3e2dc383285ef9943";
 
 export default node;

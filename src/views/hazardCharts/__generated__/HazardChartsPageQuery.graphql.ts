@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fa3184b70325f0b1e27d893d3dd52310>>
+ * @generated SignedSource<<84ddaeb211108024682fabb9b570e606>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -34,7 +34,7 @@ export type HazardChartsPageQuery = {
 const node: ConcreteRequest = (function(){
 var v0 = [
   {
-    "alias": null,
+    "alias": "textual_content",
     "args": [
       {
         "kind": "Literal",
@@ -44,7 +44,7 @@ var v0 = [
     ],
     "concreteType": "TextualContentResult",
     "kind": "LinkedField",
-    "name": "textual_content",
+    "name": "KORORAA_textual_content",
     "plural": false,
     "selections": [
       {
@@ -115,7 +115,7 @@ var v0 = [
         "storageKey": null
       }
     ],
-    "storageKey": "textual_content(index:\"curves_help.md\")"
+    "storageKey": "KORORAA_textual_content(index:\"curves_help.md\")"
   }
 ];
 return {
@@ -136,16 +136,16 @@ return {
     "selections": (v0/*: any*/)
   },
   "params": {
-    "cacheID": "a1647833a793ea8b2fb047c698da7b14",
+    "cacheID": "05713ebf3afbbccd5c27eb8dfda108c4",
     "id": null,
     "metadata": {},
     "name": "HazardChartsPageQuery",
     "operationKind": "query",
-    "text": "query HazardChartsPageQuery {\n  textual_content(index: \"curves_help.md\") {\n    ok\n    content {\n      index\n      content_type\n      text\n      created\n      author\n      tags\n      status\n    }\n  }\n}\n"
+    "text": "query HazardChartsPageQuery {\n  textual_content: KORORAA_textual_content(index: \"curves_help.md\") {\n    ok\n    content {\n      index\n      content_type\n      text\n      created\n      author\n      tags\n      status\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "cc6b08ba005b68c238e825377889accf";
+(node as any).hash = "d01f26237883c8be64aafdd50d5f970b";
 
 export default node;
