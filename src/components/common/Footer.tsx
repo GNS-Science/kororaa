@@ -50,7 +50,12 @@ const Footer: React.FC = () => {
                   MBIE for information related to engineering design and the NSHM.
                 </Link>
                 <br />
-                You are viewing version {HAZARD_MODEL_VERSION} of the NSHM.
+                You are viewing version {HAZARD_MODEL_VERSION}. Please see &nbsp;
+                <strong>
+                  <Link underline="hover" component={RouterLink} color="inherit" to="/Resources/ModelVersions">
+                    Bug Advisory in Model Versions
+                  </Link>
+                </strong>
               </em>
             </Typography>
           </FooterLinkItems>

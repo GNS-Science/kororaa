@@ -1,10 +1,10 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { styled } from '@mui/material/styles';
 import Grid from '@mui/material/Grid';
 import ReactMarkdown from 'react-markdown';
-import { graphql } from 'babel-plugin-relay/macro';
-import { useLazyLoadQuery } from 'react-relay';
-import { ModelVersionsPageQuery } from './__generated__/ModelVersionsPageQuery.graphql';
+// import { graphql } from 'babel-plugin-relay/macro';
+// import { useLazyLoadQuery } from 'react-relay';
+// import { ModelVersionsPageQuery } from './__generated__/ModelVersionsPageQuery.graphql';
 import SimpleBackdrop from '../../components/common/SimpleBackdrop';
 
 import { Typography } from '@mui/material';
@@ -23,9 +23,23 @@ const TitleContainer = styled('div')({
   paddingBottom: '1rem',
 });
 
+const markdown = `
+## NSHM_v1.0.0 - 2022-10-04
+
+Initial release of the NZ NSHM 2022 revision
+
+### Bug Advisory: April 2023
+We have identified some errors in **NSHM_v1.0.0**. These errors are being corrected and are unlikely to affect any NSHM results-based decision making.
+
+A bug in internationally sourced computer modelling code affected fault dips in the final step of the hazard calculations and affected
+every result from the modelling. However, tests show that the correction will introduce negligible hazard changes for most of the country.
+
+More information will follow as it is available.
+`;
+
 const ModelVersionsComponent: React.FC = () => {
-  const data = useLazyLoadQuery<ModelVersionsPageQuery>(modelVersionsPageQuery, {});
-  const markdown = useMemo(() => data?.textual_content?.content && data?.textual_content?.content[0]?.text, [data]);
+  // const data = useLazyLoadQuery<ModelVersionsPageQuery>(modelVersionsPageQuery, {});
+  // const markdown = useMemo(() => data?.textual_content?.content && data?.textual_content?.content[0]?.text, [data]);
 
   return (
     <PageContainer>
@@ -42,7 +56,7 @@ const ModelVersionsComponent: React.FC = () => {
               </TitleContainer>
             </Grid>
             <Grid item xs={12}>
-              <ReactMarkdown>{markdown?.replace('Changelog', '') || ''}</ReactMarkdown>
+              <ReactMarkdown>{markdown}</ReactMarkdown>
             </Grid>
           </Grid>
         </Grid>
@@ -60,20 +74,20 @@ const ModelVersionsPage: React.FC = () => {
   );
 };
 
-export const modelVersionsPageQuery = graphql`
-  query ModelVersionsPageQuery {
-    textual_content(index: "CHANGELOG.md") {
-      ok
-      content {
-        index
-        content_type
-        text
-        created
-        author
-        tags
-        status
-      }
-    }
-  }
-`;
+// export const modelVersionsPageQuery = graphql`
+//   query ModelVersionsPageQuery {
+//     textual_content(index: "CHANGELOG.md") {
+//       ok
+//       content {
+//         index
+//         content_type
+//         text
+//         created
+//         author
+//         tags
+//         status
+//       }
+//     }
+//   }
+// `;
 export default ModelVersionsPage;
