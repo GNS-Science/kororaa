@@ -14,6 +14,8 @@ import SelectControlWithDisable from '../../components/common/SelectControlWithD
 import { FaultModelPageState } from './faultModelPageReducer';
 import { SOLVIS_LOCATION_LIST, SOLVIS_RADII_ID } from '../../utils/environmentVariables';
 
+const REACT_APP_HAZARD_MODEL = 'NSHM_1.0.4'; // TODO replace with envvar when data ius aligned
+
 const StyledButton = styled(Button)(() => ({
   margin: '0 0 0 10px',
 }));
@@ -84,7 +86,7 @@ const FaultModelControls: React.FC<FaultModelControlsProps> = ({ startTransition
   const [radiiOptions, setRadiiOptions] = useState<string[]>([]);
   const [optionsValid, setOptionsValid] = useState<boolean>(false);
   const [radiusError, setRadiusError] = useState<string | null>(null);
-  const data = useLazyLoadQuery<FaultModelControlsQuery>(faultModelControlsQuery, { radiiSetId: SOLVIS_RADII_ID, locationListId: SOLVIS_LOCATION_LIST });
+  const data = useLazyLoadQuery<FaultModelControlsQuery>(faultModelControlsQuery, { model_id: REACT_APP_HAZARD_MODEL, radiiSetId: SOLVIS_RADII_ID, locationListId: SOLVIS_LOCATION_LIST });
   const locationData = data?.SOLVIS_get_location_list?.locations;
   const radiiData = data?.SOLVIS_get_radii_set?.radii;
   const faultSystemBranches =
@@ -232,8 +234,8 @@ const FaultModelControls: React.FC<FaultModelControlsProps> = ({ startTransition
 export default FaultModelControls;
 
 export const faultModelControlsQuery = graphql`
-  query FaultModelControlsQuery($radiiSetId: Int!, $locationListId: String!) {
-    nzshm_model: KORORAA_nzshm_model(version: "NSHM_1.0.0") {
+  query FaultModelControlsQuery($model_id: String!, $radiiSetId: Int!, $locationListId: String!) {
+    nzshm_model: KORORAA_nzshm_model(version: $model_id) {
       model {
         version
         title

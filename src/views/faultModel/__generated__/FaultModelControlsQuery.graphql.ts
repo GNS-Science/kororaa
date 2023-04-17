@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<71eea7195f51366ebe20bf9bfe931da6>>
+ * @generated SignedSource<<489070d6dffe978c3cad5f8e9ac7b4e3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,6 +10,7 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 export type FaultModelControlsQuery$variables = {
+  model_id: string;
   radiiSetId: number;
   locationListId: string;
 };
@@ -75,37 +76,42 @@ var v0 = {
 v1 = {
   "defaultValue": null,
   "kind": "LocalArgument",
-  "name": "radiiSetId"
+  "name": "model_id"
 },
 v2 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
+  "name": "radiiSetId"
+},
+v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "long_name",
   "storageKey": null
 },
-v3 = {
+v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "short_name",
   "storageKey": null
 },
-v4 = {
+v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "name",
   "storageKey": null
 },
-v5 = [
+v6 = [
   {
     "alias": "nzshm_model",
     "args": [
       {
-        "kind": "Literal",
+        "kind": "Variable",
         "name": "version",
-        "value": "NSHM_1.0.0"
+        "variableName": "model_id"
       }
     ],
     "concreteType": "NzshmModelResult",
@@ -151,8 +157,8 @@ v5 = [
                 "name": "fault_system_branches",
                 "plural": true,
                 "selections": [
-                  (v2/*: any*/),
                   (v3/*: any*/),
+                  (v4/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -204,7 +210,7 @@ v5 = [
                         "name": "values",
                         "plural": true,
                         "selections": [
-                          (v2/*: any*/),
+                          (v3/*: any*/),
                           {
                             "alias": null,
                             "args": null,
@@ -240,8 +246,8 @@ v5 = [
                 "name": "fault_system_branches",
                 "plural": true,
                 "selections": [
+                  (v4/*: any*/),
                   (v3/*: any*/),
-                  (v2/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -250,8 +256,8 @@ v5 = [
                     "name": "branches",
                     "plural": true,
                     "selections": [
-                      (v4/*: any*/),
-                      (v2/*: any*/),
+                      (v5/*: any*/),
+                      (v3/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -272,7 +278,7 @@ v5 = [
         "storageKey": null
       }
     ],
-    "storageKey": "KORORAA_nzshm_model(version:\"NSHM_1.0.0\")"
+    "storageKey": null
   },
   {
     "alias": null,
@@ -334,7 +340,7 @@ v5 = [
             "name": "location_id",
             "storageKey": null
           },
-          (v4/*: any*/),
+          (v5/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -360,12 +366,13 @@ return {
   "fragment": {
     "argumentDefinitions": [
       (v0/*: any*/),
-      (v1/*: any*/)
+      (v1/*: any*/),
+      (v2/*: any*/)
     ],
     "kind": "Fragment",
     "metadata": null,
     "name": "FaultModelControlsQuery",
-    "selections": (v5/*: any*/),
+    "selections": (v6/*: any*/),
     "type": "Query",
     "abstractKey": null
   },
@@ -373,23 +380,24 @@ return {
   "operation": {
     "argumentDefinitions": [
       (v1/*: any*/),
+      (v2/*: any*/),
       (v0/*: any*/)
     ],
     "kind": "Operation",
     "name": "FaultModelControlsQuery",
-    "selections": (v5/*: any*/)
+    "selections": (v6/*: any*/)
   },
   "params": {
-    "cacheID": "3493b8f04cf1be4683a3146f9b16368a",
+    "cacheID": "f6a793ff54284773d974dbc70bf389e1",
     "id": null,
     "metadata": {},
     "name": "FaultModelControlsQuery",
     "operationKind": "query",
-    "text": "query FaultModelControlsQuery(\n  $radiiSetId: Int!\n  $locationListId: String!\n) {\n  nzshm_model: KORORAA_nzshm_model(version: \"NSHM_1.0.0\") {\n    model {\n      version\n      title\n      source_logic_tree {\n        fault_system_branches {\n          long_name\n          short_name\n          branches {\n            weight\n            inversion_solution_id\n            inversion_solution_type\n            onfault_nrml_id\n            distributed_nrml_id\n            values {\n              long_name\n              json_value\n            }\n          }\n        }\n      }\n      source_logic_tree_spec {\n        fault_system_branches {\n          short_name\n          long_name\n          branches {\n            name\n            long_name\n            value_options\n          }\n        }\n      }\n    }\n  }\n  SOLVIS_get_radii_set(radii_set_id: $radiiSetId) {\n    radii\n  }\n  SOLVIS_get_location_list(list_id: $locationListId) {\n    list_id\n    locations {\n      location_id\n      name\n      latitude\n      longitude\n    }\n  }\n}\n"
+    "text": "query FaultModelControlsQuery(\n  $model_id: String!\n  $radiiSetId: Int!\n  $locationListId: String!\n) {\n  nzshm_model: KORORAA_nzshm_model(version: $model_id) {\n    model {\n      version\n      title\n      source_logic_tree {\n        fault_system_branches {\n          long_name\n          short_name\n          branches {\n            weight\n            inversion_solution_id\n            inversion_solution_type\n            onfault_nrml_id\n            distributed_nrml_id\n            values {\n              long_name\n              json_value\n            }\n          }\n        }\n      }\n      source_logic_tree_spec {\n        fault_system_branches {\n          short_name\n          long_name\n          branches {\n            name\n            long_name\n            value_options\n          }\n        }\n      }\n    }\n  }\n  SOLVIS_get_radii_set(radii_set_id: $radiiSetId) {\n    radii\n  }\n  SOLVIS_get_location_list(list_id: $locationListId) {\n    list_id\n    locations {\n      location_id\n      name\n      latitude\n      longitude\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "fc842283e16dafeab9af8a4357db7f82";
+(node as any).hash = "4f7a930c8d7ba15f765309853a23855e";
 
 export default node;

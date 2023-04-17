@@ -58,7 +58,6 @@ const DisclaimerLayer: React.FC<DisclaimerLayerProps> = ({ children }: Disclaime
             NSHM model and forecast errors resulting from a bug in internationally sourced computer modelling code have been fixed, and the related data sets (hazard curves, maps etc) are now being
             corrected. This notice will be removed once all the data sets are corrected on the web portal – expected in the next few weeks. For model version details and changes please see the
             Resources, Model Versions page.
-
           </Typography>
           <Button onClick={handleAccept}>Accept</Button>
         </Paper>
