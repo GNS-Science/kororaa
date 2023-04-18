@@ -226,6 +226,7 @@ const NavBar: React.FC = () => {
         { name: 'Other Documents', path: '/Resources/OtherDocuments' },
         { name: 'Model Components', path: '/Resources/ModelComponents' },
         { name: 'Model Versions', path: '/Resources/ModelVersions' },
+        { name: 'Inversion Fault Model', path: '/Resources/IFMAnalysis' },
       ],
     },
     {

@@ -88,7 +88,7 @@ const DisaggregationsPage = () => {
 
 export const disaggregationsPageQuery = graphql`
   query DisaggregationsPageQuery {
-    disaggregation_reports {
+    disaggregation_reports: KORORAA_disaggregation_reports {
       reports {
         location {
           name
@@ -104,7 +104,7 @@ export const disaggregationsPageQuery = graphql`
         report_url
       }
     }
-    textual_content(index: "disagg_help.md") {
+    textual_content: KORORAA_textual_content(index: "disagg_help.md") {
       ok
       content {
         index

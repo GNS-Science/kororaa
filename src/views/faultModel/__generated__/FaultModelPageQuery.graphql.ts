@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<84ddaeb211108024682fabb9b570e606>>
+ * @generated SignedSource<<494911cc1c2d69a02411379f64a9ac94>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,8 +11,8 @@
 import { ConcreteRequest, Query } from 'relay-runtime';
 export type ContentFormatEnum = "Raw" | "Markdown" | "%future added value";
 export type ContentStatusEnum = "Undefined" | "Draft" | "Published" | "Deprecated" | "%future added value";
-export type HazardChartsPageQuery$variables = {};
-export type HazardChartsPageQuery$data = {
+export type FaultModelPageQuery$variables = {};
+export type FaultModelPageQuery$data = {
   readonly textual_content: {
     readonly ok: boolean | null;
     readonly content: ReadonlyArray<{
@@ -26,9 +26,9 @@ export type HazardChartsPageQuery$data = {
     } | null> | null;
   } | null;
 };
-export type HazardChartsPageQuery = {
-  variables: HazardChartsPageQuery$variables;
-  response: HazardChartsPageQuery$data;
+export type FaultModelPageQuery = {
+  variables: FaultModelPageQuery$variables;
+  response: FaultModelPageQuery$data;
 };
 
 const node: ConcreteRequest = (function(){
@@ -39,7 +39,7 @@ var v0 = [
       {
         "kind": "Literal",
         "name": "index",
-        "value": "curves_help.md"
+        "value": "ifm_analysis_help.md"
       }
     ],
     "concreteType": "TextualContentResult",
@@ -115,7 +115,7 @@ var v0 = [
         "storageKey": null
       }
     ],
-    "storageKey": "KORORAA_textual_content(index:\"curves_help.md\")"
+    "storageKey": "KORORAA_textual_content(index:\"ifm_analysis_help.md\")"
   }
 ];
 return {
@@ -123,7 +123,7 @@ return {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "HazardChartsPageQuery",
+    "name": "FaultModelPageQuery",
     "selections": (v0/*: any*/),
     "type": "Query",
     "abstractKey": null
@@ -132,20 +132,20 @@ return {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "HazardChartsPageQuery",
+    "name": "FaultModelPageQuery",
     "selections": (v0/*: any*/)
   },
   "params": {
-    "cacheID": "05713ebf3afbbccd5c27eb8dfda108c4",
+    "cacheID": "571692b8a18f8e39fd4f465bb79017f5",
     "id": null,
     "metadata": {},
-    "name": "HazardChartsPageQuery",
+    "name": "FaultModelPageQuery",
     "operationKind": "query",
-    "text": "query HazardChartsPageQuery {\n  textual_content: KORORAA_textual_content(index: \"curves_help.md\") {\n    ok\n    content {\n      index\n      content_type\n      text\n      created\n      author\n      tags\n      status\n    }\n  }\n}\n"
+    "text": "query FaultModelPageQuery {\n  textual_content: KORORAA_textual_content(index: \"ifm_analysis_help.md\") {\n    ok\n    content {\n      index\n      content_type\n      text\n      created\n      author\n      tags\n      status\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "d01f26237883c8be64aafdd50d5f970b";
+(node as any).hash = "605f29ad476b16e9eaa637d1221af5a2";
 
 export default node;
