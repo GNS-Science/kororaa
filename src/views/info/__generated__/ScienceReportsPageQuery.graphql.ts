@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c769dc633d91184f088f0aad8dc5bdac>>
+ * @generated SignedSource<<c36b1429a4281d28fa9323b5c029b7f4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -36,11 +36,11 @@ export type ScienceReportsPageQuery = {
 const node: ConcreteRequest = (function(){
 var v0 = [
   {
-    "alias": null,
+    "alias": "science_reports",
     "args": null,
     "concreteType": "ScienceReportResult",
     "kind": "LinkedField",
-    "name": "science_reports",
+    "name": "KORORAA_science_reports",
     "plural": false,
     "selections": [
       {
@@ -139,7 +139,7 @@ return {
     "metadata": null,
     "name": "ScienceReportsPageQuery",
     "selections": (v0/*: any*/),
-    "type": "QueryRoot",
+    "type": "Query",
     "abstractKey": null
   },
   "kind": "Request",
@@ -150,16 +150,16 @@ return {
     "selections": (v0/*: any*/)
   },
   "params": {
-    "cacheID": "a769dbccb2cc557f6c46a97a49771ae3",
+    "cacheID": "35abbaf27ff7e061b08e5067455a99d6",
     "id": null,
     "metadata": {},
     "name": "ScienceReportsPageQuery",
     "operationKind": "query",
-    "text": "query ScienceReportsPageQuery {\n  science_reports {\n    ok\n    reports {\n      filename\n      title\n      status\n      notes\n      report_number\n      lead_author {\n        name\n      }\n      publication_date\n      bibliographic_ref\n    }\n  }\n}\n"
+    "text": "query ScienceReportsPageQuery {\n  science_reports: KORORAA_science_reports {\n    ok\n    reports {\n      filename\n      title\n      status\n      notes\n      report_number\n      lead_author {\n        name\n      }\n      publication_date\n      bibliographic_ref\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "72d0cacb7d19bb5eef619e7db69ac78b";
+(node as any).hash = "ed0ecf7189d6af3b7678b2055f36fed6";
 
 export default node;

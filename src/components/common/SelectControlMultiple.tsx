@@ -3,7 +3,6 @@ import { Checkbox, FormControl, Input, InputLabel, MenuItem, Select, SelectChang
 import { styled } from '@mui/material/styles';
 
 const MultiSelectContainer = styled('div')({
-  margin: 10,
   minWidth: 200,
   maxWidth: 300,
 });
