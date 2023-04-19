@@ -6,6 +6,7 @@ import '../../css/leaflet.timedimension.control.css';
 import { graphql } from 'babel-plugin-relay/macro';
 import { HAZARD_MODEL_ID } from '../../utils/environmentVariables';
 import { GeoJsonObject } from 'geojson';
+import { LatLngExpression } from 'leaflet';
 
 import { InfoTooltip } from '../../components/common/InfoTooltip';
 import RuptureAnimationControls from './RuptureAnimationPageControls';
@@ -13,7 +14,6 @@ import SimpleBackdrop from '../../components/common/SimpleBackdrop';
 import { ruptureAnimationPageReducer, ruptureAnimationPageReducerInitialState } from './ruptureAnimationPageReducer';
 import { RuptureAnimationPageQuery, RuptureAnimationPageQuery$data } from './__generated__/RuptureAnimationPageQuery.graphql';
 import { RuptureAnimationPage_queryRoot$key } from './__generated__/RuptureAnimationPage_queryRoot.graphql';
-import { LatLngExpression } from 'leaflet';
 
 type Props = {
   queryData: RuptureAnimationPageQuery$data;
@@ -159,15 +159,15 @@ export const RuptureAnimationPaginationComponent: React.FC<Props> = (props: Prop
           zoom={zoom}
           zoomLevel={zoomLevel}
           setZoomLevel={setZoomLevel}
-          nzCentre={nzCentre as LatLngExpression}
+          nzCentre={nzCentre as typeof LatLngExpression}
           geoJsonData={locationData ? locationData : ['']}
           height={'80vh'}
           width={'100%'}
           setFullscreen={setFullscreen}
           timeDimensionOptions={timeDimensionOptions}
           timeDimension={true}
-          timeDimensionGeoJsonData={(ruptureData as GeoJsonObject[]) || ''}
-          timeDimensionUnderlay={'' as unknown as GeoJsonObject}
+          timeDimensionGeoJsonData={(ruptureData as typeof GeoJsonObject[]) || ''}
+          timeDimensionUnderlay={'' as unknown as typeof GeoJsonObject}
           timeDimensionControlOptions={timeDimensionControlOptions}
           setTimeDimensionNeedsMore={setNeedsMore}
           setTimeDimensionHasNoMore={setHasNoMore}
@@ -186,6 +186,8 @@ export const RuptureAnimationPage: React.FC = () => {
     </React.Suspense>
   );
 };
+
+export default RuptureAnimationPage;
 
 const ruptureAnimationPage_queryRoot = graphql`
   fragment RuptureAnimationPage_queryRoot on Query
