@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { Box, Button, styled } from '@mui/material';
 import { RangeSliderWithInputs } from '@gns-science/toshi-nest';
 import { toPng } from 'html-to-image';
@@ -13,6 +13,7 @@ import SelectControlMultiple from '../../components/common/SelectControlMultiple
 import SelectControlWithDisable from '../../components/common/SelectControlWithDisable';
 import { RuptureAnimationPageControlsQuery } from './__generated__/RuptureAnimationPageControlsQuery.graphql';
 import { RuptureAnimationPageState } from './ruptureAnimationPageReducer';
+import { sort } from 'mathjs';
 
 const StyledButton = styled(Button)(() => ({
   margin: '10px',
@@ -46,6 +47,21 @@ interface RuptureAnimationControlsProps {
   dispatch: React.Dispatch<Partial<RuptureAnimationPageState>>;
 }
 
+type SortDict = {
+  [key: string]: {
+    attribute: string;
+    ascending: boolean;
+  } | null;
+};
+
+const sortDict: SortDict = {
+  Unsorted: null,
+  Magnitude: { attribute: 'magnitude', ascending: false },
+  'Rate (weighted mean)': { attribute: 'rate_weighted_mean', ascending: false },
+  'Rate (maximum)': { attribute: 'rate_max', ascending: false },
+  'Rate (minimum)': { attribute: 'rate_min', ascending: false },
+};
+
 const RuptureAnimationControls: React.FC<RuptureAnimationControlsProps> = ({ startTransition, isPending, dispatch }: RuptureAnimationControlsProps) => {
   const [faultSystem, setFaultSystem] = useState<string>('Crustal');
   const [locations, setLocations] = useState<string[]>([]);
@@ -56,10 +72,24 @@ const RuptureAnimationControls: React.FC<RuptureAnimationControlsProps> = ({ sta
   const [rateRange, setRateRange] = useState<number[]>([-20, 0]);
   const [radius, setRadius] = useState<string>('');
   const [radiusError, setRadiusError] = useState<string | null>(null);
+  const [sortBy1, setSortBy1] = useState<string>('Unsorted');
+  const [sortBy2, setSortBy2] = useState<string>('');
 
   const data = useLazyLoadQuery<RuptureAnimationPageControlsQuery>(ruptureAnimationPageControlsQuery, { radiiSetId: SOLVIS_RADII_ID, locationListId: SOLVIS_LOCATION_LIST });
   const locationData = data?.SOLVIS_get_location_list?.locations;
   const radiiData = data?.SOLVIS_get_radii_set?.radii;
+  const sortByOptions = useMemo(() => ['Unsorted', 'Magnitude', 'Rate (weighted mean)', 'Rate (maximum)', 'Rate (minimum)'], []);
+  const sortByOptions2 = useMemo(() => sortByOptions.filter((option) => option !== sortBy1), [sortBy1, sortByOptions]);
+
+  const sortByFormatted = useMemo(() => {
+    if (sortBy1 !== 'Unsorted') {
+      if (sortBy2 === '') {
+        return [sortDict[sortBy1]];
+      } else if (sortBy2 !== '') {
+        return [sortDict[sortBy1], sortDict[sortBy2]];
+      } else return null;
+    }
+  }, [sortBy1, sortBy2]);
 
   useEffect(() => {
     if (locationData) {
@@ -112,6 +142,7 @@ const RuptureAnimationControls: React.FC<RuptureAnimationControlsProps> = ({ sta
         radius: Number(radius.replace('km', '')),
         magnitudeRange: magnitudeRange,
         rateRange: rateRange.map((rate) => Math.pow(10, rate)),
+        sortby: sortByFormatted,
       });
     });
   };
@@ -126,6 +157,8 @@ const RuptureAnimationControls: React.FC<RuptureAnimationControlsProps> = ({ sta
           <RangeSliderWithInputs label="Magnitude Range" valuesRange={magnitudeRange} setValues={setMagnitudeRange} inputProps={{ step: 0.1, min: 6, max: 10, type: 'number' }} />
           <RangeSliderWithInputs label="Rate Range (1/yr)" valuesRange={rateRange} setValues={setRateRange} inputProps={{ step: 1, min: -20, max: 0, type: 'number' }} />
         </StyledRangeSliderDiv>
+        <SelectControl name="Sort By 1" selection={sortBy1} setSelection={setSortBy1} options={sortByOptions} tooltip={'sort by'} />
+        <SelectControlWithDisable disabled={sortBy1 === 'Unsorted'} name="Sort By 2" selection={sortBy2} setSelection={setSortBy2} options={sortByOptions2} tooltip={'then sort by'} />
       </StyledCustomControlsBar>
       <StyledButton disabled={isPending || !!radiusError} variant="contained" type="submit" onClick={handleSubmit}>
         Submit

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<aa9192de7440c24880570481abf9a71f>>
+ * @generated SignedSource<<534465cb8f6bae281f50f9cd82f388c6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,6 +10,10 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
+export type SimpleSortRupturesArgs = {
+  attribute?: string | null;
+  ascending?: boolean | null;
+};
 export type RuptureAnimationPageQuery$variables = {
   first: number;
   after?: string | null;
@@ -21,6 +25,7 @@ export type RuptureAnimationPageQuery$variables = {
   maximum_mag?: number | null;
   minimum_rate?: number | null;
   maximum_rate?: number | null;
+  sortby?: ReadonlyArray<SimpleSortRupturesArgs | null> | null;
 };
 export type RuptureAnimationPageQuery$data = {
   readonly SOLVIS_locations_by_id: {
@@ -92,26 +97,32 @@ v9 = {
   "name": "radius_km"
 },
 v10 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
+  "name": "sortby"
+},
+v11 = {
   "kind": "Variable",
   "name": "location_ids",
   "variableName": "location_ids"
 },
-v11 = [
-  (v10/*: any*/)
+v12 = [
+  (v11/*: any*/)
 ],
-v12 = {
+v13 = {
   "kind": "Variable",
   "name": "radius_km",
   "variableName": "radius_km"
 },
-v13 = {
+v14 = {
   "alias": null,
   "args": [
-    (v12/*: any*/),
+    (v13/*: any*/),
     {
       "kind": "Literal",
       "name": "style",
       "value": {
+        "fill_opacity": 0.3,
         "stroke_color": "royalblue",
         "stroke_opacity": 0.5,
         "stroke_width": 3
@@ -122,7 +133,7 @@ v13 = {
   "name": "radius_geojson",
   "storageKey": null
 },
-v14 = [
+v15 = [
   {
     "kind": "Variable",
     "name": "after",
@@ -135,7 +146,7 @@ v14 = [
         "name": "fault_system",
         "variableName": "fault_system"
       },
-      (v10/*: any*/),
+      (v11/*: any*/),
       {
         "kind": "Variable",
         "name": "maximum_mag",
@@ -161,7 +172,7 @@ v14 = [
         "name": "model_id",
         "variableName": "model_id"
       },
-      (v12/*: any*/)
+      (v13/*: any*/)
     ],
     "kind": "ObjectValue",
     "name": "filter"
@@ -170,16 +181,21 @@ v14 = [
     "kind": "Variable",
     "name": "first",
     "variableName": "first"
+  },
+  {
+    "kind": "Variable",
+    "name": "sortby",
+    "variableName": "sortby"
   }
 ],
-v15 = {
+v16 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "total_count",
   "storageKey": null
 },
-v16 = {
+v17 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -198,7 +214,8 @@ return {
       (v6/*: any*/),
       (v7/*: any*/),
       (v8/*: any*/),
-      (v9/*: any*/)
+      (v9/*: any*/),
+      (v10/*: any*/)
     ],
     "kind": "Fragment",
     "metadata": null,
@@ -206,7 +223,7 @@ return {
     "selections": [
       {
         "alias": null,
-        "args": (v11/*: any*/),
+        "args": (v12/*: any*/),
         "concreteType": "LocationDetailConnection",
         "kind": "LinkedField",
         "name": "SOLVIS_locations_by_id",
@@ -228,7 +245,7 @@ return {
                 "name": "node",
                 "plural": false,
                 "selections": [
-                  (v13/*: any*/)
+                  (v14/*: any*/)
                 ],
                 "storageKey": null
               }
@@ -240,18 +257,18 @@ return {
       },
       {
         "alias": null,
-        "args": (v14/*: any*/),
+        "args": (v15/*: any*/),
         "concreteType": "RuptureDetailConnection",
         "kind": "LinkedField",
         "name": "SOLVIS_filter_ruptures",
         "plural": false,
         "selections": [
-          (v15/*: any*/)
+          (v16/*: any*/)
         ],
         "storageKey": null
       },
       {
-        "args": (v14/*: any*/),
+        "args": (v15/*: any*/),
         "kind": "FragmentSpread",
         "name": "RuptureAnimationPage_queryRoot"
       }
@@ -271,14 +288,15 @@ return {
       (v6/*: any*/),
       (v4/*: any*/),
       (v7/*: any*/),
-      (v5/*: any*/)
+      (v5/*: any*/),
+      (v10/*: any*/)
     ],
     "kind": "Operation",
     "name": "RuptureAnimationPageQuery",
     "selections": [
       {
         "alias": null,
-        "args": (v11/*: any*/),
+        "args": (v12/*: any*/),
         "concreteType": "LocationDetailConnection",
         "kind": "LinkedField",
         "name": "SOLVIS_locations_by_id",
@@ -300,8 +318,8 @@ return {
                 "name": "node",
                 "plural": false,
                 "selections": [
-                  (v13/*: any*/),
-                  (v16/*: any*/)
+                  (v14/*: any*/),
+                  (v17/*: any*/)
                 ],
                 "storageKey": null
               }
@@ -313,13 +331,13 @@ return {
       },
       {
         "alias": null,
-        "args": (v14/*: any*/),
+        "args": (v15/*: any*/),
         "concreteType": "RuptureDetailConnection",
         "kind": "LinkedField",
         "name": "SOLVIS_filter_ruptures",
         "plural": false,
         "selections": [
-          (v15/*: any*/),
+          (v16/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -396,7 +414,7 @@ return {
                     "name": "length",
                     "storageKey": null
                   },
-                  (v16/*: any*/),
+                  (v17/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -422,9 +440,10 @@ return {
       },
       {
         "alias": null,
-        "args": (v14/*: any*/),
+        "args": (v15/*: any*/),
         "filters": [
-          "filter"
+          "filter",
+          "sortby"
         ],
         "handle": "connection",
         "key": "RuptureAnimationPage_queryRoot_SOLVIS_filter_ruptures",
@@ -434,16 +453,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "42a885f4978c5fa0a15d94f0701edb33",
+    "cacheID": "0a59085feb5f0ef02ca691bf3a91ff04",
     "id": null,
     "metadata": {},
     "name": "RuptureAnimationPageQuery",
     "operationKind": "query",
-    "text": "query RuptureAnimationPageQuery(\n  $first: Int!\n  $after: String\n  $model_id: String!\n  $fault_system: String!\n  $location_ids: [String]!\n  $radius_km: Int!\n  $minimum_mag: Float\n  $maximum_mag: Float\n  $minimum_rate: Float\n  $maximum_rate: Float\n) {\n  SOLVIS_locations_by_id(location_ids: $location_ids) {\n    edges {\n      node {\n        radius_geojson(radius_km: $radius_km, style: {stroke_color: \"royalblue\", stroke_width: 3, stroke_opacity: 0.5})\n        id\n      }\n    }\n  }\n  SOLVIS_filter_ruptures(first: $first, after: $after, filter: {model_id: $model_id, fault_system: $fault_system, location_ids: $location_ids, radius_km: $radius_km, minimum_mag: $minimum_mag, maximum_mag: $maximum_mag, minimum_rate: $minimum_rate, maximum_rate: $maximum_rate}) {\n    total_count\n  }\n  ...RuptureAnimationPage_queryRoot_3EF0MQ\n}\n\nfragment RuptureAnimationPage_queryRoot_3EF0MQ on Query {\n  SOLVIS_filter_ruptures(first: $first, after: $after, filter: {model_id: $model_id, fault_system: $fault_system, location_ids: $location_ids, radius_km: $radius_km, minimum_mag: $minimum_mag, maximum_mag: $maximum_mag, minimum_rate: $minimum_rate, maximum_rate: $maximum_rate}) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    edges {\n      node {\n        fault_surfaces\n        magnitude\n        rate_weighted_mean\n        area\n        length\n        id\n        __typename\n      }\n      cursor\n    }\n  }\n}\n"
+    "text": "query RuptureAnimationPageQuery(\n  $first: Int!\n  $after: String\n  $model_id: String!\n  $fault_system: String!\n  $location_ids: [String]!\n  $radius_km: Int!\n  $minimum_mag: Float\n  $maximum_mag: Float\n  $minimum_rate: Float\n  $maximum_rate: Float\n  $sortby: [SimpleSortRupturesArgs]\n) {\n  SOLVIS_locations_by_id(location_ids: $location_ids) {\n    edges {\n      node {\n        radius_geojson(radius_km: $radius_km, style: {stroke_color: \"royalblue\", stroke_width: 3, stroke_opacity: 0.5, fill_opacity: 0.3})\n        id\n      }\n    }\n  }\n  SOLVIS_filter_ruptures(first: $first, after: $after, filter: {model_id: $model_id, fault_system: $fault_system, location_ids: $location_ids, radius_km: $radius_km, minimum_mag: $minimum_mag, maximum_mag: $maximum_mag, minimum_rate: $minimum_rate, maximum_rate: $maximum_rate}, sortby: $sortby) {\n    total_count\n  }\n  ...RuptureAnimationPage_queryRoot_45dR5v\n}\n\nfragment RuptureAnimationPage_queryRoot_45dR5v on Query {\n  SOLVIS_filter_ruptures(first: $first, after: $after, filter: {model_id: $model_id, fault_system: $fault_system, location_ids: $location_ids, radius_km: $radius_km, minimum_mag: $minimum_mag, maximum_mag: $maximum_mag, minimum_rate: $minimum_rate, maximum_rate: $maximum_rate}, sortby: $sortby) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    edges {\n      node {\n        fault_surfaces\n        magnitude\n        rate_weighted_mean\n        area\n        length\n        id\n        __typename\n      }\n      cursor\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "5f541011a482ca5389761f5a2f61b584";
+(node as any).hash = "30a7ae5314b7888c7661097a2c9d2102";
 
 export default node;

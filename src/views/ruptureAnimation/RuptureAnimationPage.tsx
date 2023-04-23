@@ -38,6 +38,7 @@ export const RuptureAnimationComponent: React.FC = () => {
     maximum_rate: state.rateRange[1],
     model_id: HAZARD_MODEL_ID,
     fault_system: state.faultSystem.slice(0, 3).toUpperCase(),
+    sortby: state.sortby,
   });
 
   useEffect(() => {
@@ -166,6 +167,7 @@ export const RuptureAnimationPaginationComponent: React.FC<Props> = (props: Prop
           setFullscreen={setFullscreen}
           timeDimensionOptions={timeDimensionOptions}
           timeDimension={true}
+          // eslint-disable-next-line prettier/prettier
           timeDimensionGeoJsonData={(ruptureData as typeof GeoJsonObject[]) || ''}
           timeDimensionUnderlay={'' as unknown as typeof GeoJsonObject}
           timeDimensionControlOptions={timeDimensionControlOptions}
@@ -192,8 +194,8 @@ export default RuptureAnimationPage;
 const ruptureAnimationPage_queryRoot = graphql`
   fragment RuptureAnimationPage_queryRoot on Query
   @refetchable(queryName: "RuptureAnimationPagePaginationQuery")
-  @argumentDefinitions(first: { type: "Int", defaultValue: 5 }, after: { type: "String" }, filter: { type: "FilterRupturesArgs!" }) {
-    SOLVIS_filter_ruptures(first: $first, after: $after, filter: $filter) @connection(key: "RuptureAnimationPage_queryRoot_SOLVIS_filter_ruptures") {
+  @argumentDefinitions(first: { type: "Int", defaultValue: 5 }, after: { type: "String" }, filter: { type: "FilterRupturesArgs!" }, sortby: { type: "[SimpleSortRupturesArgs]" }) {
+    SOLVIS_filter_ruptures(first: $first, after: $after, filter: $filter, sortby: $sortby) @connection(key: "RuptureAnimationPage_queryRoot_SOLVIS_filter_ruptures") {
       pageInfo {
         hasNextPage
         endCursor
@@ -223,12 +225,13 @@ export const ruptureAnimationPageQuery = graphql`
     $maximum_mag: Float
     $minimum_rate: Float
     $maximum_rate: Float
+    $sortby: [SimpleSortRupturesArgs]
   ) {
     SOLVIS_locations_by_id(location_ids: $location_ids) {
       edges {
         node {
           ... on LocationDetail {
-            radius_geojson(radius_km: $radius_km, style: { stroke_color: "royalblue", stroke_width: 3, stroke_opacity: 0.5 })
+            radius_geojson(radius_km: $radius_km, style: { stroke_color: "royalblue", stroke_width: 3, stroke_opacity: 0.5, fill_opacity: 0.3 })
           }
         }
       }
@@ -246,6 +249,7 @@ export const ruptureAnimationPageQuery = graphql`
         minimum_rate: $minimum_rate
         maximum_rate: $maximum_rate
       }
+      sortby: $sortby
     ) {
       total_count
     }
@@ -263,6 +267,7 @@ export const ruptureAnimationPageQuery = graphql`
           minimum_rate: $minimum_rate
           maximum_rate: $maximum_rate
         }
+        sortby: $sortby
       )
   }
 `;

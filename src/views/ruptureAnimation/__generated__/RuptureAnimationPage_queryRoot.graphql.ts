@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<80e8ff64e18d39127483dfd539db402e>>
+ * @generated SignedSource<<fa5c4e1344dcf916e3cbb18cdd190d8c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -53,6 +53,11 @@ return {
       "defaultValue": 5,
       "kind": "LocalArgument",
       "name": "first"
+    },
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "sortby"
     }
   ],
   "kind": "Fragment",
@@ -87,6 +92,11 @@ return {
           "kind": "Variable",
           "name": "filter",
           "variableName": "filter"
+        },
+        {
+          "kind": "Variable",
+          "name": "sortby",
+          "variableName": "sortby"
         }
       ],
       "concreteType": "RuptureDetailConnection",
@@ -199,6 +209,6 @@ return {
 };
 })();
 
-(node as any).hash = "5a7af2a2ec196c9e96090c39af238e4d";
+(node as any).hash = "13f07a517faecea5273b2d1e24ed9c94";
 
 export default node;
