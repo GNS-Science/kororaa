@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<534465cb8f6bae281f50f9cd82f388c6>>
+ * @generated SignedSource<<f85bf74cac463ff10713c3fe8e9987ac>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -122,9 +122,9 @@ v14 = {
       "kind": "Literal",
       "name": "style",
       "value": {
-        "fill_opacity": 0.3,
+        "fill_opacity": 0.2,
         "stroke_color": "royalblue",
-        "stroke_opacity": 0.5,
+        "stroke_opacity": 0.2,
         "stroke_width": 3
       }
     }
@@ -453,16 +453,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "0a59085feb5f0ef02ca691bf3a91ff04",
+    "cacheID": "dfdf3a5155f086b3d861b5e4c9950628",
     "id": null,
     "metadata": {},
     "name": "RuptureAnimationPageQuery",
     "operationKind": "query",
-    "text": "query RuptureAnimationPageQuery(\n  $first: Int!\n  $after: String\n  $model_id: String!\n  $fault_system: String!\n  $location_ids: [String]!\n  $radius_km: Int!\n  $minimum_mag: Float\n  $maximum_mag: Float\n  $minimum_rate: Float\n  $maximum_rate: Float\n  $sortby: [SimpleSortRupturesArgs]\n) {\n  SOLVIS_locations_by_id(location_ids: $location_ids) {\n    edges {\n      node {\n        radius_geojson(radius_km: $radius_km, style: {stroke_color: \"royalblue\", stroke_width: 3, stroke_opacity: 0.5, fill_opacity: 0.3})\n        id\n      }\n    }\n  }\n  SOLVIS_filter_ruptures(first: $first, after: $after, filter: {model_id: $model_id, fault_system: $fault_system, location_ids: $location_ids, radius_km: $radius_km, minimum_mag: $minimum_mag, maximum_mag: $maximum_mag, minimum_rate: $minimum_rate, maximum_rate: $maximum_rate}, sortby: $sortby) {\n    total_count\n  }\n  ...RuptureAnimationPage_queryRoot_45dR5v\n}\n\nfragment RuptureAnimationPage_queryRoot_45dR5v on Query {\n  SOLVIS_filter_ruptures(first: $first, after: $after, filter: {model_id: $model_id, fault_system: $fault_system, location_ids: $location_ids, radius_km: $radius_km, minimum_mag: $minimum_mag, maximum_mag: $maximum_mag, minimum_rate: $minimum_rate, maximum_rate: $maximum_rate}, sortby: $sortby) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    edges {\n      node {\n        fault_surfaces\n        magnitude\n        rate_weighted_mean\n        area\n        length\n        id\n        __typename\n      }\n      cursor\n    }\n  }\n}\n"
+    "text": "query RuptureAnimationPageQuery(\n  $first: Int!\n  $after: String\n  $model_id: String!\n  $fault_system: String!\n  $location_ids: [String]!\n  $radius_km: Int!\n  $minimum_mag: Float\n  $maximum_mag: Float\n  $minimum_rate: Float\n  $maximum_rate: Float\n  $sortby: [SimpleSortRupturesArgs]\n) {\n  SOLVIS_locations_by_id(location_ids: $location_ids) {\n    edges {\n      node {\n        radius_geojson(radius_km: $radius_km, style: {stroke_color: \"royalblue\", stroke_width: 3, stroke_opacity: 0.2, fill_opacity: 0.2})\n        id\n      }\n    }\n  }\n  SOLVIS_filter_ruptures(first: $first, after: $after, filter: {model_id: $model_id, fault_system: $fault_system, location_ids: $location_ids, radius_km: $radius_km, minimum_mag: $minimum_mag, maximum_mag: $maximum_mag, minimum_rate: $minimum_rate, maximum_rate: $maximum_rate}, sortby: $sortby) {\n    total_count\n  }\n  ...RuptureAnimationPage_queryRoot_45dR5v\n}\n\nfragment RuptureAnimationPage_queryRoot_45dR5v on Query {\n  SOLVIS_filter_ruptures(first: $first, after: $after, filter: {model_id: $model_id, fault_system: $fault_system, location_ids: $location_ids, radius_km: $radius_km, minimum_mag: $minimum_mag, maximum_mag: $maximum_mag, minimum_rate: $minimum_rate, maximum_rate: $maximum_rate}, sortby: $sortby) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    edges {\n      node {\n        fault_surfaces\n        magnitude\n        rate_weighted_mean\n        area\n        length\n        id\n        __typename\n      }\n      cursor\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "30a7ae5314b7888c7661097a2c9d2102";
+(node as any).hash = "0d7d667d9bd51fdf03c74614d01fd7d7";
 
 export default node;

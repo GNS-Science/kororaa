@@ -86,7 +86,7 @@ describe('Hazard Curves', () => {
     cy.get('li').contains('350').click();
     cy.get('[type="submit"]').click({ force: true });
     cy.get('[role="curve"]').should('have.length', 5);
-    cy.get('[role="listbox"]').focus().type('{esc}');
+    cy.realPress("{esc}");
   });
 
   it.skip('When the save data button is clicked, a CSV file is downloaded', () => {

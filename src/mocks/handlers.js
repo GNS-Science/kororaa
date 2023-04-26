@@ -6,6 +6,13 @@ import { IFMControlsMockData } from './mockData/IFMControlsMockData';
 import { IFMEmptyMockData } from './mockData/IFMEmptyMockData';
 import { IFMTextualContentMockData } from './mockData/IFMTextualContentMockData';
 import { IFMWellington100kmMockData } from './mockData/IFMWellington100kmMockData';
+import { ruptureAnimationMock1 } from './mockData/ruptureAnimationMockPagination/ruptureAnimationMock1';
+import { ruptureAnimationMock2 } from './mockData/ruptureAnimationMockPagination/ruptureAnimationMock2';
+import { ruptureAnimationMock3 } from './mockData/ruptureAnimationMockPagination/ruptureAnimationMock3';
+import { ruptureAnimationMock4 } from './mockData/ruptureAnimationMockPagination/ruptureAnimationMock4';
+import { ruptureAnimationMock5 } from './mockData/ruptureAnimationMockPagination/ruptureAnimationMock5';
+import { ruptureAnimationMock6 } from './mockData/ruptureAnimationMockPagination/ruptureAnimationMock6';
+import { ruptureAnimationControlsMock } from './mockData/ruptureAnimationMockPagination/ruptureAnimationControlsMock';
 
 export const handlers = [
   graphql.query('HazardChartsPlotsViewQuery', (req, res, ctx) => {
@@ -69,5 +76,39 @@ export const handlers = [
   }),
   graphql.query('FaultModelControlsQuery', (req, res, ctx) => {
     return res(ctx.data(IFMControlsMockData));
+  }),
+  graphql.query('RuptureAnimationPageQuery', (req, res, ctx) => {
+    const after = req.variables.after;
+    const faultSystem = req.variables.fault_system;
+    const locationIds = req.variables.location_ids;
+    const radiusKm = req.variables.radius_km;
+
+    if (faultSystem === 'PUY' && locationIds[0] === 'ZQN' && radiusKm === 100) {
+      if (after === null) {
+        return res(ctx.data(ruptureAnimationMock1));
+      }
+    }
+  }),
+  graphql.operation((req, res, ctx) => {
+    const after = req.variables.after;
+    console.log(after);
+    if (after === 'UnVwdHVyZURldGFpbENvbm5lY3Rpb25DdXJzb3I6OQ==') {
+      return res(ctx.data(ruptureAnimationMock2));
+    }
+    if (after === 'UnVwdHVyZURldGFpbENvbm5lY3Rpb25DdXJzb3I6MTQ=') {
+      return res(ctx.data(ruptureAnimationMock3));
+    }
+    if (after === 'UnVwdHVyZURldGFpbENvbm5lY3Rpb25DdXJzb3I6MTk=') {
+      return res(ctx.data(ruptureAnimationMock4));
+    }
+    if (after === 'UnVwdHVyZURldGFpbENvbm5lY3Rpb25DdXJzb3I6MjQ=') {
+      return res(ctx.data(ruptureAnimationMock5));
+    }
+    if (after === 'UnVwdHVyZURldGFpbENvbm5lY3Rpb25DdXJzb3I6Mjk=') {
+      return res(ctx.data(ruptureAnimationMock6));
+    }
+  }),
+  graphql.query('RuptureAnimationPageControlsQuery', (req, res, ctx) => {
+    return res(ctx.data(ruptureAnimationControlsMock));
   }),
 ];

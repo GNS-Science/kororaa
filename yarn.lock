@@ -1367,10 +1367,10 @@
     minimatch "^3.1.2"
     strip-json-comments "^3.1.1"
 
-"@gns-science/toshi-nest@^3.7.16":
-  version "3.7.16"
-  resolved "https://npm.pkg.github.com/download/@GNS-Science/toshi-nest/3.7.16/39c229b21435f4d06a3450cda7ad31f0c167a9b9#39c229b21435f4d06a3450cda7ad31f0c167a9b9"
-  integrity sha512-r8L2CWeLiL+Fc4rIZBx7SfmA/YHOEnQhcInU638bVYi4T2mjlGtW9er8XszEkqtVtOXObToAmGxgHS2eoWTqlA==
+"@gns-science/toshi-nest@^3.7.17":
+  version "3.7.17"
+  resolved "https://npm.pkg.github.com/download/@GNS-Science/toshi-nest/3.7.17/0acb16d7488f583b8379990385b26c3ab2a89d1e#0acb16d7488f583b8379990385b26c3ab2a89d1e"
+  integrity sha512-iIrpcitN4v2TdAo3s3zR23lu/niyGslDNuORF9k3ID2iA5sqm2nUY3aQdYePf5KVRIZJ8oo20VZFtIJJUryEHw==
   dependencies:
     "@emotion/react" "^11.8.2"
     "@emotion/styled" "^11.8.1"
@@ -5108,6 +5108,11 @@ cypress-localstorage-commands@^2.1.0:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/cypress-localstorage-commands/-/cypress-localstorage-commands-2.2.1.tgz#9895d75a3e8059e78d61231c5794dc46e0fc5fdd"
   integrity sha512-m7IwoM+BMOJj7FzzN4It268c/i/Ur72CQX8JwLICkQ6ZgF1XNJOIKlQ7Rszg45ATLTjVTL1QElKCZECoU8cthQ==
+
+cypress-real-events@^1.7.6:
+  version "1.7.6"
+  resolved "https://registry.yarnpkg.com/cypress-real-events/-/cypress-real-events-1.7.6.tgz#6f17e0b2ceea1d6dc60f6737d8f84cc517bbbb4c"
+  integrity sha512-yP6GnRrbm6HK5q4DH6Nnupz37nOfZu/xn1xFYqsE2o4G73giPWQOdu6375QYpwfU1cvHNCgyD2bQ2hPH9D7NMw==
 
 cypress@^10.1.0:
   version "10.8.0"

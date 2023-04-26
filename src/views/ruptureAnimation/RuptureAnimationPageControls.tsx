@@ -13,7 +13,6 @@ import SelectControlMultiple from '../../components/common/SelectControlMultiple
 import SelectControlWithDisable from '../../components/common/SelectControlWithDisable';
 import { RuptureAnimationPageControlsQuery } from './__generated__/RuptureAnimationPageControlsQuery.graphql';
 import { RuptureAnimationPageState } from './ruptureAnimationPageReducer';
-import { sort } from 'mathjs';
 
 const StyledButton = styled(Button)(() => ({
   margin: '10px',
@@ -83,11 +82,11 @@ const RuptureAnimationControls: React.FC<RuptureAnimationControlsProps> = ({ sta
 
   const sortByFormatted = useMemo(() => {
     if (sortBy1 !== 'Unsorted') {
-      if (sortBy2 === '') {
+      if (sortBy2 === '' || sortBy2 === 'Unsorted') {
         return [sortDict[sortBy1]];
-      } else if (sortBy2 !== '') {
+      } else if (sortBy2 !== '' && sortBy2 !== 'Unsorted') {
         return [sortDict[sortBy1], sortDict[sortBy2]];
-      } else return null;
+      }
     }
   }, [sortBy1, sortBy2]);
 

@@ -78,6 +78,8 @@ export const RuptureAnimationPaginationComponent: React.FC<Props> = (props: Prop
     return edge?.node?.radius_geojson;
   });
 
+  // console.log(locationData);
+
   const totalRuptures = useMemo(() => {
     return queryData?.SOLVIS_filter_ruptures?.total_count;
   }, [queryData]);
@@ -151,6 +153,8 @@ export const RuptureAnimationPaginationComponent: React.FC<Props> = (props: Prop
       setLoading(false);
     }
   }, [ruptureData?.length, totalRuptures]);
+
+  console.log(surfaceProperties);
 
   return (
     <>
@@ -231,7 +235,7 @@ export const ruptureAnimationPageQuery = graphql`
       edges {
         node {
           ... on LocationDetail {
-            radius_geojson(radius_km: $radius_km, style: { stroke_color: "royalblue", stroke_width: 3, stroke_opacity: 0.5, fill_opacity: 0.3 })
+            radius_geojson(radius_km: $radius_km, style: { stroke_color: "royalblue", stroke_width: 3, stroke_opacity: 0.2, fill_opacity: 0.2 })
           }
         }
       }
