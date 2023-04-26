@@ -92,9 +92,7 @@ export const RuptureAnimationPaginationComponent: React.FC<Props> = (props: Prop
 
   const surfaceProperties = useMemo(() => {
     return data?.SOLVIS_filter_ruptures?.edges?.map((edge) => {
-      if (edge?.node?.magnitude && edge?.node?.area && edge?.node?.length && edge?.node?.rate_weighted_mean) {
-        return { magnitude: edge?.node?.magnitude, area: edge?.node?.area, length: edge?.node?.length, rate_weighted_mean: edge?.node?.rate_weighted_mean };
-      }
+      return { magnitude: edge?.node?.magnitude, area: edge?.node?.area, length: edge?.node?.length, rate_weighted_mean: edge?.node?.rate_weighted_mean };
     });
   }, [data]);
 
