@@ -7,7 +7,7 @@ import { flexParentCenter } from '../../utils/styleUtils';
 import { getHazardMapCSVData } from './hazardMaps.service';
 import { HazardMapsState } from './hazardMapReducer';
 import CustomControlsBar from '../../components/common/CustomControlsBar';
-import { MAP_IMTS, MAP_POES, MAP_STATISTICS, MAP_VS30S, MAP_GRID_STYLE_DEFAULT, MAP_GRID_VMAX, MAP_GRID_STROKE_WIDTH, HAZARD_MODEL_VERSION } from '../../utils/environmentVariables';
+import { MAP_IMTS, MAP_POES, MAP_STATISTICS, MAP_VS30S, MAP_GRID_STYLE_DEFAULT, MAP_GRID_VMAX, MAP_GRID_STROKE_WIDTH, HAZARD_MODEL_ID } from '../../utils/environmentVariables';
 
 import StyledCSVLink from '../../components/common/StyledCSVLink';
 import { parsePoeString, readablePoe, readablePoeArray } from './hazardMaps.service';
@@ -69,7 +69,7 @@ const HazardMapsControls: React.FC<HazardMapsControlsProps> = ({ startTransition
     }
     toPng(element, { quality: 0.95 }).then((dataUrl: string) => {
       const link = document.createElement('a');
-      link.download = `hazard map-${HAZARD_MODEL_VERSION}.png`;
+      link.download = `hazard map-${HAZARD_MODEL_ID}.png`;
       link.href = dataUrl;
       link.click();
     });

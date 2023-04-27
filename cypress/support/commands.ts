@@ -1,6 +1,8 @@
 /// <reference types="cypress" />
 
 import "cypress-localstorage-commands"
+import 'cypress-real-events';
+
 // ***********************************************
 // This example commands.ts shows you how to
 // create various custom commands and overwrite

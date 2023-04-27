@@ -211,13 +211,20 @@ const NavBar: React.FC = () => {
 
   const pages = [
     {
-      name: 'Site Hazard',
+      name: 'Hazard',
       submenu: [
         { name: 'Curves and Spectra', path: '/HazardCurves' },
         { name: 'Disaggregations', path: '/Disaggs' },
+        { name: 'Hazard Maps', path: '/HazardMaps' },
       ],
     },
-    { name: 'Hazard Maps', path: '/HazardMaps' },
+    {
+      name: 'Ruptures',
+      submenu: [
+        { name: 'Multi-Rupture Map', path: '/IFMAnalysis' },
+        { name: 'Rupture Animation', path: '/RuptureAnimation' },
+      ],
+    },
     { name: 'Coming Features', path: '/Previews' },
     {
       name: 'Resources',
@@ -226,7 +233,6 @@ const NavBar: React.FC = () => {
         { name: 'Other Documents', path: '/Resources/OtherDocuments' },
         { name: 'Model Components', path: '/Resources/ModelComponents' },
         { name: 'Model Versions', path: '/Resources/ModelVersions' },
-        { name: 'Inversion Fault Model', path: '/Resources/IFMAnalysis' },
       ],
     },
     {
