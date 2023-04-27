@@ -14,6 +14,7 @@ import { HazardPageState } from './hazardPageReducer';
 import { HazardChartsPlotsViewQuery$data } from './__generated__/HazardChartsPlotsViewQuery.graphql';
 import { HAZARD_MODEL } from '../../utils/environmentVariables';
 
+
 interface HazardChartsSettingsProps {
   data: HazardChartsPlotsViewQuery$data;
   spectral: boolean;
