@@ -91,7 +91,6 @@ export const handlers = [
   }),
   graphql.operation((req, res, ctx) => {
     const after = req.variables.after;
-    console.log(after);
     if (after === 'UnVwdHVyZURldGFpbENvbm5lY3Rpb25DdXJzb3I6OQ==') {
       return res(ctx.data(ruptureAnimationMock2));
     }

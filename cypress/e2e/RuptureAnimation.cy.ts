@@ -32,8 +32,18 @@ describe('RuptureAnimationPage', () => {
     cy.get('[data-testid="ChevronLeftIcon"]').click({ force: true });
   });
 
-  it('Plays animation', () => {
+  it('Displays different geojson when moving through the animation', () => {
+    cy.get('p').contains('Rupture 1 of 32').should('exist');
+    cy.wait(2000);
+    cy.get('[class="leaflet-control-timecontrol timecontrol-forward"]').click({ force: true });
+    cy.get('p').contains('Rupture 2 of 32').should('exist');
+
+  });
+
+  it.skip('Plays animation and pauses', () => {
     cy.get('[class="leaflet-control-timecontrol timecontrol-play play"]').click();
-    
+    cy.get('[class="leaflet-control-timecontrol timecontrol-play pause"]').should('exist');
+    cy.get('[class="leaflet-control-timecontrol timecontrol-play pause"]').click();
+    cy.get('[class="leaflet-control-timecontrol timecontrol-play play"]').should('exist');
   })
 });

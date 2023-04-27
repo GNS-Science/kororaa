@@ -152,8 +152,6 @@ export const RuptureAnimationPaginationComponent: React.FC<Props> = (props: Prop
     }
   }, [ruptureData?.length, totalRuptures]);
 
-  console.log(surfaceProperties);
-
   return (
     <>
       <React.Suspense fallback={<SimpleBackdrop />}>
