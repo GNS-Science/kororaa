@@ -129,8 +129,7 @@ export const RuptureAnimationPaginationComponent: React.FC<Props> = (props: Prop
   }, [hasNext, needsMore, loadNext]);
 
   useEffect(() => {
-    if (needsMore && hasNoMore) {
-    } else if (!needsMore && !hasNoMore) {
+    if (!needsMore && !hasNoMore) {
       setHasNoMore(false);
     }
   }, [needsMore, hasNoMore]);
