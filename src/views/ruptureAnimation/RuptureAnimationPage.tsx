@@ -155,7 +155,7 @@ export const RuptureAnimationPaginationComponent: React.FC<Props> = (props: Prop
   return (
     <>
       <React.Suspense fallback={<SimpleBackdrop />}>
-        {(loading || isPending) && <SimpleBackdrop />}
+        {isPending && <SimpleBackdrop />}
         <LeafletMap
           zoom={zoom}
           zoomLevel={zoomLevel}
@@ -231,7 +231,7 @@ export const ruptureAnimationPageQuery = graphql`
       edges {
         node {
           ... on LocationDetail {
-            radius_geojson(radius_km: $radius_km, style: { stroke_color: "royalblue", stroke_width: 3, stroke_opacity: 0.2, fill_opacity: 0.2 })
+            radius_geojson(radius_km: $radius_km, style: { stroke_color: "royalblue", stroke_width: 3, stroke_opacity: 0.2, fill_opacity: 0.5, fill_color: "royalblue" })
           }
         }
       }
