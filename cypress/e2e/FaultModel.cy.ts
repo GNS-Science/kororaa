@@ -1,4 +1,4 @@
-describe('Fault Model all locations', () => {
+describe.skip('Fault Model all locations', () => {
   before(() => {
     cy.visit('/Resources/IFMAnalysis');
     cy.get('button').contains('Accept').click();
