@@ -68,17 +68,14 @@ export const RuptureAnimationComponent: React.FC = () => {
 
 export const RuptureAnimationPaginationComponent: React.FC<Props> = (props: Props) => {
   const { queryData, setFullscreen, ruptureConnectionRef, isPending } = props;
-  const { data, hasNext, loadNext, isLoadingNext } = usePaginationFragment<RuptureAnimationPageQuery, RuptureAnimationPage_queryRoot$key>(ruptureAnimationPage_queryRoot, ruptureConnectionRef);
+  const { data, hasNext, loadNext } = usePaginationFragment<RuptureAnimationPageQuery, RuptureAnimationPage_queryRoot$key>(ruptureAnimationPage_queryRoot, ruptureConnectionRef);
   const [zoomLevel, setZoomLevel] = useState<number>(5);
   const [needsMore, setNeedsMore] = useState<boolean>(false);
   const [hasNoMore, setHasNoMore] = useState<boolean>(false);
-  const [loading, setLoading] = useState<boolean>(false);
 
   const locationData = queryData?.SOLVIS_locations_by_id?.edges?.map((edge) => {
     return edge?.node?.radius_geojson;
   });
-
-  // console.log(locationData);
 
   const totalRuptures = useMemo(() => {
     return queryData?.SOLVIS_filter_ruptures?.total_count;
@@ -133,24 +130,10 @@ export const RuptureAnimationPaginationComponent: React.FC<Props> = (props: Prop
 
   useEffect(() => {
     if (needsMore && hasNoMore) {
-      setLoading(true);
     } else if (!needsMore && !hasNoMore) {
-      setLoading(false);
       setHasNoMore(false);
     }
   }, [needsMore, hasNoMore]);
-
-  useEffect(() => {
-    if (!isLoadingNext && !hasNext && hasNoMore && needsMore) {
-      setLoading(false);
-    }
-  }, [isLoadingNext, hasNext, needsMore, hasNoMore]);
-
-  useEffect(() => {
-    if (ruptureData?.length === totalRuptures) {
-      setLoading(false);
-    }
-  }, [ruptureData?.length, totalRuptures]);
 
   return (
     <>
