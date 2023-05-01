@@ -77,8 +77,6 @@ export const RuptureAnimationPaginationComponent: React.FC<Props> = (props: Prop
     return edge?.node?.radius_geojson;
   });
 
-  // console.log(locationData);
-
   const totalRuptures = useMemo(() => {
     return queryData?.SOLVIS_filter_ruptures?.total_count;
   }, [queryData]);
