@@ -13,7 +13,7 @@ import { ruptureAnimationMock4 } from './mockData/ruptureAnimationMockPagination
 import { ruptureAnimationMock5 } from './mockData/ruptureAnimationMockPagination/ruptureAnimationMock5';
 import { ruptureAnimationMock6 } from './mockData/ruptureAnimationMockPagination/ruptureAnimationMock6';
 import { ruptureAnimationControlsMock } from './mockData/ruptureAnimationMockPagination/ruptureAnimationControlsMock';
-
+import { ruptureAnimationMockSorted } from './mockData/ruptureAnimationMockPagination/ruptureAnimationMockSorted';
 export const handlers = [
   graphql.query('HazardChartsPlotsViewQuery', (req, res, ctx) => {
     const locations = req.variables.locs;
@@ -82,11 +82,14 @@ export const handlers = [
     const faultSystem = req.variables.fault_system;
     const locationIds = req.variables.location_ids;
     const radiusKm = req.variables.radius_km;
+    const sortBy = req.variables.sortby;
 
-    if (faultSystem === 'PUY' && locationIds[0] === 'ZQN' && radiusKm === 100) {
+    if (faultSystem === 'PUY' && locationIds[0] === 'ZQN' && radiusKm === 100 && sortBy === null) {
       if (after === null) {
         return res(ctx.data(ruptureAnimationMock1));
       }
+    } else if (sortBy.length === 1) {
+      return res(ctx.data(ruptureAnimationMockSorted));
     }
   }),
   graphql.operation((req, res, ctx) => {

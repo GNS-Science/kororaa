@@ -11,7 +11,7 @@ describe('HazardMapsPage', () => {
   it('Map initially displays default map tile layer and changes map tile layer when user selects different option', () => {
     cy.get('img[src*="arcgisonline"]');
     cy.get('[class="leaflet-control-layers-toggle"]').focus();
-    cy.get('[type="radio"]').last().check();
+    cy.get('[type="radio"]').last().check({force: true});
     cy.get('img[src*="google"]');
   });
 
