@@ -33,8 +33,8 @@ describe('RuptureAnimationPage', () => {
   });
 
   it('Displays different geojson when moving through the animation', () => {
-    cy.get('p').contains('Rupture 1 of 32').should('exist');
     cy.wait(2000);
+    cy.get('p').contains('Rupture 1 of 32').should('exist');
     cy.get('[class="leaflet-control-timecontrol timecontrol-forward"]').click({ force: true });
     cy.get('p').contains('Rupture 2 of 32').should('exist');
 
