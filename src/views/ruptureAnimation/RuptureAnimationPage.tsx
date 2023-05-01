@@ -101,7 +101,7 @@ export const RuptureAnimationPaginationComponent: React.FC<Props> = (props: Prop
       totalRuptures &&
       Array(totalRuptures)
         .fill(0)
-        .map((_, i) => i + 1 + Math.random())
+        .map((_, i) => i + 1)
     );
   }, [totalRuptures]);
 
