@@ -1676,6 +1676,8 @@ type Query {
   ): CompositeSolution
   SOLVIS_composite_rupture_detail(filter: CompositeRuptureDetailArgs!): CompositeRuptureDetail
   SOLVIS_filter_ruptures(filter: FilterRupturesArgs!, sortby: [SimpleSortRupturesArgs] = [], before: String, after: String, first: Int, last: Int): RuptureDetailConnection
+<<<<<<< HEAD
+<<<<<<< HEAD
   SOLVIS_filter_rupture_sections(
     filter: FilterRupturesArgs!
     color_scale: ColorScaleArgs
@@ -1683,6 +1685,21 @@ type Query {
     """feature style for rupture surface geojson."""
     surface_style: GeojsonAreaStyleArguments
   ): CompositeRuptureSections
+||||||| parent of 573f968 (update schema; add MRM pages;)
+=======
+  SOLVIS_filter_rupture_sections(filter: FilterRupturesArgs!): CompositeRuptureSections
+>>>>>>> 573f968 (update schema; add MRM pages;)
+||||||| parent of f352299 (update nest; fix popups for all maps; change styling for popups; update schema; update MRM query;)
+  SOLVIS_filter_rupture_sections(filter: FilterRupturesArgs!): CompositeRuptureSections
+=======
+  SOLVIS_filter_rupture_sections(
+    filter: FilterRupturesArgs!
+    color_scale: ColorScaleArgs
+
+    """feature style for rupture surface geojson."""
+    surface_style: GeojsonAreaStyleArguments
+  ): CompositeRuptureSections
+>>>>>>> f352299 (update nest; fix popups for all maps; change styling for popups; update schema; update MRM query;)
 
   """Return ad single radii_set for the id passed in"""
   SOLVIS_get_radii_set(
