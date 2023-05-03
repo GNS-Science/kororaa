@@ -202,7 +202,27 @@ type BranchAttributeValueSpec {
 
 union ChildTaskUnion = GeneralTask | RuptureGenerationTask | AutomationTask | OpenquakeHazardTask
 
+type ColorScale {
+  name: String
+  min_value: Float
+  max_value: Float
+  normalisation: ColourScaleNormaliseEnum
+  color_map: HexRgbValueMapping
+}
+
+input ColorScaleArgs {
+  name: String!
+  min_value: Float
+  max_value: Float
+  normalisation: ColourScaleNormaliseEnum
+}
+
 enum ColourScaleNormalise {
+  LOG
+  LIN
+}
+
+enum ColourScaleNormaliseEnum {
   LOG
   LIN
 }
@@ -275,6 +295,7 @@ type CompositeRuptureSections {
   """
   min_participation_rate: Float
   fault_surfaces: JSONString
+  color_scale(name: String, normalization: ColourScaleNormaliseEnum, min_value: Float, max_value: Float): ColorScale
 }
 
 type CompositeSolution {
@@ -1636,6 +1657,7 @@ type Query {
   KORORAA_gridded_location(lat: Float, lon: Float, resolution: Float): GriddedLocationResult
   KORORAA_hazard_curves(hazard_model: String, imts: [String], locs: [String], aggs: [String], vs30s: [Int], resolution: Float = 0.1): ToshiHazardCurveResult
   KORORAA_gridded_hazard(grid_id: RegionGrid, hazard_model_id: String, imt: String, loc: String, agg: String, vs30: Int, poe: Float): GriddedHazardResult
+  SOLVIS_color_scale(name: String, min_value: Float, max_value: Float, normalization: ColourScaleNormaliseEnum): ColorScale
   SOLVIS_node(
     """The ID of the object"""
     id: ID!
@@ -1654,7 +1676,13 @@ type Query {
   ): CompositeSolution
   SOLVIS_composite_rupture_detail(filter: CompositeRuptureDetailArgs!): CompositeRuptureDetail
   SOLVIS_filter_ruptures(filter: FilterRupturesArgs!, sortby: [SimpleSortRupturesArgs] = [], before: String, after: String, first: Int, last: Int): RuptureDetailConnection
-  SOLVIS_filter_rupture_sections(filter: FilterRupturesArgs!): CompositeRuptureSections
+  SOLVIS_filter_rupture_sections(
+    filter: FilterRupturesArgs!
+    color_scale: ColorScaleArgs
+
+    """feature style for rupture surface geojson."""
+    surface_style: GeojsonAreaStyleArguments
+  ): CompositeRuptureSections
 
   """Return ad single radii_set for the id passed in"""
   SOLVIS_get_radii_set(

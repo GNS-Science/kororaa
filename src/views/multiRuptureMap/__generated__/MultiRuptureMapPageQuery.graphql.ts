@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2987eb07cff98ef08d51dff311da25e0>>
+ * @generated SignedSource<<16efea3b1ebad3953aaea722ea341cd2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -117,9 +117,9 @@ v13 = {
       "name": "style",
       "value": {
         "fill_color": "royalblue",
-        "fill_opacity": 0.5,
+        "fill_opacity": 0.01,
         "stroke_color": "royalblue",
-        "stroke_opacity": 0.2,
+        "stroke_opacity": 1,
         "stroke_width": 3
       }
     }
@@ -131,6 +131,13 @@ v13 = {
 v14 = {
   "alias": null,
   "args": [
+    {
+      "kind": "Literal",
+      "name": "color_scale",
+      "value": {
+        "name": "inferno"
+      }
+    },
     {
       "fields": [
         {
@@ -318,16 +325,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "d33db9a5dd37d2f9645122c7d5b0fd08",
+    "cacheID": "912ff2227fb6111208ff99c4e0a9906e",
     "id": null,
     "metadata": {},
     "name": "MultiRuptureMapPageQuery",
     "operationKind": "query",
-    "text": "query MultiRuptureMapPageQuery(\n  $model_id: String!\n  $fault_system: String!\n  $location_ids: [String]!\n  $radius_km: Int!\n  $minimum_mag: Float\n  $maximum_mag: Float\n  $minimum_rate: Float\n  $maximum_rate: Float\n) {\n  SOLVIS_locations_by_id(location_ids: $location_ids) {\n    edges {\n      node {\n        location_id\n        name\n        radius_geojson(radius_km: $radius_km, style: {stroke_color: \"royalblue\", stroke_width: 3, stroke_opacity: 0.2, fill_opacity: 0.5, fill_color: \"royalblue\"})\n        id\n      }\n    }\n  }\n  SOLVIS_filter_rupture_sections(filter: {model_id: $model_id, location_ids: $location_ids, fault_system: $fault_system, radius_km: $radius_km, minimum_mag: $minimum_mag, maximum_mag: $maximum_mag, minimum_rate: $minimum_rate, maximum_rate: $maximum_rate}) {\n    model_id\n    section_count\n    fault_surfaces\n  }\n}\n"
+    "text": "query MultiRuptureMapPageQuery(\n  $model_id: String!\n  $fault_system: String!\n  $location_ids: [String]!\n  $radius_km: Int!\n  $minimum_mag: Float\n  $maximum_mag: Float\n  $minimum_rate: Float\n  $maximum_rate: Float\n) {\n  SOLVIS_locations_by_id(location_ids: $location_ids) {\n    edges {\n      node {\n        location_id\n        name\n        radius_geojson(radius_km: $radius_km, style: {stroke_color: \"royalblue\", stroke_width: 3, stroke_opacity: 1, fill_opacity: 0.01, fill_color: \"royalblue\"})\n        id\n      }\n    }\n  }\n  SOLVIS_filter_rupture_sections(filter: {model_id: $model_id, location_ids: $location_ids, fault_system: $fault_system, radius_km: $radius_km, minimum_mag: $minimum_mag, maximum_mag: $maximum_mag, minimum_rate: $minimum_rate, maximum_rate: $maximum_rate}, color_scale: {name: \"inferno\"}) {\n    model_id\n    section_count\n    fault_surfaces\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "3f175466d4b5e962c6dc93df86f9e340";
+(node as any).hash = "e828d90d82864b583f7e1d90962e7fbd";
 
 export default node;
