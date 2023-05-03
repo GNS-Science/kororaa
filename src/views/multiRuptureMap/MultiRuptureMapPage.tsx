@@ -76,7 +76,7 @@ export const MultiRuptureMapComponent: React.FC<Props> = (props: Props) => {
   const colorScale = useMemo<ColorScale>(() => {
     if (queryData?.SOLVIS_filter_rupture_sections?.color_scale?.color_map?.levels && queryData?.SOLVIS_filter_rupture_sections?.color_scale?.color_map?.hexrgbs) {
       return {
-        levels: queryData?.SOLVIS_filter_rupture_sections?.color_scale?.color_map?.levels.map((level) => level?.toExponential(2)) ?? [],
+        levels: queryData?.SOLVIS_filter_rupture_sections?.color_scale?.color_map?.levels.map((level) => level?.toExponential(0)) ?? [],
         hexrgbs: queryData?.SOLVIS_filter_rupture_sections?.color_scale?.color_map?.hexrgbs.map((color) => color?.toString()) ?? [],
       };
     }
@@ -148,12 +148,13 @@ export const MultiRuptureMapComponent: React.FC<Props> = (props: Props) => {
         {colorScale && (
           <ColorBar
             heading={'Participation Rate'}
-            width={276}
+            width={350}
             height={35}
             colors={colorScale?.hexrgbs}
             tickValues={colorScale?.levels}
+            linear={false}
             style={
-              !fullscreen ? { position: 'relative', zIndex: 119700, top: '-115px', left: 'calc(100% - 319px)' } : { position: 'absolute', zIndex: 119700, bottom: '14px', left: 'calc(100% - 319px)' }
+              !fullscreen ? { position: 'relative', zIndex: 119700, top: '-115px', left: 'calc(100% - 396px)' } : { position: 'absolute', zIndex: 119700, bottom: '14px', left: 'calc(100% - 396px)' }
             }
           />
         )}
