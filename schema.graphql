@@ -202,7 +202,27 @@ type BranchAttributeValueSpec {
 
 union ChildTaskUnion = GeneralTask | RuptureGenerationTask | AutomationTask | OpenquakeHazardTask
 
+type ColorScale {
+  name: String
+  min_value: Float
+  max_value: Float
+  normalisation: ColourScaleNormaliseEnum
+  color_map: HexRgbValueMapping
+}
+
+input ColorScaleArgs {
+  name: String!
+  min_value: Float
+  max_value: Float
+  normalisation: ColourScaleNormaliseEnum
+}
+
 enum ColourScaleNormalise {
+  LOG
+  LIN
+}
+
+enum ColourScaleNormaliseEnum {
   LOG
   LIN
 }
@@ -252,6 +272,30 @@ input CompositeRuptureDetailArgs {
 
   """feature style for rupture trace geojson."""
   fault_trace_style: GeojsonLineStyleArguments = {stroke_color: "black", stroke_width: 1, stroke_opacity: 1}
+}
+
+type CompositeRuptureSections {
+  model_id: String
+  rupture_count: Int
+  section_count: Int
+
+  """maximum magnitude from contributing solutions"""
+  max_magnitude: Float
+
+  """minimum magnitude from contributing solutions"""
+  min_magnitude: Float
+
+  """
+  maximum section participation rate (sum of rate_weighted_mean.sum) over the contributing solutions
+  """
+  max_participation_rate: Float
+
+  """
+  minimum section participation rate (sum of rate_weighted_mean.sum) over the contributing solutions
+  """
+  min_participation_rate: Float
+  fault_surfaces: JSONString
+  color_scale(name: String, normalization: ColourScaleNormaliseEnum, min_value: Float, max_value: Float): ColorScale
 }
 
 type CompositeSolution {
@@ -788,7 +832,7 @@ input FilterRupturesArgs {
   """The ID of NSHM model"""
   model_id: String!
 
-  """One or more fault systems to consider from [`HIK`, `PUY`, `CRU`]"""
+  """The fault systems [`HIK`, `PUY`, `CRU`]"""
   fault_system: String!
 
   """
@@ -1613,6 +1657,7 @@ type Query {
   KORORAA_gridded_location(lat: Float, lon: Float, resolution: Float): GriddedLocationResult
   KORORAA_hazard_curves(hazard_model: String, imts: [String], locs: [String], aggs: [String], vs30s: [Int], resolution: Float = 0.1): ToshiHazardCurveResult
   KORORAA_gridded_hazard(grid_id: RegionGrid, hazard_model_id: String, imt: String, loc: String, agg: String, vs30: Int, poe: Float): GriddedHazardResult
+  SOLVIS_color_scale(name: String, min_value: Float, max_value: Float, normalization: ColourScaleNormaliseEnum): ColorScale
   SOLVIS_node(
     """The ID of the object"""
     id: ID!
@@ -1631,6 +1676,13 @@ type Query {
   ): CompositeSolution
   SOLVIS_composite_rupture_detail(filter: CompositeRuptureDetailArgs!): CompositeRuptureDetail
   SOLVIS_filter_ruptures(filter: FilterRupturesArgs!, sortby: [SimpleSortRupturesArgs] = [], before: String, after: String, first: Int, last: Int): RuptureDetailConnection
+  SOLVIS_filter_rupture_sections(
+    filter: FilterRupturesArgs!
+    color_scale: ColorScaleArgs
+
+    """feature style for rupture surface geojson."""
+    surface_style: GeojsonAreaStyleArguments
+  ): CompositeRuptureSections
 
   """Return ad single radii_set for the id passed in"""
   SOLVIS_get_radii_set(
