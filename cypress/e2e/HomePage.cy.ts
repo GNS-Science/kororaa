@@ -83,7 +83,7 @@ describe('NavBarLinks', () => {
   it('IFM nav link works', () => {
     cy.get('header').contains('Ruptures').click();
     cy.get('[role="menuitem"]').contains('Multi-Rupture Map').click({ force: true });
-    cy.url().should('include', '/IFMAnalysis')
+    cy.url().should('include', '/MultiRuptureMap')
   })
 
   it('IFM nav link works', () => {
