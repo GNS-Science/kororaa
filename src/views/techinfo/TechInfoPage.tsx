@@ -55,7 +55,7 @@ const rows = [
   createData('Taupo', -38.68, 176.08),
   createData('Rotorua', -38.14, 176.25),
   createData('Whakatane', -37.98, 177.0),
-  createData('Franz Josef', -43.35, 170.17),
+  createData('Franz Josef', -43.38, 170.19),
   createData('Wellington', -41.3, 174.78),
   createData('Westport', -41.75, 171.58),
   createData('Whanganui', -39.93, 175.05),

@@ -24,17 +24,23 @@ const TitleContainer = styled('div')({
 });
 
 const markdown = `
+## NSHM_v1.0.4 - 2023-05-05
+
+### Fixed
+- Fault dip direction for crustal faults
+- Dip orientation of Puysegur fault sections corrected.
+- Kermadec interface location corrected. A bug had placed sources east of 180 degrees longitude in the wrong position.
+- Statistical aggregation of hazard curves. A bug introduced a small error (<1%) in the mean hazard curve at high probability / low values of shaking
+
 ## NSHM_v1.0.0 - 2022-10-04
 
 Initial release of the NZ NSHM 2022 revision
 
 ### Bug Advisory: April 2023
-We have identified some errors in **NSHM_v1.0.0**. These errors are being corrected and are unlikely to affect any NSHM results-based decision making.
 
-A bug in internationally sourced computer modelling code affected fault dips in the final step of the hazard calculations and affected
-every result from the modelling. However, tests show that the correction will introduce negligible hazard changes for most of the country.
+We have identified some errors in NSHM_v1.0.0. These errors are being corrected and are unlikely to affect any NSHM results-based decision making.
 
-More information will follow as it is available.
+A bug in internationally sourced computer modelling code affected fault dips in the final step of the hazard calculations and affected every result from the modelling. However, tests show that the correction will introduce negligible hazard changes for most of the country. One particular section of the Alpine Fault was affected, and the fault was moved farther or nearer to certain locations. The mean hazard estimate for Franz Joseph has effectively remain unchanged while the mean hazard estimate for Aoraki/Mt Cook has increased. These changes are unlikely to affect any NSHM results-based decision making.
 `;
 
 const ModelVersionsComponent: React.FC = () => {
