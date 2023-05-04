@@ -1,4 +1,4 @@
-export const ruptureAnimationControlsMock = {
+export const solvisControlsMock = {
   SOLVIS_get_radii_set: {
     radii: [10000, 20000, 30000, 40000, 50000, 100000],
   },

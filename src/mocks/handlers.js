@@ -1,18 +1,18 @@
 import { graphql } from 'msw';
-import { wellington400Response, wellingtonChristchurchResponse, arbitraryLatLonResponse, initialResponse } from './mockData/HazardChartsPlotsViewMockData';
-import { hazardMapMockData } from './mockData/HazardMapMockData';
-import { IFMAllLocationsMockData } from './mockData/IFMAllLocationsMockData';
-import { IFMControlsMockData } from './mockData/IFMControlsMockData';
-import { IFMEmptyMockData } from './mockData/IFMEmptyMockData';
-import { IFMTextualContentMockData } from './mockData/IFMTextualContentMockData';
-import { IFMWellington100kmMockData } from './mockData/IFMWellington100kmMockData';
+import { wellington400Response, wellingtonChristchurchResponse, arbitraryLatLonResponse, initialResponse } from './mockData/hazardMocks/HazardChartsPlotsViewMockData';
+import { hazardMapMockData } from './mockData/hazardMocks/HazardMapMockData';
+import { IFMAllLocationsMockData } from './mockData/IFMMocks/IFMAllLocationsMockData';
+import { IFMControlsMockData } from './mockData/IFMMocks/IFMControlsMockData';
+import { IFMEmptyMockData } from './mockData/IFMMocks/IFMEmptyMockData';
+import { IFMTextualContentMockData } from './mockData/IFMMocks/IFMTextualContentMockData';
+import { IFMWellington100kmMockData } from './mockData/IFMMocks/IFMWellington100kmMockData';
 import { ruptureAnimationMock1 } from './mockData/ruptureAnimationMockPagination/ruptureAnimationMock1';
 import { ruptureAnimationMock2 } from './mockData/ruptureAnimationMockPagination/ruptureAnimationMock2';
 import { ruptureAnimationMock3 } from './mockData/ruptureAnimationMockPagination/ruptureAnimationMock3';
 import { ruptureAnimationMock4 } from './mockData/ruptureAnimationMockPagination/ruptureAnimationMock4';
 import { ruptureAnimationMock5 } from './mockData/ruptureAnimationMockPagination/ruptureAnimationMock5';
 import { ruptureAnimationMock6 } from './mockData/ruptureAnimationMockPagination/ruptureAnimationMock6';
-import { ruptureAnimationControlsMock } from './mockData/ruptureAnimationMockPagination/ruptureAnimationControlsMock';
+import { solvisControlsMock } from './mockData/solvisControlsMock';
 import { ruptureAnimationMockSorted } from './mockData/ruptureAnimationMockPagination/ruptureAnimationMockSorted';
 export const handlers = [
   graphql.query('HazardChartsPlotsViewQuery', (req, res, ctx) => {
@@ -111,6 +111,6 @@ export const handlers = [
     }
   }),
   graphql.query('RuptureAnimationPageControlsQuery', (req, res, ctx) => {
-    return res(ctx.data(ruptureAnimationControlsMock));
+    return res(ctx.data(solvisControlsMock));
   }),
 ];

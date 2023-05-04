@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<16efea3b1ebad3953aaea722ea341cd2>>
+ * @generated SignedSource<<8db5802c625b7fea88decfca0867b410>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -33,6 +33,15 @@ export type MultiRuptureMapPageQuery$data = {
     readonly model_id: string | null;
     readonly section_count: number | null;
     readonly fault_surfaces: any | null;
+    readonly color_scale: {
+      readonly name: string | null;
+      readonly min_value: number | null;
+      readonly max_value: number | null;
+      readonly color_map: {
+        readonly levels: ReadonlyArray<number | null> | null;
+        readonly hexrgbs: ReadonlyArray<string | null> | null;
+      } | null;
+    } | null;
   } | null;
 };
 export type MultiRuptureMapPageQuery = {
@@ -202,6 +211,63 @@ v14 = {
       "kind": "ScalarField",
       "name": "fault_surfaces",
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "name",
+          "value": "inferno"
+        }
+      ],
+      "concreteType": "ColorScale",
+      "kind": "LinkedField",
+      "name": "color_scale",
+      "plural": false,
+      "selections": [
+        (v11/*: any*/),
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "min_value",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "max_value",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "HexRgbValueMapping",
+          "kind": "LinkedField",
+          "name": "color_map",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "levels",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "hexrgbs",
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        }
+      ],
+      "storageKey": "color_scale(name:\"inferno\")"
     }
   ],
   "storageKey": null
@@ -325,16 +391,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "912ff2227fb6111208ff99c4e0a9906e",
+    "cacheID": "6520e989063cbac110dbf45f6f2e91d8",
     "id": null,
     "metadata": {},
     "name": "MultiRuptureMapPageQuery",
     "operationKind": "query",
-    "text": "query MultiRuptureMapPageQuery(\n  $model_id: String!\n  $fault_system: String!\n  $location_ids: [String]!\n  $radius_km: Int!\n  $minimum_mag: Float\n  $maximum_mag: Float\n  $minimum_rate: Float\n  $maximum_rate: Float\n) {\n  SOLVIS_locations_by_id(location_ids: $location_ids) {\n    edges {\n      node {\n        location_id\n        name\n        radius_geojson(radius_km: $radius_km, style: {stroke_color: \"royalblue\", stroke_width: 3, stroke_opacity: 1, fill_opacity: 0.01, fill_color: \"royalblue\"})\n        id\n      }\n    }\n  }\n  SOLVIS_filter_rupture_sections(filter: {model_id: $model_id, location_ids: $location_ids, fault_system: $fault_system, radius_km: $radius_km, minimum_mag: $minimum_mag, maximum_mag: $maximum_mag, minimum_rate: $minimum_rate, maximum_rate: $maximum_rate}, color_scale: {name: \"inferno\"}) {\n    model_id\n    section_count\n    fault_surfaces\n  }\n}\n"
+    "text": "query MultiRuptureMapPageQuery(\n  $model_id: String!\n  $fault_system: String!\n  $location_ids: [String]!\n  $radius_km: Int!\n  $minimum_mag: Float\n  $maximum_mag: Float\n  $minimum_rate: Float\n  $maximum_rate: Float\n) {\n  SOLVIS_locations_by_id(location_ids: $location_ids) {\n    edges {\n      node {\n        location_id\n        name\n        radius_geojson(radius_km: $radius_km, style: {stroke_color: \"royalblue\", stroke_width: 3, stroke_opacity: 1, fill_opacity: 0.01, fill_color: \"royalblue\"})\n        id\n      }\n    }\n  }\n  SOLVIS_filter_rupture_sections(filter: {model_id: $model_id, location_ids: $location_ids, fault_system: $fault_system, radius_km: $radius_km, minimum_mag: $minimum_mag, maximum_mag: $maximum_mag, minimum_rate: $minimum_rate, maximum_rate: $maximum_rate}, color_scale: {name: \"inferno\"}) {\n    model_id\n    section_count\n    fault_surfaces\n    color_scale(name: \"inferno\") {\n      name\n      min_value\n      max_value\n      color_map {\n        levels\n        hexrgbs\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "e828d90d82864b583f7e1d90962e7fbd";
+(node as any).hash = "8cbc60c9c1201ed9ae0b300c46a92cfe";
 
 export default node;

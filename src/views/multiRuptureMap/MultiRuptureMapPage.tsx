@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useReducer, useTransition, useMemo } from 'react';
-import { LeafletMap, LeafletDrawer } from '@gns-science/toshi-nest';
+import { LeafletMap, LeafletDrawer, ColorBar } from '@gns-science/toshi-nest';
 import { Box, GlobalStyles, Typography } from '@mui/material';
 import { useLazyLoadQuery } from 'react-relay';
 import '../../css/leaflet.timedimension.control.css';
@@ -12,12 +12,14 @@ import MultiRuptureMapControls from './MultiRuptureMapPageControls';
 import SimpleBackdrop from '../../components/common/SimpleBackdrop';
 import { multiRuptureMapPageReducer, multiRuptureMapPageReducerInitialState } from './multiRuptureMapPageReducer';
 import { MultiRuptureMapPageQuery, MultiRuptureMapPageQuery$data } from './__generated__/MultiRuptureMapPageQuery.graphql';
-
 type Props = {
   queryData: MultiRuptureMapPageQuery$data;
+  fullscreen: boolean;
   setFullscreen: (fullscreen: boolean) => void;
   isPending: boolean;
 };
+
+type ColorScale = { levels: (string | undefined)[]; hexrgbs: (string | undefined)[] } | undefined;
 
 export const MultiRuptureMap: React.FC = () => {
   const [state, dispatch] = useReducer(multiRuptureMapPageReducer, multiRuptureMapPageReducerInitialState);
@@ -48,7 +50,7 @@ export const MultiRuptureMap: React.FC = () => {
   return (
     <>
       <Box id="map" sx={{ width: '100%', height: '80vh' }}>
-        <MultiRuptureMapComponent setFullscreen={setFullscreen} queryData={initialData} isPending={isPending} />
+        <MultiRuptureMapComponent fullscreen={fullscreen} setFullscreen={setFullscreen} queryData={initialData} isPending={isPending} />
       </Box>
       <LeafletDrawer drawerHeight={'80vh'} headerHeight={`${100 - scrollHeight}px`} width={'400px'} fullscreen={fullscreen}>
         <Typography variant="h4" sx={{ textAlign: 'center' }}>
@@ -62,7 +64,7 @@ export const MultiRuptureMap: React.FC = () => {
 };
 
 export const MultiRuptureMapComponent: React.FC<Props> = (props: Props) => {
-  const { queryData, setFullscreen, isPending } = props;
+  const { queryData, fullscreen, setFullscreen, isPending } = props;
   const [zoomLevel, setZoomLevel] = useState<number>(5);
 
   const locationData = queryData?.SOLVIS_locations_by_id?.edges?.map((edge) => {
@@ -70,7 +72,15 @@ export const MultiRuptureMapComponent: React.FC<Props> = (props: Props) => {
   });
 
   const geoJsonData = queryData?.SOLVIS_filter_rupture_sections?.fault_surfaces;
-  console.log(geoJsonData);
+
+  const colorScale = useMemo<ColorScale>(() => {
+    if (queryData?.SOLVIS_filter_rupture_sections?.color_scale?.color_map?.levels && queryData?.SOLVIS_filter_rupture_sections?.color_scale?.color_map?.hexrgbs) {
+      return {
+        levels: queryData?.SOLVIS_filter_rupture_sections?.color_scale?.color_map?.levels.map((level) => level?.toExponential(0)) ?? [],
+        hexrgbs: queryData?.SOLVIS_filter_rupture_sections?.color_scale?.color_map?.hexrgbs.map((color) => color?.toString()) ?? [],
+      };
+    }
+  }, [queryData]);
 
   const geoJson = useMemo(() => {
     if (geoJsonData !== null && geoJsonData !== undefined && locationData && locationData.length > 0) {
@@ -135,6 +145,19 @@ export const MultiRuptureMapComponent: React.FC<Props> = (props: Props) => {
           setFullscreen={setFullscreen}
           onEachFeature={onEachFeature}
         />
+        {colorScale && (
+          <ColorBar
+            heading={'Participation Rate'}
+            width={350}
+            height={35}
+            colors={colorScale?.hexrgbs}
+            tickValues={colorScale?.levels}
+            linear={false}
+            style={
+              !fullscreen ? { position: 'relative', zIndex: 119700, top: '-115px', left: 'calc(100% - 396px)' } : { position: 'absolute', zIndex: 119700, bottom: '14px', left: 'calc(100% - 396px)' }
+            }
+          />
+        )}
       </React.Suspense>
     </>
   );
@@ -186,6 +209,15 @@ export const multiRuptureMapPageQuery = graphql`
       model_id
       section_count
       fault_surfaces
+      color_scale(name: "inferno") {
+        name
+        min_value
+        max_value
+        color_map {
+          levels
+          hexrgbs
+        }
+      }
     }
   }
 `;
