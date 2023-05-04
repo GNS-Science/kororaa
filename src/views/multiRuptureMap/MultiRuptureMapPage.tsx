@@ -17,6 +17,7 @@ type Props = {
   fullscreen: boolean;
   setFullscreen: (fullscreen: boolean) => void;
   isPending: boolean;
+  setGeoJsonError: (geoJsonError: string | null) => void;
 };
 
 type ColorScale = { levels: (string | undefined)[]; hexrgbs: (string | undefined)[] } | undefined;
@@ -26,8 +27,9 @@ export const MultiRuptureMap: React.FC = () => {
   const [isPending, startTransition] = useTransition();
   const [fullscreen, setFullscreen] = React.useState<boolean>(false);
   const [scrollHeight, setScrollHeight] = useState<number>(0);
+  const [geoJsonError, setGeoJsonError] = useState<string | null>(null);
 
-  const initialData = useLazyLoadQuery<MultiRuptureMapPageQuery>(multiRuptureMapPageQuery, {
+  const data = useLazyLoadQuery<MultiRuptureMapPageQuery>(multiRuptureMapPageQuery, {
     location_ids: state.locationCodes,
     radius_km: state.radius,
     minimum_mag: state.magnitudeRange[0],
@@ -50,21 +52,21 @@ export const MultiRuptureMap: React.FC = () => {
   return (
     <>
       <Box id="map" sx={{ width: '100%', height: '80vh' }}>
-        <MultiRuptureMapComponent fullscreen={fullscreen} setFullscreen={setFullscreen} queryData={initialData} isPending={isPending} />
+        <MultiRuptureMapComponent fullscreen={fullscreen} setFullscreen={setFullscreen} setGeoJsonError={setGeoJsonError} queryData={data} isPending={isPending} />
       </Box>
       <LeafletDrawer drawerHeight={'80vh'} headerHeight={`${100 - scrollHeight}px`} width={'400px'} fullscreen={fullscreen}>
         <Typography variant="h4" sx={{ textAlign: 'center' }}>
           Multi-Rupture Map
           <InfoTooltip content={'tooltip to come'} format={false} />
         </Typography>
-        <MultiRuptureMapControls startTransition={startTransition} isPending={isPending} dispatch={dispatch} />
+        <MultiRuptureMapControls startTransition={startTransition} isPending={isPending} geoJsonError={geoJsonError} dispatch={dispatch} />
       </LeafletDrawer>
     </>
   );
 };
 
 export const MultiRuptureMapComponent: React.FC<Props> = (props: Props) => {
-  const { queryData, fullscreen, setFullscreen, isPending } = props;
+  const { queryData, fullscreen, setFullscreen, isPending, setGeoJsonError } = props;
   const [zoomLevel, setZoomLevel] = useState<number>(5);
 
   const locationData = queryData?.SOLVIS_locations_by_id?.edges?.map((edge) => {
@@ -93,6 +95,14 @@ export const MultiRuptureMapComponent: React.FC<Props> = (props: Props) => {
       return [];
     }
   }, [geoJsonData, locationData]);
+
+  useEffect(() => {
+    if (locationData && locationData.length > 0 && !geoJsonData) {
+      setGeoJsonError('No fault sections satisfy the filter.');
+    } else {
+      setGeoJsonError(null);
+    }
+  }, [geoJsonData, locationData, setGeoJsonError]);
 
   const zoom = 5;
   const nzCentre = [-40.946, 174.167];
