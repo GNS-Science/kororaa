@@ -97,7 +97,7 @@ export const RuptureAnimationPaginationComponent: React.FC<Props> = (props: Prop
 
   useEffect(() => {
     if (locationData && locationData.length > 0 && ruptureData?.length === 0) {
-      setGeoJsonError('No fault sections satisfy the filter.');
+      setGeoJsonError('No ruptures satisfy the filter.');
     } else {
       setGeoJsonError(null);
     }

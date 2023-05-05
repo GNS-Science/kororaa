@@ -98,7 +98,7 @@ export const MultiRuptureMapComponent: React.FC<Props> = (props: Props) => {
 
   useEffect(() => {
     if (locationData && locationData.length > 0 && !geoJsonData) {
-      setGeoJsonError('No fault sections satisfy the filter.');
+      setGeoJsonError('No ruptures satisfy the filter.');
     } else {
       setGeoJsonError(null);
     }
