@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8e8a51206f7e715ef386c76b98b6992e>>
+ * @generated SignedSource<<d5680cf24fd6a47626b3d3f8e4af1c39>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,7 +10,7 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type FilterRupturesArgs = {
+export type FilterRupturesArgsInput = {
   model_id: string;
   fault_system: string;
   location_ids?: ReadonlyArray<string | null> | null;
@@ -19,20 +19,6 @@ export type FilterRupturesArgs = {
   maximum_rate?: number | null;
   minimum_mag?: number | null;
   maximum_mag?: number | null;
-  fault_trace_style?: GeojsonLineStyleArguments | null;
-  fault_surface_style?: GeojsonAreaStyleArguments | null;
-};
-export type GeojsonLineStyleArguments = {
-  stroke_color?: string | null;
-  stroke_width?: number | null;
-  stroke_opacity?: number | null;
-};
-export type GeojsonAreaStyleArguments = {
-  stroke_color?: string | null;
-  stroke_width?: number | null;
-  stroke_opacity?: number | null;
-  fill_color?: string | null;
-  fill_opacity?: number | null;
 };
 export type SimpleSortRupturesArgs = {
   attribute?: string | null;
@@ -40,7 +26,7 @@ export type SimpleSortRupturesArgs = {
 };
 export type RuptureAnimationPagePaginationQuery$variables = {
   after?: string | null;
-  filter: FilterRupturesArgs;
+  filter: FilterRupturesArgsInput;
   first?: number | null;
   sortby?: ReadonlyArray<SimpleSortRupturesArgs | null> | null;
 };
@@ -248,16 +234,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "b3e6e48ed93381386045c10b22530771",
+    "cacheID": "687a3366bc7f896dfb93bdd4685d2b28",
     "id": null,
     "metadata": {},
     "name": "RuptureAnimationPagePaginationQuery",
     "operationKind": "query",
-    "text": "query RuptureAnimationPagePaginationQuery(\n  $after: String\n  $filter: FilterRupturesArgs!\n  $first: Int = 5\n  $sortby: [SimpleSortRupturesArgs]\n) {\n  ...RuptureAnimationPage_queryRoot_108mgy\n}\n\nfragment RuptureAnimationPage_queryRoot_108mgy on Query {\n  SOLVIS_filter_ruptures(first: $first, after: $after, filter: $filter, sortby: $sortby) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    edges {\n      node {\n        fault_surfaces\n        magnitude\n        rate_weighted_mean\n        area\n        length\n        id\n        __typename\n      }\n      cursor\n    }\n  }\n}\n"
+    "text": "query RuptureAnimationPagePaginationQuery(\n  $after: String\n  $filter: FilterRupturesArgsInput!\n  $first: Int = 5\n  $sortby: [SimpleSortRupturesArgs]\n) {\n  ...RuptureAnimationPage_queryRoot_108mgy\n}\n\nfragment RuptureAnimationPage_queryRoot_108mgy on Query {\n  SOLVIS_filter_ruptures(first: $first, after: $after, filter: $filter, sortby: $sortby) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    edges {\n      node {\n        fault_surfaces\n        magnitude\n        rate_weighted_mean\n        area\n        length\n        id\n        __typename\n      }\n      cursor\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "13f07a517faecea5273b2d1e24ed9c94";
+(node as any).hash = "7fc988ec6e6bf303e320ece385bbce4a";
 
 export default node;
