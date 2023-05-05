@@ -14,6 +14,12 @@ import { ruptureAnimationMock5 } from './mockData/ruptureAnimationMockPagination
 import { ruptureAnimationMock6 } from './mockData/ruptureAnimationMockPagination/ruptureAnimationMock6';
 import { solvisControlsMock } from './mockData/solvisControlsMock';
 import { ruptureAnimationMockSorted } from './mockData/ruptureAnimationMockPagination/ruptureAnimationMockSorted';
+import { multiRupturePageInitialResponse } from './mockData/multiRupturePageMocks/multiRupturePageInitialResponse';
+import { multiRupturePageCrustalAllLocations } from './mockData/multiRupturePageMocks/multiRupturePageCrustalAllLocations';
+import { multiRupturePageCrustalGYM100km } from './mockData/multiRupturePageMocks/multiRupturePageCrustalGYM100km';
+import { multiRupturePageCrustalGYMCHC100km } from './mockData/multiRupturePageMocks/multiRupturePageCrustalGYMCHC100km';
+import { multiRupturePageLocationsNoRuptures } from './mockData/multiRupturePageMocks/multiRupturePageLocationsNoRuptures';
+
 export const handlers = [
   graphql.query('HazardChartsPlotsViewQuery', (req, res, ctx) => {
     const locations = req.variables.locs;
@@ -112,5 +118,28 @@ export const handlers = [
   }),
   graphql.query('RuptureAnimationPageControlsQuery', (req, res, ctx) => {
     return res(ctx.data(solvisControlsMock));
+  }),
+  graphql.query('MultiRuptureMapPageControlsQuery', (req, res, ctx) => {
+    return res(ctx.data(solvisControlsMock));
+  }),
+  graphql.query('MultiRuptureMapPageQuery', (req, res, ctx) => {
+    const locationIds = req.variables.location_ids;
+    const faultSystem = req.variables.fault_system;
+
+    if (faultSystem === '') {
+      return res(ctx.data(multiRupturePageInitialResponse));
+    }
+    if (faultSystem === 'CRU' && locationIds.length === 0) {
+      return res(ctx.data(multiRupturePageCrustalAllLocations));
+    }
+    if (faultSystem === 'CRU' && locationIds[0] === 'GMN' && locationIds.length === 1) {
+      return res(ctx.data(multiRupturePageCrustalGYM100km));
+    }
+    if (faultSystem === 'CRU' && locationIds.length === 2) {
+      return res(ctx.data(multiRupturePageCrustalGYMCHC100km));
+    }
+    if (faultSystem === 'HIK' && locationIds.length === 2) {
+      return res(ctx.data(multiRupturePageLocationsNoRuptures));
+    }
   }),
 ];

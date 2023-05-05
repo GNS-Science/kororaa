@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Button, styled } from '@mui/material';
+import { Box, Button, styled, Alert } from '@mui/material';
 import { RangeSliderWithInputs } from '@gns-science/toshi-nest';
 import { toPng } from 'html-to-image';
 import { useLazyLoadQuery } from 'react-relay';
@@ -44,9 +44,10 @@ interface MultiRuptureMapControlsProps {
   startTransition: React.TransitionStartFunction;
   isPending: boolean;
   dispatch: React.Dispatch<Partial<MultiRuptureMapPageState>>;
+  geoJsonError: string | null;
 }
 
-const MultiRuptureMapControls: React.FC<MultiRuptureMapControlsProps> = ({ startTransition, isPending, dispatch }: MultiRuptureMapControlsProps) => {
+const MultiRuptureMapControls: React.FC<MultiRuptureMapControlsProps> = ({ startTransition, isPending, dispatch, geoJsonError }: MultiRuptureMapControlsProps) => {
   const [faultSystem, setFaultSystem] = useState<string>('Crustal');
   const [locations, setLocations] = useState<string[]>([]);
   const [locationOptions, setLocationOptions] = useState<string[]>([]);
@@ -127,6 +128,7 @@ const MultiRuptureMapControls: React.FC<MultiRuptureMapControlsProps> = ({ start
           <RangeSliderWithInputs label="Rate Range (1/yr)" valuesRange={rateRange} setValues={setRateRange} inputProps={{ step: 1, min: -20, max: 0, type: 'number' }} />
         </StyledRangeSliderDiv>
       </StyledCustomControlsBar>
+      {geoJsonError && <Alert severity="error">{geoJsonError}</Alert>}
       <StyledButton disabled={isPending || !!radiusError} variant="contained" type="submit" onClick={handleSubmit}>
         Submit
       </StyledButton>
