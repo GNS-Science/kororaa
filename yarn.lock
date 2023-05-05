@@ -1367,10 +1367,10 @@
     minimatch "^3.1.2"
     strip-json-comments "^3.1.1"
 
-"@gns-science/toshi-nest@^3.8.1":
-  version "3.8.1"
-  resolved "https://npm.pkg.github.com/download/@GNS-Science/toshi-nest/3.8.1/a6eb3377b01f5280745eab30d1ebd8f04d2a290c#a6eb3377b01f5280745eab30d1ebd8f04d2a290c"
-  integrity sha512-raZle1ZELKUrsX7F9HNbDdL9OAH9KVRhW4Jl4GeyFUxjJq7yAECWF/gXlWxQg5GopZnszS+6uTmRuGZCa/bAkQ==
+"@gns-science/toshi-nest@^3.8.3":
+  version "3.8.3"
+  resolved "https://npm.pkg.github.com/download/@GNS-Science/toshi-nest/3.8.3/c1ce133d21ee18a6de5f984653d29e2f03941c57#c1ce133d21ee18a6de5f984653d29e2f03941c57"
+  integrity sha512-T9EfZd6sb47Fos6ra4O0YpjMMYfU+piWSzpMI/AavmSGHdUrnLgFoU80CdCOaUxbBSLjOtX85qA8GzzOScfY0g==
   dependencies:
     "@emotion/react" "^11.8.2"
     "@emotion/styled" "^11.8.1"

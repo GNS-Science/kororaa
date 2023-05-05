@@ -1,6 +1,6 @@
 import React, { useMemo, useState, useEffect, useReducer, useTransition } from 'react';
 import { LeafletMap, LeafletDrawer } from '@gns-science/toshi-nest';
-import { Box, Typography } from '@mui/material';
+import { Box, GlobalStyles, Typography } from '@mui/material';
 import { useLazyLoadQuery, usePaginationFragment } from 'react-relay';
 import '../../css/leaflet.timedimension.control.css';
 import { graphql } from 'babel-plugin-relay/macro';
@@ -113,6 +113,7 @@ export const RuptureAnimationPaginationComponent: React.FC<Props> = (props: Prop
   };
 
   const timeDimensionControlOptions = {
+    position: 'bottomright',
     displayDate: false,
     maxSpeed: 5,
     minSpeed: 1,
@@ -138,26 +139,28 @@ export const RuptureAnimationPaginationComponent: React.FC<Props> = (props: Prop
     <>
       <React.Suspense fallback={<SimpleBackdrop />}>
         {isPending && <SimpleBackdrop />}
-        <LeafletMap
-          zoom={zoom}
-          zoomLevel={zoomLevel}
-          setZoomLevel={setZoomLevel}
-          nzCentre={nzCentre as typeof LatLngExpression}
-          geoJsonData={locationData ? locationData : ['']}
-          height={'80vh'}
-          width={'100%'}
-          setFullscreen={setFullscreen}
-          timeDimensionOptions={timeDimensionOptions}
-          timeDimension={true}
-          // eslint-disable-next-line prettier/prettier
-          timeDimensionGeoJsonData={(ruptureData as typeof GeoJsonObject[]) || ''}
-          timeDimensionUnderlay={'' as unknown as typeof GeoJsonObject}
-          timeDimensionControlOptions={timeDimensionControlOptions}
-          setTimeDimensionNeedsMore={setNeedsMore}
-          setTimeDimensionHasNoMore={setHasNoMore}
-          surfaceProperties={surfaceProperties || []}
-          timeDimensionTotalLength={totalRuptures || 0}
-        />
+        <React.Fragment>
+          <LeafletMap
+            zoom={zoom}
+            zoomLevel={zoomLevel}
+            setZoomLevel={setZoomLevel}
+            nzCentre={nzCentre as typeof LatLngExpression}
+            geoJsonData={locationData ? locationData : ['']}
+            height={'80vh'}
+            width={'100%'}
+            setFullscreen={setFullscreen}
+            timeDimensionOptions={timeDimensionOptions}
+            timeDimension={true}
+            // eslint-disable-next-line prettier/prettier
+            timeDimensionGeoJsonData={(ruptureData as typeof GeoJsonObject[]) || ''}
+            timeDimensionUnderlay={'' as unknown as typeof GeoJsonObject}
+            timeDimensionControlOptions={timeDimensionControlOptions}
+            setTimeDimensionNeedsMore={setNeedsMore}
+            setTimeDimensionHasNoMore={setHasNoMore}
+            surfaceProperties={surfaceProperties || []}
+            timeDimensionTotalLength={totalRuptures || 0}
+          />
+        </React.Fragment>
       </React.Suspense>
     </>
   );
