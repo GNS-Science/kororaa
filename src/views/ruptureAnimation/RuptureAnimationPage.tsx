@@ -1,6 +1,6 @@
 import React, { useMemo, useState, useEffect, useReducer, useTransition } from 'react';
 import { LeafletMap, LeafletDrawer } from '@gns-science/toshi-nest';
-import { Box, GlobalStyles, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { useLazyLoadQuery, usePaginationFragment } from 'react-relay';
 import '../../css/leaflet.timedimension.control.css';
 import { graphql } from 'babel-plugin-relay/macro';
