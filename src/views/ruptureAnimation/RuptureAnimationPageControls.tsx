@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo } from 'react';
-import { Box, Button, styled } from '@mui/material';
+import { Alert, Box, Button, styled } from '@mui/material';
 import { RangeSliderWithInputs } from '@gns-science/toshi-nest';
 import { toPng } from 'html-to-image';
 import { useLazyLoadQuery } from 'react-relay';
@@ -44,6 +44,7 @@ interface RuptureAnimationControlsProps {
   startTransition: React.TransitionStartFunction;
   isPending: boolean;
   dispatch: React.Dispatch<Partial<RuptureAnimationPageState>>;
+  geoJsonError: string | null;
 }
 
 type SortDict = {
@@ -61,7 +62,7 @@ const sortDict: SortDict = {
   'Rate (minimum)': { attribute: 'rate_min', ascending: false },
 };
 
-const RuptureAnimationControls: React.FC<RuptureAnimationControlsProps> = ({ startTransition, isPending, dispatch }: RuptureAnimationControlsProps) => {
+const RuptureAnimationControls: React.FC<RuptureAnimationControlsProps> = ({ startTransition, isPending, dispatch, geoJsonError }: RuptureAnimationControlsProps) => {
   const [faultSystem, setFaultSystem] = useState<string>('Crustal');
   const [locations, setLocations] = useState<string[]>([]);
   const [locationOptions, setLocationOptions] = useState<string[]>([]);
@@ -159,6 +160,7 @@ const RuptureAnimationControls: React.FC<RuptureAnimationControlsProps> = ({ sta
         <SelectControl name="Sort By 1" selection={sortBy1} setSelection={setSortBy1} options={sortByOptions} tooltip={'sort by'} />
         <SelectControlWithDisable disabled={sortBy1 === 'Unsorted'} name="Sort By 2" selection={sortBy2} setSelection={setSortBy2} options={sortByOptions2} tooltip={'then sort by'} />
       </StyledCustomControlsBar>
+      {geoJsonError && <Alert severity="error">{geoJsonError}</Alert>}
       <StyledButton disabled={isPending || !!radiusError} variant="contained" type="submit" onClick={handleSubmit}>
         Submit
       </StyledButton>
