@@ -20,6 +20,7 @@ type Props = {
   ruptureConnectionRef: RuptureAnimationPage_queryRoot$key;
   setFullscreen: (fullscreen: boolean) => void;
   isPending: boolean;
+  setGeoJsonError: (geoJsonError: string | null) => void;
 };
 
 export const RuptureAnimationComponent: React.FC = () => {
@@ -27,6 +28,7 @@ export const RuptureAnimationComponent: React.FC = () => {
   const [isPending, startTransition] = useTransition();
   const [fullscreen, setFullscreen] = React.useState<boolean>(false);
   const [scrollHeight, setScrollHeight] = useState<number>(0);
+  const [geoJsonError, setGeoJsonError] = useState<string | null>(null);
 
   const initialData = useLazyLoadQuery<RuptureAnimationPageQuery>(ruptureAnimationPageQuery, {
     first: 10,
@@ -53,21 +55,21 @@ export const RuptureAnimationComponent: React.FC = () => {
   return (
     <>
       <Box id="map" sx={{ width: '100%', height: '80vh' }}>
-        <RuptureAnimationPaginationComponent setFullscreen={setFullscreen} ruptureConnectionRef={initialData} queryData={initialData} isPending={isPending} />
+        <RuptureAnimationPaginationComponent setFullscreen={setFullscreen} ruptureConnectionRef={initialData} queryData={initialData} isPending={isPending} setGeoJsonError={setGeoJsonError} />
       </Box>
       <LeafletDrawer drawerHeight={'80vh'} headerHeight={`${100 - scrollHeight}px`} width={'400px'} fullscreen={fullscreen}>
         <Typography variant="h4" sx={{ textAlign: 'center' }}>
           IFM Rupture Animation
           <InfoTooltip content={'tooltip to come'} format={false} />
         </Typography>
-        <RuptureAnimationControls startTransition={startTransition} isPending={isPending} dispatch={dispatch} />
+        <RuptureAnimationControls startTransition={startTransition} isPending={isPending} dispatch={dispatch} geoJsonError={geoJsonError} />
       </LeafletDrawer>
     </>
   );
 };
 
 export const RuptureAnimationPaginationComponent: React.FC<Props> = (props: Props) => {
-  const { queryData, setFullscreen, ruptureConnectionRef, isPending } = props;
+  const { queryData, setFullscreen, ruptureConnectionRef, isPending, setGeoJsonError } = props;
   const { data, hasNext, loadNext } = usePaginationFragment<RuptureAnimationPageQuery, RuptureAnimationPage_queryRoot$key>(ruptureAnimationPage_queryRoot, ruptureConnectionRef);
   const [zoomLevel, setZoomLevel] = useState<number>(5);
   const [needsMore, setNeedsMore] = useState<boolean>(false);
@@ -93,6 +95,14 @@ export const RuptureAnimationPaginationComponent: React.FC<Props> = (props: Prop
     });
   }, [data]);
 
+  useEffect(() => {
+    if (locationData && locationData.length > 0 && ruptureData?.length === 0) {
+      setGeoJsonError('No fault sections satisfy the filter.');
+    } else {
+      setGeoJsonError(null);
+    }
+  }, [locationData, ruptureData, setGeoJsonError]);
+
   const zoom = 5;
   const nzCentre = [-40.946, 174.167];
 
@@ -113,6 +123,7 @@ export const RuptureAnimationPaginationComponent: React.FC<Props> = (props: Prop
   };
 
   const timeDimensionControlOptions = {
+    position: 'bottomright',
     displayDate: false,
     maxSpeed: 5,
     minSpeed: 1,
