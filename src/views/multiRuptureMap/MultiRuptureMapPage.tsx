@@ -195,7 +195,7 @@ export const MultiRuptureMapComponent: React.FC<Props> = (props: Props) => {
               xLabelOffset={5}
               header="Magnitude Frequency Distribution"
               yScaleDomain={[1e-7, 1e-1]}
-              xScaleDomain={[6, 10]}
+              xScaleDomain={[6.7, 9.6]}
               lineColours={['green', 'red']}
               legendDomain={['Incremental', 'Cumulative']}
             />
