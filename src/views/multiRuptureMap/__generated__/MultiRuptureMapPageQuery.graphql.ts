@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8db5802c625b7fea88decfca0867b410>>
+ * @generated SignedSource<<2e6a1ff34876a92c2932e72193fc6a96>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -42,6 +42,11 @@ export type MultiRuptureMapPageQuery$data = {
         readonly hexrgbs: ReadonlyArray<string | null> | null;
       } | null;
     } | null;
+    readonly mfd_histogram: ReadonlyArray<{
+      readonly bin_center: number | null;
+      readonly rate: number | null;
+      readonly cumulative_rate: number | null;
+    } | null> | null;
   } | null;
 };
 export type MultiRuptureMapPageQuery = {
@@ -268,6 +273,38 @@ v14 = {
         }
       ],
       "storageKey": "color_scale(name:\"inferno\")"
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "MagFreqDist",
+      "kind": "LinkedField",
+      "name": "mfd_histogram",
+      "plural": true,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "bin_center",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "rate",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "cumulative_rate",
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
     }
   ],
   "storageKey": null
@@ -391,16 +428,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "6520e989063cbac110dbf45f6f2e91d8",
+    "cacheID": "9e34720759ebdefdaab5503e1cba5509",
     "id": null,
     "metadata": {},
     "name": "MultiRuptureMapPageQuery",
     "operationKind": "query",
-    "text": "query MultiRuptureMapPageQuery(\n  $model_id: String!\n  $fault_system: String!\n  $location_ids: [String]!\n  $radius_km: Int!\n  $minimum_mag: Float\n  $maximum_mag: Float\n  $minimum_rate: Float\n  $maximum_rate: Float\n) {\n  SOLVIS_locations_by_id(location_ids: $location_ids) {\n    edges {\n      node {\n        location_id\n        name\n        radius_geojson(radius_km: $radius_km, style: {stroke_color: \"royalblue\", stroke_width: 3, stroke_opacity: 1, fill_opacity: 0.01, fill_color: \"royalblue\"})\n        id\n      }\n    }\n  }\n  SOLVIS_filter_rupture_sections(filter: {model_id: $model_id, location_ids: $location_ids, fault_system: $fault_system, radius_km: $radius_km, minimum_mag: $minimum_mag, maximum_mag: $maximum_mag, minimum_rate: $minimum_rate, maximum_rate: $maximum_rate}, color_scale: {name: \"inferno\"}) {\n    model_id\n    section_count\n    fault_surfaces\n    color_scale(name: \"inferno\") {\n      name\n      min_value\n      max_value\n      color_map {\n        levels\n        hexrgbs\n      }\n    }\n  }\n}\n"
+    "text": "query MultiRuptureMapPageQuery(\n  $model_id: String!\n  $fault_system: String!\n  $location_ids: [String]!\n  $radius_km: Int!\n  $minimum_mag: Float\n  $maximum_mag: Float\n  $minimum_rate: Float\n  $maximum_rate: Float\n) {\n  SOLVIS_locations_by_id(location_ids: $location_ids) {\n    edges {\n      node {\n        location_id\n        name\n        radius_geojson(radius_km: $radius_km, style: {stroke_color: \"royalblue\", stroke_width: 3, stroke_opacity: 1, fill_opacity: 0.01, fill_color: \"royalblue\"})\n        id\n      }\n    }\n  }\n  SOLVIS_filter_rupture_sections(filter: {model_id: $model_id, location_ids: $location_ids, fault_system: $fault_system, radius_km: $radius_km, minimum_mag: $minimum_mag, maximum_mag: $maximum_mag, minimum_rate: $minimum_rate, maximum_rate: $maximum_rate}, color_scale: {name: \"inferno\"}) {\n    model_id\n    section_count\n    fault_surfaces\n    color_scale(name: \"inferno\") {\n      name\n      min_value\n      max_value\n      color_map {\n        levels\n        hexrgbs\n      }\n    }\n    mfd_histogram {\n      bin_center\n      rate\n      cumulative_rate\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "8cbc60c9c1201ed9ae0b300c46a92cfe";
+(node as any).hash = "ac862d7dd0d600902e9991f3f1da2872";
 
 export default node;

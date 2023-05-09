@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useReducer, useTransition, useMemo } from 'react';
-import { LeafletMap, LeafletDrawer, ColorBar } from '@gns-science/toshi-nest';
+import { LeafletMap, LeafletDrawer, ColorBar, MfdPlot } from '@gns-science/toshi-nest';
 import { Box, GlobalStyles, Typography } from '@mui/material';
 import { useLazyLoadQuery } from 'react-relay';
 import '../../css/leaflet.timedimension.control.css';
@@ -19,8 +19,6 @@ type Props = {
   isPending: boolean;
   setGeoJsonError: (geoJsonError: string | null) => void;
 };
-
-type ColorScale = { levels: (string | undefined)[]; hexrgbs: (string | undefined)[] } | undefined;
 
 export const MultiRuptureMap: React.FC = () => {
   const [state, dispatch] = useReducer(multiRuptureMapPageReducer, multiRuptureMapPageReducerInitialState);
@@ -75,7 +73,9 @@ export const MultiRuptureMapComponent: React.FC<Props> = (props: Props) => {
 
   const geoJsonData = queryData?.SOLVIS_filter_rupture_sections?.fault_surfaces;
 
-  const colorScale = useMemo<ColorScale>(() => {
+  const mfdData = queryData?.SOLVIS_filter_rupture_sections?.mfd_histogram;
+
+  const colorScale = useMemo(() => {
     if (queryData?.SOLVIS_filter_rupture_sections?.color_scale?.color_map?.levels && queryData?.SOLVIS_filter_rupture_sections?.color_scale?.color_map?.hexrgbs) {
       return {
         levels: queryData?.SOLVIS_filter_rupture_sections?.color_scale?.color_map?.levels.map((level) => level?.toExponential(0)) ?? [],
@@ -155,18 +155,52 @@ export const MultiRuptureMapComponent: React.FC<Props> = (props: Props) => {
           setFullscreen={setFullscreen}
           onEachFeature={onEachFeature}
         />
-        {colorScale && (
-          <ColorBar
-            heading={'Participation Rate'}
-            width={350}
-            height={35}
-            colors={colorScale?.hexrgbs}
-            tickValues={colorScale?.levels}
-            linear={false}
+        {mfdData && (
+          <Box
             style={
-              !fullscreen ? { position: 'relative', zIndex: 119700, top: '-115px', left: 'calc(100% - 396px)' } : { position: 'absolute', zIndex: 119700, bottom: '14px', left: 'calc(100% - 396px)' }
+              !fullscreen
+                ? {
+                    backgroundColor: '#ffffff',
+                    position: 'relative',
+                    zIndex: 119700,
+                    top: '-435px',
+                    left: 'calc(100% - 396px)',
+                    width: '395px',
+                    borderRadius: '4px',
+                    borderWidth: '1px',
+                    border: '2px solid rgba(0,0,0,0.2)',
+                    backgroundClip: 'padding-box',
+                  }
+                : {
+                    backgroundColor: '#ffffff',
+                    position: 'absolute',
+                    zIndex: 119700,
+                    bottom: '20px',
+                    left: 'calc(100% - 396px)',
+                    width: '395px',
+                    borderRadius: '4px',
+                    borderWidth: '1px',
+                    border: '2px solid rgba(0,0,0,0.2)',
+                    backgroundClip: 'padding-box',
+                  }
             }
-          />
+          >
+            <MfdPlot
+              data={mfdData}
+              width={430}
+              height={300}
+              xLabel="Magnitude"
+              yLabel="Rate"
+              yLabelOffset={35}
+              xLabelOffset={5}
+              header="Magnitude Frequency Distribution"
+              yScaleDomain={[1e-7, 1e-1]}
+              xScaleDomain={[6.7, 9.6]}
+              lineColours={['green', 'red']}
+              legendDomain={['Incremental', 'Cumulative']}
+            />
+            <ColorBar heading={'Participation Rate'} width={350} height={35} colors={colorScale?.hexrgbs} tickValues={colorScale?.levels} linear={false} />
+          </Box>
         )}
       </React.Suspense>
     </>
@@ -227,6 +261,11 @@ export const multiRuptureMapPageQuery = graphql`
           levels
           hexrgbs
         }
+      }
+      mfd_histogram {
+        bin_center
+        rate
+        cumulative_rate
       }
     }
   }
