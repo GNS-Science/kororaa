@@ -71,7 +71,8 @@ export const ComboRuptureMapComponent: React.FC<Props> = (props: Props) => {
     return edge?.node?.radius_geojson;
   });
 
-  const geoJsonData = queryData?.SOLVIS_filter_rupture_sections?.fault_surfaces;
+  const geojsonSurfacesData = queryData?.SOLVIS_filter_rupture_sections?.fault_surfaces;
+  const geojsonTracesData = queryData?.SOLVIS_filter_rupture_sections?.fault_traces;
 
   const mfdData = queryData?.SOLVIS_filter_rupture_sections?.mfd_histogram;
 
@@ -85,25 +86,35 @@ export const ComboRuptureMapComponent: React.FC<Props> = (props: Props) => {
   }, [queryData]);
 
   const geoJson = useMemo(() => {
-    console.log(geoJsonData);
-    if (geoJsonData !== null && geoJsonData !== undefined && locationData && locationData.length > 0) {
-      return [...locationData, geoJsonData];
-    } else if (geoJsonData) {
-      return [geoJsonData];
+    //   console.log('locationData');
+    //   console.log(locationData);
+
+    //   console.log('geojsonSurfacesData');
+    //   console.log(geojsonSurfacesData);
+
+    //   console.log('geojsonTracesData');
+    //   console.log(geojsonTracesData);
+
+    if (geojsonSurfacesData == null || geojsonSurfacesData == undefined) return [];
+
+    if (geojsonSurfacesData && geojsonTracesData && locationData && locationData.length > 0) {
+      return [...locationData, geojsonSurfacesData, geojsonTracesData];
+    } else if (geojsonSurfacesData && geojsonTracesData) {
+      return [...geojsonSurfacesData, geojsonTracesData];
     } else if (locationData && locationData.length > 0) {
       return [...locationData];
     } else {
       return [];
     }
-  }, [geoJsonData, locationData]);
+  }, [geojsonSurfacesData, geojsonTracesData, locationData]);
 
   useEffect(() => {
-    if (locationData && locationData.length > 0 && !geoJsonData) {
+    if (locationData && locationData.length > 0 && !geojsonSurfacesData) {
       setGeoJsonError('No ruptures satisfy the filter.');
     } else {
       setGeoJsonError(null);
     }
-  }, [geoJsonData, locationData, setGeoJsonError]);
+  }, [geojsonSurfacesData, locationData, setGeoJsonError]);
 
   const zoom = 5;
   const nzCentre = [-40.946, 174.167];
@@ -252,7 +263,8 @@ export const comboRuptureMapPageQuery = graphql`
     ) {
       model_id
       section_count
-      fault_surfaces(color_scale: { name: "inferno" }, style: { stroke_width: 5, fill_opacity: 0.5 })
+      fault_surfaces(style: { stroke_color: "silver", fill_color: "silver", fill_opacity: 0.25 })
+      fault_traces(color_scale: { name: "inferno" }, style: { stroke_width: 5 })
       color_scale(name: "inferno") {
         name
         min_value
