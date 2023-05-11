@@ -29,6 +29,7 @@ import ChangelogPage from './views/changelog/ChangelogPage';
 import OtherDocumentsPage from './views/info/OtherDocumentsPage';
 import ModelComponentsPage from './views/info/ModelComponentsPage';
 import RuptureAnimationPage from './views/ruptureAnimation/RuptureAnimationPage';
+import ComboRuptureMapPage from './views/comboRuptureMap/ComboRuptureMapPage';
 
 import ModelVersionsPage from './views/info/ModelVersionsPage';
 import FaultModelPage from './views/faultModel/FaultModelPage';
@@ -80,6 +81,7 @@ function App(props: { environment?: Environment }) {
                     <Route path="/IFMAnalysis" element={<FaultModelPage />} />
                     <Route path="/MultiRuptureMap" element={<MultiRuptureMapPage />} />
                     <Route path="/RuptureAnimation" element={<RuptureAnimationPage />} />
+                    <Route path="/ComboRuptureMap" element={<ComboRuptureMapPage />} />
                     <Route path="/" element={<Home />} />
                   </Routes>
                 </DisclaimerLayer>
