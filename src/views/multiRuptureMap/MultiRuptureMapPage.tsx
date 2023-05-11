@@ -85,6 +85,7 @@ export const MultiRuptureMapComponent: React.FC<Props> = (props: Props) => {
   }, [queryData]);
 
   const geoJson = useMemo(() => {
+    console.log(geoJsonData);
     if (geoJsonData !== null && geoJsonData !== undefined && locationData && locationData.length > 0) {
       return [...locationData, geoJsonData];
     } else if (geoJsonData) {
@@ -248,11 +249,10 @@ export const multiRuptureMapPageQuery = graphql`
         minimum_rate: $minimum_rate
         maximum_rate: $maximum_rate
       }
-      color_scale: { name: "inferno" }
     ) {
       model_id
       section_count
-      fault_surfaces
+      fault_surfaces(color_scale: { name: "inferno" }, style: { stroke_width: 5, fill_opacity: 0.5 })
       color_scale(name: "inferno") {
         name
         min_value
