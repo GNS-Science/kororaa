@@ -6,6 +6,7 @@ import '../../css/leaflet.timedimension.control.css';
 import { graphql } from 'babel-plugin-relay/macro';
 import { HAZARD_MODEL_ID } from '../../utils/environmentVariables';
 import { LatLngExpression } from 'leaflet';
+import { GeoJsonObject } from 'geojson';
 
 import { InfoTooltip } from '../../components/common/InfoTooltip';
 import ComboRuptureMapControls from './ComboRuptureMapPageControls';
@@ -13,7 +14,7 @@ import SimpleBackdrop from '../../components/common/SimpleBackdrop';
 import { comboRuptureMapPageReducer, comboRuptureMapPageReducerInitialState } from './comboRuptureMapPageReducer';
 import { ComboRuptureMapPageQuery, ComboRuptureMapPageQuery$data } from './__generated__/ComboRuptureMapPageQuery.graphql';
 
-import { ruptureAnimationPageReducer, ruptureAnimationPageReducerInitialState } from '../ruptureAnimation/ruptureAnimationPageReducer';
+// import { ruptureAnimationPageReducer, ruptureAnimationPageReducerInitialState } from '../ruptureAnimation/ruptureAnimationPageReducer';
 import { RuptureAnimationPageQuery, RuptureAnimationPageQuery$data } from '../ruptureAnimation/__generated__/RuptureAnimationPageQuery.graphql';
 import { RuptureAnimationPage_queryRoot$key } from '../ruptureAnimation/__generated__/RuptureAnimationPage_queryRoot.graphql';
 import { ruptureAnimationPage_queryRoot } from '../ruptureAnimation/RuptureAnimationPage';
@@ -89,11 +90,20 @@ export const ComboRuptureMapComponent: React.FC<Props> = (props: Props) => {
   const { data, hasNext, loadNext } = usePaginationFragment<RuptureAnimationPageQuery, RuptureAnimationPage_queryRoot$key>(ruptureAnimationPage_queryRoot, ruptureConnectionRef);
   const [needsMore, setNeedsMore] = useState<boolean>(false);
   const [hasNoMore, setHasNoMore] = useState<boolean>(false);
+  const totalRuptures = useMemo(() => {
+    return queryData?.SOLVIS_filter_ruptures?.total_count;
+  }, [queryData]);
+  const ruptureData = useMemo(() => {
+    return data?.SOLVIS_filter_ruptures?.edges?.map((edge) => {
+      return JSON.parse(edge?.node?.fault_surfaces);
+    });
+  }, [data]);
 
   // Aggregation
   const geojsonSurfacesData = queryData?.SOLVIS_filter_rupture_sections?.fault_surfaces;
   const geojsonTracesData = queryData?.SOLVIS_filter_rupture_sections?.fault_traces;
   const mfdData = queryData?.SOLVIS_filter_rupture_sections?.mfd_histogram;
+
   const colorScale = useMemo(() => {
     if (queryData?.SOLVIS_filter_rupture_sections?.color_scale?.color_map?.levels && queryData?.SOLVIS_filter_rupture_sections?.color_scale?.color_map?.hexrgbs) {
       return {
@@ -123,7 +133,7 @@ export const ComboRuptureMapComponent: React.FC<Props> = (props: Props) => {
     if (geojsonSurfacesData && geojsonTracesData && locationData && locationData.length > 0) {
       return [...locationData, geojsonSurfacesData, geojsonTracesData];
     } else if (geojsonSurfacesData && geojsonTracesData) {
-      return [...geojsonSurfacesData, geojsonTracesData];
+      return [geojsonSurfacesData, geojsonTracesData];
     } else if (locationData && locationData.length > 0) {
       return [...locationData];
     } else {
@@ -174,6 +184,47 @@ export const ComboRuptureMapComponent: React.FC<Props> = (props: Props) => {
       layer.bindPopup(popupContent);
     }
   };
+
+  // Animation
+  const timeArray = useMemo(() => {
+    return (
+      totalRuptures &&
+      Array(totalRuptures)
+        .fill(0)
+        .map((_, i) => i + 1)
+    );
+  }, [totalRuptures]);
+
+  const timeDimensionOptions = {
+    currentTime: 1,
+    times: timeArray || [],
+    timeInterval: 'P1M/2021-01-01T00:00:00Z/P1M',
+    period: 'P1D',
+  };
+
+  const timeDimensionControlOptions = {
+    position: 'topright',
+    displayDate: false,
+    maxSpeed: 5,
+    minSpeed: 1,
+    playerOptions: {
+      loop: true,
+    },
+  };
+
+  useEffect(() => {
+    if (needsMore && hasNext) {
+      loadNext(5);
+      setNeedsMore(false);
+    }
+  }, [hasNext, needsMore, loadNext]);
+
+  useEffect(() => {
+    if (!needsMore && !hasNoMore) {
+      setHasNoMore(false);
+    }
+  }, [needsMore, hasNoMore]);
+
   return (
     <>
       <React.Suspense fallback={<SimpleBackdrop />}>
@@ -189,6 +240,25 @@ export const ComboRuptureMapComponent: React.FC<Props> = (props: Props) => {
           width={'100%'}
           setFullscreen={setFullscreen}
           onEachFeature={onEachFeature}
+          // zoom={zoom}
+          // zoomLevel={zoomLevel}
+          // setZoomLevel={setZoomLevel}
+          // nzCentre={nzCentre as typeof LatLngExpression}
+          // geoJsonData={locationData ? locationData : ['']}
+          // height={'80vh'}
+          // width={'100%'}
+          // setFullscreen={setFullscreen}
+
+          timeDimensionOptions={timeDimensionOptions}
+          timeDimension={true}
+          // eslint-disable-next-line prettier/prettier
+          timeDimensionGeoJsonData={(ruptureData as typeof GeoJsonObject[]) || ''}
+          timeDimensionUnderlay={'' as unknown as typeof GeoJsonObject}
+          timeDimensionControlOptions={timeDimensionControlOptions}
+          setTimeDimensionNeedsMore={setNeedsMore}
+          setTimeDimensionHasNoMore={setHasNoMore}
+          surfaceProperties={[]} // surfaceProperties ||
+          timeDimensionTotalLength={totalRuptures || 0}
         />
         {mfdData && (
           <Box
