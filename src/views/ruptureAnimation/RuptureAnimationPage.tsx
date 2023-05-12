@@ -184,7 +184,7 @@ export const RuptureAnimationPage: React.FC = () => {
 
 export default RuptureAnimationPage;
 
-const ruptureAnimationPage_queryRoot = graphql`
+export const ruptureAnimationPage_queryRoot = graphql`
   fragment RuptureAnimationPage_queryRoot on Query
   @refetchable(queryName: "RuptureAnimationPagePaginationQuery")
   @argumentDefinitions(first: { type: "Int", defaultValue: 5 }, after: { type: "String" }, filter: { type: "FilterRupturesArgsInput!" }, sortby: { type: "[SimpleSortRupturesArgs]" }) {

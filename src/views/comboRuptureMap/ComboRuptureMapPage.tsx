@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useReducer, useTransition, useMemo } from 'react';
 import { LeafletMap, LeafletDrawer, ColorBar, MfdPlot } from '@gns-science/toshi-nest';
 import { Box, GlobalStyles, Typography } from '@mui/material';
-import { useLazyLoadQuery } from 'react-relay';
+import { useLazyLoadQuery, usePaginationFragment } from 'react-relay';
 import '../../css/leaflet.timedimension.control.css';
 import { graphql } from 'babel-plugin-relay/macro';
 import { HAZARD_MODEL_ID } from '../../utils/environmentVariables';
@@ -12,8 +12,15 @@ import ComboRuptureMapControls from './ComboRuptureMapPageControls';
 import SimpleBackdrop from '../../components/common/SimpleBackdrop';
 import { comboRuptureMapPageReducer, comboRuptureMapPageReducerInitialState } from './comboRuptureMapPageReducer';
 import { ComboRuptureMapPageQuery, ComboRuptureMapPageQuery$data } from './__generated__/ComboRuptureMapPageQuery.graphql';
+
+import { ruptureAnimationPageReducer, ruptureAnimationPageReducerInitialState } from '../ruptureAnimation/ruptureAnimationPageReducer';
+import { RuptureAnimationPageQuery, RuptureAnimationPageQuery$data } from '../ruptureAnimation/__generated__/RuptureAnimationPageQuery.graphql';
+import { RuptureAnimationPage_queryRoot$key } from '../ruptureAnimation/__generated__/RuptureAnimationPage_queryRoot.graphql';
+import { ruptureAnimationPage_queryRoot } from '../ruptureAnimation/RuptureAnimationPage';
+
 type Props = {
   queryData: ComboRuptureMapPageQuery$data;
+  ruptureConnectionRef: RuptureAnimationPage_queryRoot$key;
   fullscreen: boolean;
   setFullscreen: (fullscreen: boolean) => void;
   isPending: boolean;
@@ -27,7 +34,8 @@ export const ComboRuptureMap: React.FC = () => {
   const [scrollHeight, setScrollHeight] = useState<number>(0);
   const [geoJsonError, setGeoJsonError] = useState<string | null>(null);
 
-  const data = useLazyLoadQuery<ComboRuptureMapPageQuery>(comboRuptureMapPageQuery, {
+  const initialData = useLazyLoadQuery<ComboRuptureMapPageQuery>(comboRuptureMapPageQuery, {
+    first: 5,
     location_ids: state.locationCodes,
     radius_km: state.radius,
     minimum_mag: state.magnitudeRange[0],
@@ -36,6 +44,7 @@ export const ComboRuptureMap: React.FC = () => {
     maximum_rate: state.rateRange[1],
     model_id: HAZARD_MODEL_ID,
     fault_system: state.faultSystem.slice(0, 3).toUpperCase(),
+    sortby: [],
   });
 
   useEffect(() => {
@@ -50,7 +59,14 @@ export const ComboRuptureMap: React.FC = () => {
   return (
     <>
       <Box id="map" sx={{ width: '100%', height: '80vh' }}>
-        <ComboRuptureMapComponent fullscreen={fullscreen} setFullscreen={setFullscreen} setGeoJsonError={setGeoJsonError} queryData={data} isPending={isPending} />
+        <ComboRuptureMapComponent
+          fullscreen={fullscreen}
+          setFullscreen={setFullscreen}
+          setGeoJsonError={setGeoJsonError}
+          ruptureConnectionRef={initialData}
+          queryData={initialData}
+          isPending={isPending}
+        />
       </Box>
       <LeafletDrawer drawerHeight={'80vh'} headerHeight={`${100 - scrollHeight}px`} width={'400px'} fullscreen={fullscreen}>
         <Typography variant="h4" sx={{ textAlign: 'center' }}>
@@ -64,18 +80,20 @@ export const ComboRuptureMap: React.FC = () => {
 };
 
 export const ComboRuptureMapComponent: React.FC<Props> = (props: Props) => {
-  const { queryData, fullscreen, setFullscreen, isPending, setGeoJsonError } = props;
+  // Map
+  const { queryData, ruptureConnectionRef, fullscreen, setFullscreen, isPending, setGeoJsonError } = props;
   const [zoomLevel, setZoomLevel] = useState<number>(5);
+  const [showAnimation, setShowAnimation] = useState<boolean>(false);
 
-  const locationData = queryData?.SOLVIS_locations_by_id?.edges?.map((edge) => {
-    return edge?.node?.radius_geojson;
-  });
+  // Animation
+  const { data, hasNext, loadNext } = usePaginationFragment<RuptureAnimationPageQuery, RuptureAnimationPage_queryRoot$key>(ruptureAnimationPage_queryRoot, ruptureConnectionRef);
+  const [needsMore, setNeedsMore] = useState<boolean>(false);
+  const [hasNoMore, setHasNoMore] = useState<boolean>(false);
 
+  // Aggregation
   const geojsonSurfacesData = queryData?.SOLVIS_filter_rupture_sections?.fault_surfaces;
   const geojsonTracesData = queryData?.SOLVIS_filter_rupture_sections?.fault_traces;
-
   const mfdData = queryData?.SOLVIS_filter_rupture_sections?.mfd_histogram;
-
   const colorScale = useMemo(() => {
     if (queryData?.SOLVIS_filter_rupture_sections?.color_scale?.color_map?.levels && queryData?.SOLVIS_filter_rupture_sections?.color_scale?.color_map?.hexrgbs) {
       return {
@@ -84,6 +102,11 @@ export const ComboRuptureMapComponent: React.FC<Props> = (props: Props) => {
       };
     }
   }, [queryData]);
+
+  // Location
+  const locationData = queryData?.SOLVIS_locations_by_id?.edges?.map((edge) => {
+    return edge?.node?.radius_geojson;
+  });
 
   const geoJson = useMemo(() => {
     //   console.log('locationData');
@@ -231,6 +254,8 @@ export default ComboRuptureMapPage;
 
 export const comboRuptureMapPageQuery = graphql`
   query ComboRuptureMapPageQuery(
+    $first: Int!
+    $after: String
     $model_id: String!
     $fault_system: String!
     $location_ids: [String]!
@@ -239,6 +264,7 @@ export const comboRuptureMapPageQuery = graphql`
     $maximum_mag: Float
     $minimum_rate: Float
     $maximum_rate: Float
+    $sortby: [SimpleSortRupturesArgs]
   ) {
     SOLVIS_locations_by_id(location_ids: $location_ids) {
       edges {
@@ -249,6 +275,7 @@ export const comboRuptureMapPageQuery = graphql`
         }
       }
     }
+
     SOLVIS_filter_rupture_sections(
       filter: {
         model_id: $model_id
@@ -280,5 +307,40 @@ export const comboRuptureMapPageQuery = graphql`
         cumulative_rate
       }
     }
+
+    SOLVIS_filter_ruptures(
+      first: $first
+      after: $after
+      filter: {
+        model_id: $model_id
+        fault_system: $fault_system
+        location_ids: $location_ids
+        radius_km: $radius_km
+        minimum_mag: $minimum_mag
+        maximum_mag: $maximum_mag
+        minimum_rate: $minimum_rate
+        maximum_rate: $maximum_rate
+      }
+      sortby: $sortby
+    ) {
+      total_count
+    }
+
+    ...RuptureAnimationPage_queryRoot
+      @arguments(
+        first: $first
+        after: $after
+        filter: {
+          model_id: $model_id
+          fault_system: $fault_system
+          location_ids: $location_ids
+          radius_km: $radius_km
+          minimum_mag: $minimum_mag
+          maximum_mag: $maximum_mag
+          minimum_rate: $minimum_rate
+          maximum_rate: $maximum_rate
+        }
+        sortby: $sortby
+      )
   }
 `;
