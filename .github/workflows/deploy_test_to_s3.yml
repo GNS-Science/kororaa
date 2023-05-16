@@ -94,7 +94,7 @@ jobs:
           yarn build
 
       - name: Deploy to S3
-        uses: jakejarvis/s3-sync-action@master
+        uses: GNS-Science/s3-sync-action@master
         with:
           args: --acl public-read --delete
         env:
