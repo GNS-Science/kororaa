@@ -207,10 +207,10 @@ export const hazardPageLocations: HazardPageLocations[] = [
     longitude: 174.28,
   },
   {
-    id: 'WHO',
+    id: 'srg_164',
     name: 'Franz Josef',
-    latitude: -43.38,
-    longitude: 170.19,
+    latitude: -43.376,
+    longitude: 170.188,
   },
   {
     id: 'WSZ',
