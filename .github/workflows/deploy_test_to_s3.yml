@@ -4,6 +4,9 @@ on:
   push:
     branches: [ deploy-test ]
 
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -86,7 +89,6 @@ jobs:
           echo "REACT_APP_RESOLUTION=${{secrets.REACT_APP_RESOLUTION}}" >> .env
           echo "REACT_APP_HAZARD_MODEL=${{secrets.REACT_APP_HAZARD_MODEL}}" >> .env
           echo "REACT_APP_GRID_ID=${{secrets.REACT_APP_GRID_ID}}" >> .env
-
           echo
           yarn build
 

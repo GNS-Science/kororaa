@@ -2,7 +2,7 @@ import React from 'react';
 import { styled } from '@mui/material/styles';
 import { Link, Grid, Typography } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
-import { HAZARD_MODEL_VERSION } from '../../utils/environmentVariables';
+import { HAZARD_MODEL } from '../../utils/environmentVariables';
 
 const FooterContainer = styled('footer')(({ theme }) => ({
   width: '100%',
@@ -50,12 +50,7 @@ const Footer: React.FC = () => {
                   MBIE for information related to engineering design and the NSHM.
                 </Link>
                 <br />
-                You are viewing version {HAZARD_MODEL_VERSION}. Please see &nbsp;
-                <strong>
-                  <Link underline="hover" component={RouterLink} color="inherit" to="/Resources/ModelVersions">
-                    Bug Advisory in Model Versions
-                  </Link>
-                </strong>
+                You are viewing version {HAZARD_MODEL}.
               </em>
             </Typography>
           </FooterLinkItems>
