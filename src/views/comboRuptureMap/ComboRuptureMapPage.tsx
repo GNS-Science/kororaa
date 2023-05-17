@@ -4,7 +4,7 @@ import { Box, GlobalStyles, Typography } from '@mui/material';
 import { useLazyLoadQuery, usePaginationFragment } from 'react-relay';
 import '../../css/leaflet.timedimension.control.css';
 import { graphql } from 'babel-plugin-relay/macro';
-import { HAZARD_MODEL_ID } from '../../utils/environmentVariables';
+import { HAZARD_MODEL } from '../../utils/environmentVariables';
 import { LatLngExpression } from 'leaflet';
 import { GeoJsonObject } from 'geojson';
 
@@ -43,7 +43,7 @@ export const ComboRuptureMap: React.FC = () => {
     maximum_mag: state.magnitudeRange[1],
     minimum_rate: state.rateRange[0],
     maximum_rate: state.rateRange[1],
-    model_id: HAZARD_MODEL_ID,
+    model_id: HAZARD_MODEL,
     fault_system: state.faultSystem.slice(0, 3).toUpperCase(),
     sortby: [],
   });

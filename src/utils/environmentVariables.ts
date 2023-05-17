@@ -1,7 +1,7 @@
 import { RegionGrid } from '../views/hazardMaps/__generated__/HazardMapsPageQuery.graphql';
 
 export const RESOLUTION: number = parseFloat(process.env.REACT_APP_RESOLUTION || '0.2');
-export const HAZARD_MODEL: string | undefined = process.env.REACT_APP_HAZARD_MODEL;
+export const HAZARD_MODEL: string = process.env.REACT_APP_HAZARD_MODEL || 'env.REACT_APP_HAZARD_MODEL is undefined';
 export const GRID_ID: RegionGrid | null | undefined = (process.env.REACT_APP_GRID_ID as RegionGrid) || ('NZ_0_2_NB_1_1' as RegionGrid);
 
 export const MAP_IMTS = process.env.REACT_APP_MAP_IMTS?.split(',') || ['PGA'];

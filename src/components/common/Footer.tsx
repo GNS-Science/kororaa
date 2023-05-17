@@ -4,7 +4,6 @@ import { Link, Grid, Typography } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 import { HAZARD_MODEL } from '../../utils/environmentVariables';
 
-
 const FooterContainer = styled('footer')(({ theme }) => ({
   width: '100%',
   justifyContent: 'space-between',

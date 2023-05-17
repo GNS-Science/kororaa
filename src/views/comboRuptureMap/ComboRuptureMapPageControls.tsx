@@ -8,7 +8,7 @@ import { SelectControl } from '@gns-science/toshi-nest';
 
 import { flexParentCenter } from '../../utils/styleUtils';
 import CustomControlsBar from '../../components/common/CustomControlsBar';
-import { SOLVIS_RADII_ID, SOLVIS_LOCATION_LIST, HAZARD_MODEL_ID } from '../../utils/environmentVariables';
+import { SOLVIS_RADII_ID, SOLVIS_LOCATION_LIST, HAZARD_MODEL } from '../../utils/environmentVariables';
 import SelectControlMultiple from '../../components/common/SelectControlMultiple';
 import SelectControlWithDisable from '../../components/common/SelectControlWithDisable';
 import { ComboRuptureMapPageControlsQuery } from './__generated__/ComboRuptureMapPageControlsQuery.graphql';
@@ -99,7 +99,7 @@ const ComboRuptureMapControls: React.FC<ComboRuptureMapControlsProps> = ({ start
     }
     toPng(element, { quality: 0.95 }).then((dataUrl: string) => {
       const link = document.createElement('a');
-      link.download = `hazard map-${HAZARD_MODEL_ID}.png`;
+      link.download = `hazard map-${HAZARD_MODEL}.png`;
       link.href = dataUrl;
       link.click();
     });

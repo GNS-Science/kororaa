@@ -15,7 +15,7 @@ export type ContentStatusEnum = "Undefined" | "Draft" | "Published" | "Deprecate
 export type RegionGrid = "NZ_0_1_NB_1_0" | "NZ_0_1_NB_1_1" | "NZ_0_2_NB_1_1" | "WLG_0_01_nb_1_1" | "WLG_0_05_nb_1_1" | "%future added value";
 export type HazardMapsPageQuery$variables = {
   grid_id?: RegionGrid | null;
-  hazard_model_id?: string | null;
+  HAZARD_MODEL?: string | null;
   imt?: string | null;
   agg?: string | null;
   vs30?: number | null;
@@ -96,7 +96,7 @@ v5 = {
 v6 = {
   "defaultValue": null,
   "kind": "LocalArgument",
-  "name": "hazard_model_id"
+  "name": "HAZARD_MODEL"
 },
 v7 = {
   "defaultValue": null,
@@ -146,8 +146,8 @@ v13 = [
       },
       {
         "kind": "Variable",
-        "name": "hazard_model_id",
-        "variableName": "hazard_model_id"
+        "name": "HAZARD_MODEL",
+        "variableName": "HAZARD_MODEL"
       },
       {
         "kind": "Variable",
@@ -415,7 +415,7 @@ return {
     "metadata": {},
     "name": "HazardMapsPageQuery",
     "operationKind": "query",
-    "text": "query HazardMapsPageQuery(\n  $grid_id: RegionGrid\n  $hazard_model_id: String\n  $imt: String\n  $agg: String\n  $vs30: Int\n  $poe: Float\n  $color_scale: String\n  $color_scale_vmax: Float\n  $fill_opacity: Float\n  $stroke_width: Float\n  $stroke_opacity: Float\n  $color_scale_normalise: ColourScaleNormalise\n) {\n  gridded_hazard: KORORAA_gridded_hazard(grid_id: $grid_id, hazard_model_id: $hazard_model_id, imt: $imt, agg: $agg, vs30: $vs30, poe: $poe) {\n    ok\n    gridded_hazard {\n      grid_id\n      hazard_model\n      imt\n      agg\n      hazard_map(color_scale: $color_scale, color_scale_vmax: $color_scale_vmax, fill_opacity: $fill_opacity, stroke_width: $stroke_width, stroke_opacity: $stroke_opacity, color_scale_normalise: $color_scale_normalise) {\n        geojson\n        colour_scale {\n          levels\n          hexrgbs\n        }\n      }\n    }\n  }\n  textual_content: KORORAA_textual_content(index: \"hazmap_help.md\") {\n    ok\n    content {\n      index\n      content_type\n      text\n      created\n      author\n      tags\n      status\n    }\n  }\n}\n"
+    "text": "query HazardMapsPageQuery(\n  $grid_id: RegionGrid\n  $HAZARD_MODEL: String\n  $imt: String\n  $agg: String\n  $vs30: Int\n  $poe: Float\n  $color_scale: String\n  $color_scale_vmax: Float\n  $fill_opacity: Float\n  $stroke_width: Float\n  $stroke_opacity: Float\n  $color_scale_normalise: ColourScaleNormalise\n) {\n  gridded_hazard: KORORAA_gridded_hazard(grid_id: $grid_id, HAZARD_MODEL: $HAZARD_MODEL, imt: $imt, agg: $agg, vs30: $vs30, poe: $poe) {\n    ok\n    gridded_hazard {\n      grid_id\n      hazard_model\n      imt\n      agg\n      hazard_map(color_scale: $color_scale, color_scale_vmax: $color_scale_vmax, fill_opacity: $fill_opacity, stroke_width: $stroke_width, stroke_opacity: $stroke_opacity, color_scale_normalise: $color_scale_normalise) {\n        geojson\n        colour_scale {\n          levels\n          hexrgbs\n        }\n      }\n    }\n  }\n  textual_content: KORORAA_textual_content(index: \"hazmap_help.md\") {\n    ok\n    content {\n      index\n      content_type\n      text\n      created\n      author\n      tags\n      status\n    }\n  }\n}\n"
   }
 };
 })();
