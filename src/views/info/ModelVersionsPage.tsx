@@ -6,6 +6,7 @@ import ReactMarkdown from 'react-markdown';
 // import { useLazyLoadQuery } from 'react-relay';
 // import { ModelVersionsPageQuery } from './__generated__/ModelVersionsPageQuery.graphql';
 import SimpleBackdrop from '../../components/common/SimpleBackdrop';
+import { HAZARD_MODEL } from '../../utils/environmentVariables';
 
 import { Typography } from '@mui/material';
 
@@ -24,19 +25,23 @@ const TitleContainer = styled('div')({
 });
 
 const markdown = `
-## NSHM_v1.0.4 - 2023-05-05
+### NSHM_v1.0.4 - 2023-05-05
+Dip orientation of Puysegur fault sections corrected.
 
-### Fixed
-- Fault dip direction for crustal faults
-- Dip orientation of Puysegur fault sections corrected.
-- Kermadec interface location corrected. A bug had placed sources east of 180 degrees longitude in the wrong position.
-- Statistical aggregation of hazard curves. A bug introduced a small error (<1%) in the mean hazard curve at high probability / low values of shaking
+### NSHM_v1.0.3 - 2023-03-08
+Fault dip direction for crustal faults corrected.
 
-## NSHM_v1.0.0 - 2022-10-04
+### NSHM_v1.0.2 - 2023-02-01
+Kermadec interface location corrected. A bug had placed sources east of 180 degrees longitude in the wrong position.
+
+### NSHM_v1.0.1 - 2023-01-06
+Statistical aggregation of hazard curves corrected. A bug introduced a small error (<1%) in the mean hazard curve at high probability / low values of shaking.
+
+### NSHM_v1.0.0 - 2022-10-04
 
 Initial release of the NZ NSHM 2022 revision
 
-### Bug Advisory: April 2023
+#### Bug Advisory: April 2023
 
 We have identified some errors in NSHM_v1.0.0. These errors are being corrected and are unlikely to affect any NSHM results-based decision making.
 
@@ -60,6 +65,9 @@ const ModelVersionsComponent: React.FC = () => {
                   <strong>This is a log of the NSHM versions. Updates to the model are recorded here.</strong>
                 </Typography>
               </TitleContainer>
+              <Typography variant="body1">
+                <strong>THe current model version is {HAZARD_MODEL}</strong>
+              </Typography>
             </Grid>
             <Grid item xs={12}>
               <ReactMarkdown>{markdown}</ReactMarkdown>
