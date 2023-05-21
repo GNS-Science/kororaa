@@ -6,6 +6,7 @@ export interface ColorScale {
 
 export const getHazardMapCSVData = (data: string[], vs30: number, imt: string, poe: string, statistic: string) => {
   const datetimeAndVersion = [`date-time: ${new Date().toLocaleString('en-GB', { timeZone: 'UTC' })}, (UTC)`, `NSHM model version: ${HAZARD_MODEL}`];
+
   const csvData: (number | string)[][] = [
     [`vs30=${vs30}`, `spectral period=${imt}`, `Poe=${poe}`, `Statistic=${statistic}`],
     ['lon', 'lat', 'shaking intensity(g)'],

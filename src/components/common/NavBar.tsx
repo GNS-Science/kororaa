@@ -211,13 +211,21 @@ const NavBar: React.FC = () => {
 
   const pages = [
     {
-      name: 'Site Hazard',
+      name: 'Hazard',
       submenu: [
         { name: 'Curves and Spectra', path: '/HazardCurves' },
         { name: 'Disaggregations', path: '/Disaggs' },
+        { name: 'Hazard Maps', path: '/HazardMaps' },
       ],
     },
-    { name: 'Hazard Maps', path: '/HazardMaps' },
+    {
+      name: 'Ruptures',
+      submenu: [
+        { name: 'Multi-Rupture Map', path: '/MultiRuptureMap' },
+        { name: 'Rupture Animation', path: '/RuptureAnimation' },
+        // { name: 'Combo Map', path: '/ComboRuptureMap' },
+      ],
+    },
     { name: 'Coming Features', path: '/Previews' },
     {
       name: 'Resources',

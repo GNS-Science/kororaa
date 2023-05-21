@@ -20,8 +20,8 @@ describe('Home Page', () => {
   });
 
   it('Displays the nav bar', () => {
-    cy.get('header').contains('Site Hazard');
-    cy.get('header').contains('Hazard Maps');
+    cy.get('header').contains('Hazard');
+    cy.get('header').contains('Ruptures');
     cy.get('header').contains('Coming Features');
     cy.get('header').contains('Resources');
     cy.get('header').contains('Help');
@@ -63,21 +63,34 @@ describe('NavBarLinks', () => {
   });
 
   it('Hazard Curves Nav Link works', () => {
-    cy.get('header').contains('Site Hazard').click();
+    cy.get('header').contains('Hazard').click();
     cy.get('[role="menuitem"]').contains('Curves and Spectra').click({ force: true });
     cy.url().should('include', '/HazardCurves');
   });
 
   it('Disaggregations Nav Link works', () => {
-    cy.get('header').contains('Site Hazard').click();
+    cy.get('header').contains('Hazard').click();
     cy.get('[role="menuitem"]').contains('Disaggregations').click({ force: true });
     cy.url().should('include', '/Disaggs');
   });
 
   it('Hazard Map Nav Link works', () => {
-    cy.get('header').contains('Hazard Maps').click();
+    cy.get('header').contains('Hazard').click();
+    cy.get('[role="menuitem"]').contains('Hazard Maps').click({ force: true });
     cy.url().should('include', '/HazardMaps');
   });
+
+  it('IFM nav link works', () => {
+    cy.get('header').contains('Ruptures').click();
+    cy.get('[role="menuitem"]').contains('Multi-Rupture Map').click({ force: true });
+    cy.url().should('include', '/MultiRuptureMap')
+  })
+
+  it('IFM nav link works', () => {
+    cy.get('header').contains('Ruptures').click();
+    cy.get('[role="menuitem"]').contains('Rupture Animation').click({ force: true });
+    cy.url().should('include', '/RuptureAnimation')
+  })
 
   it('Coming Features Nav Link works', () => {
     cy.get('header').contains('Coming Features').click({ force: true });
