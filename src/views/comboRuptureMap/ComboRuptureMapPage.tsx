@@ -15,7 +15,7 @@ import { comboRuptureMapPageReducer, comboRuptureMapPageReducerInitialState } fr
 import { ComboRuptureMapPageQuery, ComboRuptureMapPageQuery$data } from './__generated__/ComboRuptureMapPageQuery.graphql';
 
 // import { ruptureAnimationPageReducer, ruptureAnimationPageReducerInitialState } from '../ruptureAnimation/ruptureAnimationPageReducer';
-import { RuptureAnimationPageQuery, RuptureAnimationPageQuery$data } from '../ruptureAnimation/__generated__/RuptureAnimationPageQuery.graphql';
+import { RuptureAnimationPageQuery } from '../ruptureAnimation/__generated__/RuptureAnimationPageQuery.graphql';
 import { RuptureAnimationPage_queryRoot$key } from '../ruptureAnimation/__generated__/RuptureAnimationPage_queryRoot.graphql';
 import { ruptureAnimationPage_queryRoot } from '../ruptureAnimation/RuptureAnimationPage';
 
@@ -84,7 +84,7 @@ export const ComboRuptureMapComponent: React.FC<Props> = (props: Props) => {
   // Map
   const { queryData, ruptureConnectionRef, fullscreen, setFullscreen, isPending, setGeoJsonError } = props;
   const [zoomLevel, setZoomLevel] = useState<number>(5);
-  const [showAnimation, setShowAnimation] = useState<boolean>(false);
+  // const [showAnimation, setShowAnimation] = useState<boolean>(false);
 
   // Animation
   const { data, hasNext, loadNext } = usePaginationFragment<RuptureAnimationPageQuery, RuptureAnimationPage_queryRoot$key>(ruptureAnimationPage_queryRoot, ruptureConnectionRef);

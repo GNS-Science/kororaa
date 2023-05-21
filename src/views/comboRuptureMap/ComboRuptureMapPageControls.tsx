@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Button, styled, Alert } from '@mui/material';
+import { Box, Button, styled, Alert, Checkbox, FormControlLabel } from '@mui/material';
 import { RangeSliderWithInputs } from '@gns-science/toshi-nest';
 import { toPng } from 'html-to-image';
 import { useLazyLoadQuery } from 'react-relay';
@@ -127,6 +127,30 @@ const ComboRuptureMapControls: React.FC<ComboRuptureMapControlsProps> = ({ start
           <RangeSliderWithInputs label="Magnitude Range" valuesRange={magnitudeRange} setValues={setMagnitudeRange} inputProps={{ step: 0.1, min: 6, max: 10, type: 'number' }} />
           <RangeSliderWithInputs label="Rate Range (1/yr)" valuesRange={rateRange} setValues={setRateRange} inputProps={{ step: 1, min: -20, max: 0, type: 'number' }} />
         </StyledRangeSliderDiv>
+        <FormControlLabel
+          labelPlacement="end"
+          control={
+            <Checkbox
+              checked={true}
+              // onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+              //   showFaultSurfaces ? dispatch({ showFaultSurfacesUncertainty: event?.target.checked }) : dispatch({ hazardUncertainty: event?.target.checked });
+              // }}
+            />
+          }
+          label="show fault surfaces"
+        />
+        <FormControlLabel
+          labelPlacement="end"
+          control={
+            <Checkbox
+              checked={true}
+              // onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+              //   showFaultSurfaces ? dispatch({ showFaultSurfacesUncertainty: event?.target.checked }) : dispatch({ hazardUncertainty: event?.target.checked });
+              // }}
+            />
+          }
+          label="show ruptures"
+        />
       </StyledCustomControlsBar>
       {geoJsonError && <Alert severity="error">{geoJsonError}</Alert>}
       <StyledButton disabled={isPending || !!radiusError} variant="contained" type="submit" onClick={handleSubmit}>

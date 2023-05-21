@@ -49,7 +49,7 @@ const HazardMapsComponent: React.FC = () => {
 
   const data = useLazyLoadQuery<HazardMapsPageQuery>(hazardMapsPageQuery, {
     grid_id: GRID_ID,
-    HAZARD_MODEL: HAZARD_MODEL,
+    hazard_model_id: HAZARD_MODEL,
     imt: state.spectralPeriod,
     agg: state.statistic,
     vs30: state.vs30,
@@ -118,7 +118,7 @@ export default HazardMapsPage;
 export const hazardMapsPageQuery = graphql`
   query HazardMapsPageQuery(
     $grid_id: RegionGrid
-    $HAZARD_MODEL: String
+    $hazard_model_id: String
     $imt: String
     $agg: String
     $vs30: Int
@@ -130,7 +130,7 @@ export const hazardMapsPageQuery = graphql`
     $stroke_opacity: Float
     $color_scale_normalise: ColourScaleNormalise
   ) {
-    gridded_hazard: KORORAA_gridded_hazard(grid_id: $grid_id, HAZARD_MODEL: $HAZARD_MODEL, imt: $imt, agg: $agg, vs30: $vs30, poe: $poe) {
+    gridded_hazard: KORORAA_gridded_hazard(grid_id: $grid_id, hazard_model_id: $hazard_model_id, imt: $imt, agg: $agg, vs30: $vs30, poe: $poe) {
       ok
       gridded_hazard {
         grid_id
