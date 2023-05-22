@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useReducer } from 'react';
-import { Box, Button, styled, Alert, Checkbox, FormControlLabel } from '@mui/material';
+import { Box, Button, styled, Alert } from '@mui/material';
 import { RangeSliderWithInputs } from '@gns-science/toshi-nest';
 import { toPng } from 'html-to-image';
 import { useLazyLoadQuery } from 'react-relay';
@@ -59,7 +59,6 @@ const ComboRuptureMapControls: React.FC<ComboRuptureMapControlsProps> = ({ start
   const [rateRange, setRateRange] = useState<number[]>([-20, 0]);
   const [radius, setRadius] = useState<string>('');
   const [radiusError, setRadiusError] = useState<string | null>(null);
-  const [showSurfaces, setShowSurfaces] = useState<boolean>(false);
   const [mapViewControlsState, mapViewControlsDispatch] = useReducer(mapViewControlsReducer, { showSurfaces: true, showAnimation: true });
   const data = useLazyLoadQuery<ComboRuptureMapPageControlsQuery>(comboRuptureMapPageControlsQuery, { radiiSetId: SOLVIS_RADII_ID, locationListId: SOLVIS_LOCATION_LIST });
   const locationData = data?.SOLVIS_get_location_list?.locations;
@@ -126,6 +125,7 @@ const ComboRuptureMapControls: React.FC<ComboRuptureMapControlsProps> = ({ start
   useEffect(() => {
     console.log('handleViewControls', mapViewControlsState);
     dispatch({ showSurfaces: mapViewControlsState.showSurfaces, showAnimation: mapViewControlsState.showAnimation });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mapViewControlsState]);
 
   return (

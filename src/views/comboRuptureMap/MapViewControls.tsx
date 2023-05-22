@@ -32,6 +32,7 @@ const MapViewControls: React.FC<MapViewControlsProps> = ({ initState, onHandleCh
 
   useEffect(() => {
     onHandleChange({ showAnimation: showAnimationChecked, showSurfaces: showSurfacesChecked });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [showSurfacesChecked, showAnimationChecked]);
 
   return (
