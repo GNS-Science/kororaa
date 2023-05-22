@@ -11,7 +11,7 @@ import { GeoJsonObject } from 'geojson';
 import { InfoTooltip } from '../../components/common/InfoTooltip';
 import ComboRuptureMapControls from './ComboRuptureMapPageControls';
 import SimpleBackdrop from '../../components/common/SimpleBackdrop';
-import { comboRuptureMapPageReducer, comboRuptureMapPageReducerInitialState } from './comboRuptureMapPageReducer';
+import { comboRuptureMapPageReducer, comboRuptureMapPageReducerInitialState, ComboRuptureMapPageState } from './comboRuptureMapPageReducer';
 import { ComboRuptureMapPageQuery, ComboRuptureMapPageQuery$data } from './__generated__/ComboRuptureMapPageQuery.graphql';
 
 // import { ruptureAnimationPageReducer, ruptureAnimationPageReducerInitialState } from '../ruptureAnimation/ruptureAnimationPageReducer';
@@ -19,17 +19,19 @@ import { RuptureAnimationPageQuery } from '../ruptureAnimation/__generated__/Rup
 import { RuptureAnimationPage_queryRoot$key } from '../ruptureAnimation/__generated__/RuptureAnimationPage_queryRoot.graphql';
 import { ruptureAnimationPage_queryRoot } from '../ruptureAnimation/RuptureAnimationPage';
 
-type Props = {
+type ComboRuptureMapComponentProps = {
   queryData: ComboRuptureMapPageQuery$data;
   ruptureConnectionRef: RuptureAnimationPage_queryRoot$key;
   fullscreen: boolean;
   setFullscreen: (fullscreen: boolean) => void;
   isPending: boolean;
   setGeoJsonError: (geoJsonError: string | null) => void;
+  mapControlsState: ComboRuptureMapPageState;
 };
 
 export const ComboRuptureMap: React.FC = () => {
   const [state, dispatch] = useReducer(comboRuptureMapPageReducer, comboRuptureMapPageReducerInitialState);
+
   const [isPending, startTransition] = useTransition();
   const [fullscreen, setFullscreen] = React.useState<boolean>(false);
   const [scrollHeight, setScrollHeight] = useState<number>(0);
@@ -57,6 +59,10 @@ export const ComboRuptureMap: React.FC = () => {
     return () => window.removeEventListener('scroll', updateScrollHeight);
   }, []);
 
+  // useEffect(() => {
+  //   console.log('ComboRuptureMap.useEffect[state]', state);
+  // }, [state]);
+
   return (
     <>
       <Box id="map" sx={{ width: '100%', height: '80vh' }}>
@@ -67,6 +73,7 @@ export const ComboRuptureMap: React.FC = () => {
           ruptureConnectionRef={initialData}
           queryData={initialData}
           isPending={isPending}
+          mapControlsState={state}
         />
       </Box>
       <LeafletDrawer drawerHeight={'80vh'} headerHeight={`${100 - scrollHeight}px`} width={'400px'} fullscreen={fullscreen}>
@@ -80,11 +87,10 @@ export const ComboRuptureMap: React.FC = () => {
   );
 };
 
-export const ComboRuptureMapComponent: React.FC<Props> = (props: Props) => {
+export const ComboRuptureMapComponent: React.FC<ComboRuptureMapComponentProps> = (props: ComboRuptureMapComponentProps) => {
   // Map
-  const { queryData, ruptureConnectionRef, fullscreen, setFullscreen, isPending, setGeoJsonError } = props;
+  const { queryData, ruptureConnectionRef, fullscreen, setFullscreen, isPending, setGeoJsonError, mapControlsState } = props;
   const [zoomLevel, setZoomLevel] = useState<number>(5);
-  // const [showAnimation, setShowAnimation] = useState<boolean>(false);
 
   // Animation
   const { data, hasNext, loadNext } = usePaginationFragment<RuptureAnimationPageQuery, RuptureAnimationPage_queryRoot$key>(ruptureAnimationPage_queryRoot, ruptureConnectionRef);
@@ -93,11 +99,16 @@ export const ComboRuptureMapComponent: React.FC<Props> = (props: Props) => {
   const totalRuptures = useMemo(() => {
     return queryData?.SOLVIS_filter_ruptures?.total_count;
   }, [queryData]);
+
   const ruptureData = useMemo(() => {
-    return data?.SOLVIS_filter_ruptures?.edges?.map((edge) => {
-      return JSON.parse(edge?.node?.fault_surfaces);
-    });
-  }, [data]);
+    if (mapControlsState.showAnimation) {
+      return data?.SOLVIS_filter_ruptures?.edges?.map((edge) => {
+        return JSON.parse(edge?.node?.fault_surfaces);
+      });
+    } else {
+      return [];
+    }
+  }, [data, mapControlsState]);
 
   // Aggregation
   const geojsonSurfacesData = queryData?.SOLVIS_filter_rupture_sections?.fault_surfaces;
@@ -131,15 +142,23 @@ export const ComboRuptureMapComponent: React.FC<Props> = (props: Props) => {
     if (geojsonSurfacesData == null || geojsonSurfacesData == undefined) return [];
 
     if (geojsonSurfacesData && geojsonTracesData && locationData && locationData.length > 0) {
-      return [...locationData, geojsonSurfacesData, geojsonTracesData];
+      if (mapControlsState.showSurfaces) {
+        return [...locationData, geojsonSurfacesData, geojsonTracesData];
+      } else {
+        return [...locationData, geojsonTracesData];
+      }
     } else if (geojsonSurfacesData && geojsonTracesData) {
-      return [geojsonSurfacesData, geojsonTracesData];
+      if (mapControlsState.showSurfaces) {
+        return [geojsonSurfacesData, geojsonTracesData];
+      } else {
+        return [geojsonTracesData];
+      }
     } else if (locationData && locationData.length > 0) {
       return [...locationData];
     } else {
       return [];
     }
-  }, [geojsonSurfacesData, geojsonTracesData, locationData]);
+  }, [geojsonSurfacesData, geojsonTracesData, locationData, mapControlsState]);
 
   useEffect(() => {
     if (locationData && locationData.length > 0 && !geojsonSurfacesData) {

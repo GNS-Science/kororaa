@@ -221,9 +221,9 @@ const NavBar: React.FC = () => {
     {
       name: 'Ruptures',
       submenu: [
+        { name: 'Combo Map', path: '/ComboRuptureMap' },
         { name: 'Multi-Rupture Map', path: '/MultiRuptureMap' },
         { name: 'Rupture Animation', path: '/RuptureAnimation' },
-        // { name: 'Combo Map', path: '/ComboRuptureMap' },
       ],
     },
     { name: 'Coming Features', path: '/Previews' },
