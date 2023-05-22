@@ -14,6 +14,8 @@ import SelectControlWithDisable from '../../components/common/SelectControlWithD
 import { ComboRuptureMapPageControlsQuery } from './__generated__/ComboRuptureMapPageControlsQuery.graphql';
 import { ComboRuptureMapPageState } from './comboRuptureMapPageReducer';
 
+import MapViewControls from './MapViewControls';
+
 const StyledButton = styled(Button)(() => ({
   margin: '10px',
 }));
@@ -57,6 +59,7 @@ const ComboRuptureMapControls: React.FC<ComboRuptureMapControlsProps> = ({ start
   const [rateRange, setRateRange] = useState<number[]>([-20, 0]);
   const [radius, setRadius] = useState<string>('');
   const [radiusError, setRadiusError] = useState<string | null>(null);
+  const [showSurfaces, setShowSurfaces] = useState<boolean>(false);
 
   const data = useLazyLoadQuery<ComboRuptureMapPageControlsQuery>(comboRuptureMapPageControlsQuery, { radiiSetId: SOLVIS_RADII_ID, locationListId: SOLVIS_LOCATION_LIST });
   const locationData = data?.SOLVIS_get_location_list?.locations;
@@ -127,30 +130,7 @@ const ComboRuptureMapControls: React.FC<ComboRuptureMapControlsProps> = ({ start
           <RangeSliderWithInputs label="Magnitude Range" valuesRange={magnitudeRange} setValues={setMagnitudeRange} inputProps={{ step: 0.1, min: 6, max: 10, type: 'number' }} />
           <RangeSliderWithInputs label="Rate Range (1/yr)" valuesRange={rateRange} setValues={setRateRange} inputProps={{ step: 1, min: -20, max: 0, type: 'number' }} />
         </StyledRangeSliderDiv>
-        <FormControlLabel
-          labelPlacement="end"
-          control={
-            <Checkbox
-              checked={true}
-              // onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-              //   showFaultSurfaces ? dispatch({ showFaultSurfacesUncertainty: event?.target.checked }) : dispatch({ hazardUncertainty: event?.target.checked });
-              // }}
-            />
-          }
-          label="show fault surfaces"
-        />
-        <FormControlLabel
-          labelPlacement="end"
-          control={
-            <Checkbox
-              checked={true}
-              // onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-              //   showFaultSurfaces ? dispatch({ showFaultSurfacesUncertainty: event?.target.checked }) : dispatch({ hazardUncertainty: event?.target.checked });
-              // }}
-            />
-          }
-          label="show ruptures"
-        />
+        <MapViewControls showSurfaces={true} showAnimation={false} />
       </StyledCustomControlsBar>
       {geoJsonError && <Alert severity="error">{geoJsonError}</Alert>}
       <StyledButton disabled={isPending || !!radiusError} variant="contained" type="submit" onClick={handleSubmit}>

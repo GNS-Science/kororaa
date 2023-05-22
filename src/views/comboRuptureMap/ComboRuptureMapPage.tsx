@@ -84,7 +84,7 @@ export const ComboRuptureMapComponent: React.FC<Props> = (props: Props) => {
   // Map
   const { queryData, ruptureConnectionRef, fullscreen, setFullscreen, isPending, setGeoJsonError } = props;
   const [zoomLevel, setZoomLevel] = useState<number>(5);
-  // const [showAnimation, setShowAnimation] = useState<boolean>(false);
+  const [showAnimation, setShowAnimation] = useState<boolean>(false);
 
   // Animation
   const { data, hasNext, loadNext } = usePaginationFragment<RuptureAnimationPageQuery, RuptureAnimationPage_queryRoot$key>(ruptureAnimationPage_queryRoot, ruptureConnectionRef);
