@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useReducer } from 'react';
 import { Box, Button, styled, Alert, Checkbox, FormControlLabel } from '@mui/material';
 import { RangeSliderWithInputs } from '@gns-science/toshi-nest';
 import { toPng } from 'html-to-image';
@@ -14,7 +14,7 @@ import SelectControlWithDisable from '../../components/common/SelectControlWithD
 import { ComboRuptureMapPageControlsQuery } from './__generated__/ComboRuptureMapPageControlsQuery.graphql';
 import { ComboRuptureMapPageState } from './comboRuptureMapPageReducer';
 
-import MapViewControls from './MapViewControls';
+import MapViewControls, { mapViewControlsReducer } from './MapViewControls';
 
 const StyledButton = styled(Button)(() => ({
   margin: '10px',
@@ -60,7 +60,7 @@ const ComboRuptureMapControls: React.FC<ComboRuptureMapControlsProps> = ({ start
   const [radius, setRadius] = useState<string>('');
   const [radiusError, setRadiusError] = useState<string | null>(null);
   const [showSurfaces, setShowSurfaces] = useState<boolean>(false);
-
+  const [mapViewControlsState, mapViewControlsDispatch] = useReducer(mapViewControlsReducer, { showSurfaces: true, showAnimation: true });
   const data = useLazyLoadQuery<ComboRuptureMapPageControlsQuery>(comboRuptureMapPageControlsQuery, { radiiSetId: SOLVIS_RADII_ID, locationListId: SOLVIS_LOCATION_LIST });
   const locationData = data?.SOLVIS_get_location_list?.locations;
   const radiiData = data?.SOLVIS_get_radii_set?.radii;
@@ -120,6 +120,14 @@ const ComboRuptureMapControls: React.FC<ComboRuptureMapControlsProps> = ({ start
     });
   };
 
+  // const handleViewControls = () => {
+  // };
+
+  useEffect(() => {
+    console.log('handleViewControls', mapViewControlsState);
+    dispatch({ showSurfaces: mapViewControlsState.showSurfaces, showAnimation: mapViewControlsState.showAnimation });
+  }, [mapViewControlsState]);
+
   return (
     <Box sx={{ width: '100%', ...flexParentCenter, flexDirection: 'column' }}>
       <StyledCustomControlsBar direction="column">
@@ -130,7 +138,7 @@ const ComboRuptureMapControls: React.FC<ComboRuptureMapControlsProps> = ({ start
           <RangeSliderWithInputs label="Magnitude Range" valuesRange={magnitudeRange} setValues={setMagnitudeRange} inputProps={{ step: 0.1, min: 6, max: 10, type: 'number' }} />
           <RangeSliderWithInputs label="Rate Range (1/yr)" valuesRange={rateRange} setValues={setRateRange} inputProps={{ step: 1, min: -20, max: 0, type: 'number' }} />
         </StyledRangeSliderDiv>
-        <MapViewControls showSurfaces={true} showAnimation={false} />
+        <MapViewControls initState={{ showSurfaces: true, showAnimation: false }} onHandleChange={mapViewControlsDispatch} />
       </StyledCustomControlsBar>
       {geoJsonError && <Alert severity="error">{geoJsonError}</Alert>}
       <StyledButton disabled={isPending || !!radiusError} variant="contained" type="submit" onClick={handleSubmit}>
