@@ -13,7 +13,6 @@ import SelectControlMultiple from '../../components/common/SelectControlMultiple
 import SelectControlWithDisable from '../../components/common/SelectControlWithDisable';
 import { ComboRuptureMapPageControlsQuery } from './__generated__/ComboRuptureMapPageControlsQuery.graphql';
 import { ComboRuptureMapPageState } from './comboRuptureMapPageReducer';
-
 import MapViewControls, { mapViewControlsReducer } from './MapViewControls';
 
 const StyledButton = styled(Button)(() => ({

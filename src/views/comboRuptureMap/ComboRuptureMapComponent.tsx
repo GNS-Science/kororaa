@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { LeafletMap, ColorBar, MfdPlot } from '@gns-science/toshi-nest';
-import { Box, GlobalStyles } from '@mui/material';
+import { LeafletMap } from '@gns-science/toshi-nest';
+import { GlobalStyles } from '@mui/material';
 import { usePaginationFragment } from 'react-relay';
 import '../../css/leaflet.timedimension.control.css';
 import { LatLngExpression } from 'leaflet';
@@ -11,6 +11,7 @@ import { ComboRuptureMapPageQuery$data } from './__generated__/ComboRuptureMapPa
 import { RuptureAnimationPageQuery } from '../ruptureAnimation/__generated__/RuptureAnimationPageQuery.graphql';
 import { RuptureAnimationPage_queryRoot$key } from '../ruptureAnimation/__generated__/RuptureAnimationPage_queryRoot.graphql';
 import { ruptureAnimationPage_queryRoot } from '../ruptureAnimation/RuptureAnimationPage';
+import ComboInfoPanelComponent from './ComboInfoPanelComponent';
 
 type ComboRuptureMapComponentProps = {
   queryData: ComboRuptureMapPageQuery$data;
@@ -22,9 +23,9 @@ type ComboRuptureMapComponentProps = {
   mapControlsState: ComboRuptureMapPageState;
 };
 
-export const ComboRuptureMapComponent: React.FC<ComboRuptureMapComponentProps> = (props: ComboRuptureMapComponentProps) => {
+export const ComboRuptureMapComponent = (props: ComboRuptureMapComponentProps) => {
   // Map
-  const { queryData, ruptureConnectionRef, fullscreen, setFullscreen, isPending, setGeoJsonError, mapControlsState } = props;
+  const { queryData, ruptureConnectionRef, setFullscreen, isPending, setGeoJsonError, mapControlsState } = props;
   const [zoomLevel, setZoomLevel] = useState<number>(5);
 
   // Animation
@@ -48,16 +49,6 @@ export const ComboRuptureMapComponent: React.FC<ComboRuptureMapComponentProps> =
   // Aggregation
   const geojsonSurfacesData = queryData?.SOLVIS_filter_rupture_sections?.fault_surfaces;
   const geojsonTracesData = queryData?.SOLVIS_filter_rupture_sections?.fault_traces;
-  const mfdData = queryData?.SOLVIS_filter_rupture_sections?.mfd_histogram;
-
-  const colorScale = useMemo(() => {
-    if (queryData?.SOLVIS_filter_rupture_sections?.color_scale?.color_map?.levels && queryData?.SOLVIS_filter_rupture_sections?.color_scale?.color_map?.hexrgbs) {
-      return {
-        levels: queryData?.SOLVIS_filter_rupture_sections?.color_scale?.color_map?.levels.map((level) => level?.toExponential(0)) ?? [],
-        hexrgbs: queryData?.SOLVIS_filter_rupture_sections?.color_scale?.color_map?.hexrgbs.map((color) => color?.toString()) ?? [],
-      };
-    }
-  }, [queryData]);
 
   // Location
   const locationData = queryData?.SOLVIS_locations_by_id?.edges?.map((edge) => {
@@ -207,53 +198,7 @@ export const ComboRuptureMapComponent: React.FC<ComboRuptureMapComponentProps> =
           timeDimensionControlOptions={timeDimensionControlOptions}
           timeDimensionLayerProps={timeDimensionLayerProps}
         />
-        {mfdData && (
-          <Box
-            style={
-              !fullscreen
-                ? {
-                    backgroundColor: '#ffffff',
-                    position: 'relative',
-                    zIndex: 119700,
-                    top: '-435px',
-                    left: 'calc(100% - 396px)',
-                    width: '395px',
-                    borderRadius: '4px',
-                    borderWidth: '1px',
-                    border: '2px solid rgba(0,0,0,0.2)',
-                    backgroundClip: 'padding-box',
-                  }
-                : {
-                    backgroundColor: '#ffffff',
-                    position: 'absolute',
-                    zIndex: 119700,
-                    bottom: '20px',
-                    left: 'calc(100% - 396px)',
-                    width: '395px',
-                    borderRadius: '4px',
-                    borderWidth: '1px',
-                    border: '2px solid rgba(0,0,0,0.2)',
-                    backgroundClip: 'padding-box',
-                  }
-            }
-          >
-            <MfdPlot
-              data={mfdData}
-              width={430}
-              height={300}
-              xLabel="Magnitude"
-              yLabel="Rate"
-              yLabelOffset={35}
-              xLabelOffset={5}
-              header="Magnitude Frequency Distribution"
-              yScaleDomain={[1e-7, 1e-1]}
-              xScaleDomain={[6.7, 9.6]}
-              lineColours={['green', 'red']}
-              legendDomain={['Incremental', 'Cumulative']}
-            />
-            <ColorBar heading={'Participation Rate'} width={350} height={35} colors={colorScale?.hexrgbs} tickValues={colorScale?.levels} linear={false} />
-          </Box>
-        )}
+        <ComboInfoPanelComponent {...props} />
       </React.Suspense>
     </>
   );
