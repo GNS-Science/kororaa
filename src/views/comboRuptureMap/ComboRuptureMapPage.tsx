@@ -244,6 +244,14 @@ export const ComboRuptureMapComponent: React.FC<ComboRuptureMapComponentProps> =
     }
   }, [needsMore, hasNoMore]);
 
+  const timeDimensionLayerProps = {
+    geoJsonData: (ruptureData as typeof GeoJsonObject[]) || '',
+    setTimeDimensionNeedsMore: setNeedsMore,
+    setTimeDimensionHasNoMore: setHasNoMore,
+    surfaceProperties: [],
+    timeDimensionTotalLength: totalRuptures || 0,
+  };
+
   return (
     <>
       <React.Suspense fallback={<SimpleBackdrop />}>
@@ -259,25 +267,10 @@ export const ComboRuptureMapComponent: React.FC<ComboRuptureMapComponentProps> =
           width={'100%'}
           setFullscreen={setFullscreen}
           onEachFeature={onEachFeature}
-          // zoom={zoom}
-          // zoomLevel={zoomLevel}
-          // setZoomLevel={setZoomLevel}
-          // nzCentre={nzCentre as typeof LatLngExpression}
-          // geoJsonData={locationData ? locationData : ['']}
-          // height={'80vh'}
-          // width={'100%'}
-          // setFullscreen={setFullscreen}
-
-          timeDimensionOptions={timeDimensionOptions}
           timeDimension={true}
-          // eslint-disable-next-line prettier/prettier
-          timeDimensionGeoJsonData={(ruptureData as typeof GeoJsonObject[]) || ''}
-          timeDimensionUnderlay={'' as unknown as typeof GeoJsonObject}
+          timeDimensionOptions={timeDimensionOptions}
           timeDimensionControlOptions={timeDimensionControlOptions}
-          setTimeDimensionNeedsMore={setNeedsMore}
-          setTimeDimensionHasNoMore={setHasNoMore}
-          surfaceProperties={[]} // surfaceProperties ||
-          timeDimensionTotalLength={totalRuptures || 0}
+          timeDimensionLayerProps={timeDimensionLayerProps}
         />
         {mfdData && (
           <Box

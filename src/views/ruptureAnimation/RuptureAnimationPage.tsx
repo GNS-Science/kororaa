@@ -145,6 +145,14 @@ export const RuptureAnimationPaginationComponent: React.FC<Props> = (props: Prop
     }
   }, [needsMore, hasNoMore]);
 
+  const timeDimensionLayerProps = {
+    geoJsonData: (ruptureData as typeof GeoJsonObject[]) || '',
+    setTimeDimensionNeedsMore: setNeedsMore,
+    setTimeDimensionHasNoMore: setHasNoMore,
+    surfaceProperties: surfaceProperties || [],
+    timeDimensionTotalLength: totalRuptures || 0,
+  };
+
   return (
     <>
       <React.Suspense fallback={<SimpleBackdrop />}>
@@ -158,16 +166,17 @@ export const RuptureAnimationPaginationComponent: React.FC<Props> = (props: Prop
           height={'80vh'}
           width={'100%'}
           setFullscreen={setFullscreen}
-          timeDimensionOptions={timeDimensionOptions}
           timeDimension={true}
+          timeDimensionOptions={timeDimensionOptions}
+          timeDimensionControlOptions={timeDimensionControlOptions}
           // eslint-disable-next-line prettier/prettier
           timeDimensionGeoJsonData={(ruptureData as typeof GeoJsonObject[]) || ''}
-          timeDimensionUnderlay={'' as unknown as typeof GeoJsonObject}
-          timeDimensionControlOptions={timeDimensionControlOptions}
-          setTimeDimensionNeedsMore={setNeedsMore}
-          setTimeDimensionHasNoMore={setHasNoMore}
-          surfaceProperties={surfaceProperties || []}
-          timeDimensionTotalLength={totalRuptures || 0}
+          timeDimensionLayerProps={timeDimensionLayerProps}
+          //timeDimensionUnderlay={'' as unknown as typeof GeoJsonObject}
+          // setTimeDimensionNeedsMore={setNeedsMore}
+          // setTimeDimensionHasNoMore={setHasNoMore}
+          // surfaceProperties={surfaceProperties || []}
+          // timeDimensionTotalLength={totalRuptures || 0}
         />
       </React.Suspense>
     </>
