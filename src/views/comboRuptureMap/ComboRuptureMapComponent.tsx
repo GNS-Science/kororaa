@@ -11,7 +11,9 @@ import { ComboRuptureMapPageQuery$data } from './__generated__/ComboRuptureMapPa
 import { RuptureAnimationPageQuery } from '../ruptureAnimation/__generated__/RuptureAnimationPageQuery.graphql';
 import { RuptureAnimationPage_queryRoot$key } from '../ruptureAnimation/__generated__/RuptureAnimationPage_queryRoot.graphql';
 import { ruptureAnimationPage_queryRoot } from '../ruptureAnimation/RuptureAnimationPage';
-import ComboInfoPanelComponent from './ComboInfoPanelComponent';
+import ComboInfoPanelComponent, { ComboInfoPanelComponentProps } from './ComboInfoPanelComponent';
+
+import TimeDimensionLayerContext, { TimeDimensionLayerState } from './store';
 
 type ComboRuptureMapComponentProps = {
   queryData: ComboRuptureMapPageQuery$data;
@@ -25,8 +27,15 @@ type ComboRuptureMapComponentProps = {
 
 export const ComboRuptureMapComponent = (props: ComboRuptureMapComponentProps) => {
   // Map
-  const { queryData, ruptureConnectionRef, setFullscreen, isPending, setGeoJsonError, mapControlsState } = props;
+  const { queryData, ruptureConnectionRef, fullscreen, setFullscreen, isPending, setGeoJsonError, mapControlsState } = props;
   const [zoomLevel, setZoomLevel] = useState<number>(5);
+
+  const [timeDimensionLayerState, timeDimensionLayerStateSet] = useState<TimeDimensionLayerState>({ timeIndex: 20 });
+
+  const onNewTimeIndexHandler = (e: number) => {
+    // console.log('onNewTimeIndexHandler', e);
+    timeDimensionLayerStateSet({ timeIndex: e });
+  };
 
   // Animation
   const { data, hasNext, loadNext } = usePaginationFragment<RuptureAnimationPageQuery, RuptureAnimationPage_queryRoot$key>(ruptureAnimationPage_queryRoot, ruptureConnectionRef);
@@ -148,7 +157,7 @@ export const ComboRuptureMapComponent = (props: ComboRuptureMapComponentProps) =
   };
 
   const timeDimensionControlOptions = {
-    position: 'topright',
+    position: 'bottomright',
     displayDate: false,
     maxSpeed: 5,
     minSpeed: 1,
@@ -170,35 +179,52 @@ export const ComboRuptureMapComponent = (props: ComboRuptureMapComponentProps) =
     }
   }, [needsMore, hasNoMore]);
 
+  const surfaceProperties = useMemo(() => {
+    return data?.SOLVIS_filter_ruptures?.edges?.map((edge) => {
+      return { magnitude: edge?.node?.magnitude, area: edge?.node?.area, length: edge?.node?.length, rate_weighted_mean: edge?.node?.rate_weighted_mean };
+    });
+  }, [data]);
+
   const timeDimensionLayerProps = {
     geoJsonData: (ruptureData as typeof GeoJsonObject[]) || '',
     setTimeDimensionNeedsMore: setNeedsMore,
     setTimeDimensionHasNoMore: setHasNoMore,
-    surfaceProperties: [],
+    surfaceProperties: surfaceProperties || [],
     timeDimensionTotalLength: totalRuptures || 0,
+    onNewTimeIndexHandler: onNewTimeIndexHandler,
+  };
+
+  const comboInfoPanelComponentProps: ComboInfoPanelComponentProps = {
+    queryData: queryData,
+    fullscreen: fullscreen,
+    timeDimensionTotalLength: totalRuptures || 0,
+    surfaceProperties: surfaceProperties || [],
+    mapControlsState: mapControlsState,
   };
 
   return (
     <>
       <React.Suspense fallback={<SimpleBackdrop />}>
         {isPending && <SimpleBackdrop />}
-        <GlobalStyles styles={{ '.leaflet-popup-content p': { margin: '0' } }} />
-        <LeafletMap
-          zoom={zoom}
-          zoomLevel={zoomLevel}
-          setZoomLevel={setZoomLevel}
-          nzCentre={nzCentre as typeof LatLngExpression}
-          geoJsonData={geoJson}
-          height={'80vh'}
-          width={'100%'}
-          setFullscreen={setFullscreen}
-          onEachFeature={onEachFeature}
-          timeDimension={true}
-          timeDimensionOptions={timeDimensionOptions}
-          timeDimensionControlOptions={timeDimensionControlOptions}
-          timeDimensionLayerProps={timeDimensionLayerProps}
-        />
-        <ComboInfoPanelComponent {...props} />
+        <TimeDimensionLayerContext.Provider value={timeDimensionLayerState}>
+          <GlobalStyles styles={{ '.leaflet-popup-content p': { margin: '0' } }} />
+          <LeafletMap
+            zoom={zoom}
+            zoomLevel={zoomLevel}
+            setZoomLevel={setZoomLevel}
+            nzCentre={nzCentre as typeof LatLngExpression}
+            geoJsonData={geoJson}
+            height={'80vh'}
+            width={'100%'}
+            setFullscreen={setFullscreen}
+            onEachFeature={onEachFeature}
+            timeDimension={true}
+            timeDimensionOptions={timeDimensionOptions}
+            timeDimensionControlOptions={timeDimensionControlOptions}
+            timeDimensionLayerProps={timeDimensionLayerProps}
+          />
+          <ComboInfoPanelComponent {...comboInfoPanelComponentProps} />
+        </TimeDimensionLayerContext.Provider>
       </React.Suspense>
     </>
   );

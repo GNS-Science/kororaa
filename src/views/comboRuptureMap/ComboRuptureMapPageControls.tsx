@@ -58,7 +58,7 @@ const ComboRuptureMapControls: React.FC<ComboRuptureMapControlsProps> = ({ start
   const [rateRange, setRateRange] = useState<number[]>([-20, 0]);
   const [radius, setRadius] = useState<string>('');
   const [radiusError, setRadiusError] = useState<string | null>(null);
-  const [mapViewControlsState, mapViewControlsDispatch] = useReducer(mapViewControlsReducer, { showSurfaces: true, showAnimation: true });
+  const [mapViewControlsState, mapViewControlsDispatch] = useReducer(mapViewControlsReducer, { showSurfaces: true, showAnimation: true, showMfd: true, showTraceLegend: true });
   const data = useLazyLoadQuery<ComboRuptureMapPageControlsQuery>(comboRuptureMapPageControlsQuery, { radiiSetId: SOLVIS_RADII_ID, locationListId: SOLVIS_LOCATION_LIST });
   const locationData = data?.SOLVIS_get_location_list?.locations;
   const radiiData = data?.SOLVIS_get_radii_set?.radii;
@@ -123,7 +123,7 @@ const ComboRuptureMapControls: React.FC<ComboRuptureMapControlsProps> = ({ start
 
   useEffect(() => {
     console.log('handleViewControls', mapViewControlsState);
-    dispatch({ showSurfaces: mapViewControlsState.showSurfaces, showAnimation: mapViewControlsState.showAnimation });
+    dispatch({ ...mapViewControlsState });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mapViewControlsState]);
 
@@ -137,7 +137,7 @@ const ComboRuptureMapControls: React.FC<ComboRuptureMapControlsProps> = ({ start
           <RangeSliderWithInputs label="Magnitude Range" valuesRange={magnitudeRange} setValues={setMagnitudeRange} inputProps={{ step: 0.1, min: 6, max: 10, type: 'number' }} />
           <RangeSliderWithInputs label="Rate Range (1/yr)" valuesRange={rateRange} setValues={setRateRange} inputProps={{ step: 1, min: -20, max: 0, type: 'number' }} />
         </StyledRangeSliderDiv>
-        <MapViewControls initState={{ showSurfaces: true, showAnimation: false }} onHandleChange={mapViewControlsDispatch} />
+        <MapViewControls initState={{ showSurfaces: true, showAnimation: false, showMfd: false, showTraceLegend: true }} onHandleChange={mapViewControlsDispatch} />
       </StyledCustomControlsBar>
       {geoJsonError && <Alert severity="error">{geoJsonError}</Alert>}
       <StyledButton disabled={isPending || !!radiusError} variant="contained" type="submit" onClick={handleSubmit}>

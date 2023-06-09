@@ -6,6 +6,8 @@ export type ComboRuptureMapPageState = {
   rateRange: number[];
   showSurfaces: boolean;
   showAnimation: boolean;
+  showMfd: boolean;
+  showTraceLegend: boolean;
 };
 
 export const comboRuptureMapPageReducerInitialState: ComboRuptureMapPageState = {
@@ -16,6 +18,8 @@ export const comboRuptureMapPageReducerInitialState: ComboRuptureMapPageState = 
   rateRange: [10e-20, 0],
   showSurfaces: true,
   showAnimation: true,
+  showMfd: true,
+  showTraceLegend: true,
 };
 
 export const comboRuptureMapPageReducer = (state: ComboRuptureMapPageState, newState: Partial<ComboRuptureMapPageState>) => {
