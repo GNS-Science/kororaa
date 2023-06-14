@@ -166,7 +166,14 @@ const ComboRuptureMapControls: React.FC<ComboRuptureMapControlsProps> = ({ start
           <RangeSliderWithInputs label="Magnitude Range" valuesRange={magnitudeRange} setValues={setMagnitudeRange} inputProps={{ step: 0.1, min: 6, max: 10, type: 'number' }} />
           <RangeSliderWithInputs label="Rate Range (1/yr)" valuesRange={rateRange} setValues={setRateRange} inputProps={{ step: 1, min: -20, max: 0, type: 'number' }} />
         </StyledRangeSliderDiv>
-        <SelectControlWithDisable disabled={!state.showAnimation} name="Sort By 1" selection={sortBy1} setSelection={setSortBy1} options={sortByOptions} tooltip={'sort by'} />
+        <SelectControlWithDisable
+          disabled={!state.showAnimation}
+          name="Sort By 1"
+          selection={sortBy1}
+          setSelection={setSortBy1}
+          options={sortByOptions}
+          tooltip={'Animation must be enabled to sort'}
+        />
         <SelectControlWithDisable
           disabled={sortBy1 === 'Unsorted' || !state.showAnimation}
           name="Sort By 2"
