@@ -32,7 +32,7 @@ export const ComboRuptureMap: React.FC = () => {
     maximum_rate: state.rateRange[1],
     model_id: HAZARD_MODEL,
     fault_system: state.faultSystem.slice(0, 3).toUpperCase(),
-    sortby: [],
+    sortby: state.sortby,
   });
 
   useEffect(() => {
@@ -43,10 +43,6 @@ export const ComboRuptureMap: React.FC = () => {
     updateScrollHeight();
     return () => window.removeEventListener('scroll', updateScrollHeight);
   }, []);
-
-  // useEffect(() => {
-  //   console.log('ComboRuptureMap.useEffect[state]', state);
-  // }, [state]);
 
   return (
     <>
@@ -66,7 +62,7 @@ export const ComboRuptureMap: React.FC = () => {
           Combo-Rupture Map
           <InfoTooltip content={'tooltip to come'} format={false} />
         </Typography>
-        <ComboRuptureMapControls startTransition={startTransition} isPending={isPending} geoJsonError={geoJsonError} dispatch={dispatch} />
+        <ComboRuptureMapControls startTransition={startTransition} isPending={isPending} geoJsonError={geoJsonError} dispatch={dispatch} state={state} />
       </LeafletDrawer>
     </>
   );

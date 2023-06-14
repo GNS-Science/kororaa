@@ -33,7 +33,6 @@ export const ComboRuptureMapComponent = (props: ComboRuptureMapComponentProps) =
   const [timeDimensionLayerState, timeDimensionLayerStateSet] = useState<TimeDimensionLayerState>({ timeIndex: 20 });
 
   const onNewTimeIndexHandler = (e: number) => {
-    // console.log('onNewTimeIndexHandler', e);
     timeDimensionLayerStateSet({ timeIndex: e });
   };
 
@@ -65,15 +64,6 @@ export const ComboRuptureMapComponent = (props: ComboRuptureMapComponentProps) =
   });
 
   const geoJson = useMemo(() => {
-    //   console.log('locationData');
-    //   console.log(locationData);
-
-    //   console.log('geojsonSurfacesData');
-    //   console.log(geojsonSurfacesData);
-
-    //   console.log('geojsonTracesData');
-    //   console.log(geojsonTracesData);
-
     if (geojsonSurfacesData == null || geojsonSurfacesData == undefined) return [];
 
     if (geojsonSurfacesData && geojsonTracesData && locationData && locationData.length > 0) {

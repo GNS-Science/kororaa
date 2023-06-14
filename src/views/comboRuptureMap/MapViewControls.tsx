@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Checkbox, FormLabel } from '@mui/material';
+import { Box, Checkbox, Menu, MenuItem, Button } from '@mui/material';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
-// import FormHelperText from '@mui/material/FormHelperText';
 
 import { flexParentCenter } from '../../utils/styleUtils';
 
@@ -35,6 +34,14 @@ const MapViewControls: React.FC<MapViewControlsProps> = ({ initState, onHandleCh
   const [showAnimationChecked, setShowAnimationChecked] = useState<boolean>(initState.showAnimation);
   const [showMfdChecked, setShowMfdChecked] = useState<boolean>(initState.showMfd);
   const [showTraceLegendChecked, setShowTraceLegendChecked] = useState<boolean>(initState.showTraceLegend);
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   useEffect(() => {
     onHandleChange({ showAnimation: showAnimationChecked, showSurfaces: showSurfacesChecked, showMfd: showMfdChecked, showTraceLegend: showTraceLegendChecked });
@@ -43,57 +50,77 @@ const MapViewControls: React.FC<MapViewControlsProps> = ({ initState, onHandleCh
 
   return (
     <Box sx={{ width: '100%', ...flexParentCenter, flexDirection: 'column' }}>
-      <FormLabel>Map view options</FormLabel>
-      <FormGroup>
-        <FormControlLabel
-          labelPlacement="end"
-          control={
-            <Checkbox
-              checked={showSurfacesChecked}
-              onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                setShowSurfacesChecked(event?.target.checked);
-              }}
+      <Button id="basic-button" aria-controls={open ? 'basic-menu' : undefined} aria-haspopup="true" aria-expanded={open ? 'true' : undefined} onClick={handleClick}>
+        Map View Options
+      </Button>
+      <Menu
+        id="basic-menu"
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        MenuListProps={{
+          'aria-labelledby': 'basic-button',
+        }}
+      >
+        <FormGroup>
+          <MenuItem>
+            <FormControlLabel
+              labelPlacement="end"
+              control={
+                <Checkbox
+                  checked={showSurfacesChecked}
+                  onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                    setShowSurfacesChecked(event?.target.checked);
+                  }}
+                />
+              }
+              label="show fault surfaces"
             />
-          }
-          label="show fault surfaces"
-        />
-        <FormControlLabel
-          labelPlacement="end"
-          control={
-            <Checkbox
-              checked={showAnimationChecked}
-              onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                setShowAnimationChecked(event?.target.checked);
-              }}
+          </MenuItem>
+          <MenuItem>
+            <FormControlLabel
+              labelPlacement="end"
+              control={
+                <Checkbox
+                  checked={showAnimationChecked}
+                  onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                    setShowAnimationChecked(event?.target.checked);
+                  }}
+                />
+              }
+              label="show animation"
             />
-          }
-          label="show animation"
-        />
-        <FormControlLabel
-          labelPlacement="end"
-          control={
-            <Checkbox
-              checked={showMfdChecked}
-              onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                setShowMfdChecked(event?.target.checked);
-              }}
+          </MenuItem>
+          <MenuItem>
+            <FormControlLabel
+              labelPlacement="end"
+              control={
+                <Checkbox
+                  checked={showMfdChecked}
+                  onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                    setShowMfdChecked(event?.target.checked);
+                  }}
+                />
+              }
+              label="show MFD plot"
             />
-          }
-          label="show MFD plot"
-        />
-        <FormControlLabel
-          labelPlacement="end"
-          control={
-            <Checkbox
-              checked={showTraceLegendChecked}
-              onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                setShowTraceLegendChecked(event?.target.checked);
-              }}
+          </MenuItem>
+          <MenuItem>
+            <FormControlLabel
+              labelPlacement="end"
+              control={
+                <Checkbox
+                  checked={showTraceLegendChecked}
+                  onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                    setShowTraceLegendChecked(event?.target.checked);
+                  }}
+                />
+              }
+              label="show trace legend"
             />
-          }
-          label="show trace legend"
-        />
-      </FormGroup>
+          </MenuItem>
+        </FormGroup>
+      </Menu>
     </Box>
   );
 };

@@ -23,7 +23,6 @@ export interface RuptureInfoBoxProps {
 
 const RuptureInfoBox = (props: RuptureInfoBoxProps) => {
   const { timeDimensionTotalLength, surfaceProperties } = props;
-  console.log('RuptureInfoBox');
   const context = useContext(TimeDimensionLayerContext);
   return (
     <Box>

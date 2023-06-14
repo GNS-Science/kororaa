@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useReducer } from 'react';
+import React, { useEffect, useState, useReducer, useMemo } from 'react';
 import { Box, Button, styled, Alert } from '@mui/material';
 import { RangeSliderWithInputs } from '@gns-science/toshi-nest';
 import { toPng } from 'html-to-image';
@@ -39,6 +39,21 @@ const StyledRangeSliderDiv = styled('div')(() => ({
   },
 }));
 
+type SortDict = {
+  [key: string]: {
+    attribute: string;
+    ascending: boolean;
+  } | null;
+};
+
+const sortDict: SortDict = {
+  Unsorted: null,
+  Magnitude: { attribute: 'magnitude', ascending: false },
+  'Rate (weighted mean)': { attribute: 'rate_weighted_mean', ascending: false },
+  'Rate (maximum)': { attribute: 'rate_max', ascending: false },
+  'Rate (minimum)': { attribute: 'rate_min', ascending: false },
+};
+
 const faultSystemOptions = ['Crustal', 'Hikurangi', 'Puysegur'];
 
 interface ComboRuptureMapControlsProps {
@@ -46,9 +61,10 @@ interface ComboRuptureMapControlsProps {
   isPending: boolean;
   dispatch: React.Dispatch<Partial<ComboRuptureMapPageState>>;
   geoJsonError: string | null;
+  state: ComboRuptureMapPageState;
 }
 
-const ComboRuptureMapControls: React.FC<ComboRuptureMapControlsProps> = ({ startTransition, isPending, dispatch, geoJsonError }: ComboRuptureMapControlsProps) => {
+const ComboRuptureMapControls: React.FC<ComboRuptureMapControlsProps> = ({ startTransition, isPending, dispatch, geoJsonError, state }: ComboRuptureMapControlsProps) => {
   const [faultSystem, setFaultSystem] = useState<string>('Crustal');
   const [locations, setLocations] = useState<string[]>([]);
   const [locationOptions, setLocationOptions] = useState<string[]>([]);
@@ -59,9 +75,24 @@ const ComboRuptureMapControls: React.FC<ComboRuptureMapControlsProps> = ({ start
   const [radius, setRadius] = useState<string>('');
   const [radiusError, setRadiusError] = useState<string | null>(null);
   const [mapViewControlsState, mapViewControlsDispatch] = useReducer(mapViewControlsReducer, { showSurfaces: true, showAnimation: true, showMfd: true, showTraceLegend: true });
+  const [sortBy1, setSortBy1] = useState<string>('Unsorted');
+  const [sortBy2, setSortBy2] = useState<string>('');
   const data = useLazyLoadQuery<ComboRuptureMapPageControlsQuery>(comboRuptureMapPageControlsQuery, { radiiSetId: SOLVIS_RADII_ID, locationListId: SOLVIS_LOCATION_LIST });
   const locationData = data?.SOLVIS_get_location_list?.locations;
   const radiiData = data?.SOLVIS_get_radii_set?.radii;
+
+  const sortByOptions = useMemo(() => ['Unsorted', 'Magnitude', 'Rate (weighted mean)', 'Rate (maximum)', 'Rate (minimum)'], []);
+  const sortByOptions2 = useMemo(() => sortByOptions.filter((option) => option !== sortBy1), [sortBy1, sortByOptions]);
+
+  const sortByFormatted = useMemo(() => {
+    if (sortBy1 !== 'Unsorted') {
+      if (sortBy2 === '' || sortBy2 === 'Unsorted') {
+        return [sortDict[sortBy1]];
+      } else if (sortBy2 !== '' && sortBy2 !== 'Unsorted') {
+        return [sortDict[sortBy1], sortDict[sortBy2]];
+      }
+    }
+  }, [sortBy1, sortBy2]);
 
   useEffect(() => {
     if (locationData) {
@@ -114,15 +145,12 @@ const ComboRuptureMapControls: React.FC<ComboRuptureMapControlsProps> = ({ start
         radius: Number(radius.replace('km', '')),
         magnitudeRange: magnitudeRange,
         rateRange: rateRange.map((rate) => Math.pow(10, rate)),
+        sortby: sortByFormatted,
       });
     });
   };
 
-  // const handleViewControls = () => {
-  // };
-
   useEffect(() => {
-    console.log('handleViewControls', mapViewControlsState);
     dispatch({ ...mapViewControlsState });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mapViewControlsState]);
@@ -133,11 +161,20 @@ const ComboRuptureMapControls: React.FC<ComboRuptureMapControlsProps> = ({ start
         <SelectControl name="Fault System" selection={faultSystem} setSelection={setFaultSystem} options={faultSystemOptions} tooltip={'fault system'} />
         <SelectControlMultiple name="Locations" selection={locations} options={locationOptions} setSelection={setLocations} />
         <SelectControlWithDisable disabled={locations.length === 0} name="Radius" selection={radius} options={radiiOptions} setSelection={setRadius} />
+        <MapViewControls initState={{ showSurfaces: true, showAnimation: false, showMfd: false, showTraceLegend: true }} onHandleChange={mapViewControlsDispatch} />
         <StyledRangeSliderDiv>
           <RangeSliderWithInputs label="Magnitude Range" valuesRange={magnitudeRange} setValues={setMagnitudeRange} inputProps={{ step: 0.1, min: 6, max: 10, type: 'number' }} />
           <RangeSliderWithInputs label="Rate Range (1/yr)" valuesRange={rateRange} setValues={setRateRange} inputProps={{ step: 1, min: -20, max: 0, type: 'number' }} />
         </StyledRangeSliderDiv>
-        <MapViewControls initState={{ showSurfaces: true, showAnimation: false, showMfd: false, showTraceLegend: true }} onHandleChange={mapViewControlsDispatch} />
+        <SelectControlWithDisable disabled={!state.showAnimation} name="Sort By 1" selection={sortBy1} setSelection={setSortBy1} options={sortByOptions} tooltip={'sort by'} />
+        <SelectControlWithDisable
+          disabled={sortBy1 === 'Unsorted' || !state.showAnimation}
+          name="Sort By 2"
+          selection={sortBy2}
+          setSelection={setSortBy2}
+          options={sortByOptions2}
+          tooltip={'then sort by'}
+        />
       </StyledCustomControlsBar>
       {geoJsonError && <Alert severity="error">{geoJsonError}</Alert>}
       <StyledButton disabled={isPending || !!radiusError} variant="contained" type="submit" onClick={handleSubmit}>

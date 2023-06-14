@@ -8,7 +8,16 @@ export type ComboRuptureMapPageState = {
   showAnimation: boolean;
   showMfd: boolean;
   showTraceLegend: boolean;
+  sortby: SortBy;
 };
+
+type SortBy =
+  | ({
+      attribute: string;
+      ascending: boolean;
+    } | null)[]
+  | null
+  | undefined;
 
 export const comboRuptureMapPageReducerInitialState: ComboRuptureMapPageState = {
   faultSystem: '',
@@ -20,6 +29,7 @@ export const comboRuptureMapPageReducerInitialState: ComboRuptureMapPageState = 
   showAnimation: true,
   showMfd: true,
   showTraceLegend: true,
+  sortby: [],
 };
 
 export const comboRuptureMapPageReducer = (state: ComboRuptureMapPageState, newState: Partial<ComboRuptureMapPageState>) => {
