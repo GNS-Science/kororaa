@@ -50,18 +50,10 @@ const MapViewControls: React.FC<MapViewControlsProps> = ({ initState, onHandleCh
 
   return (
     <Box sx={{ width: '100%', ...flexParentCenter, flexDirection: 'column' }}>
-      <Button id="basic-button" aria-controls={open ? 'basic-menu' : undefined} aria-haspopup="true" aria-expanded={open ? 'true' : undefined} onClick={handleClick}>
+      <Button variant="outlined" onClick={handleClick}>
         Map View Options
       </Button>
-      <Menu
-        id="basic-menu"
-        anchorEl={anchorEl}
-        open={open}
-        onClose={handleClose}
-        MenuListProps={{
-          'aria-labelledby': 'basic-button',
-        }}
-      >
+      <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
         <FormGroup>
           <MenuItem>
             <FormControlLabel

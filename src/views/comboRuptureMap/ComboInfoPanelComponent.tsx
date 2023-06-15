@@ -66,10 +66,10 @@ const ComboInfoPanelComponent = (props: ComboInfoPanelComponentProps) => {
         <Box
           style={{
             backgroundColor: '#ffffff',
-            position: fullscreen ? 'absolute' : 'relative',
-            zIndex: 119700,
-            top: '-605px',
-            left: 'calc(100% - 435px)',
+            position: 'absolute',
+            zIndex: fullscreen ? 119700 : 799,
+            bottom: fullscreen ? '72px' : '16.5vh',
+            left: 'calc(100% - 438px)',
             width: '429px',
             borderRadius: '4px',
             borderWidth: '1px',
