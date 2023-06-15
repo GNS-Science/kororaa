@@ -57,7 +57,7 @@ export const ComboRuptureMap: React.FC = () => {
           mapControlsState={state}
         />
       </Box>
-      <LeafletDrawer drawerHeight={'80vh'} headerHeight={`${100 - scrollHeight}px`} width={'400px'} fullscreen={fullscreen}>
+      <LeafletDrawer drawerHeight={'80vh'} headerHeight={`${100 - scrollHeight}px`} width={'400px'} fullscreen={fullscreen} openAtRender={true}>
         <Typography variant="h4" sx={{ textAlign: 'center' }}>
           Combo-Rupture Map
           <InfoTooltip content={'tooltip to come'} format={false} />
