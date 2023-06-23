@@ -1,6 +1,6 @@
 import React, { useMemo, useContext } from 'react';
 import { ColorBar, MfdPlot } from '@gns-science/toshi-nest';
-import { Box, Typography } from '@mui/material';
+import { Box, Typography, CircularProgress } from '@mui/material';
 import { ComboRuptureMapPageQuery$data } from './__generated__/ComboRuptureMapPageQuery.graphql';
 import TimeDimensionLayerContext from './store';
 // import { GeoJsonObject } from 'geojson';
@@ -26,14 +26,21 @@ const RuptureInfoBox = (props: RuptureInfoBoxProps) => {
   const context = useContext(TimeDimensionLayerContext);
   return (
     <Box>
-      {/*<Typography variant={'body2'}>Rupture ID: {surfaceProperties[context.timeIndex]?.id}</Typography> */}
-      <Typography variant={'body2'}>
-        Rupture {context.timeIndex + 1} of {timeDimensionTotalLength}
-      </Typography>
-      <Typography variant={'body2'}>Mean Rate: {surfaceProperties[context.timeIndex]?.rate_weighted_mean?.toExponential(2)} per year</Typography>
-      <Typography variant={'body2'}>Magnitude: {surfaceProperties[context.timeIndex]?.magnitude?.toFixed(1)}</Typography>
-      <Typography variant={'body2'}>Area: {surfaceProperties[context.timeIndex]?.area} km²</Typography>
-      <Typography variant={'body2'}>Length: {surfaceProperties[context.timeIndex]?.length} km</Typography>
+      {surfaceProperties[context.timeIndex] ? (
+        <>
+          <Typography variant={'body2'}>
+            Rupture {context.timeIndex + 1} of {timeDimensionTotalLength}
+          </Typography>
+          <Typography variant={'body2'}>Mean Rate: {surfaceProperties[context.timeIndex]?.rate_weighted_mean?.toExponential(2)} per year</Typography>
+          <Typography variant={'body2'}>Magnitude: {surfaceProperties[context.timeIndex]?.magnitude?.toFixed(1)}</Typography>
+          <Typography variant={'body2'}>Area: {surfaceProperties[context.timeIndex]?.area} km²</Typography>
+          <Typography variant={'body2'}>Length: {surfaceProperties[context.timeIndex]?.length} km</Typography>
+        </>
+      ) : (
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <CircularProgress />
+        </div>
+      )}
     </Box>
   );
 };
