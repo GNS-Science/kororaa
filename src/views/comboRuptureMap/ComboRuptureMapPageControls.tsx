@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useReducer, useMemo } from 'react';
-import { Box, Button, styled, Alert } from '@mui/material';
+import { Box, Button, styled, Alert, Fab, Menu, MenuItem } from '@mui/material';
+import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
 import { RangeSliderWithInputs } from '@gns-science/toshi-nest';
 import { toPng } from 'html-to-image';
 import { useLazyLoadQuery } from 'react-relay';
@@ -14,6 +15,7 @@ import SelectControlWithDisable from '../../components/common/SelectControlWithD
 import { ComboRuptureMapPageControlsQuery } from './__generated__/ComboRuptureMapPageControlsQuery.graphql';
 import { ComboRuptureMapPageState } from './comboRuptureMapPageReducer';
 import MapViewControls, { mapViewControlsReducer } from './MapViewControls';
+import { geoJSON } from 'leaflet';
 
 const StyledButton = styled(Button)(() => ({
   margin: '10px',
@@ -62,9 +64,10 @@ interface ComboRuptureMapControlsProps {
   dispatch: React.Dispatch<Partial<ComboRuptureMapPageState>>;
   geoJsonError: string | null;
   state: ComboRuptureMapPageState;
+  ruptureSectionsGeojson: string;
 }
 
-const ComboRuptureMapControls: React.FC<ComboRuptureMapControlsProps> = ({ startTransition, isPending, dispatch, geoJsonError, state }: ComboRuptureMapControlsProps) => {
+const ComboRuptureMapControls: React.FC<ComboRuptureMapControlsProps> = ({ startTransition, isPending, dispatch, geoJsonError, state, ruptureSectionsGeojson }: ComboRuptureMapControlsProps) => {
   const [faultSystem, setFaultSystem] = useState<string>('Crustal');
   const [locations, setLocations] = useState<string[]>([]);
   const [locationOptions, setLocationOptions] = useState<string[]>([]);
@@ -77,6 +80,15 @@ const ComboRuptureMapControls: React.FC<ComboRuptureMapControlsProps> = ({ start
   const [mapViewControlsState, mapViewControlsDispatch] = useReducer(mapViewControlsReducer, { showSurfaces: true, showAnimation: true, showMfd: true, showTraceLegend: true });
   const [sortBy1, setSortBy1] = useState<string>('Unsorted');
   const [sortBy2, setSortBy2] = useState<string>('');
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+
+  const open = Boolean(anchorEl);
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
   const data = useLazyLoadQuery<ComboRuptureMapPageControlsQuery>(comboRuptureMapPageControlsQuery, { radiiSetId: SOLVIS_RADII_ID, locationListId: SOLVIS_LOCATION_LIST });
   const locationData = data?.SOLVIS_get_location_list?.locations;
   const radiiData = data?.SOLVIS_get_radii_set?.radii;
@@ -137,6 +149,15 @@ const ComboRuptureMapControls: React.FC<ComboRuptureMapControlsProps> = ({ start
     });
   };
 
+  //download ruptureSectionsGeojson as geojson file
+  const handleDownloadGeojson = () => {
+    const a = document.createElement('a');
+    const file = new Blob([ruptureSectionsGeojson], { type: geoJSON });
+    a.href = URL.createObjectURL(file);
+    a.download = 'ruptureSections.geojson';
+    a.click();
+  };
+
   const handleSubmit = async () => {
     startTransition(() => {
       dispatch({
@@ -187,9 +208,13 @@ const ComboRuptureMapControls: React.FC<ComboRuptureMapControlsProps> = ({ start
       <StyledButton disabled={isPending || !!radiusError} variant="contained" type="submit" onClick={handleSubmit}>
         Submit
       </StyledButton>
-      <StyledButton variant="contained" onClick={handleDownload}>
-        Download Image
-      </StyledButton>
+      <Fab onClick={handleClick} color="primary" sx={{ marginBottom: 2 }}>
+        <FileDownloadOutlinedIcon />
+      </Fab>
+      <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
+        <MenuItem onClick={handleDownload}>Map image</MenuItem>
+        <MenuItem onClick={handleDownloadGeojson}>Faults Geojson</MenuItem>
+      </Menu>
     </Box>
   );
 };

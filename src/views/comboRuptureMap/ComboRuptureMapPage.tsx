@@ -62,7 +62,14 @@ export const ComboRuptureMap: React.FC = () => {
           Combo-Rupture Map
           <InfoTooltip content={'tooltip to come'} format={false} />
         </Typography>
-        <ComboRuptureMapControls startTransition={startTransition} isPending={isPending} geoJsonError={geoJsonError} dispatch={dispatch} state={state} />
+        <ComboRuptureMapControls
+          startTransition={startTransition}
+          isPending={isPending}
+          geoJsonError={geoJsonError}
+          dispatch={dispatch}
+          state={state}
+          ruptureSectionsGeojson={JSON.stringify(initialData.SOLVIS_filter_rupture_sections)}
+        />
       </LeafletDrawer>
     </>
   );
