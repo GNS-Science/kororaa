@@ -16,6 +16,7 @@ import { ComboRuptureMapPageControlsQuery } from './__generated__/ComboRuptureMa
 import { ComboRuptureMapPageState } from './comboRuptureMapPageReducer';
 import MapViewControls, { mapViewControlsReducer } from './MapViewControls';
 import { geoJSON } from 'leaflet';
+import { GeoJsonObject } from 'geojson';
 
 const StyledButton = styled(Button)(() => ({
   margin: '10px',
@@ -64,7 +65,7 @@ interface ComboRuptureMapControlsProps {
   dispatch: React.Dispatch<Partial<ComboRuptureMapPageState>>;
   geoJsonError: string | null;
   state: ComboRuptureMapPageState;
-  ruptureSectionsGeojson: string;
+  ruptureSectionsGeojson: typeof GeoJsonObject;
 }
 
 const ComboRuptureMapControls: React.FC<ComboRuptureMapControlsProps> = ({ startTransition, isPending, dispatch, geoJsonError, state, ruptureSectionsGeojson }: ComboRuptureMapControlsProps) => {
@@ -152,7 +153,7 @@ const ComboRuptureMapControls: React.FC<ComboRuptureMapControlsProps> = ({ start
   //download ruptureSectionsGeojson as geojson file
   const handleDownloadGeojson = () => {
     const a = document.createElement('a');
-    const file = new Blob([ruptureSectionsGeojson], { type: geoJSON });
+    const file = new Blob([JSON.stringify(ruptureSectionsGeojson)], { type: geoJSON });
     a.href = URL.createObjectURL(file);
     a.download = 'ruptureSections.geojson';
     a.click();

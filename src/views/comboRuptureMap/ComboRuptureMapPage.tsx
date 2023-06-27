@@ -5,6 +5,7 @@ import { useLazyLoadQuery } from 'react-relay';
 import '../../css/leaflet.timedimension.control.css';
 import { graphql } from 'babel-plugin-relay/macro';
 import { HAZARD_MODEL } from '../../utils/environmentVariables';
+import { GeoJsonObject } from 'geojson';
 
 import { InfoTooltip } from '../../components/common/InfoTooltip';
 import SimpleBackdrop from '../../components/common/SimpleBackdrop';
@@ -68,7 +69,18 @@ export const ComboRuptureMap: React.FC = () => {
           geoJsonError={geoJsonError}
           dispatch={dispatch}
           state={state}
-          ruptureSectionsGeojson={JSON.stringify(initialData.SOLVIS_filter_rupture_sections)}
+          ruptureSectionsGeojson={
+            initialData?.SOLVIS_filter_rupture_sections?.fault_surfaces &&
+            initialData?.SOLVIS_filter_rupture_sections?.fault_traces &&
+            JSON.parse(initialData.SOLVIS_filter_rupture_sections?.fault_surfaces).features &&
+            JSON.parse(initialData?.SOLVIS_filter_rupture_sections?.fault_traces).features &&
+            JSON.parse(initialData.SOLVIS_filter_rupture_sections?.fault_surfaces).features?.length > 0 &&
+            JSON.parse(initialData?.SOLVIS_filter_rupture_sections?.fault_traces).features?.length > 0 &&
+            ({
+              type: 'FeatureCollection',
+              features: [...JSON.parse(initialData.SOLVIS_filter_rupture_sections?.fault_surfaces)?.features, ...JSON.parse(initialData.SOLVIS_filter_rupture_sections?.fault_traces)?.features],
+            } as typeof GeoJsonObject)
+          }
         />
       </LeafletDrawer>
     </>
