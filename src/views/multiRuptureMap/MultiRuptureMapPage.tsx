@@ -85,7 +85,6 @@ export const MultiRuptureMapComponent: React.FC<Props> = (props: Props) => {
   }, [queryData]);
 
   const geoJson = useMemo(() => {
-    console.log(geoJsonData);
     if (geoJsonData !== null && geoJsonData !== undefined && locationData && locationData.length > 0) {
       return [...locationData, geoJsonData];
     } else if (geoJsonData) {

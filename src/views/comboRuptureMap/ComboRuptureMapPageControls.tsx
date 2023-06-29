@@ -1,5 +1,6 @@
-import React, { useEffect, useState, useReducer } from 'react';
-import { Box, Button, styled, Alert } from '@mui/material';
+import React, { useEffect, useState, useReducer, useMemo } from 'react';
+import { Box, Button, styled, Alert, Fab, Menu, MenuItem, Autocomplete, TextField } from '@mui/material';
+import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
 import { RangeSliderWithInputs } from '@gns-science/toshi-nest';
 import { toPng } from 'html-to-image';
 import { useLazyLoadQuery } from 'react-relay';
@@ -13,8 +14,9 @@ import SelectControlMultiple from '../../components/common/SelectControlMultiple
 import SelectControlWithDisable from '../../components/common/SelectControlWithDisable';
 import { ComboRuptureMapPageControlsQuery } from './__generated__/ComboRuptureMapPageControlsQuery.graphql';
 import { ComboRuptureMapPageState } from './comboRuptureMapPageReducer';
-
 import MapViewControls, { mapViewControlsReducer } from './MapViewControls';
+import { geoJSON } from 'leaflet';
+import { GeoJsonObject } from 'geojson';
 
 const StyledButton = styled(Button)(() => ({
   margin: '10px',
@@ -40,6 +42,21 @@ const StyledRangeSliderDiv = styled('div')(() => ({
   },
 }));
 
+type SortDict = {
+  [key: string]: {
+    attribute: string;
+    ascending: boolean;
+  } | null;
+};
+
+const sortDict: SortDict = {
+  Unsorted: null,
+  Magnitude: { attribute: 'magnitude', ascending: false },
+  'Rate (weighted mean)': { attribute: 'rate_weighted_mean', ascending: false },
+  'Rate (maximum)': { attribute: 'rate_max', ascending: false },
+  'Rate (minimum)': { attribute: 'rate_min', ascending: false },
+};
+
 const faultSystemOptions = ['Crustal', 'Hikurangi', 'Puysegur'];
 
 interface ComboRuptureMapControlsProps {
@@ -47,22 +64,59 @@ interface ComboRuptureMapControlsProps {
   isPending: boolean;
   dispatch: React.Dispatch<Partial<ComboRuptureMapPageState>>;
   geoJsonError: string | null;
+  state: ComboRuptureMapPageState;
+  faultSurfacesGeojson: typeof GeoJsonObject;
+  faultTracesGeojson: typeof GeoJsonObject;
 }
 
-const ComboRuptureMapControls: React.FC<ComboRuptureMapControlsProps> = ({ startTransition, isPending, dispatch, geoJsonError }: ComboRuptureMapControlsProps) => {
+const ComboRuptureMapControls: React.FC<ComboRuptureMapControlsProps> = ({
+  startTransition,
+  isPending,
+  dispatch,
+  geoJsonError,
+  state,
+  faultSurfacesGeojson,
+  faultTracesGeojson,
+}: ComboRuptureMapControlsProps) => {
   const [faultSystem, setFaultSystem] = useState<string>('Crustal');
   const [locations, setLocations] = useState<string[]>([]);
   const [locationOptions, setLocationOptions] = useState<string[]>([]);
   const [locationIdArray, setLocationIdArray] = useState<string[]>([]);
   const [radiiOptions, setRadiiOptions] = useState<string[]>([]);
+  const [parentFault, setParentFault] = useState<string | null>(null);
   const [magnitudeRange, setMagnitudeRange] = useState<number[]>([6, 10]);
   const [rateRange, setRateRange] = useState<number[]>([-20, 0]);
   const [radius, setRadius] = useState<string>('');
   const [radiusError, setRadiusError] = useState<string | null>(null);
-  const [mapViewControlsState, mapViewControlsDispatch] = useReducer(mapViewControlsReducer, { showSurfaces: true, showAnimation: true });
+  const [mapViewControlsState, mapViewControlsDispatch] = useReducer(mapViewControlsReducer, { showSurfaces: true, showAnimation: true, showMfd: true, showTraceLegend: true });
+  const [sortBy1, setSortBy1] = useState<string>('Unsorted');
+  const [sortBy2, setSortBy2] = useState<string>('');
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+
+  const open = Boolean(anchorEl);
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
   const data = useLazyLoadQuery<ComboRuptureMapPageControlsQuery>(comboRuptureMapPageControlsQuery, { radiiSetId: SOLVIS_RADII_ID, locationListId: SOLVIS_LOCATION_LIST });
   const locationData = data?.SOLVIS_get_location_list?.locations;
   const radiiData = data?.SOLVIS_get_radii_set?.radii;
+  const parentFaultOptions = data?.SOLVIS_get_parent_fault_names;
+
+  const sortByOptions = useMemo(() => ['Unsorted', 'Magnitude', 'Rate (weighted mean)', 'Rate (maximum)', 'Rate (minimum)'], []);
+  const sortByOptions2 = useMemo(() => sortByOptions.filter((option) => option !== sortBy1), [sortBy1, sortByOptions]);
+
+  const sortByFormatted = useMemo(() => {
+    if (sortBy1 !== 'Unsorted') {
+      if (sortBy2 === '' || sortBy2 === 'Unsorted') {
+        return [sortDict[sortBy1]];
+      } else if (sortBy2 !== '' && sortBy2 !== 'Unsorted') {
+        return [sortDict[sortBy1], sortDict[sortBy2]];
+      }
+    }
+  }, [sortBy1, sortBy2]);
 
   useEffect(() => {
     if (locationData) {
@@ -107,6 +161,16 @@ const ComboRuptureMapControls: React.FC<ComboRuptureMapControlsProps> = ({ start
     });
   };
 
+  const handleDownloadGeoJson = (geoJson: typeof GeoJsonObject, fileName: string) => {
+    const a = document.createElement('a');
+    const file = new Blob([JSON.stringify(geoJson)], { type: geoJSON });
+    a.href = URL.createObjectURL(file);
+    a.download = fileName;
+    a.click();
+  };
+  const handleClickTraceDownload = () => handleDownloadGeoJson(faultTracesGeojson, 'fault-traces.geojson');
+  const handleClickSurfaceDownload = () => handleDownloadGeoJson(faultSurfacesGeojson, 'fault-surfaces.geojson');
+
   const handleSubmit = async () => {
     startTransition(() => {
       dispatch({
@@ -115,16 +179,14 @@ const ComboRuptureMapControls: React.FC<ComboRuptureMapControlsProps> = ({ start
         radius: Number(radius.replace('km', '')),
         magnitudeRange: magnitudeRange,
         rateRange: rateRange.map((rate) => Math.pow(10, rate)),
+        sortby: sortByFormatted,
+        parentFault: faultSystem === 'Crustal' ? parentFault : null,
       });
     });
   };
 
-  // const handleViewControls = () => {
-  // };
-
   useEffect(() => {
-    console.log('handleViewControls', mapViewControlsState);
-    dispatch({ showSurfaces: mapViewControlsState.showSurfaces, showAnimation: mapViewControlsState.showAnimation });
+    dispatch({ ...mapViewControlsState });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mapViewControlsState]);
 
@@ -132,21 +194,59 @@ const ComboRuptureMapControls: React.FC<ComboRuptureMapControlsProps> = ({ start
     <Box sx={{ width: '100%', ...flexParentCenter, flexDirection: 'column' }}>
       <StyledCustomControlsBar direction="column">
         <SelectControl name="Fault System" selection={faultSystem} setSelection={setFaultSystem} options={faultSystemOptions} tooltip={'fault system'} />
+        <Autocomplete
+          disabled={faultSystem !== 'Crustal'}
+          options={parentFaultOptions ?? []}
+          renderInput={(params) => <TextField {...params} label="Fault" />}
+          style={{ minWidth: 200 }}
+          value={parentFault}
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          onChange={(event: any, newValue: string | null, reason: any) => {
+            if (reason === 'clear') {
+              setParentFault(null);
+            } else {
+              newValue && setParentFault(newValue);
+            }
+          }}
+        />
         <SelectControlMultiple name="Locations" selection={locations} options={locationOptions} setSelection={setLocations} />
         <SelectControlWithDisable disabled={locations.length === 0} name="Radius" selection={radius} options={radiiOptions} setSelection={setRadius} />
+        <MapViewControls initState={{ showSurfaces: true, showAnimation: true, showMfd: true, showTraceLegend: true }} onHandleChange={mapViewControlsDispatch} />
         <StyledRangeSliderDiv>
           <RangeSliderWithInputs label="Magnitude Range" valuesRange={magnitudeRange} setValues={setMagnitudeRange} inputProps={{ step: 0.1, min: 6, max: 10, type: 'number' }} />
           <RangeSliderWithInputs label="Rate Range (1/yr)" valuesRange={rateRange} setValues={setRateRange} inputProps={{ step: 1, min: -20, max: 0, type: 'number' }} />
         </StyledRangeSliderDiv>
-        <MapViewControls initState={{ showSurfaces: true, showAnimation: false }} onHandleChange={mapViewControlsDispatch} />
+        <SelectControlWithDisable
+          disabled={!state.showAnimation}
+          name="Sort By 1"
+          selection={sortBy1}
+          setSelection={setSortBy1}
+          options={sortByOptions}
+          tooltip={'Animation must be enabled to sort'}
+        />
+        <SelectControlWithDisable
+          disabled={sortBy1 === 'Unsorted' || !state.showAnimation}
+          name="Sort By 2"
+          selection={sortBy2}
+          setSelection={setSortBy2}
+          options={sortByOptions2}
+          tooltip={'then sort by'}
+        />
       </StyledCustomControlsBar>
       {geoJsonError && <Alert severity="error">{geoJsonError}</Alert>}
-      <StyledButton disabled={isPending || !!radiusError} variant="contained" type="submit" onClick={handleSubmit}>
-        Submit
-      </StyledButton>
-      <StyledButton variant="contained" onClick={handleDownload}>
-        Download Image
-      </StyledButton>
+      <Box sx={{ ...flexParentCenter, flexDirection: 'row' }}>
+        <StyledButton disabled={isPending || !!radiusError} variant="contained" type="submit" onClick={handleSubmit}>
+          Submit
+        </StyledButton>
+        <Fab onClick={handleClick} color="primary" size="small">
+          <FileDownloadOutlinedIcon />
+        </Fab>
+      </Box>
+      <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
+        <MenuItem onClick={handleDownload}>Map image</MenuItem>
+        <MenuItem onClick={handleClickTraceDownload}>Trace geoJSON</MenuItem>
+        <MenuItem onClick={handleClickSurfaceDownload}>Surface geoJSON</MenuItem>
+      </Menu>
     </Box>
   );
 };
@@ -164,5 +264,6 @@ export const comboRuptureMapPageControlsQuery = graphql`
         location_id
       }
     }
+    SOLVIS_get_parent_fault_names(model_id: "NSHM_v1.0.4", fault_system: "CRU")
   }
 `;
