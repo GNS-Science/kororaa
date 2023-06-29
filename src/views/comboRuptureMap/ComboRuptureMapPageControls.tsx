@@ -201,8 +201,12 @@ const ComboRuptureMapControls: React.FC<ComboRuptureMapControlsProps> = ({
           style={{ minWidth: 200 }}
           value={parentFault}
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          onChange={(event: any, newValue: string | null) => {
-            newValue && setParentFault(newValue);
+          onChange={(event: any, newValue: string | null, reason: any) => {
+            if (reason === 'clear') {
+              setParentFault(null);
+            } else {
+              newValue && setParentFault(newValue);
+            }
           }}
         />
         <SelectControlMultiple name="Locations" selection={locations} options={locationOptions} setSelection={setLocations} />
