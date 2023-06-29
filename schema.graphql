@@ -849,6 +849,11 @@ type FilterRupturesArgs {
   fault_system: String!
 
   """
+  The name of parent fault may be supplied to restrict to ruptures that include parent fault sections
+  """
+  corupture_parent_fault_name: String
+
+  """
   Optional list of locations ids for proximity filtering e.g. `WLG,PMR,ZQN`
   """
   location_ids: [String]
@@ -884,6 +889,11 @@ input FilterRupturesArgsInput {
 
   """The fault systems [`HIK`, `PUY`, `CRU`]"""
   fault_system: String!
+
+  """
+  The name of parent fault may be supplied to restrict to ruptures that include parent fault sections
+  """
+  corupture_parent_fault_name: String
 
   """
   Optional list of locations ids for proximity filtering e.g. `WLG,PMR,ZQN`
@@ -1720,6 +1730,13 @@ type Query {
   SOLVIS_composite_rupture_detail(filter: CompositeRuptureDetailArgs!): CompositeRuptureDetail
   SOLVIS_filter_ruptures(filter: FilterRupturesArgsInput!, sortby: [SimpleSortRupturesArgs] = [], before: String, after: String, first: Int, last: Int): RuptureDetailConnection
   SOLVIS_filter_rupture_sections(filter: FilterRupturesArgsInput!): CompositeRuptureSections
+  SOLVIS_get_parent_fault_names(
+    """A valid NSHM model id e.g. `NSHM_1.0.0`"""
+    model_id: String!
+
+    """A valid FSS name CRU, PUY, HIK"""
+    fault_system: String!
+  ): [String]
 
   """Return ad single radii_set for the id passed in"""
   SOLVIS_get_radii_set(

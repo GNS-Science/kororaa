@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useReducer, useTransition } from 'react';
+import React, { useState, useEffect, useReducer, useTransition, useMemo } from 'react';
 import { LeafletDrawer } from '@gns-science/toshi-nest';
 import { Box, Typography } from '@mui/material';
 import { useLazyLoadQuery } from 'react-relay';
@@ -27,6 +27,7 @@ export const ComboRuptureMap: React.FC = () => {
     first: 5,
     location_ids: state.locationCodes,
     radius_km: state.radius,
+    corupture_parent_fault_name: state.parentFault,
     minimum_mag: state.magnitudeRange[0],
     maximum_mag: state.magnitudeRange[1],
     minimum_rate: state.rateRange[0],
@@ -35,6 +36,14 @@ export const ComboRuptureMap: React.FC = () => {
     fault_system: state.faultSystem.slice(0, 3).toUpperCase(),
     sortby: state.sortby,
   });
+
+  const faultTracesGeojson = useMemo(() => {
+    return JSON.parse(initialData?.SOLVIS_filter_rupture_sections?.fault_traces);
+  }, [initialData]);
+
+  const faultSurfacesGeojson = useMemo(() => {
+    return JSON.parse(initialData?.SOLVIS_filter_rupture_sections?.fault_surfaces);
+  }, [initialData]);
 
   useEffect(() => {
     function updateScrollHeight() {
@@ -60,7 +69,7 @@ export const ComboRuptureMap: React.FC = () => {
       </Box>
       <LeafletDrawer drawerHeight={'80vh'} headerHeight={`${100 - scrollHeight}px`} width={'400px'} fullscreen={fullscreen} openAtRender={true}>
         <Typography variant="h4" sx={{ textAlign: 'center' }}>
-          Combo-Rupture Map
+          Rupture Map
           <InfoTooltip content={'tooltip to come'} format={false} />
         </Typography>
         <ComboRuptureMapControls
@@ -69,18 +78,8 @@ export const ComboRuptureMap: React.FC = () => {
           geoJsonError={geoJsonError}
           dispatch={dispatch}
           state={state}
-          ruptureSectionsGeojson={
-            initialData?.SOLVIS_filter_rupture_sections?.fault_surfaces &&
-            initialData?.SOLVIS_filter_rupture_sections?.fault_traces &&
-            JSON.parse(initialData.SOLVIS_filter_rupture_sections?.fault_surfaces).features &&
-            JSON.parse(initialData?.SOLVIS_filter_rupture_sections?.fault_traces).features &&
-            JSON.parse(initialData.SOLVIS_filter_rupture_sections?.fault_surfaces).features?.length > 0 &&
-            JSON.parse(initialData?.SOLVIS_filter_rupture_sections?.fault_traces).features?.length > 0 &&
-            ({
-              type: 'FeatureCollection',
-              features: [...JSON.parse(initialData.SOLVIS_filter_rupture_sections?.fault_surfaces)?.features, ...JSON.parse(initialData.SOLVIS_filter_rupture_sections?.fault_traces)?.features],
-            } as typeof GeoJsonObject)
-          }
+          faultSurfacesGeojson={faultSurfacesGeojson as typeof GeoJsonObject}
+          faultTracesGeojson={faultTracesGeojson as typeof GeoJsonObject}
         />
       </LeafletDrawer>
     </>
@@ -105,6 +104,7 @@ export const comboRuptureMapPageQuery = graphql`
     $fault_system: String!
     $location_ids: [String]!
     $radius_km: Int!
+    $corupture_parent_fault_name: String
     $minimum_mag: Float
     $maximum_mag: Float
     $minimum_rate: Float
@@ -126,6 +126,7 @@ export const comboRuptureMapPageQuery = graphql`
         model_id: $model_id
         location_ids: $location_ids
         fault_system: $fault_system
+        corupture_parent_fault_name: $corupture_parent_fault_name
         radius_km: $radius_km
         minimum_mag: $minimum_mag
         maximum_mag: $maximum_mag
@@ -161,6 +162,7 @@ export const comboRuptureMapPageQuery = graphql`
         fault_system: $fault_system
         location_ids: $location_ids
         radius_km: $radius_km
+        corupture_parent_fault_name: $corupture_parent_fault_name
         minimum_mag: $minimum_mag
         maximum_mag: $maximum_mag
         minimum_rate: $minimum_rate
@@ -180,6 +182,7 @@ export const comboRuptureMapPageQuery = graphql`
           fault_system: $fault_system
           location_ids: $location_ids
           radius_km: $radius_km
+          corupture_parent_fault_name: $corupture_parent_fault_name
           minimum_mag: $minimum_mag
           maximum_mag: $maximum_mag
           minimum_rate: $minimum_rate

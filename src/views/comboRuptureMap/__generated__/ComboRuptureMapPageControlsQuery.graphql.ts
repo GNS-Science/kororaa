@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1701d086f46b782b77c5e067de87fd48>>
+ * @generated SignedSource<<a96eefd4881c2d5623c841dbb3d47f65>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -23,6 +23,7 @@ export type ComboRuptureMapPageControlsQuery$data = {
       readonly location_id: string | null;
     } | null> | null;
   } | null;
+  readonly SOLVIS_get_parent_fault_names: ReadonlyArray<string | null> | null;
 };
 export type ComboRuptureMapPageControlsQuery = {
   variables: ComboRuptureMapPageControlsQuery$variables;
@@ -106,6 +107,24 @@ v2 = [
       }
     ],
     "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": [
+      {
+        "kind": "Literal",
+        "name": "fault_system",
+        "value": "CRU"
+      },
+      {
+        "kind": "Literal",
+        "name": "model_id",
+        "value": "NSHM_v1.0.4"
+      }
+    ],
+    "kind": "ScalarField",
+    "name": "SOLVIS_get_parent_fault_names",
+    "storageKey": "SOLVIS_get_parent_fault_names(fault_system:\"CRU\",model_id:\"NSHM_v1.0.4\")"
   }
 ];
 return {
@@ -132,16 +151,16 @@ return {
     "selections": (v2/*: any*/)
   },
   "params": {
-    "cacheID": "4da99246b0fa14a1cec006297c3d2a3a",
+    "cacheID": "75048ae3868ac45476da61cda5ab2fd9",
     "id": null,
     "metadata": {},
     "name": "ComboRuptureMapPageControlsQuery",
     "operationKind": "query",
-    "text": "query ComboRuptureMapPageControlsQuery(\n  $radiiSetId: Int!\n  $locationListId: String!\n) {\n  SOLVIS_get_radii_set(radii_set_id: $radiiSetId) {\n    radii\n  }\n  SOLVIS_get_location_list(list_id: $locationListId) {\n    locations {\n      name\n      location_id\n    }\n  }\n}\n"
+    "text": "query ComboRuptureMapPageControlsQuery(\n  $radiiSetId: Int!\n  $locationListId: String!\n) {\n  SOLVIS_get_radii_set(radii_set_id: $radiiSetId) {\n    radii\n  }\n  SOLVIS_get_location_list(list_id: $locationListId) {\n    locations {\n      name\n      location_id\n    }\n  }\n  SOLVIS_get_parent_fault_names(model_id: \"NSHM_v1.0.4\", fault_system: \"CRU\")\n}\n"
   }
 };
 })();
 
-(node as any).hash = "0a1d46803bbcf4adf648b15a879bce21";
+(node as any).hash = "6ca95a3ba67b2b24551a9653271dad1e";
 
 export default node;

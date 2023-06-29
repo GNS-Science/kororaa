@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useReducer, useMemo } from 'react';
-import { Box, Button, styled, Alert, Fab, Menu, MenuItem } from '@mui/material';
+import { Box, Button, styled, Alert, Fab, Menu, MenuItem, Autocomplete, TextField } from '@mui/material';
 import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
 import { RangeSliderWithInputs } from '@gns-science/toshi-nest';
 import { toPng } from 'html-to-image';
@@ -65,15 +65,25 @@ interface ComboRuptureMapControlsProps {
   dispatch: React.Dispatch<Partial<ComboRuptureMapPageState>>;
   geoJsonError: string | null;
   state: ComboRuptureMapPageState;
-  ruptureSectionsGeojson: typeof GeoJsonObject;
+  faultSurfacesGeojson: typeof GeoJsonObject;
+  faultTracesGeojson: typeof GeoJsonObject;
 }
 
-const ComboRuptureMapControls: React.FC<ComboRuptureMapControlsProps> = ({ startTransition, isPending, dispatch, geoJsonError, state, ruptureSectionsGeojson }: ComboRuptureMapControlsProps) => {
+const ComboRuptureMapControls: React.FC<ComboRuptureMapControlsProps> = ({
+  startTransition,
+  isPending,
+  dispatch,
+  geoJsonError,
+  state,
+  faultSurfacesGeojson,
+  faultTracesGeojson,
+}: ComboRuptureMapControlsProps) => {
   const [faultSystem, setFaultSystem] = useState<string>('Crustal');
   const [locations, setLocations] = useState<string[]>([]);
   const [locationOptions, setLocationOptions] = useState<string[]>([]);
   const [locationIdArray, setLocationIdArray] = useState<string[]>([]);
   const [radiiOptions, setRadiiOptions] = useState<string[]>([]);
+  const [parentFault, setParentFault] = useState<string | null>(null);
   const [magnitudeRange, setMagnitudeRange] = useState<number[]>([6, 10]);
   const [rateRange, setRateRange] = useState<number[]>([-20, 0]);
   const [radius, setRadius] = useState<string>('');
@@ -93,6 +103,7 @@ const ComboRuptureMapControls: React.FC<ComboRuptureMapControlsProps> = ({ start
   const data = useLazyLoadQuery<ComboRuptureMapPageControlsQuery>(comboRuptureMapPageControlsQuery, { radiiSetId: SOLVIS_RADII_ID, locationListId: SOLVIS_LOCATION_LIST });
   const locationData = data?.SOLVIS_get_location_list?.locations;
   const radiiData = data?.SOLVIS_get_radii_set?.radii;
+  const parentFaultOptions = data?.SOLVIS_get_parent_fault_names;
 
   const sortByOptions = useMemo(() => ['Unsorted', 'Magnitude', 'Rate (weighted mean)', 'Rate (maximum)', 'Rate (minimum)'], []);
   const sortByOptions2 = useMemo(() => sortByOptions.filter((option) => option !== sortBy1), [sortBy1, sortByOptions]);
@@ -150,14 +161,15 @@ const ComboRuptureMapControls: React.FC<ComboRuptureMapControlsProps> = ({ start
     });
   };
 
-  //download ruptureSectionsGeojson as geojson file
-  const handleDownloadGeojson = () => {
+  const handleDownloadGeoJson = (geoJson: typeof GeoJsonObject, fileName: string) => {
     const a = document.createElement('a');
-    const file = new Blob([JSON.stringify(ruptureSectionsGeojson)], { type: geoJSON });
+    const file = new Blob([JSON.stringify(geoJson)], { type: geoJSON });
     a.href = URL.createObjectURL(file);
-    a.download = 'ruptureSections.geojson';
+    a.download = fileName;
     a.click();
   };
+  const handleClickTraceDownload = () => handleDownloadGeoJson(faultTracesGeojson, 'fault-traces.geojson');
+  const handleClickSurfaceDownload = () => handleDownloadGeoJson(faultSurfacesGeojson, 'fault-surfaces.geojson');
 
   const handleSubmit = async () => {
     startTransition(() => {
@@ -168,6 +180,7 @@ const ComboRuptureMapControls: React.FC<ComboRuptureMapControlsProps> = ({ start
         magnitudeRange: magnitudeRange,
         rateRange: rateRange.map((rate) => Math.pow(10, rate)),
         sortby: sortByFormatted,
+        parentFault: faultSystem === 'Crustal' ? parentFault : null,
       });
     });
   };
@@ -181,6 +194,17 @@ const ComboRuptureMapControls: React.FC<ComboRuptureMapControlsProps> = ({ start
     <Box sx={{ width: '100%', ...flexParentCenter, flexDirection: 'column' }}>
       <StyledCustomControlsBar direction="column">
         <SelectControl name="Fault System" selection={faultSystem} setSelection={setFaultSystem} options={faultSystemOptions} tooltip={'fault system'} />
+        <Autocomplete
+          disabled={faultSystem !== 'Crustal'}
+          options={parentFaultOptions ?? []}
+          renderInput={(params) => <TextField {...params} label="Fault" />}
+          style={{ minWidth: 200 }}
+          value={parentFault}
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          onChange={(event: any, newValue: string | null) => {
+            newValue && setParentFault(newValue);
+          }}
+        />
         <SelectControlMultiple name="Locations" selection={locations} options={locationOptions} setSelection={setLocations} />
         <SelectControlWithDisable disabled={locations.length === 0} name="Radius" selection={radius} options={radiiOptions} setSelection={setRadius} />
         <MapViewControls initState={{ showSurfaces: true, showAnimation: true, showMfd: true, showTraceLegend: true }} onHandleChange={mapViewControlsDispatch} />
@@ -206,15 +230,18 @@ const ComboRuptureMapControls: React.FC<ComboRuptureMapControlsProps> = ({ start
         />
       </StyledCustomControlsBar>
       {geoJsonError && <Alert severity="error">{geoJsonError}</Alert>}
-      <StyledButton disabled={isPending || !!radiusError} variant="contained" type="submit" onClick={handleSubmit}>
-        Submit
-      </StyledButton>
-      <Fab onClick={handleClick} color="primary" sx={{ marginBottom: 2 }}>
-        <FileDownloadOutlinedIcon />
-      </Fab>
+      <Box sx={{ ...flexParentCenter, flexDirection: 'row' }}>
+        <StyledButton disabled={isPending || !!radiusError} variant="contained" type="submit" onClick={handleSubmit}>
+          Submit
+        </StyledButton>
+        <Fab onClick={handleClick} color="primary" size="small">
+          <FileDownloadOutlinedIcon />
+        </Fab>
+      </Box>
       <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
         <MenuItem onClick={handleDownload}>Map image</MenuItem>
-        <MenuItem onClick={handleDownloadGeojson}>Faults Geojson</MenuItem>
+        <MenuItem onClick={handleClickTraceDownload}>Trace geoJSON</MenuItem>
+        <MenuItem onClick={handleClickSurfaceDownload}>Surface geoJSON</MenuItem>
       </Menu>
     </Box>
   );
@@ -233,5 +260,6 @@ export const comboRuptureMapPageControlsQuery = graphql`
         location_id
       }
     }
+    SOLVIS_get_parent_fault_names(model_id: "NSHM_v1.0.4", fault_system: "CRU")
   }
 `;

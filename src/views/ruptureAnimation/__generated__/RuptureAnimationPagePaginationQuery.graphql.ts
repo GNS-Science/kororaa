@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d5680cf24fd6a47626b3d3f8e4af1c39>>
+ * @generated SignedSource<<c42ebdf777f1cf4eaaf1f0a8fb01e072>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,6 +13,7 @@ import { FragmentRefs } from "relay-runtime";
 export type FilterRupturesArgsInput = {
   model_id: string;
   fault_system: string;
+  corupture_parent_fault_name?: string | null;
   location_ids?: ReadonlyArray<string | null> | null;
   radius_km?: number | null;
   minimum_rate?: number | null;
