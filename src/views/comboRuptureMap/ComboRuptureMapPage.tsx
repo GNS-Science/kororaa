@@ -45,6 +45,10 @@ export const ComboRuptureMap: React.FC = () => {
     return JSON.parse(initialData?.SOLVIS_filter_rupture_sections?.fault_surfaces);
   }, [initialData]);
 
+  const mfdData = useMemo(() => {
+    return initialData?.SOLVIS_filter_rupture_sections?.mfd_histogram;
+  }, [initialData]);
+
   useEffect(() => {
     function updateScrollHeight() {
       setScrollHeight(window.scrollY);
@@ -80,6 +84,7 @@ export const ComboRuptureMap: React.FC = () => {
           state={state}
           faultSurfacesGeojson={faultSurfacesGeojson as typeof GeoJsonObject}
           faultTracesGeojson={faultTracesGeojson as typeof GeoJsonObject}
+          mfdData={mfdData}
         />
       </LeafletDrawer>
     </>
