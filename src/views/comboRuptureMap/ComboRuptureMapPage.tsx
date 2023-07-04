@@ -27,7 +27,7 @@ export const ComboRuptureMap: React.FC = () => {
     first: 5,
     location_ids: state.locationCodes,
     radius_km: state.radius,
-    corupture_parent_fault_name: state.parentFault,
+    corupture_fault_names: [state.parentFault],
     minimum_mag: state.magnitudeRange[0],
     maximum_mag: state.magnitudeRange[1],
     minimum_rate: state.rateRange[0],
@@ -43,6 +43,10 @@ export const ComboRuptureMap: React.FC = () => {
 
   const faultSurfacesGeojson = useMemo(() => {
     return JSON.parse(initialData?.SOLVIS_filter_rupture_sections?.fault_surfaces);
+  }, [initialData]);
+
+  const mfdData = useMemo(() => {
+    return initialData?.SOLVIS_filter_rupture_sections?.mfd_histogram;
   }, [initialData]);
 
   useEffect(() => {
@@ -80,6 +84,7 @@ export const ComboRuptureMap: React.FC = () => {
           state={state}
           faultSurfacesGeojson={faultSurfacesGeojson as typeof GeoJsonObject}
           faultTracesGeojson={faultTracesGeojson as typeof GeoJsonObject}
+          mfdData={mfdData}
         />
       </LeafletDrawer>
     </>
@@ -104,7 +109,7 @@ export const comboRuptureMapPageQuery = graphql`
     $fault_system: String!
     $location_ids: [String]!
     $radius_km: Int!
-    $corupture_parent_fault_name: String
+    $corupture_fault_names: [String]
     $minimum_mag: Float
     $maximum_mag: Float
     $minimum_rate: Float
@@ -126,7 +131,7 @@ export const comboRuptureMapPageQuery = graphql`
         model_id: $model_id
         location_ids: $location_ids
         fault_system: $fault_system
-        corupture_parent_fault_name: $corupture_parent_fault_name
+        corupture_fault_names: $corupture_fault_names
         radius_km: $radius_km
         minimum_mag: $minimum_mag
         maximum_mag: $maximum_mag
@@ -162,7 +167,7 @@ export const comboRuptureMapPageQuery = graphql`
         fault_system: $fault_system
         location_ids: $location_ids
         radius_km: $radius_km
-        corupture_parent_fault_name: $corupture_parent_fault_name
+        corupture_fault_names: $corupture_fault_names
         minimum_mag: $minimum_mag
         maximum_mag: $maximum_mag
         minimum_rate: $minimum_rate
@@ -182,7 +187,7 @@ export const comboRuptureMapPageQuery = graphql`
           fault_system: $fault_system
           location_ids: $location_ids
           radius_km: $radius_km
-          corupture_parent_fault_name: $corupture_parent_fault_name
+          corupture_fault_names: $corupture_fault_names
           minimum_mag: $minimum_mag
           maximum_mag: $maximum_mag
           minimum_rate: $minimum_rate

@@ -98,7 +98,7 @@ const ComboInfoPanelComponent = (props: ComboInfoPanelComponentProps) => {
               header="Magnitude Frequency Distribution"
               yScaleDomain={[1e-7, 1e-1]}
               xScaleDomain={[6.7, 9.6]}
-              lineColours={['green', 'red']}
+              lineColours={['silver', '#072B61']}
               legendDomain={['Incremental', 'Cumulative']}
             />
           )}

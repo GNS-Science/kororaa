@@ -157,11 +157,11 @@ export const ComboRuptureMapComponent = (props: ComboRuptureMapComponentProps) =
   };
 
   useEffect(() => {
-    if (needsMore && hasNext) {
+    if (needsMore && hasNext && mapControlsState.showAnimation) {
       loadNext(5);
       setNeedsMore(false);
     }
-  }, [hasNext, needsMore, loadNext]);
+  }, [hasNext, needsMore, loadNext, mapControlsState]);
 
   useEffect(() => {
     if (!needsMore && !hasNoMore) {

@@ -15,7 +15,6 @@ import SelectControlWithDisable from '../../components/common/SelectControlWithD
 import { ComboRuptureMapPageControlsQuery } from './__generated__/ComboRuptureMapPageControlsQuery.graphql';
 import { ComboRuptureMapPageState } from './comboRuptureMapPageReducer';
 import MapViewControls, { mapViewControlsReducer } from './MapViewControls';
-import { geoJSON } from 'leaflet';
 import { GeoJsonObject } from 'geojson';
 
 const StyledButton = styled(Button)(() => ({
@@ -49,6 +48,15 @@ type SortDict = {
   } | null;
 };
 
+type MfdData =
+  | readonly ({
+      readonly bin_center: number | null;
+      readonly rate: number | null;
+      readonly cumulative_rate: number | null;
+    } | null)[]
+  | null
+  | undefined;
+
 const sortDict: SortDict = {
   Unsorted: null,
   Magnitude: { attribute: 'magnitude', ascending: false },
@@ -67,6 +75,7 @@ interface ComboRuptureMapControlsProps {
   state: ComboRuptureMapPageState;
   faultSurfacesGeojson: typeof GeoJsonObject;
   faultTracesGeojson: typeof GeoJsonObject;
+  mfdData: MfdData;
 }
 
 const ComboRuptureMapControls: React.FC<ComboRuptureMapControlsProps> = ({
@@ -77,6 +86,7 @@ const ComboRuptureMapControls: React.FC<ComboRuptureMapControlsProps> = ({
   state,
   faultSurfacesGeojson,
   faultTracesGeojson,
+  mfdData,
 }: ComboRuptureMapControlsProps) => {
   const [faultSystem, setFaultSystem] = useState<string>('Crustal');
   const [locations, setLocations] = useState<string[]>([]);
@@ -161,15 +171,17 @@ const ComboRuptureMapControls: React.FC<ComboRuptureMapControlsProps> = ({
     });
   };
 
-  const handleDownloadGeoJson = (geoJson: typeof GeoJsonObject, fileName: string) => {
+  const handleDownloadData = (data: typeof GeoJsonObject | MfdData, fileName: string, fileType: 'geoJSON' | 'JSON') => {
     const a = document.createElement('a');
-    const file = new Blob([JSON.stringify(geoJson)], { type: geoJSON });
+    const file = new Blob([JSON.stringify(data)], { type: fileType });
     a.href = URL.createObjectURL(file);
     a.download = fileName;
     a.click();
   };
-  const handleClickTraceDownload = () => handleDownloadGeoJson(faultTracesGeojson, 'fault-traces.geojson');
-  const handleClickSurfaceDownload = () => handleDownloadGeoJson(faultSurfacesGeojson, 'fault-surfaces.geojson');
+
+  const handleClickTraceDownload = () => handleDownloadData(faultTracesGeojson, 'fault-traces.geojson', 'geoJSON');
+  const handleClickSurfaceDownload = () => handleDownloadData(faultSurfacesGeojson, 'fault-surfaces.geojson', 'geoJSON');
+  const handleClickMfdDownload = () => handleDownloadData(mfdData, 'mfd-data.json', 'JSON');
 
   const handleSubmit = async () => {
     startTransition(() => {
@@ -246,6 +258,7 @@ const ComboRuptureMapControls: React.FC<ComboRuptureMapControlsProps> = ({
         <MenuItem onClick={handleDownload}>Map image</MenuItem>
         <MenuItem onClick={handleClickTraceDownload}>Trace geoJSON</MenuItem>
         <MenuItem onClick={handleClickSurfaceDownload}>Surface geoJSON</MenuItem>
+        <MenuItem onClick={handleClickMfdDownload}>MFD data</MenuItem>
       </Menu>
     </Box>
   );
