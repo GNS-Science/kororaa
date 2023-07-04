@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<85b34979bd6dd0431cf3dadede722741>>
+ * @generated SignedSource<<a5cc2ee4fe674ae273e4e542aaab361c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -21,7 +21,7 @@ export type ComboRuptureMapPageQuery$variables = {
   fault_system: string;
   location_ids: ReadonlyArray<string | null>;
   radius_km: number;
-  corupture_parent_fault_name?: string | null;
+  corupture_fault_names?: ReadonlyArray<string | null> | null;
   minimum_mag?: number | null;
   maximum_mag?: number | null;
   minimum_rate?: number | null;
@@ -77,7 +77,7 @@ var v0 = {
 v1 = {
   "defaultValue": null,
   "kind": "LocalArgument",
-  "name": "corupture_parent_fault_name"
+  "name": "corupture_fault_names"
 },
 v2 = {
   "defaultValue": null,
@@ -180,8 +180,8 @@ v18 = {
   "fields": [
     {
       "kind": "Variable",
-      "name": "corupture_parent_fault_name",
-      "variableName": "corupture_parent_fault_name"
+      "name": "corupture_fault_names",
+      "variableName": "corupture_fault_names"
     },
     {
       "kind": "Variable",
@@ -665,16 +665,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "4e49e1c62cacbefe922425a90e8a7406",
+    "cacheID": "4478165ffbbe58b0f909dbfbc98e3057",
     "id": null,
     "metadata": {},
     "name": "ComboRuptureMapPageQuery",
     "operationKind": "query",
-    "text": "query ComboRuptureMapPageQuery(\n  $first: Int!\n  $after: String\n  $model_id: String!\n  $fault_system: String!\n  $location_ids: [String]!\n  $radius_km: Int!\n  $corupture_parent_fault_name: String\n  $minimum_mag: Float\n  $maximum_mag: Float\n  $minimum_rate: Float\n  $maximum_rate: Float\n  $sortby: [SimpleSortRupturesArgs]\n) {\n  SOLVIS_locations_by_id(location_ids: $location_ids) {\n    edges {\n      node {\n        location_id\n        name\n        radius_geojson(radius_km: $radius_km, style: {stroke_color: \"royalblue\", stroke_width: 3, stroke_opacity: 1, fill_opacity: 0.01, fill_color: \"royalblue\"})\n        id\n      }\n    }\n  }\n  SOLVIS_filter_rupture_sections(filter: {model_id: $model_id, location_ids: $location_ids, fault_system: $fault_system, corupture_parent_fault_name: $corupture_parent_fault_name, radius_km: $radius_km, minimum_mag: $minimum_mag, maximum_mag: $maximum_mag, minimum_rate: $minimum_rate, maximum_rate: $maximum_rate}) {\n    model_id\n    section_count\n    fault_surfaces(style: {stroke_color: \"silver\", fill_color: \"silver\", fill_opacity: 0.25})\n    fault_traces(color_scale: {name: \"inferno\"}, style: {stroke_width: 5})\n    color_scale(name: \"inferno\") {\n      name\n      min_value\n      max_value\n      color_map {\n        levels\n        hexrgbs\n      }\n    }\n    mfd_histogram {\n      bin_center\n      rate\n      cumulative_rate\n    }\n  }\n  SOLVIS_filter_ruptures(first: $first, after: $after, filter: {model_id: $model_id, fault_system: $fault_system, location_ids: $location_ids, radius_km: $radius_km, corupture_parent_fault_name: $corupture_parent_fault_name, minimum_mag: $minimum_mag, maximum_mag: $maximum_mag, minimum_rate: $minimum_rate, maximum_rate: $maximum_rate}, sortby: $sortby) {\n    total_count\n  }\n  ...RuptureAnimationPage_queryRoot_2fIqMW\n}\n\nfragment RuptureAnimationPage_queryRoot_2fIqMW on Query {\n  SOLVIS_filter_ruptures(first: $first, after: $after, filter: {model_id: $model_id, fault_system: $fault_system, location_ids: $location_ids, radius_km: $radius_km, corupture_parent_fault_name: $corupture_parent_fault_name, minimum_mag: $minimum_mag, maximum_mag: $maximum_mag, minimum_rate: $minimum_rate, maximum_rate: $maximum_rate}, sortby: $sortby) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    edges {\n      node {\n        fault_surfaces\n        magnitude\n        rate_weighted_mean\n        area\n        length\n        id\n        __typename\n      }\n      cursor\n    }\n  }\n}\n"
+    "text": "query ComboRuptureMapPageQuery(\n  $first: Int!\n  $after: String\n  $model_id: String!\n  $fault_system: String!\n  $location_ids: [String]!\n  $radius_km: Int!\n  $corupture_fault_names: [String]\n  $minimum_mag: Float\n  $maximum_mag: Float\n  $minimum_rate: Float\n  $maximum_rate: Float\n  $sortby: [SimpleSortRupturesArgs]\n) {\n  SOLVIS_locations_by_id(location_ids: $location_ids) {\n    edges {\n      node {\n        location_id\n        name\n        radius_geojson(radius_km: $radius_km, style: {stroke_color: \"royalblue\", stroke_width: 3, stroke_opacity: 1, fill_opacity: 0.01, fill_color: \"royalblue\"})\n        id\n      }\n    }\n  }\n  SOLVIS_filter_rupture_sections(filter: {model_id: $model_id, location_ids: $location_ids, fault_system: $fault_system, corupture_fault_names: $corupture_fault_names, radius_km: $radius_km, minimum_mag: $minimum_mag, maximum_mag: $maximum_mag, minimum_rate: $minimum_rate, maximum_rate: $maximum_rate}) {\n    model_id\n    section_count\n    fault_surfaces(style: {stroke_color: \"silver\", fill_color: \"silver\", fill_opacity: 0.25})\n    fault_traces(color_scale: {name: \"inferno\"}, style: {stroke_width: 5})\n    color_scale(name: \"inferno\") {\n      name\n      min_value\n      max_value\n      color_map {\n        levels\n        hexrgbs\n      }\n    }\n    mfd_histogram {\n      bin_center\n      rate\n      cumulative_rate\n    }\n  }\n  SOLVIS_filter_ruptures(first: $first, after: $after, filter: {model_id: $model_id, fault_system: $fault_system, location_ids: $location_ids, radius_km: $radius_km, corupture_fault_names: $corupture_fault_names, minimum_mag: $minimum_mag, maximum_mag: $maximum_mag, minimum_rate: $minimum_rate, maximum_rate: $maximum_rate}, sortby: $sortby) {\n    total_count\n  }\n  ...RuptureAnimationPage_queryRoot_2Ls9it\n}\n\nfragment RuptureAnimationPage_queryRoot_2Ls9it on Query {\n  SOLVIS_filter_ruptures(first: $first, after: $after, filter: {model_id: $model_id, fault_system: $fault_system, location_ids: $location_ids, radius_km: $radius_km, corupture_fault_names: $corupture_fault_names, minimum_mag: $minimum_mag, maximum_mag: $maximum_mag, minimum_rate: $minimum_rate, maximum_rate: $maximum_rate}, sortby: $sortby) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    edges {\n      node {\n        fault_surfaces\n        magnitude\n        rate_weighted_mean\n        area\n        length\n        id\n        __typename\n      }\n      cursor\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "9b37e8966dcb3d7c4c900486bed6ab55";
+(node as any).hash = "bc6f6cafcf84308c88d15e6d78026c8e";
 
 export default node;

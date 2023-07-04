@@ -15,7 +15,6 @@ import SelectControlWithDisable from '../../components/common/SelectControlWithD
 import { ComboRuptureMapPageControlsQuery } from './__generated__/ComboRuptureMapPageControlsQuery.graphql';
 import { ComboRuptureMapPageState } from './comboRuptureMapPageReducer';
 import MapViewControls, { mapViewControlsReducer } from './MapViewControls';
-import { geoJSON } from 'leaflet';
 import { GeoJsonObject } from 'geojson';
 
 const StyledButton = styled(Button)(() => ({
