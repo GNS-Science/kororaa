@@ -213,7 +213,8 @@ const ComboRuptureMapControls: React.FC<ComboRuptureMapControlsProps> = ({
           multiple={true}
           disabled={faultSystem !== 'Crustal'}
           options={parentFaultOptions}
-          renderInput={(params) => <TextField {...params} label="Fault" />}
+          renderInput={(params) => <TextField {...params} label="Faults" />}
+          limitTags={2}
           style={{ minWidth: 200 }}
           value={parentFaultArray}
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
