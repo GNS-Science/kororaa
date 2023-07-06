@@ -93,7 +93,7 @@ const ComboRuptureMapControls: React.FC<ComboRuptureMapControlsProps> = ({
   const [locationOptions, setLocationOptions] = useState<string[]>([]);
   const [locationIdArray, setLocationIdArray] = useState<string[]>([]);
   const [radiiOptions, setRadiiOptions] = useState<string[]>([]);
-  const [parentFault, setParentFault] = useState<string | null>(null);
+  const [parentFaultArray, setParentFaultArray] = useState<string[]>([]);
   const [magnitudeRange, setMagnitudeRange] = useState<number[]>([6, 10]);
   const [rateRange, setRateRange] = useState<number[]>([-20, 0]);
   const [radius, setRadius] = useState<string>('');
@@ -113,7 +113,10 @@ const ComboRuptureMapControls: React.FC<ComboRuptureMapControlsProps> = ({
   const data = useLazyLoadQuery<ComboRuptureMapPageControlsQuery>(comboRuptureMapPageControlsQuery, { radiiSetId: SOLVIS_RADII_ID, locationListId: SOLVIS_LOCATION_LIST });
   const locationData = data?.SOLVIS_get_location_list?.locations;
   const radiiData = data?.SOLVIS_get_radii_set?.radii;
-  const parentFaultOptions = data?.SOLVIS_get_parent_fault_names;
+  const parentFaultOptions: string[] = useMemo(
+    () => (data?.SOLVIS_get_parent_fault_names ? data?.SOLVIS_get_parent_fault_names.filter((el) => el !== null && el !== undefined).map((el) => el as string) : []),
+    [data],
+  );
 
   const sortByOptions = useMemo(() => ['Unsorted', 'Magnitude', 'Rate (weighted mean)', 'Rate (maximum)', 'Rate (minimum)'], []);
   const sortByOptions2 = useMemo(() => sortByOptions.filter((option) => option !== sortBy1), [sortBy1, sortByOptions]);
@@ -192,7 +195,7 @@ const ComboRuptureMapControls: React.FC<ComboRuptureMapControlsProps> = ({
         magnitudeRange: magnitudeRange,
         rateRange: rateRange.map((rate) => Math.pow(10, rate)),
         sortby: sortByFormatted,
-        parentFault: faultSystem === 'Crustal' ? parentFault : null,
+        parentFaultArray: faultSystem === 'Crustal' ? parentFaultArray : [],
       });
     });
   };
@@ -207,18 +210,15 @@ const ComboRuptureMapControls: React.FC<ComboRuptureMapControlsProps> = ({
       <StyledCustomControlsBar direction="column">
         <SelectControl name="Fault System" selection={faultSystem} setSelection={setFaultSystem} options={faultSystemOptions} tooltip={'fault system'} />
         <Autocomplete
+          multiple={true}
           disabled={faultSystem !== 'Crustal'}
-          options={parentFaultOptions ?? []}
+          options={parentFaultOptions}
           renderInput={(params) => <TextField {...params} label="Fault" />}
           style={{ minWidth: 200 }}
-          value={parentFault}
+          value={parentFaultArray}
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          onChange={(event: any, newValue: string | null, reason: any) => {
-            if (reason === 'clear') {
-              setParentFault(null);
-            } else {
-              newValue && setParentFault(newValue);
-            }
+          onChange={(event: any, newValue: any | null) => {
+            setParentFaultArray(newValue);
           }}
         />
         <SelectControlMultiple name="Locations" selection={locations} options={locationOptions} setSelection={setLocations} />
