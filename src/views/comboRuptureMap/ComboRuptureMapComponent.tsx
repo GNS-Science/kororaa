@@ -21,13 +21,12 @@ type ComboRuptureMapComponentProps = {
   fullscreen: boolean;
   setFullscreen: (fullscreen: boolean) => void;
   isPending: boolean;
-  setGeoJsonError: (geoJsonError: string | null) => void;
   mapControlsState: ComboRuptureMapPageState;
 };
 
 export const ComboRuptureMapComponent = (props: ComboRuptureMapComponentProps) => {
   // Map
-  const { queryData, ruptureConnectionRef, fullscreen, setFullscreen, isPending, setGeoJsonError, mapControlsState } = props;
+  const { queryData, ruptureConnectionRef, fullscreen, setFullscreen, isPending, mapControlsState } = props;
   const [zoomLevel, setZoomLevel] = useState<number>(5);
 
   const [timeDimensionLayerState, timeDimensionLayerStateSet] = useState<TimeDimensionLayerState>({ timeIndex: 20 });
@@ -84,14 +83,6 @@ export const ComboRuptureMapComponent = (props: ComboRuptureMapComponentProps) =
       return [];
     }
   }, [geojsonSurfacesData, geojsonTracesData, locationData, mapControlsState]);
-
-  useEffect(() => {
-    if (locationData && locationData.length > 0 && !geojsonSurfacesData) {
-      setGeoJsonError('No ruptures satisfy the filter.');
-    } else {
-      setGeoJsonError(null);
-    }
-  }, [geojsonSurfacesData, locationData, setGeoJsonError]);
 
   const zoom = 5;
   const nzCentre = [-40.946, 174.167];

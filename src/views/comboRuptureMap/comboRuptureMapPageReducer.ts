@@ -2,7 +2,7 @@ export type ComboRuptureMapPageState = {
   faultSystem: string;
   locationCodes: string[];
   radius: number;
-  parentFault: string | null;
+  parentFaultArray: string[];
   magnitudeRange: number[];
   rateRange: number[];
   showSurfaces: boolean;
@@ -24,7 +24,7 @@ export const comboRuptureMapPageReducerInitialState: ComboRuptureMapPageState = 
   faultSystem: '',
   locationCodes: [],
   radius: 0,
-  parentFault: null,
+  parentFaultArray: [],
   magnitudeRange: [6, 10],
   rateRange: [10e-20, 0],
   showSurfaces: true,

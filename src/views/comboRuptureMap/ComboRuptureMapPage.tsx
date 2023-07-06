@@ -27,7 +27,7 @@ export const ComboRuptureMap: React.FC = () => {
     first: 5,
     location_ids: state.locationCodes,
     radius_km: state.radius,
-    corupture_fault_names: [state.parentFault],
+    corupture_fault_names: state.parentFaultArray,
     minimum_mag: state.magnitudeRange[0],
     maximum_mag: state.magnitudeRange[1],
     minimum_rate: state.rateRange[0],
@@ -58,18 +58,18 @@ export const ComboRuptureMap: React.FC = () => {
     return () => window.removeEventListener('scroll', updateScrollHeight);
   }, []);
 
+  useEffect(() => {
+    if (!faultSurfacesGeojson && state.faultSystem !== '') {
+      setGeoJsonError('No ruptures satisfy the filter.');
+    } else {
+      setGeoJsonError(null);
+    }
+  }, [faultSurfacesGeojson, state.faultSystem, setGeoJsonError]);
+
   return (
     <>
       <Box id="map" sx={{ width: '100%', height: '80vh' }}>
-        <ComboRuptureMapComponent
-          fullscreen={fullscreen}
-          setFullscreen={setFullscreen}
-          setGeoJsonError={setGeoJsonError}
-          ruptureConnectionRef={initialData}
-          queryData={initialData}
-          isPending={isPending}
-          mapControlsState={state}
-        />
+        <ComboRuptureMapComponent fullscreen={fullscreen} setFullscreen={setFullscreen} ruptureConnectionRef={initialData} queryData={initialData} isPending={isPending} mapControlsState={state} />
       </Box>
       <LeafletDrawer drawerHeight={'80vh'} headerHeight={`${100 - scrollHeight}px`} width={'400px'} fullscreen={fullscreen} openAtRender={true}>
         <Typography variant="h4" sx={{ textAlign: 'center' }}>
