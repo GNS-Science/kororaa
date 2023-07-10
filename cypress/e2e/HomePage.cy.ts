@@ -21,7 +21,7 @@ describe('Home Page', () => {
 
   it('Displays the nav bar', () => {
     cy.get('header').contains('Hazard');
-    cy.get('header').contains('Ruptures');
+    cy.get('header').contains('Rupture Map');
     cy.get('header').contains('Coming Features');
     cy.get('header').contains('Resources');
     cy.get('header').contains('Help');
@@ -80,16 +80,9 @@ describe('NavBarLinks', () => {
     cy.url().should('include', '/HazardMaps');
   });
 
-  it('IFM nav link works', () => {
-    cy.get('header').contains('Ruptures').click();
-    cy.get('[role="menuitem"]').contains('Multi-Rupture Map').click({ force: true });
-    cy.url().should('include', '/MultiRuptureMap')
-  })
-
-  it('IFM nav link works', () => {
-    cy.get('header').contains('Ruptures').click();
-    cy.get('[role="menuitem"]').contains('Rupture Animation').click({ force: true });
-    cy.url().should('include', '/RuptureAnimation')
+  it('Rupture map link works', () => {
+    cy.get('header').contains('Rupture Map').click({ force: true });
+    cy.url().should('include', '/RuptureMap')
   })
 
   it('Coming Features Nav Link works', () => {
