@@ -3,7 +3,6 @@ import { ColorBar, MfdPlot } from '@gns-science/toshi-nest';
 import { Box, Typography, CircularProgress } from '@mui/material';
 import { ComboRuptureMapPageQuery$data } from './__generated__/ComboRuptureMapPageQuery.graphql';
 import TimeDimensionLayerContext from './store';
-// import { GeoJsonObject } from 'geojson';
 import { ComboRuptureMapPageState } from './comboRuptureMapPageReducer';
 
 export type SurfaceProperties =
@@ -19,17 +18,20 @@ export type SurfaceProperties =
 export interface RuptureInfoBoxProps {
   timeDimensionTotalLength: number;
   surfaceProperties: SurfaceProperties[];
+  mapControlsState: ComboRuptureMapPageState;
 }
 
 const RuptureInfoBox = (props: RuptureInfoBoxProps) => {
-  const { timeDimensionTotalLength, surfaceProperties } = props;
+  const { timeDimensionTotalLength, surfaceProperties, mapControlsState } = props;
   const context = useContext(TimeDimensionLayerContext);
+  const sortByStringArray = mapControlsState.sortby?.map((sort) => sort?.attribute.replaceAll('_', ' ') + ' ' + (sort?.ascending ? 'ascending' : 'descending'));
+  const sortByJoinedString = sortByStringArray?.join(', ');
   return (
     <Box>
       {surfaceProperties[context.timeIndex] ? (
         <>
           <Typography variant={'body2'}>
-            Rupture {context.timeIndex + 1} of {timeDimensionTotalLength}
+            Rupture {context.timeIndex + 1} of {timeDimensionTotalLength} {mapControlsState.sortby && mapControlsState.sortby?.length > 0 ? `(sorted by ${sortByJoinedString})` : ''}
           </Typography>
           <Typography variant={'body2'}>Mean Rate: {surfaceProperties[context.timeIndex]?.rate_weighted_mean?.toExponential(2)} per year</Typography>
           <Typography variant={'body2'}>Magnitude: {surfaceProperties[context.timeIndex]?.magnitude?.toFixed(1)}</Typography>

@@ -9,6 +9,7 @@ export interface SelectControlWithDisableProps {
   name: string;
   disabled?: boolean;
   tooltip?: string;
+  onClose?: () => void;
 }
 
 const SelectControlContainer = styled('div')({
@@ -16,7 +17,7 @@ const SelectControlContainer = styled('div')({
   maxWidth: 300,
 });
 
-const SelectControlWithDisable: React.FC<SelectControlWithDisableProps> = ({ options, selection, setSelection, name, disabled, tooltip = '' }: SelectControlWithDisableProps) => {
+const SelectControlWithDisable: React.FC<SelectControlWithDisableProps> = ({ options, selection, setSelection, name, disabled, tooltip = '', onClose = () => null }: SelectControlWithDisableProps) => {
   const handleChange = (event: SelectChangeEvent<string>) => {
     const value = (event.target.value as string) || '';
     setSelection(value);
@@ -32,7 +33,7 @@ const SelectControlWithDisable: React.FC<SelectControlWithDisableProps> = ({ opt
         ) : (
           <InputLabel>{name}</InputLabel>
         )}
-        <Select labelId={`report-hash-label`} label={name} name={name} value={selection} onChange={handleChange} input={<Input />} variant="standard">
+        <Select labelId={`report-hash-label`} label={name} name={name} value={selection} onChange={handleChange} input={<Input />} variant="standard" onClose={onClose}>
           {options.map((opt: string) => (
             <MenuItem key={opt} value={opt}>
               {opt}
