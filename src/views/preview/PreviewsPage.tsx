@@ -57,8 +57,6 @@ const PreviewsPage: React.FC = () => {
                 <strong>Things we expect to include over the coming months.</strong>
               </Typography>
             </PreviewTitleContainer>
-
-            <PreviewCard title="Ruptures and Rates view" text="Users can explore the Rupture sets and seismic rate models that produced the NSHM." img="/images/TUI-ruptures-0.png" />
             <PreviewCard title="NSHM Public API" text="A web API providing access to the datasets and internal components of the NSHM." img="/images/K-API-igraphql-0.png" />
             <PreviewCard
               title="Technical resources"

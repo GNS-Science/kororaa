@@ -14,6 +14,7 @@ import { ComboRuptureMapPageQuery } from './__generated__/ComboRuptureMapPageQue
 
 import ComboRuptureMapControls from './ComboRuptureMapPageControls';
 import ComboRuptureMapComponent from './ComboRuptureMapComponent';
+import ErrorBoundary from '../../components/common/ErrorBoundary';
 
 export const ComboRuptureMap: React.FC = () => {
   const [state, dispatch] = useReducer(comboRuptureMapPageReducer, comboRuptureMapPageReducerInitialState);
@@ -73,7 +74,7 @@ export const ComboRuptureMap: React.FC = () => {
       </Box>
       <LeafletDrawer drawerHeight={'80vh'} headerHeight={`${100 - scrollHeight}px`} width={'400px'} fullscreen={fullscreen} openAtRender={true}>
         <Typography variant="h4" sx={{ textAlign: 'center' }}>
-          Rupture Map
+          Rupture Explorer
           <InfoTooltip content={'tooltip to come'} format={false} />
         </Typography>
         <ComboRuptureMapControls
@@ -93,9 +94,11 @@ export const ComboRuptureMap: React.FC = () => {
 
 export const ComboRuptureMapPage: React.FC = () => {
   return (
-    <React.Suspense fallback={<SimpleBackdrop />}>
-      <ComboRuptureMap />
-    </React.Suspense>
+    <ErrorBoundary>
+      <React.Suspense fallback={<SimpleBackdrop />}>
+        <ComboRuptureMap />
+      </React.Suspense>
+    </ErrorBoundary>
   );
 };
 
@@ -116,6 +119,18 @@ export const comboRuptureMapPageQuery = graphql`
     $maximum_rate: Float
     $sortby: [SimpleSortRupturesArgs]
   ) {
+    textual_content: KORORAA_textual_content(index: "rupture_map.md") {
+      ok
+      content {
+        index
+        content_type
+        text
+        created
+        author
+        tags
+        status
+      }
+    }
     SOLVIS_locations_by_id(location_ids: $location_ids) {
       edges {
         node {

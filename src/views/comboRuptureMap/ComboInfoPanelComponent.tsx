@@ -55,6 +55,25 @@ export type ComboInfoPanelComponentProps = {
   mapControlsState: ComboRuptureMapPageState;
 };
 
+export type Datum = {
+  bin_center: number;
+  rate: number;
+  cumulative_rate: number;
+};
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const renderCustomTooltip = (tooltipData: any) => {
+  const datum = tooltipData?.nearestDatum?.datum as Datum;
+  console.log(tooltipData);
+  return (
+    <>
+      <Typography>Rate: {datum?.rate?.toExponential(2)}/yr</Typography>
+      <Typography>Cumulative Rate: {datum?.cumulative_rate?.toExponential(2)}/yr</Typography>
+      <Typography>Magnitude: {datum?.bin_center.toPrecision(3)}</Typography>
+    </>
+  );
+};
+
 const ComboInfoPanelComponent = (props: ComboInfoPanelComponentProps) => {
   const { queryData, fullscreen, mapControlsState } = props;
 
@@ -94,18 +113,19 @@ const ComboInfoPanelComponent = (props: ComboInfoPanelComponentProps) => {
               width={430}
               height={300}
               xLabel="Magnitude"
-              yLabel="Rate"
+              yLabel="Rate (1/yr)"
               yLabelOffset={35}
               xLabelOffset={5}
               header="Magnitude Frequency Distribution"
               yScaleDomain={[1e-7, 1e-1]}
-              xScaleDomain={[6.7, 9.6]}
+              xScaleDomain={[6.7, 9.7]}
               lineColours={['silver', '#072B61']}
               legendDomain={['Incremental', 'Cumulative']}
+              renderCustomTooltip={renderCustomTooltip}
             />
           )}
           {mapControlsState.showTraceLegend && colorScale && (
-            <ColorBar heading={'Participation Rate'} width={350} height={35} colors={colorScale?.hexrgbs} tickValues={colorScale?.levels} linear={false} />
+            <ColorBar heading={'Participation Rate (1/yr)'} width={350} height={35} colors={colorScale?.hexrgbs} tickValues={colorScale?.levels} linear={false} />
           )}
         </Box>
       )}
