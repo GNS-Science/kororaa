@@ -52,7 +52,6 @@ export const ComboRuptureMap: React.FC = () => {
 
   const markdown = useMemo(() => initialData?.textual_content?.content && initialData?.textual_content?.content[0]?.text, [initialData]);
   const content_type = useMemo(() => initialData?.textual_content?.content && initialData?.textual_content?.content[0]?.content_type, [initialData]);
-  console.log(initialData?.textual_content?.content);
 
   useEffect(() => {
     function updateScrollHeight() {

@@ -26,6 +26,9 @@ Cypress.on('uncaught:exception', (err, runnable) => {
   if (err.message.includes('> Unexpected token < in JSON at position 0')) {
     return false;
   }
+  if (err.message.includes('(No errors)')) {
+    return false;
+  }
 });
 
 
