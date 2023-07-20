@@ -64,7 +64,6 @@ export type Datum = {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const renderCustomTooltip = (tooltipData: any) => {
   const datum = tooltipData?.nearestDatum?.datum as Datum;
-  console.log(tooltipData);
   return (
     <>
       <Typography>Rate: {datum?.rate?.toExponential(2)}/yr</Typography>

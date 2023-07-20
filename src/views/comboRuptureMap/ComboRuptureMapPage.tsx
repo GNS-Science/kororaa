@@ -50,6 +50,10 @@ export const ComboRuptureMap: React.FC = () => {
     return initialData?.SOLVIS_filter_rupture_sections?.mfd_histogram;
   }, [initialData]);
 
+  const markdown = useMemo(() => initialData?.textual_content?.content && initialData?.textual_content?.content[0]?.text, [initialData]);
+  const content_type = useMemo(() => initialData?.textual_content?.content && initialData?.textual_content?.content[0]?.content_type, [initialData]);
+  console.log(initialData?.textual_content?.content);
+
   useEffect(() => {
     function updateScrollHeight() {
       setScrollHeight(window.scrollY);
@@ -75,7 +79,7 @@ export const ComboRuptureMap: React.FC = () => {
       <LeafletDrawer drawerHeight={'80vh'} headerHeight={`${100 - scrollHeight}px`} width={'400px'} fullscreen={fullscreen} openAtRender={true}>
         <Typography variant="h4" sx={{ textAlign: 'center' }}>
           Rupture Explorer
-          <InfoTooltip content={'tooltip to come'} format={false} />
+          <InfoTooltip content={markdown || ''} format={content_type === 'Markdown'} />
         </Typography>
         <ComboRuptureMapControls
           startTransition={startTransition}

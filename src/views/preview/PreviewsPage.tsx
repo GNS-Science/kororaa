@@ -54,7 +54,7 @@ const PreviewsPage: React.FC = () => {
             <PreviewTitleContainer>
               <Typography variant="h2">Coming features</Typography>
               <Typography variant="body1">
-                <strong>Things we expect to include over the coming months.</strong>
+                <strong>Features we expect to add in the future.</strong>
               </Typography>
             </PreviewTitleContainer>
             <PreviewCard title="NSHM Public API" text="A web API providing access to the datasets and internal components of the NSHM." img="/images/K-API-igraphql-0.png" />
