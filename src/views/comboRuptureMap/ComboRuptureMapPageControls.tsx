@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useReducer, useMemo } from 'react';
-import { Box, Button, styled, Alert, Fab, Menu, MenuItem, Autocomplete, TextField } from '@mui/material';
+import { Box, Button, styled, Alert, Fab, Menu, MenuItem, Autocomplete, TextField, FormGroup, Tooltip } from '@mui/material';
 import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
 import { RangeSliderWithInputs } from '@gns-science/toshi-nest';
 import { toPng } from 'html-to-image';
@@ -57,12 +57,16 @@ type MfdData =
   | null
   | undefined;
 
-const sortDict: SortDict = {
+export const sortDict: SortDict = {
   Unsorted: null,
-  Magnitude: { attribute: 'magnitude', ascending: false },
-  'Rate (weighted mean)': { attribute: 'rate_weighted_mean', ascending: false },
-  'Rate (maximum)': { attribute: 'rate_max', ascending: false },
-  'Rate (minimum)': { attribute: 'rate_min', ascending: false },
+  'Magnitude ↑': { attribute: 'magnitude', ascending: true },
+  'Magnitude ↓': { attribute: 'magnitude', ascending: false },
+  'Rate ↑ (weighted mean)': { attribute: 'rate_weighted_mean', ascending: true },
+  'Rate ↓ (weighted mean)': { attribute: 'rate_weighted_mean', ascending: false },
+  'Rate ↑ (maximum)': { attribute: 'rate_max', ascending: true },
+  'Rate ↓ (maximum)': { attribute: 'rate_max', ascending: false },
+  'Rate ↑ (minimum)': { attribute: 'rate_min', ascending: true },
+  'Rate ↓ (minimum)': { attribute: 'rate_min', ascending: false },
 };
 
 const faultSystemOptions = ['Crustal', 'Hikurangi', 'Puysegur'];
@@ -101,15 +105,25 @@ const ComboRuptureMapControls: React.FC<ComboRuptureMapControlsProps> = ({
   const [mapViewControlsState, mapViewControlsDispatch] = useReducer(mapViewControlsReducer, { showSurfaces: true, showAnimation: true, showMfd: true, showTraceLegend: true });
   const [sortBy1, setSortBy1] = useState<string>('Unsorted');
   const [sortBy2, setSortBy2] = useState<string>('');
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [sortOptionsAnchorEl, setSortOptionsAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [mapOptionsAnchorEl, setMapOptionsAnchorEl] = React.useState<null | HTMLElement>(null);
 
-  const open = Boolean(anchorEl);
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
+  const mapOptionsOpen = Boolean(mapOptionsAnchorEl);
+  const handleMapOptionsClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setMapOptionsAnchorEl(event.currentTarget);
   };
-  const handleClose = () => {
-    setAnchorEl(null);
+  const handleMapOptionsClose = () => {
+    setMapOptionsAnchorEl(null);
   };
+
+  const sortOptionsOpen = Boolean(sortOptionsAnchorEl);
+  const handleSortOptionsClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setSortOptionsAnchorEl(event.currentTarget);
+  };
+  const handleSortOptionsClose = () => {
+    setSortOptionsAnchorEl(null);
+  };
+
   const data = useLazyLoadQuery<ComboRuptureMapPageControlsQuery>(comboRuptureMapPageControlsQuery, { radiiSetId: SOLVIS_RADII_ID, locationListId: SOLVIS_LOCATION_LIST });
   const locationData = data?.SOLVIS_get_location_list?.locations;
   const radiiData = data?.SOLVIS_get_radii_set?.radii;
@@ -118,7 +132,10 @@ const ComboRuptureMapControls: React.FC<ComboRuptureMapControlsProps> = ({
     [data],
   );
 
-  const sortByOptions = useMemo(() => ['Unsorted', 'Magnitude', 'Rate (weighted mean)', 'Rate (maximum)', 'Rate (minimum)'], []);
+  const sortByOptions = useMemo(
+    () => ['Unsorted', 'Magnitude ↑', 'Magnitude ↓', 'Rate ↑ (weighted mean)', 'Rate ↓ (weighted mean)', 'Rate ↑ (maximum)', 'Rate ↓ (maximum)', 'Rate ↑ (minimum)', 'Rate ↓ (minimum)'],
+    [],
+  );
   const sortByOptions2 = useMemo(() => sortByOptions.filter((option) => option !== sortBy1), [sortBy1, sortByOptions]);
 
   const sortByFormatted = useMemo(() => {
@@ -214,7 +231,7 @@ const ComboRuptureMapControls: React.FC<ComboRuptureMapControlsProps> = ({
           disabled={faultSystem !== 'Crustal'}
           options={parentFaultOptions}
           renderInput={(params) => <TextField {...params} label="Faults" />}
-          limitTags={2}
+          limitTags={1}
           style={{ minWidth: 200 }}
           value={parentFaultArray}
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -224,43 +241,74 @@ const ComboRuptureMapControls: React.FC<ComboRuptureMapControlsProps> = ({
         />
         <SelectControlMultiple name="Locations" selection={locations} options={locationOptions} setSelection={setLocations} />
         <SelectControlWithDisable disabled={locations.length === 0} name="Radius" selection={radius} options={radiiOptions} setSelection={setRadius} />
-        <MapViewControls initState={{ showSurfaces: true, showAnimation: true, showMfd: true, showTraceLegend: true }} onHandleChange={mapViewControlsDispatch} />
         <StyledRangeSliderDiv>
-          <RangeSliderWithInputs label="Magnitude Range" valuesRange={magnitudeRange} setValues={setMagnitudeRange} inputProps={{ step: 0.1, min: 6, max: 10, type: 'number' }} />
-          <RangeSliderWithInputs label="Rate Range (1/yr)" valuesRange={rateRange} setValues={setRateRange} inputProps={{ step: 1, min: -20, max: 0, type: 'number' }} />
+          <RangeSliderWithInputs label="Magnitude" valuesRange={magnitudeRange} setValues={setMagnitudeRange} inputProps={{ step: 0.1, min: 6, max: 10, type: 'number' }} />
+          <RangeSliderWithInputs label="Rate (1/yr)" valuesRange={rateRange} setValues={setRateRange} inputProps={{ step: 1, min: -20, max: 0, type: 'number' }} />
         </StyledRangeSliderDiv>
-        <SelectControlWithDisable
-          disabled={!state.showAnimation}
-          name="Sort By 1"
-          selection={sortBy1}
-          setSelection={setSortBy1}
-          options={sortByOptions}
-          tooltip={'Animation must be enabled to sort'}
-        />
-        <SelectControlWithDisable
-          disabled={sortBy1 === 'Unsorted' || !state.showAnimation}
-          name="Sort By 2"
-          selection={sortBy2}
-          setSelection={setSortBy2}
-          options={sortByOptions2}
-          tooltip={'then sort by'}
-        />
       </StyledCustomControlsBar>
       {geoJsonError && <Alert severity="error">{geoJsonError}</Alert>}
       <Box sx={{ ...flexParentCenter, flexDirection: 'row' }}>
         <StyledButton disabled={isPending || !!radiusError} variant="contained" type="submit" onClick={handleSubmit}>
           Submit
         </StyledButton>
-        <Fab onClick={handleClick} color="primary" size="small">
+        <Fab onClick={handleMapOptionsClick} color="primary" size="small">
           <FileDownloadOutlinedIcon />
         </Fab>
       </Box>
-      <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
+      <Menu anchorEl={mapOptionsAnchorEl} open={mapOptionsOpen} onClose={handleMapOptionsClose}>
         <MenuItem onClick={handleDownload}>Map image</MenuItem>
         <MenuItem onClick={handleClickTraceDownload}>Trace geoJSON</MenuItem>
         <MenuItem onClick={handleClickSurfaceDownload}>Surface geoJSON</MenuItem>
         <MenuItem onClick={handleClickMfdDownload}>MFD data</MenuItem>
       </Menu>
+      <Box sx={{ width: '100%', ...flexParentCenter, flexDirection: 'row', marginRight: '10px' }}>
+        <MapViewControls initState={{ showSurfaces: true, showAnimation: true, showMfd: true, showTraceLegend: true }} onHandleChange={mapViewControlsDispatch} />
+        <Tooltip title={'Sort ruptures for animation'} arrow={true}>
+          <Button variant="outlined" onClick={handleSortOptionsClick} sx={{ marginLeft: '10px' }}>
+            Animation Options
+          </Button>
+        </Tooltip>
+        <Menu
+          anchorEl={sortOptionsAnchorEl}
+          open={sortOptionsOpen}
+          onClose={handleSortOptionsClose}
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'center',
+          }}
+          transformOrigin={{
+            vertical: 'top',
+            horizontal: 'center',
+          }}
+        >
+          <FormGroup>
+            <Box sx={{ width: '100%', ...flexParentCenter, flexDirection: 'row' }}>
+              <Box sx={{ margin: '10px' }}>
+                <SelectControlWithDisable
+                  disabled={!state.showAnimation}
+                  name="Sort By 1"
+                  selection={sortBy1}
+                  setSelection={setSortBy1}
+                  options={sortByOptions}
+                  tooltip={'Animation must be enabled to sort'}
+                  onClose={() => handleSortOptionsClose}
+                />
+              </Box>
+              <Box sx={{ margin: '10px' }}>
+                <SelectControlWithDisable
+                  disabled={sortBy1 === 'Unsorted' || !state.showAnimation}
+                  name="Sort By 2"
+                  selection={sortBy2}
+                  setSelection={setSortBy2}
+                  options={sortByOptions2}
+                  tooltip={'then sort by'}
+                  onClose={() => handleSortOptionsClose}
+                />
+              </Box>
+            </Box>
+          </FormGroup>
+        </Menu>
+      </Box>
     </Box>
   );
 };

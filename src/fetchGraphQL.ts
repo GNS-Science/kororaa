@@ -19,7 +19,12 @@ const fetchGraphQL = async (text: string | null | undefined, variables: Variable
   });
 
   // Get the response as JSON
-  return await response.json();
+  try {
+    return await response.json();
+  } catch (e) {
+    if (response.status >= 500) throw new Error(`Server error: ${response.status} ${response.statusText}`);
+  }
+  return {} as GraphQLResponse;
 };
 
 export default fetchGraphQL;

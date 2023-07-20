@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ce3d2d92a6d3f0b4efc3c8e6489e10c6>>
+ * @generated SignedSource<<0700f65ed741a9d26d1ab409c21d8efc>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,16 +10,23 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
+export type SetOperationEnum = "UNION" | "INTERSECTION" | "DIFFERENCE" | "%future added value";
 export type FilterRupturesArgsInput = {
   model_id: string;
   fault_system: string;
   corupture_fault_names?: ReadonlyArray<string | null> | null;
   location_ids?: ReadonlyArray<string | null> | null;
   radius_km?: number | null;
+  filter_set_options?: FilterSetLogicOptionsInput | null;
   minimum_rate?: number | null;
   maximum_rate?: number | null;
   minimum_mag?: number | null;
   maximum_mag?: number | null;
+};
+export type FilterSetLogicOptionsInput = {
+  multiple_locations?: SetOperationEnum | null;
+  multiple_faults?: SetOperationEnum | null;
+  locations_and_faults?: SetOperationEnum | null;
 };
 export type SimpleSortRupturesArgs = {
   attribute?: string | null;

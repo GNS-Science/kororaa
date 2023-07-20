@@ -138,7 +138,7 @@ const HamburgerMenu: React.FC<MenuProps> = ({ pages }: MenuProps) => {
 
   return (
     <>
-      <IconButton size="large" aria-label="hamburger menu" aria-controls="menu-appbar" aria-haspopup="true" onClick={handleOpenNavMenu} color="inherit">
+      <IconButton size="large" aria-label="hamburger menu" aria-controls="menu-appbar" aria-haspopup="true" onClick={handleOpenNavMenu}>
         <MenuIcon />
       </IconButton>
       <SubMenu open={Boolean(anchorElNav)} pages={pages} anchorElNav={anchorElNav} setAnchorElNav={setAnchorElNav} />
@@ -219,7 +219,7 @@ const NavBar: React.FC = () => {
       ],
     },
     {
-      name: 'Rupture Map',
+      name: 'Ruptures',
       path: '/RuptureMap',
     },
     { name: 'Coming Features', path: '/Previews' },

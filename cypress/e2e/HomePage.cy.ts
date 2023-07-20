@@ -51,8 +51,8 @@ describe('Home Page', () => {
     cy.get('div').contains('Model reports and datasets.');
   });
 
-  it('displays coming features card', () => {
-    cy.get('div').contains('Previews from our backlog');
+  it('displays ruptures card', () => {
+  cy.get('div').contains('Filter and animate ruptures.');
   });
 });
 
@@ -82,14 +82,8 @@ describe('NavBarLinks', () => {
 
   it('IFM nav link works', () => {
     cy.get('header').contains('Ruptures').click();
-    cy.get('[role="menuitem"]').contains('Multi-Rupture Map').click({ force: true });
-    cy.url().should('include', '/MultiRuptureMap')
-  })
-
-  it('IFM nav link works', () => {
-    cy.get('header').contains('Ruptures').click();
-    cy.get('[role="menuitem"]').contains('Rupture Animation').click({ force: true });
-    cy.url().should('include', '/RuptureAnimation')
+    cy.get('[role="menuitem"]').contains('Ruptures').click({ force: true });
+    cy.url().should('include', '/RuptureMap')
   })
 
   it('Coming Features Nav Link works', () => {

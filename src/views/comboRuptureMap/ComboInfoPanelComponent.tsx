@@ -3,7 +3,6 @@ import { ColorBar, MfdPlot } from '@gns-science/toshi-nest';
 import { Box, Typography, CircularProgress } from '@mui/material';
 import { ComboRuptureMapPageQuery$data } from './__generated__/ComboRuptureMapPageQuery.graphql';
 import TimeDimensionLayerContext from './store';
-// import { GeoJsonObject } from 'geojson';
 import { ComboRuptureMapPageState } from './comboRuptureMapPageReducer';
 
 export type SurfaceProperties =
@@ -19,17 +18,20 @@ export type SurfaceProperties =
 export interface RuptureInfoBoxProps {
   timeDimensionTotalLength: number;
   surfaceProperties: SurfaceProperties[];
+  mapControlsState: ComboRuptureMapPageState;
 }
 
 const RuptureInfoBox = (props: RuptureInfoBoxProps) => {
-  const { timeDimensionTotalLength, surfaceProperties } = props;
+  const { timeDimensionTotalLength, surfaceProperties, mapControlsState } = props;
   const context = useContext(TimeDimensionLayerContext);
+  const sortByStringArray = mapControlsState.sortby?.map((sort) => sort?.attribute.replaceAll('_', ' ') + ' ' + (sort?.ascending ? 'ascending' : 'descending'));
+  const sortByJoinedString = sortByStringArray?.join(', ');
   return (
     <Box>
       {surfaceProperties[context.timeIndex] ? (
         <>
           <Typography variant={'body2'}>
-            Rupture {context.timeIndex + 1} of {timeDimensionTotalLength}
+            Rupture {context.timeIndex + 1} of {timeDimensionTotalLength} {mapControlsState.sortby && mapControlsState.sortby?.length > 0 ? `(sorted by ${sortByJoinedString})` : ''}
           </Typography>
           <Typography variant={'body2'}>Mean Rate: {surfaceProperties[context.timeIndex]?.rate_weighted_mean?.toExponential(2)} per year</Typography>
           <Typography variant={'body2'}>Magnitude: {surfaceProperties[context.timeIndex]?.magnitude?.toFixed(1)}</Typography>
@@ -51,6 +53,24 @@ export type ComboInfoPanelComponentProps = {
   timeDimensionTotalLength: number;
   surfaceProperties: SurfaceProperties[];
   mapControlsState: ComboRuptureMapPageState;
+};
+
+export type Datum = {
+  bin_center: number;
+  rate: number;
+  cumulative_rate: number;
+};
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const renderCustomTooltip = (tooltipData: any) => {
+  const datum = tooltipData?.nearestDatum?.datum as Datum;
+  return (
+    <>
+      <Typography>Rate: {datum?.rate?.toExponential(2)}/yr</Typography>
+      <Typography>Cumulative Rate: {datum?.cumulative_rate?.toExponential(2)}/yr</Typography>
+      <Typography>Magnitude: {datum?.bin_center.toPrecision(3)}</Typography>
+    </>
+  );
 };
 
 const ComboInfoPanelComponent = (props: ComboInfoPanelComponentProps) => {
@@ -92,18 +112,19 @@ const ComboInfoPanelComponent = (props: ComboInfoPanelComponentProps) => {
               width={430}
               height={300}
               xLabel="Magnitude"
-              yLabel="Rate"
+              yLabel="Rate (1/yr)"
               yLabelOffset={35}
               xLabelOffset={5}
               header="Magnitude Frequency Distribution"
               yScaleDomain={[1e-7, 1e-1]}
-              xScaleDomain={[6.7, 9.6]}
+              xScaleDomain={[6.7, 9.7]}
               lineColours={['silver', '#072B61']}
               legendDomain={['Incremental', 'Cumulative']}
+              renderCustomTooltip={renderCustomTooltip}
             />
           )}
           {mapControlsState.showTraceLegend && colorScale && (
-            <ColorBar heading={'Participation Rate'} width={350} height={35} colors={colorScale?.hexrgbs} tickValues={colorScale?.levels} linear={false} />
+            <ColorBar heading={'Participation Rate (1/yr)'} width={350} height={35} colors={colorScale?.hexrgbs} tickValues={colorScale?.levels} linear={false} />
           )}
         </Box>
       )}

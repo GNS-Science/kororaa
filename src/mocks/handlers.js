@@ -11,9 +11,7 @@ import { ruptureAnimationMock2 } from './mockData/ruptureAnimationMockPagination
 import { ruptureAnimationMock3 } from './mockData/ruptureAnimationMockPagination/ruptureAnimationMock3';
 import { ruptureAnimationMock4 } from './mockData/ruptureAnimationMockPagination/ruptureAnimationMock4';
 import { ruptureAnimationMock5 } from './mockData/ruptureAnimationMockPagination/ruptureAnimationMock5';
-import { ruptureAnimationMock6 } from './mockData/ruptureAnimationMockPagination/ruptureAnimationMock6';
 import { solvisControlsMock } from './mockData/solvisControlsMock';
-import { ruptureAnimationMockSorted } from './mockData/ruptureAnimationMockPagination/ruptureAnimationMockSorted';
 import { multiRupturePageInitialResponse } from './mockData/multiRupturePageMocks/multiRupturePageInitialResponse';
 import { multiRupturePageCrustalAllLocations } from './mockData/multiRupturePageMocks/multiRupturePageCrustalAllLocations';
 import { multiRupturePageCrustalGYM100km } from './mockData/multiRupturePageMocks/multiRupturePageCrustalGYM100km';
@@ -83,48 +81,12 @@ export const handlers = [
   graphql.query('FaultModelControlsQuery', (req, res, ctx) => {
     return res(ctx.data(IFMControlsMockData));
   }),
-  graphql.query('RuptureAnimationPageQuery', (req, res, ctx) => {
+  graphql.query('ComboRuptureMapPageQuery', (req, res, ctx) => {
     const after = req.variables.after;
     const faultSystem = req.variables.fault_system;
     const locationIds = req.variables.location_ids;
     const radiusKm = req.variables.radius_km;
     const sortBy = req.variables.sortby;
-
-    if (faultSystem === 'PUY' && locationIds[0] === 'ZQN' && radiusKm === 100 && sortBy === null) {
-      if (after === null) {
-        return res(ctx.data(ruptureAnimationMock1));
-      }
-    } else if (sortBy.length === 1) {
-      return res(ctx.data(ruptureAnimationMockSorted));
-    }
-  }),
-  graphql.operation((req, res, ctx) => {
-    const after = req.variables.after;
-    if (after === 'UnVwdHVyZURldGFpbENvbm5lY3Rpb25DdXJzb3I6OQ==') {
-      return res(ctx.data(ruptureAnimationMock2));
-    }
-    if (after === 'UnVwdHVyZURldGFpbENvbm5lY3Rpb25DdXJzb3I6MTQ=') {
-      return res(ctx.data(ruptureAnimationMock3));
-    }
-    if (after === 'UnVwdHVyZURldGFpbENvbm5lY3Rpb25DdXJzb3I6MTk=') {
-      return res(ctx.data(ruptureAnimationMock4));
-    }
-    if (after === 'UnVwdHVyZURldGFpbENvbm5lY3Rpb25DdXJzb3I6MjQ=') {
-      return res(ctx.data(ruptureAnimationMock5));
-    }
-    if (after === 'UnVwdHVyZURldGFpbENvbm5lY3Rpb25DdXJzb3I6Mjk=') {
-      return res(ctx.data(ruptureAnimationMock6));
-    }
-  }),
-  graphql.query('RuptureAnimationPageControlsQuery', (req, res, ctx) => {
-    return res(ctx.data(solvisControlsMock));
-  }),
-  graphql.query('MultiRuptureMapPageControlsQuery', (req, res, ctx) => {
-    return res(ctx.data(solvisControlsMock));
-  }),
-  graphql.query('MultiRuptureMapPageQuery', (req, res, ctx) => {
-    const locationIds = req.variables.location_ids;
-    const faultSystem = req.variables.fault_system;
 
     if (faultSystem === '') {
       return res(ctx.data(multiRupturePageInitialResponse));
@@ -141,5 +103,32 @@ export const handlers = [
     if (faultSystem === 'HIK' && locationIds.length === 2) {
       return res(ctx.data(multiRupturePageLocationsNoRuptures));
     }
+
+    if (faultSystem === 'PUY' && locationIds[0] === 'ZQN' && radiusKm === 100 && sortBy === null) {
+      if (after === null) {
+        return res(ctx.data(ruptureAnimationMock1));
+      }
+    }
+  }),
+  graphql.operation((req, res, ctx) => {
+    const after = req.variables.after;
+    if (after === 'UnVwdHVyZURldGFpbENvbm5lY3Rpb25DdXJzb3I6OQ==') {
+      return res(ctx.data(ruptureAnimationMock2));
+    }
+    if (after === 'UnVwdHVyZURldGFpbENvbm5lY3Rpb25DdXJzb3I6MTQ=') {
+      return res(ctx.data(ruptureAnimationMock3));
+    }
+    if (after === 'UnVwdHVyZURldGFpbENvbm5lY3Rpb25DdXJzb3I6MTk=') {
+      return res(ctx.data(ruptureAnimationMock4));
+    }
+    if (after === 'UnVwdHVyZURldGFpbENvbm5lY3Rpb25DdXJzb3I6MjQ=') {
+      return res(ctx.data(ruptureAnimationMock5));
+    }
+  }),
+  graphql.query('ComboRuptureMapPageControlsQuery', (req, res, ctx) => {
+    return res(ctx.data(solvisControlsMock));
+  }),
+  graphql.query('MultiRuptureMapPageControlsQuery', (req, res, ctx) => {
+    return res(ctx.data(solvisControlsMock));
   }),
 ];

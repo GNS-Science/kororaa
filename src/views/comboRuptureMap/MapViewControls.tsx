@@ -3,8 +3,6 @@ import { Box, Checkbox, Menu, MenuItem, Button } from '@mui/material';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 
-import { flexParentCenter } from '../../utils/styleUtils';
-
 export type MapViewControlsState = {
   showSurfaces: boolean;
   showAnimation: boolean;
@@ -49,11 +47,23 @@ const MapViewControls: React.FC<MapViewControlsProps> = ({ initState, onHandleCh
   }, [showSurfacesChecked, showAnimationChecked, showMfdChecked, showTraceLegendChecked]);
 
   return (
-    <Box sx={{ width: '100%', ...flexParentCenter, flexDirection: 'column' }}>
+    <Box>
       <Button variant="outlined" onClick={handleClick}>
-        Map View Options
+        Map Options
       </Button>
-      <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
+      <Menu
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'center',
+        }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'center',
+        }}
+      >
         <FormGroup>
           <MenuItem>
             <FormControlLabel
