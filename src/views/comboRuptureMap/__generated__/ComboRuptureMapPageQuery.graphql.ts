@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a7d3eafc9cbb3cabbd3d41bfec539ef7>>
+ * @generated SignedSource<<611e8330bd6f8fcf9558172447612860>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,7 +11,6 @@
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ContentFormatEnum = "Raw" | "Markdown" | "%future added value";
-export type ContentStatusEnum = "Undefined" | "Draft" | "Published" | "Deprecated" | "%future added value";
 export type SimpleSortRupturesArgs = {
   attribute?: string | null;
   ascending?: boolean | null;
@@ -31,16 +30,11 @@ export type ComboRuptureMapPageQuery$variables = {
   sortby?: ReadonlyArray<SimpleSortRupturesArgs | null> | null;
 };
 export type ComboRuptureMapPageQuery$data = {
-  readonly textual_content: {
+  readonly textual_content_header: {
     readonly ok: boolean | null;
     readonly content: ReadonlyArray<{
-      readonly index: string | null;
       readonly content_type: ContentFormatEnum | null;
       readonly text: string | null;
-      readonly created: any | null;
-      readonly author: string | null;
-      readonly tags: ReadonlyArray<string | null> | null;
-      readonly status: ContentStatusEnum | null;
     } | null> | null;
   } | null;
   readonly SOLVIS_locations_by_id: {
@@ -144,12 +138,12 @@ v11 = {
   "name": "sortby"
 },
 v12 = {
-  "alias": "textual_content",
+  "alias": "textual_content_header",
   "args": [
     {
       "kind": "Literal",
       "name": "index",
-      "value": "rupture_map.md"
+      "value": "rupture_map_header.md"
     }
   ],
   "concreteType": "TextualContentResult",
@@ -176,13 +170,6 @@ v12 = {
           "alias": null,
           "args": null,
           "kind": "ScalarField",
-          "name": "index",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
           "name": "content_type",
           "storageKey": null
         },
@@ -192,40 +179,12 @@ v12 = {
           "kind": "ScalarField",
           "name": "text",
           "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "created",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "author",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "tags",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "status",
-          "storageKey": null
         }
       ],
       "storageKey": null
     }
   ],
-  "storageKey": "KORORAA_textual_content(index:\"rupture_map.md\")"
+  "storageKey": "KORORAA_textual_content(index:\"rupture_map_header.md\")"
 },
 v13 = {
   "kind": "Variable",
@@ -765,16 +724,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "f17d12501efc469c627e64556b2fecf6",
+    "cacheID": "fd4ed443093527e72c67d290794b03a2",
     "id": null,
     "metadata": {},
     "name": "ComboRuptureMapPageQuery",
     "operationKind": "query",
-    "text": "query ComboRuptureMapPageQuery(\n  $first: Int!\n  $after: String\n  $model_id: String!\n  $fault_system: String!\n  $location_ids: [String]!\n  $radius_km: Int!\n  $corupture_fault_names: [String]\n  $minimum_mag: Float\n  $maximum_mag: Float\n  $minimum_rate: Float\n  $maximum_rate: Float\n  $sortby: [SimpleSortRupturesArgs]\n) {\n  textual_content: KORORAA_textual_content(index: \"rupture_map.md\") {\n    ok\n    content {\n      index\n      content_type\n      text\n      created\n      author\n      tags\n      status\n    }\n  }\n  SOLVIS_locations_by_id(location_ids: $location_ids) {\n    edges {\n      node {\n        location_id\n        name\n        radius_geojson(radius_km: $radius_km, style: {stroke_color: \"royalblue\", stroke_width: 3, stroke_opacity: 1, fill_opacity: 0.01, fill_color: \"royalblue\"})\n        id\n      }\n    }\n  }\n  SOLVIS_filter_rupture_sections(filter: {model_id: $model_id, location_ids: $location_ids, fault_system: $fault_system, corupture_fault_names: $corupture_fault_names, radius_km: $radius_km, minimum_mag: $minimum_mag, maximum_mag: $maximum_mag, minimum_rate: $minimum_rate, maximum_rate: $maximum_rate}) {\n    model_id\n    section_count\n    fault_surfaces(style: {stroke_color: \"silver\", fill_color: \"silver\", fill_opacity: 0.25})\n    fault_traces(color_scale: {name: \"inferno\"}, style: {stroke_width: 5})\n    color_scale(name: \"inferno\") {\n      name\n      min_value\n      max_value\n      color_map {\n        levels\n        hexrgbs\n      }\n    }\n    mfd_histogram {\n      bin_center\n      rate\n      cumulative_rate\n    }\n  }\n  SOLVIS_filter_ruptures(first: $first, after: $after, filter: {model_id: $model_id, fault_system: $fault_system, location_ids: $location_ids, radius_km: $radius_km, corupture_fault_names: $corupture_fault_names, minimum_mag: $minimum_mag, maximum_mag: $maximum_mag, minimum_rate: $minimum_rate, maximum_rate: $maximum_rate}, sortby: $sortby) {\n    total_count\n  }\n  ...RuptureAnimationPage_queryRoot_2Ls9it\n}\n\nfragment RuptureAnimationPage_queryRoot_2Ls9it on Query {\n  SOLVIS_filter_ruptures(first: $first, after: $after, filter: {model_id: $model_id, fault_system: $fault_system, location_ids: $location_ids, radius_km: $radius_km, corupture_fault_names: $corupture_fault_names, minimum_mag: $minimum_mag, maximum_mag: $maximum_mag, minimum_rate: $minimum_rate, maximum_rate: $maximum_rate}, sortby: $sortby) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    edges {\n      node {\n        fault_surfaces\n        magnitude\n        rate_weighted_mean\n        area\n        length\n        id\n        __typename\n      }\n      cursor\n    }\n  }\n}\n"
+    "text": "query ComboRuptureMapPageQuery(\n  $first: Int!\n  $after: String\n  $model_id: String!\n  $fault_system: String!\n  $location_ids: [String]!\n  $radius_km: Int!\n  $corupture_fault_names: [String]\n  $minimum_mag: Float\n  $maximum_mag: Float\n  $minimum_rate: Float\n  $maximum_rate: Float\n  $sortby: [SimpleSortRupturesArgs]\n) {\n  textual_content_header: KORORAA_textual_content(index: \"rupture_map_header.md\") {\n    ok\n    content {\n      content_type\n      text\n    }\n  }\n  SOLVIS_locations_by_id(location_ids: $location_ids) {\n    edges {\n      node {\n        location_id\n        name\n        radius_geojson(radius_km: $radius_km, style: {stroke_color: \"royalblue\", stroke_width: 3, stroke_opacity: 1, fill_opacity: 0.01, fill_color: \"royalblue\"})\n        id\n      }\n    }\n  }\n  SOLVIS_filter_rupture_sections(filter: {model_id: $model_id, location_ids: $location_ids, fault_system: $fault_system, corupture_fault_names: $corupture_fault_names, radius_km: $radius_km, minimum_mag: $minimum_mag, maximum_mag: $maximum_mag, minimum_rate: $minimum_rate, maximum_rate: $maximum_rate}) {\n    model_id\n    section_count\n    fault_surfaces(style: {stroke_color: \"silver\", fill_color: \"silver\", fill_opacity: 0.25})\n    fault_traces(color_scale: {name: \"inferno\"}, style: {stroke_width: 5})\n    color_scale(name: \"inferno\") {\n      name\n      min_value\n      max_value\n      color_map {\n        levels\n        hexrgbs\n      }\n    }\n    mfd_histogram {\n      bin_center\n      rate\n      cumulative_rate\n    }\n  }\n  SOLVIS_filter_ruptures(first: $first, after: $after, filter: {model_id: $model_id, fault_system: $fault_system, location_ids: $location_ids, radius_km: $radius_km, corupture_fault_names: $corupture_fault_names, minimum_mag: $minimum_mag, maximum_mag: $maximum_mag, minimum_rate: $minimum_rate, maximum_rate: $maximum_rate}, sortby: $sortby) {\n    total_count\n  }\n  ...RuptureAnimationPage_queryRoot_2Ls9it\n}\n\nfragment RuptureAnimationPage_queryRoot_2Ls9it on Query {\n  SOLVIS_filter_ruptures(first: $first, after: $after, filter: {model_id: $model_id, fault_system: $fault_system, location_ids: $location_ids, radius_km: $radius_km, corupture_fault_names: $corupture_fault_names, minimum_mag: $minimum_mag, maximum_mag: $maximum_mag, minimum_rate: $minimum_rate, maximum_rate: $maximum_rate}, sortby: $sortby) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    edges {\n      node {\n        fault_surfaces\n        magnitude\n        rate_weighted_mean\n        area\n        length\n        id\n        __typename\n      }\n      cursor\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "292c991521c47e10711616f0af775f61";
+(node as any).hash = "8ebefce3dfaf520923cc0908980d5ee6";
 
 export default node;
