@@ -131,7 +131,6 @@ const ComboRuptureMapControls: React.FC<ComboRuptureMapControlsProps> = ({
   const faultsMarkdown = useMemo(() => data?.textual_content_faults?.content && data?.textual_content_faults?.content[0]?.text, [data]);
   const locationsMarkdown = useMemo(() => data?.textual_content_locations?.content && data?.textual_content_locations?.content[0]?.text, [data]);
   const animationMarkdown = useMemo(() => data?.textual_content_animation?.content && data?.textual_content_animation?.content[0]?.text, [data]);
-
   const parentFaultOptions: string[] = useMemo(
     () => (data?.SOLVIS_get_parent_fault_names ? data?.SOLVIS_get_parent_fault_names.filter((el) => el !== null && el !== undefined).map((el) => el as string) : []),
     [data],
@@ -255,7 +254,11 @@ const ComboRuptureMapControls: React.FC<ComboRuptureMapControlsProps> = ({
             <SelectControlMultiple name="Locations" selection={locations} options={locationOptions} setSelection={setLocations} tooltip={locationsMarkdown || ''} />
           </div>
         </Tooltip>
-        <SelectControlWithDisable disabled={locations.length === 0} name="Radius" selection={radius} options={radiiOptions} setSelection={setRadius} />
+        <Tooltip title={locationsMarkdown || ''} placement="right" arrow={true}>
+          <div>
+            <SelectControlWithDisable disabled={locations.length === 0} name="Radius" selection={radius} options={radiiOptions} setSelection={setRadius} />
+          </div>
+        </Tooltip>
         <StyledRangeSliderDiv>
           <RangeSliderWithInputs label="Magnitude" valuesRange={magnitudeRange} setValues={setMagnitudeRange} inputProps={{ step: 0.1, min: 6, max: 10, type: 'number' }} />
           <RangeSliderWithInputs label="Rate (1/yr)" valuesRange={rateRange} setValues={setRateRange} inputProps={{ step: 1, min: -20, max: 0, type: 'number' }} />
