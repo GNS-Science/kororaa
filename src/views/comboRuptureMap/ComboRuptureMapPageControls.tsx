@@ -197,7 +197,7 @@ const ComboRuptureMapControls: React.FC<ComboRuptureMapControlsProps> = ({
 
   const handleDownloadData = (data: typeof GeoJsonObject | MfdData, fileName: string, fileType: 'geoJSON' | 'JSON') => {
     const a = document.createElement('a');
-    const file = new Blob([JSON.stringify(data)], { type: fileType });
+    const file = new Blob([JSON.stringify(data, null, 2)], { type: fileType });
     a.href = URL.createObjectURL(file);
     a.download = fileName;
     a.click();

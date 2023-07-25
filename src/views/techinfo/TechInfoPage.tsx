@@ -1,6 +1,6 @@
 import React from 'react';
 import { styled } from '@mui/material/styles';
-import { Typography, Grid } from '@mui/material';
+import { Typography, Grid, ListItem, List } from '@mui/material';
 import { Link } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 import Table from '@mui/material/Table';
@@ -88,38 +88,59 @@ const TechInfoPage: React.FC = () => {
               </TitleContainer>
             </Grid>
             <Grid item xs={12}>
-              <Typography variant="h4">Rupture Explorer</Typography>
+              <Typography variant="h5">
+                <Link underline="hover" component={RouterLink} color="secondary" to="/RuptureMap">
+                  Rupture Explorer
+                </Link>
+              </Typography>
               <Typography variant="body1">
                 Interrogate and view the ruptures in the inversion fault model (IFM) portion of the seismicity rate model (SRM). The SRM includes both an IFM and a distributed seismicity model (DSM);
-                this tool allows you to view the IFM portion of the SRM. The NSHM uses multiple IFMs in its logic tree; the ruptures shown here include all ruptures from all IFMs in the logic tree.
-                Each IFM in the logic tree has a different subset of ruptures with different rates; the rupture rate shown is the weighed mean rate from the various branches of the logic tree.
+                this tool allows you to view the IFM portion of the SRM. The SRM logic tree comprises multiple IFMs; the ruptures shown here include all ruptures from all IFMs in the logic tree. The
+                rupture rate given is the weighed mean rate from the various branches of the logic tree. Filtering Ruptures:
+                <List
+                  sx={{
+                    listStyleType: 'disc',
+                    listStylePosition: 'inside',
+                  }}
+                >
+                  <ListItem sx={{ display: 'list-item' }}>
+                    Select a fault system from the list of &quot;Crustal&quot;, &quot;Hikurangi-Kermadec Interface&quot;, and &quot;Puysegur Inteface&quot;.
+                  </ListItem>
+                  <ListItem sx={{ display: 'list-item' }}>
+                    The Crustal fault system can be filtered on specific faults to get the subset of ruptures that those faults participate in. Select more than one fault to get all ruptures that any
+                    of the faults chosen participate in (the union of all ruptures). Filtering by fault is not possible for the subduction interface fault systems as they comprise only one fault.
+                  </ListItem>
+                  <ListItem sx={{ display: 'list-item' }}>
+                    Filter on location from a list of population centres. Select a Location and a Radius to get all ruptures that pass within a desired distance of a population centre (distance is
+                    calculated in three dimensions). Select multiple locations to get only the ruptures that are near all locations selected (the intersection of all ruptures).
+                  </ListItem>
+                  <ListItem sx={{ display: 'list-item' }}>Filter on magnitude and rupture rate. Rupture rates are given in powers of 10 per year.</ListItem>
+                  <ListItem sx={{ display: 'list-item' }}>After selecting filter options, click &quot;SUBMIT&quot; to display the ruptures that meet the filter criteria.</ListItem>
+                </List>
+                The ruptures can be viewed one at a time using the animation feature:
+                <List
+                  sx={{
+                    listStyleType: 'disc',
+                    listStylePosition: 'inside',
+                  }}
+                >
+                  <ListItem sx={{ display: 'list-item' }}>Each rupture is highlighted in red, one at a time. </ListItem>
+                  <ListItem sx={{ display: 'list-item' }}>The play buttons and slider in the lower right can backup, play, advance, and change the rate of the animation.</ListItem>
+                  <ListItem sx={{ display: 'list-item' }}>The properties of the highlighted rupture are shown in the upper right.</ListItem>
+                  <ListItem sx={{ display: 'list-item' }}>
+                    The sorting of the animation can be controlled with ANIMATION OPTIONS. Weighted mean rate is described above. Maximum and minimum rate are the extrema rates for each rupture taken
+                    from all IFMs in the logic tree. After changing the sorting you must click &quot;SUBMIT&quot; again.
+                  </ListItem>
+                </List>
+                The details drawn on the map can be changed using MAP OPTIONS. You can download the map, fault traces, fault surfaces, and MFD data using the download icon
               </Typography>
-              <br />
-              <Typography variant="h5">Rupture Explorer - Filters</Typography>
-              <Typography variant="body1">
-                &#34;Crustal&#34;, &#34;Hikurangi-Kermadec Interface&#34;, and &#34;Puysegur Inteface&#34;. - The Crustal fault system can be filtered on specific faults in the fault model to get the
-                subset of ruptures that those faults participate in. Select more than one fault to get all ruptures that any of the faults chosen participate in (the union of all ruptures). Filtering
-                by fault is not possible for the subduction interface fault systems as they comprise only one fault. - Filter on location from a list of population centres. Select a Location and a
-                Radius to get all ruptures that pass within a desired distance of a population centre (distance is calculated in three dimensions). Select multiple locations to get only the ruptures
-                that are near all locations selected (the intersection of all ruptures). - Filter on magnitude and rupture rate. Rupture rates are given in powers of 10 per year. - After selecting
-                &#34;SUBMIT&#34; to display the ruptures that meet the filter criteria.
-              </Typography>
-              <br />
-              <Typography variant="h5">Rupture Explorer - Display</Typography>
-              <Typography variant="body1">The details drawn on the map can be changed using MAP OPTIONS.</Typography>
-              <br />
-              <Typography variant="h5">Rupture Explorer - Animation</Typography>
-              <Typography variant="body1">
-                The ruptures can be viewed one at a time using the animation feature - Each rupture is highlighted in red, one at a time. - The play buttons and slider in the lower right can backup,
-                play, advance, and change the rate of the animation. - The properties of the highlighted rupture are shown in the upper right. - The sorting of the animation can be controlled with
-                ANIMATION OPTIONS. Weighted mean rate is described above. Maximum and minimum rate are the extrema rates for each rupture taken from all IFMs in the logic tree.
-              </Typography>
-              <br />
-              <Typography variant="h5">Rupture Explorer - Downloads</Typography>
-              <Typography variant="body1">You can download the map, fault traces, fault surfaces, and MFD data using the download icon</Typography>
             </Grid>
             <Grid item xs={12}>
-              <Typography variant="h5">Ground Motion Component</Typography>
+              <Typography variant="h5">
+                <Link underline="hover" component={RouterLink} color="secondary" to="/HazardMaps">
+                  Ground Motion Component
+                </Link>
+              </Typography>
               <Typography variant="body1">
                 All results are provided in RotD50. The RotD50 is an orientation independent combination of the two horizontal component ground-motions. The two horizontal components are combined for
                 a range of rotation angles. Subsequently, at each spectral period, the combined ground-motions are sorted and the 50th percentile is chosen.
