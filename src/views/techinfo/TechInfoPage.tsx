@@ -89,9 +89,7 @@ const TechInfoPage: React.FC = () => {
             </Grid>
             <Grid item xs={12}>
               <Typography id="rupture-explorer" variant="h5">
-                <Link underline="hover" component={RouterLink} color="secondary" to="/RuptureMap">
-                  Rupture Explorer
-                </Link>
+                Rupture Explorer
               </Typography>
               <Typography variant="body1">
                 Interrogate and view the ruptures in the inversion fault model (IFM) portion of the seismicity rate model (SRM). The SRM includes both an IFM and a distributed seismicity model (DSM);
@@ -137,9 +135,7 @@ const TechInfoPage: React.FC = () => {
             </Grid>
             <Grid item xs={12}>
               <Typography id="ground-motion-component" variant="h5">
-                <Link underline="hover" component={RouterLink} color="secondary" to="/HazardMaps">
-                  Ground Motion Component
-                </Link>
+                Ground Motion Component
               </Typography>
               <Typography variant="body1">
                 All results are provided in RotD50. The RotD50 is an orientation independent combination of the two horizontal component ground-motions. The two horizontal components are combined for
@@ -164,7 +160,7 @@ const TechInfoPage: React.FC = () => {
               </Typography>
             </Grid>
             <Grid item xs={12}>
-              <Typography id="forecast" variant="h5">
+              <Typography id="forecast-timespan" variant="h5">
                 Forecast Timespan and Time-Dependence
               </Typography>
               <Typography variant="body1">
