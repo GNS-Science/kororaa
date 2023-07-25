@@ -88,7 +88,7 @@ const TechInfoPage: React.FC = () => {
               </TitleContainer>
             </Grid>
             <Grid item xs={12}>
-              <Typography variant="h5">
+              <Typography id="rupture-explorer" variant="h5">
                 <Link underline="hover" component={RouterLink} color="secondary" to="/RuptureMap">
                   Rupture Explorer
                 </Link>
@@ -136,7 +136,7 @@ const TechInfoPage: React.FC = () => {
               </Typography>
             </Grid>
             <Grid item xs={12}>
-              <Typography variant="h5">
+              <Typography id="ground-motion-component" variant="h5">
                 <Link underline="hover" component={RouterLink} color="secondary" to="/HazardMaps">
                   Ground Motion Component
                 </Link>
@@ -147,7 +147,9 @@ const TechInfoPage: React.FC = () => {
               </Typography>
             </Grid>
             <Grid item xs={12}>
-              <Typography variant="h5">Vs30</Typography>
+              <Typography id="vs30" variant="h5">
+                Vs30
+              </Typography>
               <Typography variant="body1">
                 The NSHM does not include a national Vs30 map and a Vs30 estimate should be obtained for each site. See&nbsp;
                 <Link
@@ -162,14 +164,18 @@ const TechInfoPage: React.FC = () => {
               </Typography>
             </Grid>
             <Grid item xs={12}>
-              <Typography variant="h5">Forecast Timespan and Time-Dependence</Typography>
+              <Typography id="forecast" variant="h5">
+                Forecast Timespan and Time-Dependence
+              </Typography>
               <Typography variant="body1">
                 The NZ NSHM 2022 provides forecasts of ground shaking for the next 100 years. Time 100 year time dependence has been included in the model using time since the most recent known event
                 on faults (conditional probability of rupture) as well as increased seismicity rates in areas that have recently experienced earthquakes (e.g. Christchurch and Kaikoura).
               </Typography>
             </Grid>
             <Grid item xs={12}>
-              <Typography variant="h5">Probability of Exceedance and Return Period</Typography>
+              <Typography id="poe" variant="h5">
+                Probability of Exceedance and Return Period
+              </Typography>
               <Typography variant="body1">
                 <strong>Probability of Exceedance:</strong> The chance (or likelihood) that a certain level of ground shaking will be reached or exceeded over a certain time-interval. For example: a
                 PGA value of 0.82g for 10% PoE in 50 years states that there are 10% chances that this value of shaking will be reached or exceeded in the next 50 years.
@@ -189,7 +195,9 @@ const TechInfoPage: React.FC = () => {
               </Typography>
             </Grid>
             <Grid item xs={12}>
-              <Typography variant="h5">Uncertainty Bounds</Typography>
+              <Typography id="uncertainty-bounds" variant="h5">
+                Uncertainty Bounds
+              </Typography>
               <Typography variant="body1">
                 A key feature of the National Seismic Hazard Model revision is the inclusion of epistemic uncertainty, which is expressed as uncertainty bounds. Uncertainty bounds reflect our
                 confidence (i.e. the likelihood) that the true hazard lies within those limits. For example, we estimate there is an 80% chance the true hazard lies within the 80% confidence bounds.
@@ -218,7 +226,9 @@ const TechInfoPage: React.FC = () => {
               </Typography>
             </Grid>
             <Grid item xs={12}>
-              <Typography variant="h5">Calculation Grid and Location List</Typography>
+              <Typography id="calculation-grid" variant="h5">
+                Calculation Grid and Location List
+              </Typography>
               <Typography variant="body1">
                 The NZ-NSHM has been calculated on a 0.1 deg grid (approximately 11km resolution). In addition, hazard curves and spectra are available for a number of population centres listed under
                 “Locations” on the Site Hazard Note that the user must still specify site conditions (Vs30) for these locations as they are not pre-set.
