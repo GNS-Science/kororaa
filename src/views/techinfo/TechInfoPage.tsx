@@ -166,6 +166,16 @@ const TechInfoPage: React.FC = () => {
               </Typography>
             </Grid>
             <Grid item xs={12}>
+              <Typography variant="body1">
+                On the&nbsp;
+                <Link underline="hover" component={RouterLink} color="secondary" to="/HazardMaps">
+                  Hazard Maps
+                </Link>
+                &nbsp;page it is possible to select Coefficient of Variation (CoV) as one of the &quot;Statistic&quot; options. The CoV is the standard deviation of the annual probability of
+                exceedance divided by the probability chosen (e.g. 10% in 50 years).
+              </Typography>
+            </Grid>
+            <Grid item xs={12}>
               <Typography id="rupture-explorer" variant="h5">
                 Rupture Explorer
               </Typography>
@@ -213,16 +223,6 @@ const TechInfoPage: React.FC = () => {
                   </ListItem>
                 </List>
                 The details drawn on the map can be changed using MAP OPTIONS. You can download the map, fault traces, fault surfaces, and MFD data using the download icon
-              </Typography>
-            </Grid>
-            <Grid item xs={12}>
-              <Typography variant="body1">
-                On the&nbsp;
-                <Link underline="hover" component={RouterLink} color="secondary" to="/HazardMaps">
-                  Hazard Maps
-                </Link>
-                &nbsp;page it is possible to select Coefficient of Variation (CoV) as one of the &quot;Statistic&quot; options. The CoV is the standard deviation of the annual probability of
-                exceedance divided by the probability chosen (e.g. 10% in 50 years).
               </Typography>
             </Grid>
             <Grid item xs={12}>
