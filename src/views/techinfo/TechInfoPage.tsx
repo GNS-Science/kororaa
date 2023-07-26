@@ -88,52 +88,6 @@ const TechInfoPage: React.FC = () => {
               </TitleContainer>
             </Grid>
             <Grid item xs={12}>
-              <Typography id="rupture-explorer" variant="h5">
-                Rupture Explorer
-              </Typography>
-              <Typography variant="body1">
-                Interrogate and view the ruptures in the inversion fault model (IFM) portion of the seismicity rate model (SRM). The SRM includes both an IFM and a distributed seismicity model (DSM);
-                this tool allows you to view the IFM portion of the SRM. The SRM logic tree comprises multiple IFMs; the ruptures shown here include all ruptures from all IFMs in the logic tree. The
-                rupture rate given is the weighed mean rate from the various branches of the logic tree. Filtering Ruptures:
-                <List
-                  sx={{
-                    listStyleType: 'disc',
-                    listStylePosition: 'inside',
-                  }}
-                >
-                  <ListItem sx={{ display: 'list-item' }}>
-                    Select a fault system from the list of &quot;Crustal&quot;, &quot;Hikurangi-Kermadec Interface&quot;, and &quot;Puysegur Inteface&quot;.
-                  </ListItem>
-                  <ListItem sx={{ display: 'list-item' }}>
-                    The Crustal fault system can be filtered on specific faults to get the subset of ruptures that those faults participate in. Select more than one fault to get all ruptures that any
-                    of the faults chosen participate in (the union of all ruptures). Filtering by fault is not possible for the subduction interface fault systems as they comprise only one fault.
-                  </ListItem>
-                  <ListItem sx={{ display: 'list-item' }}>
-                    Filter on location from a list of population centres. Select a Location and a Radius to get all ruptures that pass within a desired distance of a population centre (distance is
-                    calculated in three dimensions). Select multiple locations to get only the ruptures that are near all locations selected (the intersection of all ruptures).
-                  </ListItem>
-                  <ListItem sx={{ display: 'list-item' }}>Filter on magnitude and rupture rate. Rupture rates are given in powers of 10 per year.</ListItem>
-                  <ListItem sx={{ display: 'list-item' }}>After selecting filter options, click &quot;SUBMIT&quot; to display the ruptures that meet the filter criteria.</ListItem>
-                </List>
-                The ruptures can be viewed one at a time using the animation feature:
-                <List
-                  sx={{
-                    listStyleType: 'disc',
-                    listStylePosition: 'inside',
-                  }}
-                >
-                  <ListItem sx={{ display: 'list-item' }}>Each rupture is highlighted in red, one at a time. </ListItem>
-                  <ListItem sx={{ display: 'list-item' }}>The play buttons and slider in the lower right can backup, play, advance, and change the rate of the animation.</ListItem>
-                  <ListItem sx={{ display: 'list-item' }}>The properties of the highlighted rupture are shown in the upper right.</ListItem>
-                  <ListItem sx={{ display: 'list-item' }}>
-                    The sorting of the animation can be controlled with ANIMATION OPTIONS. Weighted mean rate is described above. Maximum and minimum rate are the extrema rates for each rupture taken
-                    from all IFMs in the logic tree. After changing the sorting you must click &quot;SUBMIT&quot; again.
-                  </ListItem>
-                </List>
-                The details drawn on the map can be changed using MAP OPTIONS. You can download the map, fault traces, fault surfaces, and MFD data using the download icon
-              </Typography>
-            </Grid>
-            <Grid item xs={12}>
               <Typography id="ground-motion-component" variant="h5">
                 Ground Motion Component
               </Typography>
@@ -209,6 +163,56 @@ const TechInfoPage: React.FC = () => {
               <Typography variant="body1">
                 By modelling the full logic tree, we are able to provide the mean hazard estimate with estimated confidence bounds. The logic tree branches and confidence bounds can be considered to
                 explore credible and alternate versions of the next 100 years.
+              </Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <Typography id="rupture-explorer" variant="h5">
+                Rupture Explorer
+              </Typography>
+              <Typography variant="body1">
+                Interrogate and view the ruptures in the inversion fault model (IFM) portion of the seismicity rate model (SRM). The SRM includes both an IFM and a distributed seismicity model (DSM);
+                this tool allows you to view the IFM portion of the SRM. The SRM logic tree comprises multiple IFMs; the ruptures shown here include all ruptures from all IFMs in the logic tree. The
+                rupture rate given is the weighed mean rate from the various branches of the logic tree.
+              </Typography>
+              <br />
+              <Typography variant="body1">
+                Filtering Ruptures:
+                <List
+                  sx={{
+                    listStyleType: 'disc',
+                    listStylePosition: 'inside',
+                  }}
+                >
+                  <ListItem sx={{ display: 'list-item' }}>
+                    Select a fault system from the list of &quot;Crustal&quot;, &quot;Hikurangi-Kermadec Interface&quot;, and &quot;Puysegur Inteface&quot;.
+                  </ListItem>
+                  <ListItem sx={{ display: 'list-item' }}>
+                    The Crustal fault system can be filtered on specific faults to get the subset of ruptures that those faults participate in. Select more than one fault to get all ruptures that any
+                    of the faults chosen participate in (the union of all ruptures). Filtering by fault is not possible for the subduction interface fault systems as they comprise only one fault.
+                  </ListItem>
+                  <ListItem sx={{ display: 'list-item' }}>
+                    Filter on location from a list of population centres. Select a Location and a Radius to get all ruptures that pass within a desired distance of a population centre (distance is
+                    calculated in three dimensions). Select multiple locations to get only the ruptures that are near all locations selected (the intersection of all ruptures).
+                  </ListItem>
+                  <ListItem sx={{ display: 'list-item' }}>Filter on magnitude and rupture rate. Rupture rates are given in powers of 10 per year.</ListItem>
+                  <ListItem sx={{ display: 'list-item' }}>After selecting filter options, click &quot;SUBMIT&quot; to display the ruptures that meet the filter criteria.</ListItem>
+                </List>
+                The ruptures can be viewed one at a time using the animation feature:
+                <List
+                  sx={{
+                    listStyleType: 'disc',
+                    listStylePosition: 'inside',
+                  }}
+                >
+                  <ListItem sx={{ display: 'list-item' }}>Each rupture is highlighted in red, one at a time. </ListItem>
+                  <ListItem sx={{ display: 'list-item' }}>The play buttons and slider in the lower right can backup, play, advance, and change the rate of the animation.</ListItem>
+                  <ListItem sx={{ display: 'list-item' }}>The properties of the highlighted rupture are shown in the upper right.</ListItem>
+                  <ListItem sx={{ display: 'list-item' }}>
+                    The sorting of the animation can be controlled with ANIMATION OPTIONS. Weighted mean rate is described above. Maximum and minimum rate are the extrema rates for each rupture taken
+                    from all IFMs in the logic tree. After changing the sorting you must click &quot;SUBMIT&quot; again.
+                  </ListItem>
+                </List>
+                The details drawn on the map can be changed using MAP OPTIONS. You can download the map, fault traces, fault surfaces, and MFD data using the download icon
               </Typography>
             </Grid>
             <Grid item xs={12}>
