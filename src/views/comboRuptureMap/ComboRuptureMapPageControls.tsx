@@ -127,6 +127,10 @@ const ComboRuptureMapControls: React.FC<ComboRuptureMapControlsProps> = ({
   const data = useLazyLoadQuery<ComboRuptureMapPageControlsQuery>(comboRuptureMapPageControlsQuery, { radiiSetId: SOLVIS_RADII_ID, locationListId: SOLVIS_LOCATION_LIST });
   const locationData = data?.SOLVIS_get_location_list?.locations;
   const radiiData = data?.SOLVIS_get_radii_set?.radii;
+
+  const faultsMarkdown = useMemo(() => data?.textual_content_faults?.content && data?.textual_content_faults?.content[0]?.text, [data]);
+  const locationsMarkdown = useMemo(() => data?.textual_content_locations?.content && data?.textual_content_locations?.content[0]?.text, [data]);
+  const animationMarkdown = useMemo(() => data?.textual_content_animation?.content && data?.textual_content_animation?.content[0]?.text, [data]);
   const parentFaultOptions: string[] = useMemo(
     () => (data?.SOLVIS_get_parent_fault_names ? data?.SOLVIS_get_parent_fault_names.filter((el) => el !== null && el !== undefined).map((el) => el as string) : []),
     [data],
@@ -193,7 +197,7 @@ const ComboRuptureMapControls: React.FC<ComboRuptureMapControlsProps> = ({
 
   const handleDownloadData = (data: typeof GeoJsonObject | MfdData, fileName: string, fileType: 'geoJSON' | 'JSON') => {
     const a = document.createElement('a');
-    const file = new Blob([JSON.stringify(data)], { type: fileType });
+    const file = new Blob([JSON.stringify(data, null, 2)], { type: fileType });
     a.href = URL.createObjectURL(file);
     a.download = fileName;
     a.click();
@@ -230,7 +234,13 @@ const ComboRuptureMapControls: React.FC<ComboRuptureMapControlsProps> = ({
           multiple={true}
           disabled={faultSystem !== 'Crustal'}
           options={parentFaultOptions}
-          renderInput={(params) => <TextField {...params} label="Faults" />}
+          renderInput={(params) => (
+            <Tooltip title={faultsMarkdown || ''} placement="right" arrow={true}>
+              <div>
+                <TextField {...params} label="Faults" />
+              </div>
+            </Tooltip>
+          )}
           limitTags={1}
           style={{ minWidth: 200 }}
           value={parentFaultArray}
@@ -239,8 +249,16 @@ const ComboRuptureMapControls: React.FC<ComboRuptureMapControlsProps> = ({
             setParentFaultArray(newValue);
           }}
         />
-        <SelectControlMultiple name="Locations" selection={locations} options={locationOptions} setSelection={setLocations} />
-        <SelectControlWithDisable disabled={locations.length === 0} name="Radius" selection={radius} options={radiiOptions} setSelection={setRadius} />
+        <Tooltip title={locationsMarkdown || ''} placement="right" arrow={true}>
+          <div>
+            <SelectControlMultiple name="Locations" selection={locations} options={locationOptions} setSelection={setLocations} tooltip={locationsMarkdown || ''} />
+          </div>
+        </Tooltip>
+        <Tooltip title={locationsMarkdown || ''} placement="right" arrow={true}>
+          <div>
+            <SelectControlWithDisable disabled={locations.length === 0} name="Radius" selection={radius} options={radiiOptions} setSelection={setRadius} />
+          </div>
+        </Tooltip>
         <StyledRangeSliderDiv>
           <RangeSliderWithInputs label="Magnitude" valuesRange={magnitudeRange} setValues={setMagnitudeRange} inputProps={{ step: 0.1, min: 6, max: 10, type: 'number' }} />
           <RangeSliderWithInputs label="Rate (1/yr)" valuesRange={rateRange} setValues={setRateRange} inputProps={{ step: 1, min: -20, max: 0, type: 'number' }} />
@@ -263,7 +281,7 @@ const ComboRuptureMapControls: React.FC<ComboRuptureMapControlsProps> = ({
       </Menu>
       <Box sx={{ width: '100%', ...flexParentCenter, flexDirection: 'row', marginRight: '10px' }}>
         <MapViewControls initState={{ showSurfaces: true, showAnimation: true, showMfd: true, showTraceLegend: true }} onHandleChange={mapViewControlsDispatch} />
-        <Tooltip title={'Sort ruptures for animation'} arrow={true}>
+        <Tooltip title={animationMarkdown || ''} placement="right" arrow={true}>
           <Button variant="outlined" onClick={handleSortOptionsClick} sx={{ marginLeft: '10px' }}>
             Animation Options
           </Button>
@@ -317,6 +335,21 @@ export default ComboRuptureMapControls;
 
 export const comboRuptureMapPageControlsQuery = graphql`
   query ComboRuptureMapPageControlsQuery($radiiSetId: Int!, $locationListId: String!) {
+    textual_content_faults: KORORAA_textual_content(index: "rupture_map_faults.md") {
+      content {
+        text
+      }
+    }
+    textual_content_locations: KORORAA_textual_content(index: "rupture_map_locations.md") {
+      content {
+        text
+      }
+    }
+    textual_content_animation: KORORAA_textual_content(index: "rupture_map_animation.md") {
+      content {
+        text
+      }
+    }
     SOLVIS_get_radii_set(radii_set_id: $radiiSetId) {
       radii
     }

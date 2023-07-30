@@ -92,7 +92,7 @@ const HazardMapsComponent: React.FC = () => {
     <PageContainer>
       {isPending && <SimpleBackdrop />}
       <Box role="hazardMapsView" sx={{ ...flexParentCenter, justifyContent: 'center', height: '100%', width: '100%' }}>
-        <LeafletDrawer drawerHeight={'80vh'} headerHeight={`${100 - scrollHeight}px`} width={'400px'} fullscreen={fullscreen}>
+        <LeafletDrawer drawerHeight={'80vh'} headerHeight={`${100 - scrollHeight}px`} width={'400px'} fullscreen={fullscreen} openAtRender={true}>
           <Typography variant="h4" sx={{ textAlign: 'center' }}>
             Hazard Maps
             <InfoTooltip content={markdown || ''} format={content_type === 'Markdown'} />

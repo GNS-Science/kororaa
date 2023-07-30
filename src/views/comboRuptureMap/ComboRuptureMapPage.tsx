@@ -50,8 +50,8 @@ export const ComboRuptureMap: React.FC = () => {
     return initialData?.SOLVIS_filter_rupture_sections?.mfd_histogram;
   }, [initialData]);
 
-  const markdown = useMemo(() => initialData?.textual_content?.content && initialData?.textual_content?.content[0]?.text, [initialData]);
-  const content_type = useMemo(() => initialData?.textual_content?.content && initialData?.textual_content?.content[0]?.content_type, [initialData]);
+  const headerMarkdown = useMemo(() => initialData?.textual_content_header?.content && initialData?.textual_content_header?.content[0]?.text, [initialData]);
+  const headerContentType = useMemo(() => initialData?.textual_content_header?.content && initialData?.textual_content_header?.content[0]?.content_type, [initialData]);
 
   useEffect(() => {
     function updateScrollHeight() {
@@ -78,7 +78,7 @@ export const ComboRuptureMap: React.FC = () => {
       <LeafletDrawer drawerHeight={'80vh'} headerHeight={`${100 - scrollHeight}px`} width={'400px'} fullscreen={fullscreen} openAtRender={true}>
         <Typography variant="h4" sx={{ textAlign: 'center' }}>
           Rupture Explorer
-          <InfoTooltip content={markdown || ''} format={content_type === 'Markdown'} />
+          <InfoTooltip content={headerMarkdown || ''} format={headerContentType === 'Markdown'} />
         </Typography>
         <ComboRuptureMapControls
           startTransition={startTransition}
@@ -122,16 +122,11 @@ export const comboRuptureMapPageQuery = graphql`
     $maximum_rate: Float
     $sortby: [SimpleSortRupturesArgs]
   ) {
-    textual_content: KORORAA_textual_content(index: "rupture_map.md") {
+    textual_content_header: KORORAA_textual_content(index: "rupture_map_header.md") {
       ok
       content {
-        index
         content_type
         text
-        created
-        author
-        tags
-        status
       }
     }
     SOLVIS_locations_by_id(location_ids: $location_ids) {
