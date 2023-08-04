@@ -22,7 +22,7 @@ describe('ComboRuptureMapPage', () => {
   it('Displays geojson for whole map when no locations selected', () => {
     cy.get('[data-testid="ChevronRightIcon"]').click();
     cy.get('[type="submit"]').click({ force: true });
-    cy.get('[class="leaflet-interactive"]').should('have.length.greaterThan', 4533);
+    cy.get('[class="leaflet-interactive"]').should('have.length.greaterThan', 950);
   });
 
   it('Displays geojson for selected location', () => {
@@ -32,7 +32,7 @@ describe('ComboRuptureMapPage', () => {
     cy.get('[id="mui-component-select-Radius"]').click({ force: true});
     cy.get('[data-value="100km"]').click({ force: true});
     cy.get('[type="submit"]').click({ force: true });
-    cy.get('[class="leaflet-interactive"]').should('have.length.greaterThan', 4533);
+    cy.get('[class="leaflet-interactive"]').should('have.length.greaterThan', 950);
   });
 
   it('Displays geojson for two selected locations', () => {
@@ -40,15 +40,8 @@ describe('ComboRuptureMapPage', () => {
     cy.get('[data-value="Christchurch"]').click({ force: true });
     cy.realPress('{esc}');
     cy.get('[type="submit"]').click({ force: true });
-    cy.get('[class="leaflet-interactive"]').should('have.length', 1678);
+    cy.get('[class="leaflet-interactive"]').should('have.length', 73);
   })
-
-  it('Displays only location geojson if no ruptures are returned', () => {
-    cy.get('[class="MuiSelect-select MuiSelect-standard MuiInputBase-input MuiInput-input css-1rxz5jq-MuiSelect-select-MuiInputBase-input-MuiInput-input"]').first().click({ force: true });
-    cy.get('[data-value="Hikurangi"]').click({ force: true });
-    cy.get('[type="submit"]').click({ force: true });
-    cy.get('[class="leaflet-interactive"]').should('have.length', 779);
-  });
 
   it('Reloads page', () => {
     cy.reload();

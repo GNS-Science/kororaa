@@ -93,7 +93,7 @@ describe('NavBarLinks', () => {
 
   it('Science Reports Link works', () => {
     cy.get('header').contains('Resources').click();
-    cy.get('[role="menuitem"]').contains('Science reports').click({ force: true });
+    cy.get('[role="menuitem"]').contains('Science Reports').click({ force: true });
     cy.url().should('include', '/Resources/ScienceReports');
   });
 
