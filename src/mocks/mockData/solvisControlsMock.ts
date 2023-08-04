@@ -1,4 +1,25 @@
 export const solvisControlsMock = {
+  textual_content_faults: {
+    content: [
+      {
+        text: 'The Crustal fault system can be filtered on specific faults. Select more than one fault to get the union of all ruptures on those faults.',
+      },
+    ],
+  },
+  textual_content_locations: {
+    content: [
+      {
+        text: 'Filter on location from a list of population centres. Select a Location and a Radius to get all ruptures that pass within a desired distance of a population centre. Select multiple locations to get only the ruptures that are near all locations selected (the intersection of all ruptures).',
+      },
+    ],
+  },
+  textual_content_animation: {
+    content: [
+      {
+        text: 'See the Technical Info page for details on the animation sorting options.',
+      },
+    ],
+  },
   SOLVIS_get_radii_set: {
     radii: [10000, 20000, 30000, 40000, 50000, 100000],
   },
