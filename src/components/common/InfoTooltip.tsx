@@ -60,7 +60,15 @@ export const InfoTooltip: React.FC<InfoTooltipProps> = ({ content, format }) => 
         open={open}
         onClose={handleClose}
       >
-        <DialogContent>{format ? <ReactMarkdown remarkPlugins={[remarkGfm]}>{content}</ReactMarkdown> : <p>{content}</p>}</DialogContent>
+        <DialogContent>
+          {format ? (
+            <ReactMarkdown linkTarget={'_blank'} remarkPlugins={[remarkGfm]}>
+              {content}
+            </ReactMarkdown>
+          ) : (
+            <p>{content}</p>
+          )}
+        </DialogContent>
       </Dialog>
     </>
   );

@@ -56,7 +56,7 @@ export default HazardChartsPage;
 
 export const hazardChartsPageQuery = graphql`
   query HazardChartsPageQuery {
-    textual_content(index: "curves_help.md") {
+    textual_content: KORORAA_textual_content(index: "curves_help.md") {
       ok
       content {
         index

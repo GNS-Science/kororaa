@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9c1628f544854e8827c1f00474cd4ef6>>
+ * @generated SignedSource<<59489f5c026d2f11ea8c352b1a200e4a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -79,7 +79,7 @@ v5 = {
 },
 v6 = [
   {
-    "alias": null,
+    "alias": "hazard_curves",
     "args": [
       {
         "kind": "Variable",
@@ -114,7 +114,7 @@ v6 = [
     ],
     "concreteType": "ToshiHazardCurveResult",
     "kind": "LinkedField",
-    "name": "hazard_curves",
+    "name": "KORORAA_hazard_curves",
     "plural": false,
     "selections": [
       {
@@ -266,7 +266,7 @@ return {
     "metadata": null,
     "name": "HazardChartsPlotsViewQuery",
     "selections": (v6/*: any*/),
-    "type": "QueryRoot",
+    "type": "Query",
     "abstractKey": null
   },
   "kind": "Request",
@@ -284,16 +284,16 @@ return {
     "selections": (v6/*: any*/)
   },
   "params": {
-    "cacheID": "0811de2a56093a331937cd08d67cca4a",
+    "cacheID": "7f4e8bdb2399692ffc76da863313eea4",
     "id": null,
     "metadata": {},
     "name": "HazardChartsPlotsViewQuery",
     "operationKind": "query",
-    "text": "query HazardChartsPlotsViewQuery(\n  $hazard_model: String\n  $vs30s: [Int]\n  $imts: [String]\n  $locs: [String]\n  $aggs: [String]\n  $resolution: Float\n) {\n  hazard_curves(hazard_model: $hazard_model, vs30s: $vs30s, imts: $imts, locs: $locs, aggs: $aggs, resolution: $resolution) {\n    ok\n    locations {\n      lat\n      lon\n      resolution\n      code\n      name\n      key\n    }\n    curves {\n      hazard_model\n      imt\n      loc\n      agg\n      vs30\n      curve {\n        levels\n        values\n      }\n    }\n  }\n}\n"
+    "text": "query HazardChartsPlotsViewQuery(\n  $hazard_model: String\n  $vs30s: [Int]\n  $imts: [String]\n  $locs: [String]\n  $aggs: [String]\n  $resolution: Float\n) {\n  hazard_curves: KORORAA_hazard_curves(hazard_model: $hazard_model, vs30s: $vs30s, imts: $imts, locs: $locs, aggs: $aggs, resolution: $resolution) {\n    ok\n    locations {\n      lat\n      lon\n      resolution\n      code\n      name\n      key\n    }\n    curves {\n      hazard_model\n      imt\n      loc\n      agg\n      vs30\n      curve {\n        levels\n        values\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "f63ce2e33608da9404ed7040395d7f36";
+(node as any).hash = "a49726e2958542d158788b478f0f7ab7";
 
 export default node;

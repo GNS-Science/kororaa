@@ -1,5 +1,5 @@
 export const flexParentCenter = {
   display: 'flex',
-  justifyConten: 'center',
+  justifyContent: 'center',
   alignItems: 'center',
 };

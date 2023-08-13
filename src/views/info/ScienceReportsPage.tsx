@@ -110,7 +110,7 @@ export default ScienceReportsPage;
 
 export const scienceReportsPageQuery = graphql`
   query ScienceReportsPageQuery {
-    science_reports {
+    science_reports: KORORAA_science_reports {
       ok
       reports {
         filename

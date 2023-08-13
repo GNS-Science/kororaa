@@ -1,6 +1,22 @@
 import { graphql } from 'msw';
-import { wellington400Response, wellingtonChristchurchResponse, arbitraryLatLonResponse, initialResponse } from './mockData/HazardChartsPlotsViewMockData';
-import { hazardMapMockData } from './mockData/HazardMapMockData';
+import { wellington400Response, wellingtonChristchurchResponse, arbitraryLatLonResponse, initialResponse } from './mockData/hazardMocks/HazardChartsPlotsViewMockData';
+import { hazardMapMockData } from './mockData/hazardMocks/HazardMapMockData';
+import { IFMAllLocationsMockData } from './mockData/IFMMocks/IFMAllLocationsMockData';
+import { IFMControlsMockData } from './mockData/IFMMocks/IFMControlsMockData';
+import { IFMEmptyMockData } from './mockData/IFMMocks/IFMEmptyMockData';
+import { IFMTextualContentMockData } from './mockData/IFMMocks/IFMTextualContentMockData';
+import { IFMWellington100kmMockData } from './mockData/IFMMocks/IFMWellington100kmMockData';
+import { ruptureAnimationMock1 } from './mockData/ruptureAnimationMockPagination/ruptureAnimationMock1';
+import { ruptureAnimationMock2 } from './mockData/ruptureAnimationMockPagination/ruptureAnimationMock2';
+import { ruptureAnimationMock3 } from './mockData/ruptureAnimationMockPagination/ruptureAnimationMock3';
+import { ruptureAnimationMock4 } from './mockData/ruptureAnimationMockPagination/ruptureAnimationMock4';
+import { ruptureAnimationMock5 } from './mockData/ruptureAnimationMockPagination/ruptureAnimationMock5';
+import { solvisControlsMock } from './mockData/solvisControlsMock';
+import { multiRupturePageInitialResponse } from './mockData/multiRupturePageMocks/multiRupturePageInitialResponse';
+import { multiRupturePageCrustalAllLocations } from './mockData/multiRupturePageMocks/multiRupturePageCrustalAllLocations';
+import { multiRupturePageCrustalGYM100km } from './mockData/multiRupturePageMocks/multiRupturePageCrustalGYM100km';
+import { multiRupturePageCrustalGYMCHC100km } from './mockData/multiRupturePageMocks/multiRupturePageCrustalGYMCHC100km';
+import { multiRupturePageLocationsNoRuptures } from './mockData/multiRupturePageMocks/multiRupturePageLocationsNoRuptures';
 
 export const handlers = [
   graphql.query('HazardChartsPlotsViewQuery', (req, res, ctx) => {
@@ -45,5 +61,74 @@ export const handlers = [
   }),
   graphql.query('HazardMapsPageQuery', (req, res, ctx) => {
     return res(ctx.data(hazardMapMockData));
+  }),
+  graphql.query('FaultModelPageQuery', (req, res, ctx) => {
+    return res(ctx.data(IFMTextualContentMockData));
+  }),
+  graphql.query('FaultModelPageSolvisQuery', (req, res, ctx) => {
+    const locations = req.variables.location_codes;
+    const id = req.variables.solution_id;
+    if (id === '') {
+      return res(ctx.data(IFMEmptyMockData));
+    }
+    if (locations.length === 0 && id !== '') {
+      return res(ctx.data(IFMAllLocationsMockData));
+    }
+    if (locations.includes('WLG')) {
+      return res(ctx.data(IFMWellington100kmMockData));
+    }
+  }),
+  graphql.query('FaultModelControlsQuery', (req, res, ctx) => {
+    return res(ctx.data(IFMControlsMockData));
+  }),
+  graphql.query('ComboRuptureMapPageQuery', (req, res, ctx) => {
+    const after = req.variables.after;
+    const faultSystem = req.variables.fault_system;
+    const locationIds = req.variables.location_ids;
+    const radiusKm = req.variables.radius_km;
+    const sortBy = req.variables.sortby;
+
+    if (faultSystem === '') {
+      return res(ctx.data(multiRupturePageInitialResponse));
+    }
+    if (faultSystem === 'CRU' && locationIds.length === 0) {
+      return res(ctx.data(multiRupturePageCrustalAllLocations));
+    }
+    if (faultSystem === 'CRU' && locationIds[0] === 'GMN' && locationIds.length === 1) {
+      return res(ctx.data(multiRupturePageCrustalGYM100km));
+    }
+    if (faultSystem === 'CRU' && locationIds.length === 2) {
+      return res(ctx.data(multiRupturePageCrustalGYMCHC100km));
+    }
+    if (faultSystem === 'HIK' && locationIds.length === 2) {
+      return res(ctx.data(multiRupturePageLocationsNoRuptures));
+    }
+
+    if (faultSystem === 'PUY' && locationIds[0] === 'ZQN' && radiusKm === 100 && sortBy === null) {
+      if (after === null) {
+        return res(ctx.data(ruptureAnimationMock1));
+      }
+    }
+  }),
+  graphql.operation((req, res, ctx) => {
+    const after = req.variables.after;
+    if (after === 'UnVwdHVyZURldGFpbENvbm5lY3Rpb25DdXJzb3I6OQ==') {
+      return res(ctx.data(ruptureAnimationMock2));
+    }
+    if (after === 'UnVwdHVyZURldGFpbENvbm5lY3Rpb25DdXJzb3I6MTQ=') {
+      return res(ctx.data(ruptureAnimationMock3));
+    }
+    if (after === 'UnVwdHVyZURldGFpbENvbm5lY3Rpb25DdXJzb3I6MTk=') {
+      return res(ctx.data(ruptureAnimationMock4));
+    }
+    if (after === 'UnVwdHVyZURldGFpbENvbm5lY3Rpb25DdXJzb3I6MjQ=') {
+      return res(ctx.data(ruptureAnimationMock5));
+    }
+  }),
+  graphql.query('ComboRuptureMapPageControlsQuery', (req, res, ctx) => {
+    return res(ctx.data(solvisControlsMock));
+  }),
+  graphql.query('MultiRuptureMapPageControlsQuery', (req, res, ctx) => {
+    return res(ctx.data(solvisControlsMock));
   }),
 ];

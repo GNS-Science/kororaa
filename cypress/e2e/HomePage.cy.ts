@@ -20,8 +20,8 @@ describe('Home Page', () => {
   });
 
   it('Displays the nav bar', () => {
-    cy.get('header').contains('Site Hazard');
-    cy.get('header').contains('Hazard Maps');
+    cy.get('header').contains('Hazard');
+    cy.get('header').contains('Ruptures');
     cy.get('header').contains('Coming Features');
     cy.get('header').contains('Resources');
     cy.get('header').contains('Help');
@@ -51,8 +51,8 @@ describe('Home Page', () => {
     cy.get('div').contains('Model reports and datasets.');
   });
 
-  it('displays coming features card', () => {
-    cy.get('div').contains('Previews from our backlog');
+  it('displays ruptures card', () => {
+  cy.get('div').contains('Filter and animate ruptures.');
   });
 });
 
@@ -63,21 +63,28 @@ describe('NavBarLinks', () => {
   });
 
   it('Hazard Curves Nav Link works', () => {
-    cy.get('header').contains('Site Hazard').click();
+    cy.get('header').contains('Hazard').click();
     cy.get('[role="menuitem"]').contains('Curves and Spectra').click({ force: true });
     cy.url().should('include', '/HazardCurves');
   });
 
   it('Disaggregations Nav Link works', () => {
-    cy.get('header').contains('Site Hazard').click();
+    cy.get('header').contains('Hazard').click();
     cy.get('[role="menuitem"]').contains('Disaggregations').click({ force: true });
     cy.url().should('include', '/Disaggs');
   });
 
   it('Hazard Map Nav Link works', () => {
-    cy.get('header').contains('Hazard Maps').click();
+    cy.get('header').contains('Hazard').click();
+    cy.get('[role="menuitem"]').contains('Hazard Maps').click({ force: true });
     cy.url().should('include', '/HazardMaps');
   });
+
+  it('IFM nav link works', () => {
+    cy.get('header').contains('Ruptures').click();
+    cy.get('[role="menuitem"]').contains('Ruptures').click({ force: true });
+    cy.url().should('include', '/RuptureMap')
+  })
 
   it('Coming Features Nav Link works', () => {
     cy.get('header').contains('Coming Features').click({ force: true });
@@ -86,7 +93,7 @@ describe('NavBarLinks', () => {
 
   it('Science Reports Link works', () => {
     cy.get('header').contains('Resources').click();
-    cy.get('[role="menuitem"]').contains('Science reports').click({ force: true });
+    cy.get('[role="menuitem"]').contains('Science Reports').click({ force: true });
     cy.url().should('include', '/Resources/ScienceReports');
   });
 

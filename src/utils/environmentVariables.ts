@@ -1,7 +1,7 @@
 import { RegionGrid } from '../views/hazardMaps/__generated__/HazardMapsPageQuery.graphql';
 
 export const RESOLUTION: number = parseFloat(process.env.REACT_APP_RESOLUTION || '0.2');
-export const HAZARD_MODEL: string | undefined = process.env.REACT_APP_HAZARD_MODEL;
+export const HAZARD_MODEL: string = process.env.REACT_APP_HAZARD_MODEL || 'env.REACT_APP_HAZARD_MODEL is undefined';
 export const GRID_ID: RegionGrid | null | undefined = (process.env.REACT_APP_GRID_ID as RegionGrid) || ('NZ_0_2_NB_1_1' as RegionGrid);
 
 export const MAP_IMTS = process.env.REACT_APP_MAP_IMTS?.split(',') || ['PGA'];
@@ -34,6 +34,7 @@ export const HAZARD_IMTS = process.env.REACT_APP_HAZARD_IMTS?.split(',') || [
   'SA(7.5)',
   'SA(10.0)',
 ];
+
 export const HAZARD_COLOR_MAP = process.env.REACT_APP_HAZARD_COLOR_MAP || 'jet';
 export const HAZARD_COLOR_LIMIT: number = Number(process.env.REACT_APP_HAZARD_COLOR_LIMIT) || 30;
 export const HAZARD_COLOR_UNCERTAINTY_OPACITY = process.env.REACT_APP_HAZARD_COLOR_UNCERTAINTY_OPACITY || 0.5;
@@ -61,3 +62,9 @@ export const LOWER2: string = process.env.REACT_APP_LOWER2 || '0.05';
 
 export const GA_ID: string | undefined = process.env.REACT_APP_GA_ID;
 export const GA_DEBUG_MODE: boolean = process.env.REACT_APP_GA_DEBUG_MODE === 'true';
+
+export const SOLVIS_LOCATION_LIST: string = process.env.REACT_APP_ANALYSIS_LOC_LIST_ID || 'NZ';
+export const SOLVIS_RADII_ID: number = Number(process.env.REACT_APP_RADII_ID) || 6;
+
+export const IFM_FAULT_COLOUR = process.env.REACT_APP_IFM_FAULT_COLOUR || 'red';
+export const IFM_LOCATION_COLOUR = process.env.REACT_APP_IFM_LOCATION_COLOUR || 'grey';

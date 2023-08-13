@@ -138,7 +138,7 @@ const HamburgerMenu: React.FC<MenuProps> = ({ pages }: MenuProps) => {
 
   return (
     <>
-      <IconButton size="large" aria-label="hamburger menu" aria-controls="menu-appbar" aria-haspopup="true" onClick={handleOpenNavMenu} color="inherit">
+      <IconButton size="large" aria-label="hamburger menu" aria-controls="menu-appbar" aria-haspopup="true" onClick={handleOpenNavMenu}>
         <MenuIcon />
       </IconButton>
       <SubMenu open={Boolean(anchorElNav)} pages={pages} anchorElNav={anchorElNav} setAnchorElNav={setAnchorElNav} />
@@ -211,18 +211,22 @@ const NavBar: React.FC = () => {
 
   const pages = [
     {
-      name: 'Site Hazard',
+      name: 'Hazard',
       submenu: [
         { name: 'Curves and Spectra', path: '/HazardCurves' },
         { name: 'Disaggregations', path: '/Disaggs' },
+        { name: 'Hazard Maps', path: '/HazardMaps' },
       ],
     },
-    { name: 'Hazard Maps', path: '/HazardMaps' },
+    {
+      name: 'Ruptures',
+      path: '/RuptureMap',
+    },
     { name: 'Coming Features', path: '/Previews' },
     {
       name: 'Resources',
       submenu: [
-        { name: 'Science reports', path: '/Resources/ScienceReports' },
+        { name: 'Science Reports', path: '/Resources/ScienceReports' },
         { name: 'Other Documents', path: '/Resources/OtherDocuments' },
         { name: 'Model Components', path: '/Resources/ModelComponents' },
         { name: 'Model Versions', path: '/Resources/ModelVersions' },

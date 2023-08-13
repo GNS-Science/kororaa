@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { LeafletMap, ColorBar } from '@gns-science/toshi-nest';
 import { Box } from '@mui/material';
 
@@ -16,8 +16,30 @@ interface HazardMapsProps {
 }
 
 const HazardMaps: React.FC<HazardMapsProps> = ({ state, geoJson, fullscreen, setFullscreen, colorScale, cov }: HazardMapsProps) => {
+  const [zoomLevel, setZoomLevel] = useState<number>(5);
   const zoom = 5;
   const nzCentre = [-40.946, 174.167];
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const onEachFeature = (feature: any, layer: any) => {
+    const popupContent = `
+      <div>
+        <p>Location: ${feature.properties?.loc[1]}, ${feature.properties?.loc[0]}</p>
+        <p>Acceleration: ${Number(feature.properties.value).toFixed(2)} (g)</p>
+      </div>
+    `;
+    layer.bindPopup(popupContent);
+  };
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const onEachFeatureCov = (feature: any, layer: any) => {
+    const popupContent = `
+      <div>
+        <p>Location: ${feature.properties?.loc[1]}, ${feature.properties?.loc[0]}</p>
+        <p>CoV: ${Number(feature.properties.value).toFixed(2)}</p>
+      </div>
+    `;
+    layer.bindPopup(popupContent);
+  };
 
   return (
     <Box id="map" sx={{ width: '100%', height: '80vh' }}>
@@ -32,7 +54,9 @@ const HazardMaps: React.FC<HazardMapsProps> = ({ state, geoJson, fullscreen, set
         maxZoom={MAP_ZOOM_MAX}
         zoomSnap={MAP_ZOOM_SNAP}
         zoomDelta={MAP_ZOOM_DELTA}
-        cov={cov}
+        onEachFeature={cov ? onEachFeatureCov : onEachFeature}
+        zoomLevel={zoomLevel}
+        setZoomLevel={setZoomLevel}
       />
       {colorScale && (
         <ColorBar

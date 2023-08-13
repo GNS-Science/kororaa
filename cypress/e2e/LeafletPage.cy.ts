@@ -9,14 +9,13 @@ describe('HazardMapsPage', () => {
   });
 
   it('Map initially displays default map tile layer and changes map tile layer when user selects different option', () => {
-    cy.get('img[src*="arcgisonline"]');
+    cy.get('img[src*="cartocdn"]');
     cy.get('[class="leaflet-control-layers-toggle"]').focus();
-    cy.get('[type="radio"]').last().check();
-    cy.get('img[src*="google"]');
+    cy.get('[type="radio"]').last().check({force: true});
+    cy.get('img[src*="arcgisonline"]');
   });
 
-  it('Renders drawer button and opens the drawer when clicked, drawer close button closes drawer', () => {
-    cy.get('[data-testid="ChevronRightIcon"]').click();
+  it('Renders drawer, drawer close button closes drawer', () => {
     cy.get('h4').contains('Hazard Maps').should('exist');
     cy.get('[data-testid="ChevronLeftIcon"]').click({ force: true });
     cy.get('h4').contains('Hazard Maps').should('not.be.visible');

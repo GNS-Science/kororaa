@@ -92,7 +92,7 @@ const HazardMapsComponent: React.FC = () => {
     <PageContainer>
       {isPending && <SimpleBackdrop />}
       <Box role="hazardMapsView" sx={{ ...flexParentCenter, justifyContent: 'center', height: '100%', width: '100%' }}>
-        <LeafletDrawer drawerHeight={'80vh'} headerHeight={`${100 - scrollHeight}px`} width={'400px'} fullscreen={fullscreen}>
+        <LeafletDrawer drawerHeight={'80vh'} headerHeight={`${100 - scrollHeight}px`} width={'400px'} fullscreen={fullscreen} openAtRender={true}>
           <Typography variant="h4" sx={{ textAlign: 'center' }}>
             Hazard Maps
             <InfoTooltip content={markdown || ''} format={content_type === 'Markdown'} />
@@ -130,7 +130,7 @@ export const hazardMapsPageQuery = graphql`
     $stroke_opacity: Float
     $color_scale_normalise: ColourScaleNormalise
   ) {
-    gridded_hazard(grid_id: $grid_id, hazard_model_id: $hazard_model_id, imt: $imt, agg: $agg, vs30: $vs30, poe: $poe) {
+    gridded_hazard: KORORAA_gridded_hazard(grid_id: $grid_id, hazard_model_id: $hazard_model_id, imt: $imt, agg: $agg, vs30: $vs30, poe: $poe) {
       ok
       gridded_hazard {
         grid_id
@@ -153,7 +153,7 @@ export const hazardMapsPageQuery = graphql`
         }
       }
     }
-    textual_content(index: "hazmap_help.md") {
+    textual_content: KORORAA_textual_content(index: "hazmap_help.md") {
       ok
       content {
         index
