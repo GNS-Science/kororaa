@@ -20,6 +20,13 @@ export const solvisControlsMock = {
       },
     ],
   },
+  textual_content_rate: {
+    content: [
+      {
+        text: 'Rates use a logarithmic scale i.e. 1e-4 == 0.0001 or a 1/10,000 and this number represents the **probability of exceedance** (PoE) in a single year. \n\nThe rate filter controls display the value of the power **N** in the formula **1/1e-N/yr**. \n\ne.g. setting the lower (left most) rate control to **-6** means "show me just those ruptures having a PoE of at least **1/1e-6**".\n',
+      },
+    ],
+  },
   SOLVIS_get_radii_set: {
     radii: [10000, 20000, 30000, 40000, 50000, 100000],
   },
