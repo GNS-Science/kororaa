@@ -9,9 +9,11 @@ import { SelectControl } from '@gns-science/toshi-nest';
 
 import { flexParentCenter } from '../../utils/styleUtils';
 import CustomControlsBar from '../../components/common/CustomControlsBar';
+
 import { SOLVIS_RADII_ID, SOLVIS_LOCATION_LIST, HAZARD_MODEL } from '../../utils/environmentVariables';
 import SelectControlMultiple from '../../components/common/SelectControlMultiple';
 import SelectControlWithDisable from '../../components/common/SelectControlWithDisable';
+import RangeSliderWithInfoTooltip from '../../components/common/RangeSliderWithInfoTooltip';
 import { ComboRuptureMapPageControlsQuery } from './__generated__/ComboRuptureMapPageControlsQuery.graphql';
 import { ComboRuptureMapPageState } from './comboRuptureMapPageReducer';
 import MapViewControls, { mapViewControlsReducer } from './MapViewControls';
@@ -131,6 +133,7 @@ const ComboRuptureMapControls: React.FC<ComboRuptureMapControlsProps> = ({
   const faultsMarkdown = useMemo(() => data?.textual_content_faults?.content && data?.textual_content_faults?.content[0]?.text, [data]);
   const locationsMarkdown = useMemo(() => data?.textual_content_locations?.content && data?.textual_content_locations?.content[0]?.text, [data]);
   const animationMarkdown = useMemo(() => data?.textual_content_animation?.content && data?.textual_content_animation?.content[0]?.text, [data]);
+  const rateMarkdown = useMemo(() => data?.textual_content_rate?.content && data?.textual_content_rate?.content[0]?.text, [data]);
   const parentFaultOptions: string[] = useMemo(
     () => (data?.SOLVIS_get_parent_fault_names ? data?.SOLVIS_get_parent_fault_names.filter((el) => el !== null && el !== undefined).map((el) => el as string) : []),
     [data],
@@ -261,7 +264,14 @@ const ComboRuptureMapControls: React.FC<ComboRuptureMapControlsProps> = ({
         </Tooltip>
         <StyledRangeSliderDiv>
           <RangeSliderWithInputs label="Magnitude" valuesRange={magnitudeRange} setValues={setMagnitudeRange} inputProps={{ step: 0.1, min: 6, max: 10, type: 'number' }} />
-          <RangeSliderWithInputs label="Rate (1/yr)" valuesRange={rateRange} setValues={setRateRange} inputProps={{ step: 1, min: -20, max: 0, type: 'number' }} />
+          <RangeSliderWithInfoTooltip
+            label="Rate (1eN/yr)"
+            valuesRange={rateRange}
+            setValues={setRateRange}
+            inputProps={{ step: 1, min: -20, max: 0, type: 'number' }}
+            tooltipContent={rateMarkdown || ''}
+            tooltipFormat={true}
+          />
         </StyledRangeSliderDiv>
       </StyledCustomControlsBar>
       {geoJsonError && <Alert severity="error">{geoJsonError}</Alert>}
@@ -346,6 +356,11 @@ export const comboRuptureMapPageControlsQuery = graphql`
       }
     }
     textual_content_animation: KORORAA_textual_content(index: "rupture_map_animation.md") {
+      content {
+        text
+      }
+    }
+    textual_content_rate: KORORAA_textual_content(index: "rupture_map_rate.md") {
       content {
         text
       }
