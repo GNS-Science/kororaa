@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<78362d9ad0a1325bf20e24f39e1b0e4b>>
+ * @generated SignedSource<<2295246f862206bd352ebf515a7d8901>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -25,6 +25,11 @@ export type ComboRuptureMapPageControlsQuery$data = {
     } | null> | null;
   } | null;
   readonly textual_content_animation: {
+    readonly content: ReadonlyArray<{
+      readonly text: string | null;
+    } | null> | null;
+  } | null;
+  readonly textual_content_rate: {
     readonly content: ReadonlyArray<{
       readonly text: string | null;
     } | null> | null;
@@ -124,6 +129,22 @@ v3 = [
     "plural": false,
     "selections": (v2/*: any*/),
     "storageKey": "KORORAA_textual_content(index:\"rupture_map_animation.md\")"
+  },
+  {
+    "alias": "textual_content_rate",
+    "args": [
+      {
+        "kind": "Literal",
+        "name": "index",
+        "value": "rupture_map_rate.md"
+      }
+    ],
+    "concreteType": "TextualContentResult",
+    "kind": "LinkedField",
+    "name": "KORORAA_textual_content",
+    "plural": false,
+    "selections": (v2/*: any*/),
+    "storageKey": "KORORAA_textual_content(index:\"rupture_map_rate.md\")"
   },
   {
     "alias": null,
@@ -234,16 +255,16 @@ return {
     "selections": (v3/*: any*/)
   },
   "params": {
-    "cacheID": "6b482f3c7044ef0256f3b66e42997aa5",
+    "cacheID": "3c40df4325dbc2bd2d90374733713ef5",
     "id": null,
     "metadata": {},
     "name": "ComboRuptureMapPageControlsQuery",
     "operationKind": "query",
-    "text": "query ComboRuptureMapPageControlsQuery(\n  $radiiSetId: Int!\n  $locationListId: String!\n) {\n  textual_content_faults: KORORAA_textual_content(index: \"rupture_map_faults.md\") {\n    content {\n      text\n    }\n  }\n  textual_content_locations: KORORAA_textual_content(index: \"rupture_map_locations.md\") {\n    content {\n      text\n    }\n  }\n  textual_content_animation: KORORAA_textual_content(index: \"rupture_map_animation.md\") {\n    content {\n      text\n    }\n  }\n  SOLVIS_get_radii_set(radii_set_id: $radiiSetId) {\n    radii\n  }\n  SOLVIS_get_location_list(list_id: $locationListId) {\n    locations {\n      name\n      location_id\n    }\n  }\n  SOLVIS_get_parent_fault_names(model_id: \"NSHM_v1.0.4\", fault_system: \"CRU\")\n}\n"
+    "text": "query ComboRuptureMapPageControlsQuery(\n  $radiiSetId: Int!\n  $locationListId: String!\n) {\n  textual_content_faults: KORORAA_textual_content(index: \"rupture_map_faults.md\") {\n    content {\n      text\n    }\n  }\n  textual_content_locations: KORORAA_textual_content(index: \"rupture_map_locations.md\") {\n    content {\n      text\n    }\n  }\n  textual_content_animation: KORORAA_textual_content(index: \"rupture_map_animation.md\") {\n    content {\n      text\n    }\n  }\n  textual_content_rate: KORORAA_textual_content(index: \"rupture_map_rate.md\") {\n    content {\n      text\n    }\n  }\n  SOLVIS_get_radii_set(radii_set_id: $radiiSetId) {\n    radii\n  }\n  SOLVIS_get_location_list(list_id: $locationListId) {\n    locations {\n      name\n      location_id\n    }\n  }\n  SOLVIS_get_parent_fault_names(model_id: \"NSHM_v1.0.4\", fault_system: \"CRU\")\n}\n"
   }
 };
 })();
 
-(node as any).hash = "9abb2c5a4536be90e6a4f709dca65c7e";
+(node as any).hash = "deec2902384fa92d33f48245107da920";
 
 export default node;
