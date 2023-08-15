@@ -265,7 +265,7 @@ const ComboRuptureMapControls: React.FC<ComboRuptureMapControlsProps> = ({
         <StyledRangeSliderDiv>
           <RangeSliderWithInputs label="Magnitude" valuesRange={magnitudeRange} setValues={setMagnitudeRange} inputProps={{ step: 0.1, min: 6, max: 10, type: 'number' }} />
           <RangeSliderWithInfoTooltip
-            label="Rate (1/1e-N/yr)"
+            label="Rate (1eN/yr)"
             valuesRange={rateRange}
             setValues={setRateRange}
             inputProps={{ step: 1, min: -20, max: 0, type: 'number' }}
