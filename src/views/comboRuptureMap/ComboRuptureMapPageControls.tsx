@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useReducer, useMemo } from 'react';
-import { Box, Button, styled, Alert, Fab, Menu, MenuItem, Autocomplete, TextField, FormGroup, Tooltip, Typography } from '@mui/material';
+import { Box, Button, styled, Alert, Fab, Menu, MenuItem, Autocomplete, TextField, FormGroup, Tooltip } from '@mui/material';
 import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
 import { RangeSliderWithInputs } from '@gns-science/toshi-nest';
 import { toPng } from 'html-to-image';
@@ -40,14 +40,6 @@ const StyledRangeSliderDiv = styled('div')(() => ({
   },
   '& .css-7ai7qk': {
     marginRight: '0px',
-  },
-}));
-
-const StyledTextField = styled(TextField)(() => ({
-  '& .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input::after': {
-    fontSize: '60%',
-    content: '"°"',
-    verticalAlign: 'top',
   },
 }));
 
