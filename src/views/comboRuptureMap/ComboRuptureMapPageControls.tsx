@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useReducer, useMemo } from 'react';
-import { Box, Button, styled, Alert, Fab, Menu, MenuItem, Autocomplete, TextField, FormGroup, Tooltip } from '@mui/material';
+import { Box, Button, styled, Alert, Fab, Menu, MenuItem, Autocomplete, TextField, FormGroup, Tooltip, Typography } from '@mui/material';
 import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
 import { RangeSliderWithInputs } from '@gns-science/toshi-nest';
 import { toPng } from 'html-to-image';
@@ -40,6 +40,14 @@ const StyledRangeSliderDiv = styled('div')(() => ({
   },
   '& .css-7ai7qk': {
     marginRight: '0px',
+  },
+}));
+
+const StyledTextField = styled(TextField)(() => ({
+  '& .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input::after': {
+    fontSize: '60%',
+    content: '"°"',
+    verticalAlign: 'top',
   },
 }));
 
@@ -166,7 +174,7 @@ const ComboRuptureMapControls: React.FC<ComboRuptureMapControlsProps> = ({
         const locationDataItem = locationData?.find((item) => item?.name === location);
         locationIdArray.push(locationDataItem && locationDataItem?.location_id !== null ? locationDataItem?.location_id : '');
       });
-      setLocationOptions(locationNameArray);
+      setLocationOptions(locationNameArray.sort());
       setLocationIdArray(locationIdArray);
     }
   }, [locationData, locations]);
@@ -232,7 +240,7 @@ const ComboRuptureMapControls: React.FC<ComboRuptureMapControlsProps> = ({
   return (
     <Box sx={{ width: '100%', ...flexParentCenter, flexDirection: 'column' }}>
       <StyledCustomControlsBar direction="column">
-        <SelectControl name="Fault System" selection={faultSystem} setSelection={setFaultSystem} options={faultSystemOptions} tooltip={'fault system'} />
+        <SelectControl name="Fault System" selection={faultSystem} setSelection={setFaultSystem} options={faultSystemOptions} />
         <Autocomplete
           multiple={true}
           disabled={faultSystem !== 'Crustal'}
@@ -240,7 +248,7 @@ const ComboRuptureMapControls: React.FC<ComboRuptureMapControlsProps> = ({
           renderInput={(params) => (
             <Tooltip title={faultsMarkdown || ''} placement="right" arrow={true}>
               <div>
-                <TextField {...params} label="Faults" />
+                <TextField {...params} label="Faults (optional)" />
               </div>
             </Tooltip>
           )}
