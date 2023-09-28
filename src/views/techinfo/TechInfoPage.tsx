@@ -67,6 +67,17 @@ const rows = [
 ];
 
 const TechInfoPage: React.FC = () => {
+  React.useEffect(() => {
+    if (document.location.hash) {
+      setTimeout(() => {
+        const someAnchor = document.querySelector(document.location.hash);
+        if (someAnchor !== null) {
+          someAnchor.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 300);
+    }
+  }, []);
+
   return (
     <PageContainer>
       <Grid container columns={{ sm: 6, md: 8, lg: 12 }}>
