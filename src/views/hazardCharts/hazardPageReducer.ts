@@ -10,6 +10,7 @@ export type HazardPageState = {
   spectralUncertainty: boolean;
   hazardXScale: 'log' | 'linear';
   spectraXScale: 'log' | 'linear';
+  timePeriod: number;
 };
 
 export const hazardPageReducerInitialState: HazardPageState = {
@@ -21,6 +22,7 @@ export const hazardPageReducerInitialState: HazardPageState = {
   spectralUncertainty: true,
   hazardXScale: 'log',
   spectraXScale: 'log',
+  timePeriod: 50,
 };
 export interface LocationData {
   name: string | null;

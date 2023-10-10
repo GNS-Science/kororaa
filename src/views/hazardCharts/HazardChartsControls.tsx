@@ -10,6 +10,7 @@ import { hazardPageOptions } from './constants/hazardPageOptions';
 import { getPoeInputDisplay, numbersToStrings, stringsToNumbers, validateCurveGroupLength, validateImts, validateLocationData, validatePoeValue, validateVs30s } from './hazardPage.service';
 import { HazardPageState, LocationData } from './hazardPageReducer';
 import SelectControlMultiple from '../../components/common/SelectControlMultiple';
+import { SelectControl } from '@gns-science/toshi-nest';
 import { getLatLonString, combineLocationData, getNamesFromLocationData, validateLatLon } from '../../services/latLon/latLon.service';
 import { locationTooltip, tooManyCurves, latLonTooltip, noLocations, noVs30s, noImts } from './constants/hazardCharts';
 import { imtTooltip, poeTooltip, vs30Tooltip } from '../../constants/tooltips';
@@ -28,6 +29,7 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, disp
   const [latLonErrorMessage, setLatLonErrorMessage] = useState<string>('');
   const [vs30s, setVs30s] = useState<number[]>(state.vs30s);
   const [imts, setImts] = useState<string[]>(state.imts);
+  const [timePeriod, setTimePeriod] = useState<number>(state.timePeriod);
 
   const [inputValue, setInputValue] = useState<string>('');
   const [poeInputError, setPoeInputError] = useState<boolean>(false);
@@ -80,7 +82,7 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, disp
       validateVs30s(vs30s, setVs30Error);
       validateImts(imts, setImtError);
       validateCurveGroupLength(locationData, vs30s, imts);
-      dispatch({ locationData, vs30s, imts, poe: poeInput.length === 0 || poeInput === ' ' ? undefined : Number(poeInput) / 100 });
+      dispatch({ locationData, vs30s, imts, poe: poeInput.length === 0 || poeInput === ' ' ? undefined : Number(poeInput) / 100, timePeriod });
     } catch (err) {
       if (err === 'Invalid lat, lon input') {
         setLatLonError(true);
@@ -177,9 +179,16 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, disp
           />
         </FormControl>
         <SelectControlMultiple tooltip={imtTooltip} options={hazardPageOptions.imts} selection={imts} setSelection={setImts} name="Spectral Period" />
+        <SelectControl
+          tooltip="Choose time period for Probability of Exceedance (PoE) calculation"
+          name="Probability Time Period (Yrs)"
+          options={hazardPageOptions.timePeriods}
+          selection={timePeriod}
+          setSelection={setTimePeriod}
+        />
         <FormControl sx={{ width: 200 }} variant="standard">
           <Tooltip title={poeTooltip} arrow placement="top">
-            <InputLabel htmlFor="component-helper">Probability of Exceedance (50 Yrs)</InputLabel>
+            <InputLabel htmlFor="component-helper">Probability of Exceedance</InputLabel>
           </Tooltip>
           <Input
             error={poeInputError}

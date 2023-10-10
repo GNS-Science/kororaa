@@ -35,6 +35,8 @@ export const HAZARD_IMTS = process.env.REACT_APP_HAZARD_IMTS?.split(',') || [
   'SA(10.0)',
 ];
 
+export const TIME_PERIODS = process.env.REACT_APP_TIME_PERIODS?.split(',') || [50, 100];
+
 export const HAZARD_COLOR_MAP = process.env.REACT_APP_HAZARD_COLOR_MAP || 'jet';
 export const HAZARD_COLOR_LIMIT: number = Number(process.env.REACT_APP_HAZARD_COLOR_LIMIT) || 30;
 export const HAZARD_COLOR_UNCERTAINTY_OPACITY = process.env.REACT_APP_HAZARD_COLOR_UNCERTAINTY_OPACITY || 0.5;

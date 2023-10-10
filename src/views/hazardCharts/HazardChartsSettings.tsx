@@ -29,7 +29,7 @@ const StyledIconButton = styled(IconButton)(() => ({
 const HazardChartsSettings: React.FC<HazardChartsSettingsProps> = ({ data, spectral, state, dispatch }: HazardChartsSettingsProps) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const locationList = useMemo(() => getLocationList(data), [data]);
-  const saCurves = useMemo(() => getSpectralAccelUncertaintyCurves(state.vs30s, locationList, data, state.poe, state.spectraXScale), [locationList, state, data]);
+  const saCurves = useMemo(() => getSpectralAccelUncertaintyCurves(state.vs30s, locationList, data, state.poe, state.spectraXScale, state.timePeriod), [locationList, state, data]);
   const saCSVData = useMemo(() => getSpectralCSVData(saCurves, state.poe), [saCurves, state.poe]);
 
   const open = Boolean(anchorEl);
@@ -49,7 +49,7 @@ const HazardChartsSettings: React.FC<HazardChartsSettingsProps> = ({ data, spect
     }
     toPng(element, { quality: 0.95 }).then((dataUrl: string) => {
       const link = document.createElement('a');
-      link.download = spectral ? `UHS_${state.poe}_in_50yr-${HAZARD_MODEL}.png` : `hazard_chart-${HAZARD_MODEL}.png`;
+      link.download = spectral ? `UHS_${state.poe}_in_${state.timePeriod}yr-${HAZARD_MODEL}.png` : `hazard_chart-${HAZARD_MODEL}.png`;
       link.href = dataUrl;
       link.click();
     });
