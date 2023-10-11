@@ -144,9 +144,9 @@ export const tryParseLatLon = (loc: string): string[] => {
   } else return loc.split(',').map((l) => l.trim());
 };
 
-export const getSpectralCSVData = (curves: UncertaintyChartData, poe: number | undefined): string[][] => {
+export const getSpectralCSVData = (curves: UncertaintyChartData, poe: number | undefined, timePeriod: number): string[][] => {
   const datetimeAndVersion = [`date-time: ${new Date().toLocaleString('en-GB', { timeZone: 'UTC' })}, (UTC)`, `NSHM model version: ${HAZARD_MODEL}`];
-  const saHeaderArray = ['lat', 'lon', 'vs30', 'PoE (% in 50 years)', 'statistic', ...HAZARD_IMTS];
+  const saHeaderArray = ['lat', 'lon', 'vs30', `PoE (% in ${timePeriod} years)`, 'statistic', ...HAZARD_IMTS];
   const csvData: string[][] = [];
   Object.fromEntries(
     Object.entries(curves).map((curve) => {

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Fab, InputAdornment, Button, Input, FormControl, InputLabel, Box, Autocomplete, TextField, FormHelperText, IconButton, Alert, Collapse, Tooltip } from '@mui/material';
+import { Fab, InputAdornment, Button, Input, FormControl, InputLabel, Box, Autocomplete, TextField, FormHelperText, IconButton, Alert, Collapse, Tooltip, Typography } from '@mui/material';
 import ClearIcon from '@mui/icons-material/Clear';
 import CloseIcon from '@mui/icons-material/Close';
 import { useReactToPrint } from 'react-to-print';
@@ -14,6 +14,8 @@ import { SelectControl } from '@gns-science/toshi-nest';
 import { getLatLonString, combineLocationData, getNamesFromLocationData, validateLatLon } from '../../services/latLon/latLon.service';
 import { locationTooltip, tooManyCurves, latLonTooltip, noLocations, noVs30s, noImts } from './constants/hazardCharts';
 import { imtTooltip, poeTooltip, vs30Tooltip } from '../../constants/tooltips';
+import HtmlTooltip from '../../components/common/HtmlTooltip';
+import { Link } from 'react-router-dom';
 
 interface HazardChartsControlsProps {
   state: HazardPageState;
@@ -187,7 +189,21 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, disp
           setSelection={setTimePeriod}
         />
         <FormControl sx={{ width: 200 }} variant="standard">
-          <Tooltip title={poeTooltip} arrow placement="top">
+          <Tooltip
+            title={
+              <React.Fragment>
+                <Typography>
+                  The probability of experiencing an acceleration (g) or more within the next T years where T is the chosen Probability Time Period. See the
+                  <Link to={'/TechInfo#poe'} target="_blank" rel="noopener noreferrer">
+                    Technical Info Page
+                  </Link>{' '}
+                  for more detail.
+                </Typography>
+              </React.Fragment>
+            }
+            arrow
+            placement="top"
+          >
             <InputLabel htmlFor="component-helper">Probability of Exceedance</InputLabel>
           </Tooltip>
           <Input

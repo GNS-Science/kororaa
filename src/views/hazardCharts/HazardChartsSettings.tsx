@@ -30,7 +30,7 @@ const HazardChartsSettings: React.FC<HazardChartsSettingsProps> = ({ data, spect
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const locationList = useMemo(() => getLocationList(data), [data]);
   const saCurves = useMemo(() => getSpectralAccelUncertaintyCurves(state.vs30s, locationList, data, state.poe, state.spectraXScale, state.timePeriod), [locationList, state, data]);
-  const saCSVData = useMemo(() => getSpectralCSVData(saCurves, state.poe), [saCurves, state.poe]);
+  const saCSVData = useMemo(() => getSpectralCSVData(saCurves, state.poe, state.timePeriod), [saCurves, state.poe, state.timePeriod]);
 
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
