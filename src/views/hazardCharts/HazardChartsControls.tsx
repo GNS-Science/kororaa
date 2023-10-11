@@ -191,7 +191,7 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, disp
           <Tooltip
             title={
               <React.Fragment>
-                <Typography>
+                <Typography fontSize={11}>
                   The probability of experiencing an acceleration (g) or more within the next T years where T is the chosen Probability Time Period. See the
                   <Link to={'/TechInfo#poe'} target="_blank" rel="noopener noreferrer">
                     Technical Info Page
