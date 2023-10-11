@@ -13,8 +13,7 @@ import SelectControlMultiple from '../../components/common/SelectControlMultiple
 import { SelectControl } from '@gns-science/toshi-nest';
 import { getLatLonString, combineLocationData, getNamesFromLocationData, validateLatLon } from '../../services/latLon/latLon.service';
 import { locationTooltip, tooManyCurves, latLonTooltip, noLocations, noVs30s, noImts } from './constants/hazardCharts';
-import { imtTooltip, poeTooltip, vs30Tooltip } from '../../constants/tooltips';
-import HtmlTooltip from '../../components/common/HtmlTooltip';
+import { imtTooltip, vs30Tooltip } from '../../constants/tooltips';
 import { Link } from 'react-router-dom';
 
 interface HazardChartsControlsProps {
