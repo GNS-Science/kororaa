@@ -44,11 +44,16 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, disp
   const [vs30Error, setVs30Error] = useState<boolean>(false);
   const [imtError, setImtError] = useState<boolean>(false);
 
+  const [dataFetched, setDataFetched] = useState<boolean>(false);
+
   useEffect(() => {
     const combinedLocationData = combineLocationData(locations, latLon);
     setLocationData(combinedLocationData);
   }, [locations, latLon]);
 
+  useEffect(() => {
+    setDataFetched(false);
+  }, [locationData, latLon, vs30s, imts, poeInput, timePeriod]);
   const handleLatLonBlur = () => {
     try {
       validateLatLon(latLon);
@@ -83,6 +88,7 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, disp
       validateVs30s(vs30s, setVs30Error);
       validateImts(imts, setImtError);
       validateCurveGroupLength(locationData, vs30s, imts);
+      setDataFetched(true);
       dispatch({ locationData, vs30s, imts, poe: poeInput.length === 0 || poeInput === ' ' ? undefined : Number(poeInput) / 100, timePeriod });
     } catch (err) {
       if (err === 'Invalid lat, lon input') {
@@ -226,7 +232,7 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, disp
           />
           {poeInputError && <FormHelperText id="outlined-weight-helper-text">{poeInputErrorMessage}</FormHelperText>}
         </FormControl>
-        <Button variant="contained" type="submit" onClick={handleSubmit}>
+        <Button disabled={dataFetched} variant="contained" type="submit" onClick={handleSubmit}>
           Submit
         </Button>
         <Fab color="primary" aria-label="print" onClick={handlePrint}>
