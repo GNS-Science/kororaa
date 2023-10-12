@@ -54,6 +54,7 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, disp
   useEffect(() => {
     setDataFetched(false);
   }, [locationData, latLon, vs30s, imts, poeInput, timePeriod]);
+
   const handleLatLonBlur = () => {
     try {
       validateLatLon(latLon);
