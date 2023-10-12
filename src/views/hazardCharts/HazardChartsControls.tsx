@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Fab, InputAdornment, Button, Input, FormControl, InputLabel, Box, Autocomplete, TextField, FormHelperText, IconButton, Alert, Collapse, Tooltip } from '@mui/material';
+import { Fab, InputAdornment, Button, Input, FormControl, InputLabel, Box, Autocomplete, TextField, FormHelperText, IconButton, Alert, Collapse, Tooltip, Typography } from '@mui/material';
 import ClearIcon from '@mui/icons-material/Clear';
 import CloseIcon from '@mui/icons-material/Close';
 import { useReactToPrint } from 'react-to-print';
@@ -10,9 +10,11 @@ import { hazardPageOptions } from './constants/hazardPageOptions';
 import { getPoeInputDisplay, numbersToStrings, stringsToNumbers, validateCurveGroupLength, validateImts, validateLocationData, validatePoeValue, validateVs30s } from './hazardPage.service';
 import { HazardPageState, LocationData } from './hazardPageReducer';
 import SelectControlMultiple from '../../components/common/SelectControlMultiple';
+import { SelectControl } from '@gns-science/toshi-nest';
 import { getLatLonString, combineLocationData, getNamesFromLocationData, validateLatLon } from '../../services/latLon/latLon.service';
 import { locationTooltip, tooManyCurves, latLonTooltip, noLocations, noVs30s, noImts } from './constants/hazardCharts';
-import { imtTooltip, poeTooltip, vs30Tooltip } from '../../constants/tooltips';
+import { imtTooltip, vs30Tooltip } from '../../constants/tooltips';
+import { Link } from 'react-router-dom';
 
 interface HazardChartsControlsProps {
   state: HazardPageState;
@@ -28,6 +30,7 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, disp
   const [latLonErrorMessage, setLatLonErrorMessage] = useState<string>('');
   const [vs30s, setVs30s] = useState<number[]>(state.vs30s);
   const [imts, setImts] = useState<string[]>(state.imts);
+  const [timePeriod, setTimePeriod] = useState<number>(state.timePeriod);
 
   const [inputValue, setInputValue] = useState<string>('');
   const [poeInputError, setPoeInputError] = useState<boolean>(false);
@@ -80,7 +83,7 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, disp
       validateVs30s(vs30s, setVs30Error);
       validateImts(imts, setImtError);
       validateCurveGroupLength(locationData, vs30s, imts);
-      dispatch({ locationData, vs30s, imts, poe: poeInput.length === 0 || poeInput === ' ' ? undefined : Number(poeInput) / 100 });
+      dispatch({ locationData, vs30s, imts, poe: poeInput.length === 0 || poeInput === ' ' ? undefined : Number(poeInput) / 100, timePeriod });
     } catch (err) {
       if (err === 'Invalid lat, lon input') {
         setLatLonError(true);
@@ -177,9 +180,38 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, disp
           />
         </FormControl>
         <SelectControlMultiple tooltip={imtTooltip} options={hazardPageOptions.imts} selection={imts} setSelection={setImts} name="Spectral Period" />
+        <SelectControl
+          tooltip={
+            <React.Fragment>
+              Choose time period for Probability of Exceedance (PoE) calculation See the
+              <Link to={'/TechInfo#forecast-timespan'} target="_blank" rel="noopener noreferrer">
+                Technical Info Page
+              </Link>{' '}
+              for more detail.
+            </React.Fragment>
+          }
+          name="Probability Time Period (Yrs)"
+          options={hazardPageOptions.timePeriods}
+          selection={timePeriod}
+          setSelection={setTimePeriod}
+        />
         <FormControl sx={{ width: 200 }} variant="standard">
-          <Tooltip title={poeTooltip} arrow placement="top">
-            <InputLabel htmlFor="component-helper">Probability of Exceedance (50 Yrs)</InputLabel>
+          <Tooltip
+            title={
+              <React.Fragment>
+                <Typography fontSize={11}>
+                  The probability of experiencing an acceleration (g) or more within the next T years where T is the chosen Probability Time Period. See the
+                  <Link to={'/TechInfo#forecast-timespan'} target="_blank" rel="noopener noreferrer">
+                    Technical Info Page
+                  </Link>{' '}
+                  for more detail.
+                </Typography>
+              </React.Fragment>
+            }
+            arrow
+            placement="top"
+          >
+            <InputLabel htmlFor="component-helper">Probability of Exceedance</InputLabel>
           </Tooltip>
           <Input
             error={poeInputError}

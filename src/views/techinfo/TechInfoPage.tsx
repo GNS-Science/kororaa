@@ -126,17 +126,22 @@ const TechInfoPage: React.FC = () => {
             </Grid>
             <Grid item xs={12}>
               <Typography id="forecast-timespan" variant="h5">
-                Forecast Timespan and Time-Dependence
+                Forecast Timespan, Time-Dependence and Time Periods
               </Typography>
+            </Grid>
+            <Grid item xs={12}>
               <Typography variant="body1">
                 The NZ NSHM 2022 provides forecasts of ground shaking for the next 100 years. Time 100 year time dependence has been included in the model using time since the most recent known event
                 on faults (conditional probability of rupture) as well as increased seismicity rates in areas that have recently experienced earthquakes (e.g. Christchurch and Kaikoura).
               </Typography>
             </Grid>
             <Grid item xs={12}>
-              <Typography id="poe" variant="h5">
-                Probability of Exceedance and Return Period
+              <Typography variant="body1">
+                NSHM results are often presented using either a Probability of Exceedance (PoE) in 50 years, or as an annual PoE. We have given users the ability to select 50 years or 100 years as the
+                time period for which UHS are calculated. In either case, the NZ NSHM is based on a 100 year forecast.
               </Typography>
+            </Grid>
+            <Grid item xs={12}>
               <Typography variant="body1">
                 <strong>Probability of Exceedance:</strong> The chance (or likelihood) that a certain level of ground shaking will be reached or exceeded over a certain time-interval. For example: a
                 PGA value of 0.82g for 10% PoE in 50 years states that there are 10% chances that this value of shaking will be reached or exceeded in the next 50 years.
