@@ -126,7 +126,7 @@ const TechInfoPage: React.FC = () => {
             </Grid>
             <Grid item xs={12}>
               <Typography id="forecast-timespan" variant="h5">
-                Forecast Timespan and Time-Dependence
+                Forecast Timespan, Time-Dependence and Time Periods
               </Typography>
             </Grid>
             <Grid item xs={12}>
@@ -142,9 +142,6 @@ const TechInfoPage: React.FC = () => {
               </Typography>
             </Grid>
             <Grid item xs={12}>
-              <Typography id="poe" variant="h5">
-                Probability of Exceedance and Return Period
-              </Typography>
               <Typography variant="body1">
                 <strong>Probability of Exceedance:</strong> The chance (or likelihood) that a certain level of ground shaking will be reached or exceeded over a certain time-interval. For example: a
                 PGA value of 0.82g for 10% PoE in 50 years states that there are 10% chances that this value of shaking will be reached or exceeded in the next 50 years.

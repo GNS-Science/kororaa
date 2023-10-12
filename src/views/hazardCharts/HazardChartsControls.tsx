@@ -181,7 +181,15 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, disp
         </FormControl>
         <SelectControlMultiple tooltip={imtTooltip} options={hazardPageOptions.imts} selection={imts} setSelection={setImts} name="Spectral Period" />
         <SelectControl
-          tooltip="Choose time period for Probability of Exceedance (PoE) calculation"
+          tooltip={
+            <React.Fragment>
+              Choose time period for Probability of Exceedance (PoE) calculation See the
+              <Link to={'/TechInfo#forecast-timespan'} target="_blank" rel="noopener noreferrer">
+                Technical Info Page
+              </Link>{' '}
+              for more detail.
+            </React.Fragment>
+          }
           name="Probability Time Period (Yrs)"
           options={hazardPageOptions.timePeriods}
           selection={timePeriod}
@@ -193,7 +201,7 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, disp
               <React.Fragment>
                 <Typography fontSize={11}>
                   The probability of experiencing an acceleration (g) or more within the next T years where T is the chosen Probability Time Period. See the
-                  <Link to={'/TechInfo#poe'} target="_blank" rel="noopener noreferrer">
+                  <Link to={'/TechInfo#forecast-timespan'} target="_blank" rel="noopener noreferrer">
                     Technical Info Page
                   </Link>{' '}
                   for more detail.
