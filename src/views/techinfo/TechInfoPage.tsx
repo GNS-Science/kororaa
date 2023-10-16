@@ -144,7 +144,7 @@ const TechInfoPage: React.FC = () => {
             <Grid item xs={12}>
               <Typography variant="body1">
                 <strong>Probability of Exceedance:</strong> The chance (or likelihood) that a certain level of ground shaking will be reached or exceeded over a certain time-interval. For example: a
-                PGA value of 0.82g for 10% PoE in 50 years states that there are 10% chances that this value of shaking will be reached or exceeded in the next 50 years.
+                PGA value of 0.82g for 10% PoE in 50 years states that there is a 10% chance that this value of shaking will be reached or exceeded in the next 50 years.
               </Typography>
             </Grid>
             <Grid item xs={12}>
