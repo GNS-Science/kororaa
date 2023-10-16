@@ -109,6 +109,16 @@ const ComboRuptureMapControls: React.FC<ComboRuptureMapControlsProps> = ({
   const [sortBy2, setSortBy2] = useState<string>('');
   const [sortOptionsAnchorEl, setSortOptionsAnchorEl] = React.useState<null | HTMLElement>(null);
   const [mapOptionsAnchorEl, setMapOptionsAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [dataFetched, setDataFetched] = useState<boolean>(true);
+  const [controlsChanged, setControlsChanged] = useState<number>(0);
+
+  useEffect(() => {
+    setControlsChanged(controlsChanged + 1);
+    if (controlsChanged >= 2) {
+      setDataFetched(false);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [faultSystem, locations, parentFaultArray, magnitudeRange, rateRange, radius, sortBy1, sortBy2]);
 
   const mapOptionsOpen = Boolean(mapOptionsAnchorEl);
   const handleMapOptionsClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -211,6 +221,7 @@ const ComboRuptureMapControls: React.FC<ComboRuptureMapControlsProps> = ({
   const handleClickMfdDownload = () => handleDownloadData(mfdData, 'mfd-data.json', 'JSON');
 
   const handleSubmit = async () => {
+    setDataFetched(true);
     startTransition(() => {
       dispatch({
         faultSystem: faultSystem,
@@ -276,7 +287,7 @@ const ComboRuptureMapControls: React.FC<ComboRuptureMapControlsProps> = ({
       </StyledCustomControlsBar>
       {geoJsonError && <Alert severity="error">{geoJsonError}</Alert>}
       <Box sx={{ ...flexParentCenter, flexDirection: 'row' }}>
-        <StyledButton disabled={isPending || !!radiusError} variant="contained" type="submit" onClick={handleSubmit}>
+        <StyledButton disabled={isPending || !!radiusError || dataFetched} variant="contained" type="submit" onClick={handleSubmit}>
           Submit
         </StyledButton>
         <Fab onClick={handleMapOptionsClick} color="primary" size="small">
