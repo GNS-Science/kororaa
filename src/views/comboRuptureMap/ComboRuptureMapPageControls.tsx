@@ -109,14 +109,10 @@ const ComboRuptureMapControls: React.FC<ComboRuptureMapControlsProps> = ({
   const [sortBy2, setSortBy2] = useState<string>('');
   const [sortOptionsAnchorEl, setSortOptionsAnchorEl] = React.useState<null | HTMLElement>(null);
   const [mapOptionsAnchorEl, setMapOptionsAnchorEl] = React.useState<null | HTMLElement>(null);
-  const [dataFetched, setDataFetched] = useState<boolean>(true);
-  const [controlsChanged, setControlsChanged] = useState<number>(0);
+  const [dataFetched, setDataFetched] = useState<boolean>(false);
 
   useEffect(() => {
-    setControlsChanged(controlsChanged + 1);
-    if (controlsChanged >= 2) {
-      setDataFetched(false);
-    }
+    setDataFetched(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [faultSystem, locations, parentFaultArray, magnitudeRange, rateRange, radius, sortBy1, sortBy2]);
 
