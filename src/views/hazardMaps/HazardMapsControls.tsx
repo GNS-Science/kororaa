@@ -35,6 +35,16 @@ const HazardMapsControls: React.FC<HazardMapsControlsProps> = ({ startTransition
   const [fillOpacity, setFillOpacity] = useState<string>('0.5');
   const [strokeOpacity, setStrokeOpacity] = useState<string>('0.5');
   const [gridStyle, setGridStyle] = useState<string>(MAP_GRID_STYLE_DEFAULT);
+  const [dataFetched, setDataFetched] = useState<boolean>(true);
+  const [controlsChanged, setControlsChanged] = useState<number>(0);
+
+  useEffect(() => {
+    setControlsChanged(controlsChanged + 1);
+    if (controlsChanged >= 1) {
+      setDataFetched(false);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [spectralPeriod, statistic, vs30, poe, gridStyle]);
 
   useEffect(() => {
     setFillOpacity(gridStyleOptions[gridStyle].opacity);
@@ -47,6 +57,7 @@ const HazardMapsControls: React.FC<HazardMapsControlsProps> = ({ startTransition
   }, [gridStyle, statistic]);
 
   const handleSubmit = () => {
+    setDataFetched(true);
     startTransition(() => {
       dispatch({
         spectralPeriod: spectralPeriod,
@@ -89,7 +100,7 @@ const HazardMapsControls: React.FC<HazardMapsControlsProps> = ({ startTransition
           tooltip={poeTooltip}
         />
         <SelectControl name="Grid Style" options={Object.keys(gridStyleOptions)} selection={gridStyle} setSelection={setGridStyle} tooltip={gridStyleTooltip} />
-        <StyledButton disabled={isPending} variant="contained" type="submit" onClick={handleSubmit}>
+        <StyledButton disabled={isPending || dataFetched} variant="contained" type="submit" onClick={handleSubmit}>
           Submit
         </StyledButton>
         <div>
