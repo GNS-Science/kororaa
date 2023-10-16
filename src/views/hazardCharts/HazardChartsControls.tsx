@@ -44,7 +44,8 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, disp
   const [vs30Error, setVs30Error] = useState<boolean>(false);
   const [imtError, setImtError] = useState<boolean>(false);
 
-  const [dataFetched, setDataFetched] = useState<boolean>(false);
+  const [dataFetched, setDataFetched] = useState<boolean>(true);
+  const [controlsChanged, setControlsChanged] = useState<number>(0);
 
   useEffect(() => {
     const combinedLocationData = combineLocationData(locations, latLon);
@@ -52,7 +53,11 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, disp
   }, [locations, latLon]);
 
   useEffect(() => {
-    setDataFetched(false);
+    setControlsChanged(controlsChanged + 1);
+    if (controlsChanged >= 2) {
+      setDataFetched(false);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [locationData, latLon, vs30s, imts, poeInput, timePeriod]);
 
   const handleLatLonBlur = () => {
