@@ -4,17 +4,29 @@ import ClearIcon from '@mui/icons-material/Clear';
 import CloseIcon from '@mui/icons-material/Close';
 import { useReactToPrint } from 'react-to-print';
 import PrintIcon from '@mui/icons-material/Print';
+import { Link } from 'react-router-dom';
 
 import CustomControlsBar from '../../components/common/CustomControlsBar';
 import { hazardPageOptions } from './constants/hazardPageOptions';
-import { getPoeInputDisplay, numbersToStrings, stringsToNumbers, validateCurveGroupLength, validateImts, validateLocationData, validatePoeValue, validateVs30s } from './hazardPage.service';
+import {
+  getPoeInputDisplay,
+  numbersToStrings,
+  parseTimePeriodString,
+  readableTimePeriod,
+  readableTimePeriodArray,
+  stringsToNumbers,
+  validateCurveGroupLength,
+  validateImts,
+  validateLocationData,
+  validatePoeValue,
+  validateVs30s,
+} from './hazardPage.service';
 import { HazardPageState, LocationData } from './hazardPageReducer';
 import SelectControlMultiple from '../../components/common/SelectControlMultiple';
 import { SelectControl } from '@gns-science/toshi-nest';
 import { getLatLonString, combineLocationData, getNamesFromLocationData, validateLatLon } from '../../services/latLon/latLon.service';
 import { locationTooltip, tooManyCurves, latLonTooltip, noLocations, noVs30s, noImts } from './constants/hazardCharts';
 import { imtTooltip, vs30Tooltip } from '../../constants/tooltips';
-import { Link } from 'react-router-dom';
 
 interface HazardChartsControlsProps {
   state: HazardPageState;
@@ -192,27 +204,13 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, disp
           />
         </FormControl>
         <SelectControlMultiple tooltip={imtTooltip} options={hazardPageOptions.imts} selection={imts} setSelection={setImts} name="Spectral Period" />
-        <SelectControl
-          tooltip={
-            <React.Fragment>
-              Choose time period for Probability of Exceedance (PoE) calculation See the
-              <Link to={'/TechInfo#forecast-timespan'} target="_blank" rel="noopener noreferrer">
-                Technical Info Page
-              </Link>{' '}
-              for more detail.
-            </React.Fragment>
-          }
-          name="Probability Time Period (Yrs)"
-          options={hazardPageOptions.timePeriods}
-          selection={timePeriod}
-          setSelection={setTimePeriod}
-        />
-        <FormControl sx={{ width: 200 }} variant="standard">
+        <div style={{ display: 'flex', flexDirection: 'column', textAlign: 'center', position: 'relative', top: -11 }}>
+          <InputLabel sx={{ fontSize: '1rem', transform: 'matrix(0.75, 0, 0, 0.75, -22, 20)' }}> Probability of Exceedance (PoE) </InputLabel>
           <Tooltip
             title={
               <React.Fragment>
                 <Typography fontSize={11}>
-                  The probability of experiencing an acceleration (g) or more within the next T years where T is the chosen Probability Time Period. See the
+                  The probability of experiencing an acceleration (g) or more within the next T years where T is the chosen Probability Time Period. See the{' '}
                   <Link to={'/TechInfo#forecast-timespan'} target="_blank" rel="noopener noreferrer">
                     Technical Info Page
                   </Link>{' '}
@@ -223,21 +221,36 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, disp
             arrow
             placement="top"
           >
-            <InputLabel htmlFor="component-helper">Probability of Exceedance</InputLabel>
+            <div>
+              <FormControl sx={{ width: 300, display: 'flex', flexDirection: 'row' }} variant="standard">
+                <div style={{ margin: '15px 10px 0 0' }}>
+                  <Input
+                    error={poeInputError}
+                    id="poe-input"
+                    name="poe"
+                    value={poeInput}
+                    sx={{ width: 60 }}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                      setPoeInput(e.target.value);
+                    }}
+                    aria-describedby="component-helper-text"
+                    endAdornment={<InputAdornment position="end">%</InputAdornment>}
+                  />
+                  {poeInputError && <FormHelperText id="outlined-weight-helper-text">{poeInputErrorMessage}</FormHelperText>}
+                </div>
+                <div style={{ margin: '0 10px 0 0' }}>
+                  <Typography sx={{ position: 'relative', top: 20, padding: '10 0 10 0' }}> in </Typography>
+                </div>
+                <SelectControl
+                  name=""
+                  options={readableTimePeriodArray(hazardPageOptions.timePeriods)}
+                  selection={readableTimePeriod(timePeriod)}
+                  setSelection={(newValue: string) => setTimePeriod(parseTimePeriodString(newValue))}
+                />
+              </FormControl>
+            </div>
           </Tooltip>
-          <Input
-            error={poeInputError}
-            id="poe-input"
-            name="poe"
-            value={poeInput}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-              setPoeInput(e.target.value);
-            }}
-            aria-describedby="component-helper-text"
-            endAdornment={<InputAdornment position="end">%</InputAdornment>}
-          />
-          {poeInputError && <FormHelperText id="outlined-weight-helper-text">{poeInputErrorMessage}</FormHelperText>}
-        </FormControl>
+        </div>
         <Button disabled={dataFetched} variant="contained" type="submit" onClick={handleSubmit}>
           Submit
         </Button>

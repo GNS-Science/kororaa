@@ -282,3 +282,16 @@ export const validateImts = (imts: string[], setImtError: React.Dispatch<React.S
     setImtError(false);
   }
 };
+
+export const readableTimePeriod = (timePeriod: number): string => {
+  return `${timePeriod} years`;
+};
+
+export const readableTimePeriodArray = (timePeriods: number[]): string[] => {
+  return timePeriods.map((timePeriods) => readableTimePeriod(timePeriods));
+};
+
+export const parseTimePeriodString = (timePeriod: string): number => {
+  const timePeriodArray = timePeriod.split(' ');
+  return Number(timePeriodArray[0]);
+};
