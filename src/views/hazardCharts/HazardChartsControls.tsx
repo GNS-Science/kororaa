@@ -205,7 +205,7 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, disp
         </FormControl>
         <SelectControlMultiple tooltip={imtTooltip} options={hazardPageOptions.imts} selection={imts} setSelection={setImts} name="Spectral Period" />
         <div style={{ display: 'flex', flexDirection: 'column', textAlign: 'center', position: 'relative', top: -11 }}>
-          <InputLabel sx={{ fontSize: '1rem', transform: 'matrix(0.75, 0, 0, 0.75, 30, 20)' }}> Probability of Exceedance (PoE) </InputLabel>
+          <InputLabel sx={{ fontSize: '1rem', transform: 'matrix(0.75, 0, 0, 0.75, -22, 20)' }}> Probability of Exceedance (PoE) </InputLabel>
           <Tooltip
             title={
               <React.Fragment>
@@ -222,13 +222,14 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, disp
             placement="top"
           >
             <div>
-              <FormControl sx={{ width: 400, display: 'flex', flexDirection: 'row' }} variant="standard">
+              <FormControl sx={{ width: 300, display: 'flex', flexDirection: 'row' }} variant="standard">
                 <div style={{ margin: '15px 10px 0 0' }}>
                   <Input
                     error={poeInputError}
                     id="poe-input"
                     name="poe"
                     value={poeInput}
+                    sx={{ width: 60 }}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                       setPoeInput(e.target.value);
                     }}
