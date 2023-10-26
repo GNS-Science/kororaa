@@ -67,6 +67,7 @@ describe('Hazard Curves', () => {
     cy.get('[data-testid="ArrowDropDownIcon"]').first().click({ force: true });
     cy.get('li').contains('Christchurch').click({ force: true });
     cy.get('[type="submit"]').click({ force: true });
+    cy.wait(500);
     cy.get('[role="curve"]').should('have.length', 10);
     cy.get('div[class="visx-legend-label"]').should('contain.text', '400m/s PGA Christchurch 400m/s PGA Wellington');
   });
@@ -77,7 +78,6 @@ describe('Hazard Curves', () => {
     cy.get('li').contains('Wellington').click({ force: true });
     cy.get('[class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-1x51dt5-MuiInputBase-input-MuiInput-input"]').first().type('-42, 173');
     cy.get('[type="submit"]').click({ force: true });
-    cy.wait(500);
     cy.get('[role="curve"]').should('have.length', 5);
     cy.get('div[class="visx-legend-label"]').should('contain.text', '400m/s PGA -42.0, 173.0');
   });
