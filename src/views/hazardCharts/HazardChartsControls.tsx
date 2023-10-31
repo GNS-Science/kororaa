@@ -210,7 +210,7 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, disp
             title={
               <React.Fragment>
                 <Typography fontSize={11}>
-                  The probability of experiencing an acceleration (g) or more within the next T years where T is the chosen Probability Time Period. See the{' '}
+                  The probability of experiencing an acceleration (g) or more within the next T years where T is the chosen Time Period. See the{' '}
                   <Link to={'/TechInfo#forecast-timespan'} target="_blank" rel="noopener noreferrer">
                     Technical Info Page
                   </Link>{' '}
