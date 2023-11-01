@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v1.2.2](https://github.com/GNS-Science/kororaa/compare/v1.2.0...v1.2.2)
+
+### Merged
+
+- update hazard curve tooltips; [`#412`](https://github.com/GNS-Science/kororaa/pull/412)
+ 
 ## [v1.2.0](https://github.com/GNS-Science/kororaa/compare/v1.1.0...v1.2.0)
 
 ### Merged
