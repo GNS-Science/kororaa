@@ -67,6 +67,7 @@ describe('Hazard Curves', () => {
     cy.get('[data-testid="ArrowDropDownIcon"]').first().click({ force: true });
     cy.get('li').contains('Christchurch').click({ force: true });
     cy.get('[type="submit"]').click({ force: true });
+    cy.wait(1000);
     cy.get('div[class="visx-legend-label"]').should('contain.text', '400m/s PGA Christchurch 400m/s PGA Wellington');
   });
 
