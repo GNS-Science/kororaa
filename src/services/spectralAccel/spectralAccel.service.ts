@@ -23,7 +23,14 @@ export type Curves = NonNullable<HazardCurves['curves']>;
 
 const curveTypes = ['upper2', 'upper1', 'mean', 'lower1', 'lower2'];
 
-export const getSpectralAccelUncertaintyCurves = (vs30s: number[], locs: string[], data: HazardChartsPlotsViewQuery$data, poe: number | undefined, scaleType: string): UncertaintyChartData => {
+export const getSpectralAccelUncertaintyCurves = (
+  vs30s: number[],
+  locs: string[],
+  data: HazardChartsPlotsViewQuery$data,
+  poe: number | undefined,
+  scaleType: string,
+  timePeriod: number,
+): UncertaintyChartData => {
   const saCurveGroups: UncertaintyChartData = {};
   poe &&
     vs30s.forEach((vs30) => {
@@ -34,7 +41,7 @@ export const getSpectralAccelUncertaintyCurves = (vs30s: number[], locs: string[
           saCurveGroups[key] = {};
         }
         curveTypes.forEach((curveType) => {
-          const saCurve = getSpectralAccelCurve(curveType, vs30, loc, data, poe, scaleType);
+          const saCurve = getSpectralAccelCurve(curveType, vs30, loc, data, poe, scaleType, timePeriod);
           if (saCurve) {
             saCurveGroups[key][curveType] = { data: saCurve };
           }
@@ -44,19 +51,19 @@ export const getSpectralAccelUncertaintyCurves = (vs30s: number[], locs: string[
   return saCurveGroups;
 };
 
-export const getSpectralAccelCurve = (curveType: string, vs30: number, loc: string, data: HazardChartsPlotsViewQuery$data, poe: number, scaleType: string) => {
+export const getSpectralAccelCurve = (curveType: string, vs30: number, loc: string, data: HazardChartsPlotsViewQuery$data, poe: number, scaleType: string, timePeriod: number) => {
   if (data.hazard_curves?.curves?.length) {
     const curves: Curves = data.hazard_curves?.curves?.filter((curve) => curve !== null && curve?.vs30 === vs30 && curve?.loc === loc && convertAgg(curve?.agg as string) === curveType);
-    const saCurve = calculateSpectralAccelCurve(curves, poe, scaleType);
+    const saCurve = calculateSpectralAccelCurve(curves, poe, scaleType, timePeriod);
     const sortedCurve = saCurve.sort((a, b) => a[0] - b[0]);
     return sortedCurve;
   }
 };
 
 //TODO: add this function as utility method in toshi-nest as it is shared between Kororaa and TUI
-export const calculateSpectralAccelCurve = (curves: Curves, poe: number, scaleType: string): number[][] => {
+export const calculateSpectralAccelCurve = (curves: Curves, poe: number, scaleType: string, timePeriod: number): number[][] => {
   const data: number[][] = [];
-  const yValue: number = -Math.log(1 - poe) / 50;
+  const yValue: number = -Math.log(1 - poe) / timePeriod;
 
   curves.forEach((currentCurve) => {
     if (currentCurve) {
@@ -137,9 +144,9 @@ export const tryParseLatLon = (loc: string): string[] => {
   } else return loc.split(',').map((l) => l.trim());
 };
 
-export const getSpectralCSVData = (curves: UncertaintyChartData, poe: number | undefined): string[][] => {
+export const getSpectralCSVData = (curves: UncertaintyChartData, poe: number | undefined, timePeriod: number): string[][] => {
   const datetimeAndVersion = [`date-time: ${new Date().toLocaleString('en-GB', { timeZone: 'UTC' })}, (UTC)`, `NSHM model version: ${HAZARD_MODEL}`];
-  const saHeaderArray = ['lat', 'lon', 'vs30', 'PoE (% in 50 years)', 'statistic', ...HAZARD_IMTS];
+  const saHeaderArray = ['lat', 'lon', 'vs30', `PoE (% in ${timePeriod} years)`, 'statistic', ...HAZARD_IMTS];
   const csvData: string[][] = [];
   Object.fromEntries(
     Object.entries(curves).map((curve) => {

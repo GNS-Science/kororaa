@@ -1,4 +1,4 @@
-import { HAZARD_IMTS, MAP_VS30S } from '../../../utils/environmentVariables';
+import { HAZARD_IMTS, MAP_VS30S, TIME_PERIODS } from '../../../utils/environmentVariables';
 
 interface HazardPageLocations {
   id: string;
@@ -224,4 +224,5 @@ export const hazardPageOptions = {
   locations: hazardPageLocations.map((location) => location.name),
   vs30s: MAP_VS30S,
   imts: HAZARD_IMTS,
+  timePeriods: TIME_PERIODS,
 };

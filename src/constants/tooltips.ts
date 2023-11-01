@@ -1,4 +1,4 @@
-export const vs30Tooltip = 'Vs30 is the site-specific shear wave velocity average. Use a Vs30 value estimated for your site. The NSHM does not include a national Vs30 map.';
+export const vs30Tooltip = 'Vs30 is the time-averaged shear wave velocity in top 30m beneath the site. Use a Vs30 value estimated for your site. The NSHM does not include a national Vs30 map.';
 
 export const imtTooltip = `Intensity Measure Types (IMT) include Peak Ground Acceleration (PGA),
 	 and Spectral Acceleration (SA) where bracketed values indicate the period in seconds.`;
