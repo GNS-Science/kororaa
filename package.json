@@ -38,7 +38,7 @@
     "lint": "eslint ./src/**/*.{ts,tsx} --quiet --fix",
     "prepush": "yarn test",
     "prepare": "husky install",
-    "version": "auto-changelog -p -o src/CHANGELOG.md --template keepachangelog --commitLimit 10 && git add src/CHANGELOG.md"
+    "version": "auto-changelog -p -o src/CHANGELOG.md --template keepachangelog && git add src/CHANGELOG.md"
   },
   "lint-staged": {
     "./src/**/*.{ts,tsx}": [
