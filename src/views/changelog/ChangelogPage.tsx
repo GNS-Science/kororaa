@@ -55,7 +55,7 @@ const ChangelogPage: React.FC = () => {
               </TitleContainer>
             </Grid>
             <Grid item>
-              <ReactMarkdown>{markdown}</ReactMarkdown>
+              <ReactMarkdown linkTarget={'_blank'}>{markdown}</ReactMarkdown>
             </Grid>
           </Grid>
         </Grid>
