@@ -1,10 +1,10 @@
-import colormap from 'colormap';
-import { HAZARD_COLOR_MAP } from './environmentVariables';
+import colormap from "colormap";
+import { HAZARD_COLOR_MAP } from "./environmentVariables";
 
 const colors = colormap({
   colormap: HAZARD_COLOR_MAP,
   nshades: 100,
-  format: 'hex',
+  format: "hex",
   alpha: 1,
 });
 

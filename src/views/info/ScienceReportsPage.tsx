@@ -1,30 +1,30 @@
-import React from 'react';
-import { styled } from '@mui/material/styles';
-import Grid from '@mui/material/Grid';
-import { graphql } from 'babel-plugin-relay/macro';
-import { useLazyLoadQuery } from 'react-relay/hooks';
-import { Card, CardContent, Typography, Link, Button } from '@mui/material';
-import SimpleBackdrop from '../../components/common/SimpleBackdrop';
-import { ScienceReportsPageQuery, ReportStatusEnum } from './__generated__/ScienceReportsPageQuery.graphql';
+import React from "react";
+import { styled } from "@mui/material/styles";
+import Grid from "@mui/material/Grid";
+import { graphql } from "react-relay";
+import { useLazyLoadQuery } from "react-relay/hooks";
+import { Card, CardContent, Typography, Link, Button } from "@mui/material";
+import SimpleBackdrop from "../../components/common/SimpleBackdrop";
+import { ScienceReportsPageQuery, ReportStatusEnum } from "./__generated__/ScienceReportsPageQuery.graphql";
 
 const StyledCard = styled(Card)(() => ({
-  justifyContent: 'center',
-  alignItems: 'center',
+  justifyContent: "center",
+  alignItems: "center",
 }));
 
-const PageContainer = styled('div')({
-  width: '100%',
-  justifyContent: 'center',
-  alignItems: 'center',
-  padding: '2rem',
+const PageContainer = styled("div")({
+  width: "100%",
+  justifyContent: "center",
+  alignItems: "center",
+  padding: "2rem",
 });
 
-const SectionContainer = styled('div')({
-  justifyContent: 'left',
-  textAlign: 'left',
-  width: '100%',
-  paddingTop: '2rem',
-  paddingBottom: '1rem',
+const SectionContainer = styled("div")({
+  justifyContent: "left",
+  textAlign: "left",
+  width: "100%",
+  paddingTop: "2rem",
+  paddingBottom: "1rem",
 });
 
 interface IPerson {
@@ -46,7 +46,7 @@ interface IScienceReportCardProps {
 }
 
 const ScienceReportCard: React.FC<IScienceReportCardProps> = ({ report }: IScienceReportCardProps) => {
-  const file_url = 'https://nshm-static-reports.gns.cri.nz/NSHM/ScienceReports/' + report.filename;
+  const file_url = "https://nshm-static-reports.gns.cri.nz/NSHM/ScienceReports/" + report.filename;
   return (
     <Grid item xs={12}>
       <StyledCard>
@@ -77,7 +77,9 @@ const ScienceReportCard: React.FC<IScienceReportCardProps> = ({ report }: IScien
 
 const ScienceReportsComponent: React.FC = () => {
   const data = useLazyLoadQuery<ScienceReportsPageQuery>(scienceReportsPageQuery, {});
-  const published = data?.science_reports?.reports?.filter((report) => report?.status === 'Published' && report?.filename);
+  const published = data?.science_reports?.reports?.filter(
+    (report) => report?.status === "Published" && report?.filename
+  );
   // const reviewing = data?.science_reports?.reports?.filter((report) => report?.status === 'Review');
 
   return (

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<494911cc1c2d69a02411379f64a9ac94>>
+ * @generated SignedSource<<deedabead1386a2557d9951f5d28af62>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,26 +9,26 @@
 // @ts-nocheck
 
 import { ConcreteRequest, Query } from 'relay-runtime';
-export type ContentFormatEnum = "Raw" | "Markdown" | "%future added value";
-export type ContentStatusEnum = "Undefined" | "Draft" | "Published" | "Deprecated" | "%future added value";
-export type FaultModelPageQuery$variables = {};
+export type ContentFormatEnum = "Markdown" | "Raw" | "%future added value";
+export type ContentStatusEnum = "Deprecated" | "Draft" | "Published" | "Undefined" | "%future added value";
+export type FaultModelPageQuery$variables = Record<PropertyKey, never>;
 export type FaultModelPageQuery$data = {
   readonly textual_content: {
-    readonly ok: boolean | null;
     readonly content: ReadonlyArray<{
-      readonly index: string | null;
-      readonly content_type: ContentFormatEnum | null;
-      readonly text: string | null;
-      readonly created: any | null;
-      readonly author: string | null;
-      readonly tags: ReadonlyArray<string | null> | null;
-      readonly status: ContentStatusEnum | null;
-    } | null> | null;
-  } | null;
+      readonly author: string | null | undefined;
+      readonly content_type: ContentFormatEnum | null | undefined;
+      readonly created: any | null | undefined;
+      readonly index: string | null | undefined;
+      readonly status: ContentStatusEnum | null | undefined;
+      readonly tags: ReadonlyArray<string | null | undefined> | null | undefined;
+      readonly text: string | null | undefined;
+    } | null | undefined> | null | undefined;
+    readonly ok: boolean | null | undefined;
+  } | null | undefined;
 };
 export type FaultModelPageQuery = {
-  variables: FaultModelPageQuery$variables;
   response: FaultModelPageQuery$data;
+  variables: FaultModelPageQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

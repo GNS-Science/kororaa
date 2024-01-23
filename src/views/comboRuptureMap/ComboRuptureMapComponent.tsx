@@ -1,19 +1,19 @@
-import React, { useState, useEffect, useMemo } from 'react';
-import { LeafletMap } from '@gns-science/toshi-nest';
-import { GlobalStyles } from '@mui/material';
-import { usePaginationFragment } from 'react-relay';
-import '../../css/leaflet.timedimension.control.css';
-import { LatLngExpression } from 'leaflet';
-import { GeoJsonObject } from 'geojson';
-import SimpleBackdrop from '../../components/common/SimpleBackdrop';
-import { ComboRuptureMapPageState } from './comboRuptureMapPageReducer';
-import { ComboRuptureMapPageQuery$data } from './__generated__/ComboRuptureMapPageQuery.graphql';
-import { RuptureAnimationPageQuery } from '../ruptureAnimation/__generated__/RuptureAnimationPageQuery.graphql';
-import { RuptureAnimationPage_queryRoot$key } from '../ruptureAnimation/__generated__/RuptureAnimationPage_queryRoot.graphql';
-import { ruptureAnimationPage_queryRoot } from '../ruptureAnimation/RuptureAnimationPage';
-import ComboInfoPanelComponent, { ComboInfoPanelComponentProps } from './ComboInfoPanelComponent';
+import React, { useState, useEffect, useMemo } from "react";
+import { LeafletMap } from "@gns-science/toshi-nest";
+import { GlobalStyles } from "@mui/material";
+import { usePaginationFragment } from "react-relay";
+import "../../css/leaflet.timedimension.control.css";
+import { LatLngExpression } from "leaflet";
+import { GeoJsonObject } from "geojson";
+import SimpleBackdrop from "../../components/common/SimpleBackdrop";
+import { ComboRuptureMapPageState } from "./comboRuptureMapPageReducer";
+import { ComboRuptureMapPageQuery$data } from "./__generated__/ComboRuptureMapPageQuery.graphql";
+import { RuptureAnimationPageQuery } from "../ruptureAnimation/__generated__/RuptureAnimationPageQuery.graphql";
+import { RuptureAnimationPage_queryRoot$key } from "../ruptureAnimation/__generated__/RuptureAnimationPage_queryRoot.graphql";
+import { ruptureAnimationPage_queryRoot } from "../ruptureAnimation/RuptureAnimationPage";
+import ComboInfoPanelComponent, { ComboInfoPanelComponentProps } from "./ComboInfoPanelComponent";
 
-import TimeDimensionLayerContext, { TimeDimensionLayerState } from './store';
+import TimeDimensionLayerContext, { TimeDimensionLayerState } from "./store";
 
 type ComboRuptureMapComponentProps = {
   queryData: ComboRuptureMapPageQuery$data;
@@ -36,7 +36,10 @@ export const ComboRuptureMapComponent = (props: ComboRuptureMapComponentProps) =
   };
 
   // Animation
-  const { data, hasNext, loadNext } = usePaginationFragment<RuptureAnimationPageQuery, RuptureAnimationPage_queryRoot$key>(ruptureAnimationPage_queryRoot, ruptureConnectionRef);
+  const { data, hasNext, loadNext } = usePaginationFragment<
+    RuptureAnimationPageQuery,
+    RuptureAnimationPage_queryRoot$key
+  >(ruptureAnimationPage_queryRoot, ruptureConnectionRef);
   const [needsMore, setNeedsMore] = useState<boolean>(false);
   const [hasNoMore, setHasNoMore] = useState<boolean>(false);
   const totalRuptures = useMemo(() => {
@@ -91,10 +94,10 @@ export const ComboRuptureMapComponent = (props: ComboRuptureMapComponentProps) =
     if (feature?.properties?.FaultID) {
       const faultId = feature?.properties?.FaultID;
       const faultName = feature?.properties?.FaultName;
-      const ruptureCount = feature?.properties?.['Magnitude.count'];
-      const participationRate = feature?.properties?.['rate_weighted_mean.sum'];
-      const upperMag = feature?.properties?.['Magnitude.max'];
-      const lowerMag = feature?.properties?.['Magnitude.min'];
+      const ruptureCount = feature?.properties?.["Magnitude.count"];
+      const participationRate = feature?.properties?.["rate_weighted_mean.sum"];
+      const upperMag = feature?.properties?.["Magnitude.max"];
+      const lowerMag = feature?.properties?.["Magnitude.min"];
       const dipDegrees = feature?.properties?.DipDeg;
       const dipDirection = feature?.properties?.DipDir;
       const rake = feature?.properties?.Rake;
@@ -133,12 +136,12 @@ export const ComboRuptureMapComponent = (props: ComboRuptureMapComponentProps) =
   const timeDimensionOptions = {
     currentTime: 1,
     times: timeArray || [],
-    timeInterval: 'P1M/2021-01-01T00:00:00Z/P1M',
-    period: 'P1D',
+    timeInterval: "P1M/2021-01-01T00:00:00Z/P1M",
+    period: "P1D",
   };
 
   const timeDimensionControlOptions = {
-    position: 'bottomright',
+    position: "bottomright",
     displayDate: false,
     maxSpeed: 5,
     minSpeed: 1,
@@ -162,12 +165,17 @@ export const ComboRuptureMapComponent = (props: ComboRuptureMapComponentProps) =
 
   const surfaceProperties = useMemo(() => {
     return data?.SOLVIS_filter_ruptures?.edges?.map((edge) => {
-      return { magnitude: edge?.node?.magnitude, area: edge?.node?.area, length: edge?.node?.length, rate_weighted_mean: edge?.node?.rate_weighted_mean };
+      return {
+        magnitude: edge?.node?.magnitude,
+        area: edge?.node?.area,
+        length: edge?.node?.length,
+        rate_weighted_mean: edge?.node?.rate_weighted_mean,
+      };
     });
   }, [data]);
 
   const timeDimensionLayerProps = {
-    geoJsonData: (ruptureData as typeof GeoJsonObject[]) || '',
+    geoJsonData: (ruptureData as typeof GeoJsonObject[]) || "",
     setTimeDimensionNeedsMore: setNeedsMore,
     setTimeDimensionHasNoMore: setHasNoMore,
     surfaceProperties: surfaceProperties || [],
@@ -188,15 +196,15 @@ export const ComboRuptureMapComponent = (props: ComboRuptureMapComponentProps) =
       <React.Suspense fallback={<SimpleBackdrop />}>
         {isPending && <SimpleBackdrop />}
         <TimeDimensionLayerContext.Provider value={timeDimensionLayerState}>
-          <GlobalStyles styles={{ '.leaflet-popup-content p': { margin: '0' } }} />
+          <GlobalStyles styles={{ ".leaflet-popup-content p": { margin: "0" } }} />
           <LeafletMap
             zoom={zoom}
             zoomLevel={zoomLevel}
             setZoomLevel={setZoomLevel}
             nzCentre={nzCentre as typeof LatLngExpression}
             geoJsonData={geoJson}
-            height={'80vh'}
-            width={'100%'}
+            height={"80vh"}
+            width={"100%"}
             setFullscreen={setFullscreen}
             onEachFeature={onEachFeature}
             timeDimension={true}

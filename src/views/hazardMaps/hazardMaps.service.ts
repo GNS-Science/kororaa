@@ -1,19 +1,22 @@
-import { HAZARD_MODEL } from '../../utils/environmentVariables';
+import { HAZARD_MODEL } from "../../utils/environmentVariables";
 export interface ColorScale {
   levels: number[];
   hexrgbs: (string | undefined)[];
 }
 
 export const getHazardMapCSVData = (data: string[], vs30: number, imt: string, poe: string, statistic: string) => {
-  const datetimeAndVersion = [`date-time: ${new Date().toLocaleString('en-GB', { timeZone: 'UTC' })}, (UTC)`, `NSHM model version: ${HAZARD_MODEL}`];
+  const datetimeAndVersion = [
+    `date-time: ${new Date().toLocaleString("en-GB", { timeZone: "UTC" })}, (UTC)`,
+    `NSHM model version: ${HAZARD_MODEL}`,
+  ];
 
   const csvData: (number | string)[][] = [
     [`vs30=${vs30}`, `spectral period=${imt}`, `Poe=${poe}`, `Statistic=${statistic}`],
-    ['lon', 'lat', 'shaking intensity(g)'],
+    ["lon", "lat", "shaking intensity(g)"],
   ];
 
-  if (statistic === 'cov') {
-    csvData[1][2] = 'coefficient of variation';
+  if (statistic === "cov") {
+    csvData[1][2] = "coefficient of variation";
   }
 
   data.forEach((geojsonString) => {
@@ -36,7 +39,7 @@ export const getTickValues = (levels: number[]): number[] => {
 };
 
 export const parsePoeString = (poe: string): number => {
-  return Number(poe.replace('% in 50 years', '')) / 100;
+  return Number(poe.replace("% in 50 years", "")) / 100;
 };
 
 export const readablePoe = (poe: number): string => {

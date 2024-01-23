@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<611e8330bd6f8fcf9558172447612860>>
+ * @generated SignedSource<<17de5a73c39b15a3992aab4c04a67e50>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,70 +10,70 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ContentFormatEnum = "Raw" | "Markdown" | "%future added value";
+export type ContentFormatEnum = "Markdown" | "Raw" | "%future added value";
 export type SimpleSortRupturesArgs = {
-  attribute?: string | null;
-  ascending?: boolean | null;
+  ascending?: boolean | null | undefined;
+  attribute?: string | null | undefined;
 };
 export type ComboRuptureMapPageQuery$variables = {
-  first: number;
-  after?: string | null;
-  model_id: string;
+  after?: string | null | undefined;
+  corupture_fault_names?: ReadonlyArray<string | null | undefined> | null | undefined;
   fault_system: string;
-  location_ids: ReadonlyArray<string | null>;
+  first: number;
+  location_ids: ReadonlyArray<string | null | undefined>;
+  maximum_mag?: number | null | undefined;
+  maximum_rate?: number | null | undefined;
+  minimum_mag?: number | null | undefined;
+  minimum_rate?: number | null | undefined;
+  model_id: string;
   radius_km: number;
-  corupture_fault_names?: ReadonlyArray<string | null> | null;
-  minimum_mag?: number | null;
-  maximum_mag?: number | null;
-  minimum_rate?: number | null;
-  maximum_rate?: number | null;
-  sortby?: ReadonlyArray<SimpleSortRupturesArgs | null> | null;
+  sortby?: ReadonlyArray<SimpleSortRupturesArgs | null | undefined> | null | undefined;
 };
 export type ComboRuptureMapPageQuery$data = {
-  readonly textual_content_header: {
-    readonly ok: boolean | null;
-    readonly content: ReadonlyArray<{
-      readonly content_type: ContentFormatEnum | null;
-      readonly text: string | null;
-    } | null> | null;
-  } | null;
+  readonly SOLVIS_filter_rupture_sections: {
+    readonly color_scale: {
+      readonly color_map: {
+        readonly hexrgbs: ReadonlyArray<string | null | undefined> | null | undefined;
+        readonly levels: ReadonlyArray<number | null | undefined> | null | undefined;
+      } | null | undefined;
+      readonly max_value: number | null | undefined;
+      readonly min_value: number | null | undefined;
+      readonly name: string | null | undefined;
+    } | null | undefined;
+    readonly fault_surfaces: any | null | undefined;
+    readonly fault_traces: any | null | undefined;
+    readonly mfd_histogram: ReadonlyArray<{
+      readonly bin_center: number | null | undefined;
+      readonly cumulative_rate: number | null | undefined;
+      readonly rate: number | null | undefined;
+    } | null | undefined> | null | undefined;
+    readonly model_id: string | null | undefined;
+    readonly section_count: number | null | undefined;
+  } | null | undefined;
+  readonly SOLVIS_filter_ruptures: {
+    readonly total_count: number | null | undefined;
+  } | null | undefined;
   readonly SOLVIS_locations_by_id: {
     readonly edges: ReadonlyArray<{
       readonly node: {
-        readonly location_id: string | null;
-        readonly name: string | null;
-        readonly radius_geojson: any | null;
-      } | null;
-    } | null>;
-  } | null;
-  readonly SOLVIS_filter_rupture_sections: {
-    readonly model_id: string | null;
-    readonly section_count: number | null;
-    readonly fault_surfaces: any | null;
-    readonly fault_traces: any | null;
-    readonly color_scale: {
-      readonly name: string | null;
-      readonly min_value: number | null;
-      readonly max_value: number | null;
-      readonly color_map: {
-        readonly levels: ReadonlyArray<number | null> | null;
-        readonly hexrgbs: ReadonlyArray<string | null> | null;
-      } | null;
-    } | null;
-    readonly mfd_histogram: ReadonlyArray<{
-      readonly bin_center: number | null;
-      readonly rate: number | null;
-      readonly cumulative_rate: number | null;
-    } | null> | null;
-  } | null;
-  readonly SOLVIS_filter_ruptures: {
-    readonly total_count: number | null;
-  } | null;
+        readonly location_id: string | null | undefined;
+        readonly name: string | null | undefined;
+        readonly radius_geojson: any | null | undefined;
+      } | null | undefined;
+    } | null | undefined>;
+  } | null | undefined;
+  readonly textual_content_header: {
+    readonly content: ReadonlyArray<{
+      readonly content_type: ContentFormatEnum | null | undefined;
+      readonly text: string | null | undefined;
+    } | null | undefined> | null | undefined;
+    readonly ok: boolean | null | undefined;
+  } | null | undefined;
   readonly " $fragmentSpreads": FragmentRefs<"RuptureAnimationPage_queryRoot">;
 };
 export type ComboRuptureMapPageQuery = {
-  variables: ComboRuptureMapPageQuery$variables;
   response: ComboRuptureMapPageQuery$data;
+  variables: ComboRuptureMapPageQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

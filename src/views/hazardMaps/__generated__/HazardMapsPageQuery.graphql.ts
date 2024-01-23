@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<78d624f63b6d1ac507cd84e2947c852b>>
+ * @generated SignedSource<<f35c9eedf6bb884042b5b59e668b8c4f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,57 +9,57 @@
 // @ts-nocheck
 
 import { ConcreteRequest, Query } from 'relay-runtime';
-export type ColourScaleNormalise = "LOG" | "LIN" | "%future added value";
-export type ContentFormatEnum = "Raw" | "Markdown" | "%future added value";
-export type ContentStatusEnum = "Undefined" | "Draft" | "Published" | "Deprecated" | "%future added value";
+export type ColourScaleNormalise = "LIN" | "LOG" | "%future added value";
+export type ContentFormatEnum = "Markdown" | "Raw" | "%future added value";
+export type ContentStatusEnum = "Deprecated" | "Draft" | "Published" | "Undefined" | "%future added value";
 export type RegionGrid = "NZ_0_1_NB_1_0" | "NZ_0_1_NB_1_1" | "NZ_0_2_NB_1_1" | "WLG_0_01_nb_1_1" | "WLG_0_05_nb_1_1" | "%future added value";
 export type HazardMapsPageQuery$variables = {
-  grid_id?: RegionGrid | null;
-  hazard_model_id?: string | null;
-  imt?: string | null;
-  agg?: string | null;
-  vs30?: number | null;
-  poe?: number | null;
-  color_scale?: string | null;
-  color_scale_vmax?: number | null;
-  fill_opacity?: number | null;
-  stroke_width?: number | null;
-  stroke_opacity?: number | null;
-  color_scale_normalise?: ColourScaleNormalise | null;
+  agg?: string | null | undefined;
+  color_scale?: string | null | undefined;
+  color_scale_normalise?: ColourScaleNormalise | null | undefined;
+  color_scale_vmax?: number | null | undefined;
+  fill_opacity?: number | null | undefined;
+  grid_id?: RegionGrid | null | undefined;
+  hazard_model_id?: string | null | undefined;
+  imt?: string | null | undefined;
+  poe?: number | null | undefined;
+  stroke_opacity?: number | null | undefined;
+  stroke_width?: number | null | undefined;
+  vs30?: number | null | undefined;
 };
 export type HazardMapsPageQuery$data = {
   readonly gridded_hazard: {
-    readonly ok: boolean | null;
     readonly gridded_hazard: ReadonlyArray<{
-      readonly grid_id: RegionGrid | null;
-      readonly hazard_model: string | null;
-      readonly imt: string | null;
-      readonly agg: string | null;
+      readonly agg: string | null | undefined;
+      readonly grid_id: RegionGrid | null | undefined;
       readonly hazard_map: {
-        readonly geojson: any | null;
         readonly colour_scale: {
-          readonly levels: ReadonlyArray<number | null> | null;
-          readonly hexrgbs: ReadonlyArray<string | null> | null;
-        } | null;
-      } | null;
-    } | null> | null;
-  } | null;
+          readonly hexrgbs: ReadonlyArray<string | null | undefined> | null | undefined;
+          readonly levels: ReadonlyArray<number | null | undefined> | null | undefined;
+        } | null | undefined;
+        readonly geojson: any | null | undefined;
+      } | null | undefined;
+      readonly hazard_model: string | null | undefined;
+      readonly imt: string | null | undefined;
+    } | null | undefined> | null | undefined;
+    readonly ok: boolean | null | undefined;
+  } | null | undefined;
   readonly textual_content: {
-    readonly ok: boolean | null;
     readonly content: ReadonlyArray<{
-      readonly index: string | null;
-      readonly content_type: ContentFormatEnum | null;
-      readonly text: string | null;
-      readonly created: any | null;
-      readonly author: string | null;
-      readonly tags: ReadonlyArray<string | null> | null;
-      readonly status: ContentStatusEnum | null;
-    } | null> | null;
-  } | null;
+      readonly author: string | null | undefined;
+      readonly content_type: ContentFormatEnum | null | undefined;
+      readonly created: any | null | undefined;
+      readonly index: string | null | undefined;
+      readonly status: ContentStatusEnum | null | undefined;
+      readonly tags: ReadonlyArray<string | null | undefined> | null | undefined;
+      readonly text: string | null | undefined;
+    } | null | undefined> | null | undefined;
+    readonly ok: boolean | null | undefined;
+  } | null | undefined;
 };
 export type HazardMapsPageQuery = {
-  variables: HazardMapsPageQuery$variables;
   response: HazardMapsPageQuery$data;
+  variables: HazardMapsPageQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

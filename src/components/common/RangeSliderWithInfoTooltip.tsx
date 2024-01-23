@@ -1,7 +1,7 @@
-import { Box, Grid, Input, Slider, Typography } from '@mui/material';
-import { styled } from '@mui/material/styles';
-import React from 'react';
-import InfoTooltip from './InfoTooltip';
+import { Box, Grid, Input, Slider, Typography } from "@mui/material";
+import { styled } from "@mui/material/styles";
+import React from "react";
+import InfoTooltip from "./InfoTooltip";
 
 export interface RangeSliderWithInfoTooltipProps {
   label: string;
@@ -41,7 +41,12 @@ const RangeSliderWithInfoTooltip: React.FC<RangeSliderWithInfoTooltipProps> = ({
       </Typography>
       <Grid container spacing={3} alignItems="center">
         <Grid item>
-          <SmallInput value={valuesRange[0]} size="small" onChange={(event) => setValues([Number(event.target.value), valuesRange[1]])} inputProps={inputProps} />
+          <SmallInput
+            value={valuesRange[0]}
+            size="small"
+            onChange={(event) => setValues([Number(event.target.value), valuesRange[1]])}
+            inputProps={inputProps}
+          />
         </Grid>
         <Grid item xs>
           <Slider
@@ -55,7 +60,12 @@ const RangeSliderWithInfoTooltip: React.FC<RangeSliderWithInfoTooltipProps> = ({
           />
         </Grid>
         <Grid item>
-          <SmallInput value={valuesRange[1]} size="small" onChange={(event) => setValues([valuesRange[0], Number(event.target.value)])} inputProps={inputProps} />
+          <SmallInput
+            value={valuesRange[1]}
+            size="small"
+            onChange={(event) => setValues([valuesRange[0], Number(event.target.value)])}
+            inputProps={inputProps}
+          />
         </Grid>
       </Grid>
     </Box>

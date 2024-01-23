@@ -14,24 +14,22 @@
 // ***********************************************************
 
 // Import commands.js using ES2015 syntax:
-import './commands';
+import "./commands";
 
-Cypress.on('uncaught:exception', (err, runnable) => {
-  if (err.message.includes('Invalid lat, lon input')) {
+Cypress.on("uncaught:exception", (err, runnable) => {
+  if (err.message.includes("Invalid lat, lon input")) {
     return false;
   }
-  if (err.message.includes('Cannot read properties of undefined')) {
+  if (err.message.includes("Cannot read properties of undefined")) {
     return false;
   }
-  if (err.message.includes('> Unexpected token < in JSON at position 0')) {
+  if (err.message.includes("> Unexpected token < in JSON at position 0")) {
     return false;
   }
-  if (err.message.includes('(No errors)')) {
+  if (err.message.includes("(No errors)")) {
     return false;
   }
 });
-
-
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')

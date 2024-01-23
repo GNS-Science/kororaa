@@ -1,13 +1,29 @@
-import React, { useState, useEffect } from 'react';
-import { Fab, InputAdornment, Button, Input, FormControl, InputLabel, Box, Autocomplete, TextField, FormHelperText, IconButton, Alert, Collapse, Tooltip, Typography } from '@mui/material';
-import ClearIcon from '@mui/icons-material/Clear';
-import CloseIcon from '@mui/icons-material/Close';
-import { useReactToPrint } from 'react-to-print';
-import PrintIcon from '@mui/icons-material/Print';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import {
+  Fab,
+  InputAdornment,
+  Button,
+  Input,
+  FormControl,
+  InputLabel,
+  Box,
+  Autocomplete,
+  TextField,
+  FormHelperText,
+  IconButton,
+  Alert,
+  Collapse,
+  Tooltip,
+  Typography,
+} from "@mui/material";
+import ClearIcon from "@mui/icons-material/Clear";
+import CloseIcon from "@mui/icons-material/Close";
+import { useReactToPrint } from "react-to-print";
+import PrintIcon from "@mui/icons-material/Print";
+import { Link } from "react-router-dom";
 
-import CustomControlsBar from '../../components/common/CustomControlsBar';
-import { hazardPageOptions } from './constants/hazardPageOptions';
+import CustomControlsBar from "../../components/common/CustomControlsBar";
+import { hazardPageOptions } from "./constants/hazardPageOptions";
 import {
   getPoeInputDisplay,
   numbersToStrings,
@@ -20,13 +36,18 @@ import {
   validateLocationData,
   validatePoeValue,
   validateVs30s,
-} from './hazardPage.service';
-import { HazardPageState, LocationData } from './hazardPageReducer';
-import SelectControlMultiple from '../../components/common/SelectControlMultiple';
-import { SelectControl } from '@gns-science/toshi-nest';
-import { getLatLonString, combineLocationData, getNamesFromLocationData, validateLatLon } from '../../services/latLon/latLon.service';
-import { locationTooltip, tooManyCurves, latLonTooltip, noLocations, noVs30s, noImts } from './constants/hazardCharts';
-import { imtTooltip, vs30Tooltip } from '../../constants/tooltips';
+} from "./hazardPage.service";
+import { HazardPageState, LocationData } from "./hazardPageReducer";
+import SelectControlMultiple from "../../components/common/SelectControlMultiple";
+import { SelectControl } from "@gns-science/toshi-nest";
+import {
+  getLatLonString,
+  combineLocationData,
+  getNamesFromLocationData,
+  validateLatLon,
+} from "../../services/latLon/latLon.service";
+import { locationTooltip, tooManyCurves, latLonTooltip, noLocations, noVs30s, noImts } from "./constants/hazardCharts";
+import { imtTooltip, vs30Tooltip } from "../../constants/tooltips";
 
 interface HazardChartsControlsProps {
   state: HazardPageState;
@@ -34,23 +55,27 @@ interface HazardChartsControlsProps {
   printTargetRef: React.RefObject<HTMLDivElement>;
 }
 
-const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, dispatch, printTargetRef }: HazardChartsControlsProps) => {
+const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({
+  state,
+  dispatch,
+  printTargetRef,
+}: HazardChartsControlsProps) => {
   const [locationData, setLocationData] = useState<LocationData[]>(state.locationData);
   const [locations, setLocations] = useState<string[]>(getNamesFromLocationData(state.locationData));
   const [latLon, setLatLon] = useState<string>(getLatLonString(state.locationData));
   const [latLonError, setLatLonError] = useState<boolean>(false);
-  const [latLonErrorMessage, setLatLonErrorMessage] = useState<string>('');
+  const [latLonErrorMessage, setLatLonErrorMessage] = useState<string>("");
   const [vs30s, setVs30s] = useState<number[]>(state.vs30s);
   const [imts, setImts] = useState<string[]>(state.imts);
   const [timePeriod, setTimePeriod] = useState<number>(state.timePeriod);
 
-  const [inputValue, setInputValue] = useState<string>('');
+  const [inputValue, setInputValue] = useState<string>("");
   const [poeInputError, setPoeInputError] = useState<boolean>(false);
-  const [poeInputErrorMessage, setPoeInputErrorMessage] = useState<string>('');
+  const [poeInputErrorMessage, setPoeInputErrorMessage] = useState<string>("");
   const [poeInput, setPoeInput] = useState<string>(getPoeInputDisplay(state.poe));
 
   const [controlsError, setControlsError] = useState<boolean>(false);
-  const [controlsErrorMessage, setControlsErrorMessage] = useState<string>('');
+  const [controlsErrorMessage, setControlsErrorMessage] = useState<string>("");
 
   const [locationError, setLocationError] = useState<boolean>(false);
   const [vs30Error, setVs30Error] = useState<boolean>(false);
@@ -91,7 +116,7 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, disp
     setLatLonError(validateLatLon(event.target.value));
   };
 
-  const handleLocationChange = (event: unknown, newValue: string[] | null) => {
+  const handleLocationChange = (_: unknown, newValue: string[] | null) => {
     if (newValue) {
       const locations = newValue as string[];
       setLocations(locations);
@@ -107,9 +132,15 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, disp
       validateImts(imts, setImtError);
       validateCurveGroupLength(locationData, vs30s, imts);
       setDataFetched(true);
-      dispatch({ locationData, vs30s, imts, poe: poeInput.length === 0 || poeInput === ' ' ? undefined : Number(poeInput) / 100, timePeriod });
+      dispatch({
+        locationData,
+        vs30s,
+        imts,
+        poe: poeInput.length === 0 || poeInput === " " ? undefined : Number(poeInput) / 100,
+        timePeriod,
+      });
     } catch (err) {
-      if (err === 'Invalid lat, lon input') {
+      if (err === "Invalid lat, lon input") {
         setLatLonError(true);
         setLatLonErrorMessage(err as string);
       } else if (err === tooManyCurves) {
@@ -132,7 +163,7 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, disp
   };
 
   return (
-    <Box sx={{ marginBottom: '0.5rem', width: '100%', border: 'solid 1px black', padding: '0.5rem' }}>
+    <Box sx={{ marginBottom: "0.5rem", width: "100%", border: "solid 1px black", padding: "0.5rem" }}>
       <Collapse in={controlsError || locationError || vs30Error || imtError}>
         <Alert
           severity="error"
@@ -159,7 +190,7 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, disp
           value={locations}
           onChange={handleLocationChange}
           inputValue={inputValue}
-          onInputChange={(event, newInputValue) => {
+          onInputChange={(_event, newInputValue) => {
             setInputValue(newInputValue);
           }}
           options={hazardPageOptions.locations.sort()}
@@ -185,7 +216,7 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, disp
             onBlurCapture={handleLatLonBlur}
             aria-describedby="component-helper-text"
             endAdornment={
-              <InputAdornment position="end" onClick={() => setLatLon('')}>
+              <InputAdornment position="end" onClick={() => setLatLon("")}>
                 <IconButton>
                   <ClearIcon />
                 </IconButton>
@@ -203,17 +234,27 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, disp
             tooltip={vs30Tooltip}
           />
         </FormControl>
-        <SelectControlMultiple tooltip={imtTooltip} options={hazardPageOptions.imts} selection={imts} setSelection={setImts} name="Spectral Period" />
-        <div style={{ display: 'flex', flexDirection: 'column', textAlign: 'center', position: 'relative', top: -11 }}>
-          <InputLabel sx={{ fontSize: '1rem', transform: 'matrix(0.75, 0, 0, 0.75, -22, 20)' }}> Probability of Exceedance (PoE) </InputLabel>
+        <SelectControlMultiple
+          tooltip={imtTooltip}
+          options={hazardPageOptions.imts}
+          selection={imts}
+          setSelection={setImts}
+          name="Spectral Period"
+        />
+        <div style={{ display: "flex", flexDirection: "column", textAlign: "center", position: "relative", top: -11 }}>
+          <InputLabel sx={{ fontSize: "1rem", transform: "matrix(0.75, 0, 0, 0.75, -22, 20)" }}>
+            {" "}
+            Probability of Exceedance (PoE){" "}
+          </InputLabel>
           <Tooltip
             title={
               <React.Fragment>
                 <Typography fontSize={11}>
-                  The probability of experiencing an acceleration (g) or more within the next T years where T is the chosen Time Period. See the{' '}
-                  <Link to={'/TechInfo#forecast-timespan'} target="_blank" rel="noopener noreferrer">
+                  The probability of experiencing an acceleration (g) or more within the next T years where T is the
+                  chosen Time Period. See the{" "}
+                  <Link to={"/TechInfo#forecast-timespan"} target="_blank" rel="noopener noreferrer">
                     Technical Info Page
-                  </Link>{' '}
+                  </Link>{" "}
                   for more detail.
                 </Typography>
               </React.Fragment>
@@ -222,8 +263,8 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, disp
             placement="top"
           >
             <div>
-              <FormControl sx={{ width: 300, display: 'flex', flexDirection: 'row' }} variant="standard">
-                <div style={{ margin: '15px 10px 0 0' }}>
+              <FormControl sx={{ width: 300, display: "flex", flexDirection: "row" }} variant="standard">
+                <div style={{ margin: "15px 10px 0 0" }}>
                   <Input
                     error={poeInputError}
                     id="poe-input"
@@ -236,10 +277,12 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({ state, disp
                     aria-describedby="component-helper-text"
                     endAdornment={<InputAdornment position="end">%</InputAdornment>}
                   />
-                  {poeInputError && <FormHelperText id="outlined-weight-helper-text">{poeInputErrorMessage}</FormHelperText>}
+                  {poeInputError && (
+                    <FormHelperText id="outlined-weight-helper-text">{poeInputErrorMessage}</FormHelperText>
+                  )}
                 </div>
-                <div style={{ margin: '0 10px 0 0' }}>
-                  <Typography sx={{ position: 'relative', top: 20, padding: '10 0 10 0' }}> in </Typography>
+                <div style={{ margin: "0 10px 0 0" }}>
+                  <Typography sx={{ position: "relative", top: 20, padding: "10 0 10 0" }}> in </Typography>
                 </div>
                 <SelectControl
                   name=""

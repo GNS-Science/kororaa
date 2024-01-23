@@ -1,12 +1,12 @@
-import { roundLatLon } from '../../services/latLon/latLon.service';
-import { HAZARD_COLOR_LIMIT, HAZARD_MODEL } from '../../utils/environmentVariables';
+import { roundLatLon } from "../../services/latLon/latLon.service";
+import { HAZARD_COLOR_LIMIT, HAZARD_MODEL } from "../../utils/environmentVariables";
 
-import { tooManyCurves, noLocations, noImts, noVs30s } from './constants/hazardCharts';
-import { hazardPageLocations } from './constants/hazardPageOptions';
-import { LocationData } from './hazardPageReducer';
-import { convertAgg } from '../../services/spectralAccel/spectralAccel.service';
+import { tooManyCurves, noLocations, noImts, noVs30s } from "./constants/hazardCharts";
+import { hazardPageLocations } from "./constants/hazardPageOptions";
+import { LocationData } from "./hazardPageReducer";
+import { convertAgg } from "../../services/spectralAccel/spectralAccel.service";
 
-import { HazardChartsPlotsViewQuery$data } from './__generated__/HazardChartsPlotsViewQuery.graphql';
+import { HazardChartsPlotsViewQuery$data } from "./__generated__/HazardChartsPlotsViewQuery.graphql";
 
 export interface XY {
   x: number;
@@ -50,7 +50,9 @@ export const getAllCurveGroups = (data: HazardChartsPlotsViewQuery$data): Hazard
     const location = data.hazard_curves?.locations?.filter((location) => location?.code === currentCurve?.loc);
 
     if (imt && levels && values && agg) {
-      const curveGroupKey = `${currentCurve.vs30}m/s ${currentCurve.imt} ${location && location[0]?.key ? location[0]?.name : roundLatLon(currentCurve?.loc)} `;
+      const curveGroupKey = `${currentCurve.vs30}m/s ${currentCurve.imt} ${
+        location && location[0]?.key ? location[0]?.name : roundLatLon(currentCurve?.loc)
+      } `;
       const curveName = convertAgg(agg);
 
       const curve: number[][] = [];
@@ -71,7 +73,10 @@ export const getAllCurveGroups = (data: HazardChartsPlotsViewQuery$data): Hazard
   return curveGroups;
 };
 
-export const getFilteredCurveGroups = (curveGroups: HazardUncertaintyChartData, imts: string[]): HazardUncertaintyChartData => {
+export const getFilteredCurveGroups = (
+  curveGroups: HazardUncertaintyChartData,
+  imts: string[]
+): HazardUncertaintyChartData => {
   const filteredCurveGroups: HazardUncertaintyChartData = {};
 
   imts.forEach((imt) => {
@@ -111,21 +116,24 @@ export const getHazardCSVData = (data: HazardChartsPlotsViewQuery$data): string[
           const aMatch = a?.imt.match(regExp);
           const bMatch = b?.imt.match(regExp);
           if (aMatch && bMatch) {
-            const aMatchNumber = parseFloat(aMatch[0].replace(/[()]/g, ''));
-            const bMatchNumber = parseFloat(bMatch[0].replace(/[()]/g, ''));
+            const aMatchNumber = parseFloat(aMatch[0].replace(/[()]/g, ""));
+            const bMatchNumber = parseFloat(bMatch[0].replace(/[()]/g, ""));
             if (aMatchNumber && bMatchNumber) {
               return aMatchNumber - bMatchNumber;
             }
           }
         }
         return 0;
-      }),
+      })
     )
     .flat();
 
-  const datetimeAndVersion = [`date-time: ${new Date().toLocaleString('en-GB', { timeZone: 'UTC' })}, (UTC)`, `NSHM model version: ${HAZARD_MODEL}`];
+  const datetimeAndVersion = [
+    `date-time: ${new Date().toLocaleString("en-GB", { timeZone: "UTC" })}, (UTC)`,
+    `NSHM model version: ${HAZARD_MODEL}`,
+  ];
   const CSVData = sortedHazardCurves.map((curve) => {
-    const latLonArray = curve?.loc?.split('~');
+    const latLonArray = curve?.loc?.split("~");
     if (latLonArray && curve?.curve?.values && curve?.vs30) {
       const curveCSVData = [latLonArray[0], latLonArray[1], curve?.vs30.toString(), curve?.imt, curve?.agg];
       curve?.curve?.values.forEach((value) => {
@@ -137,7 +145,7 @@ export const getHazardCSVData = (data: HazardChartsPlotsViewQuery$data): string[
     }
   });
   if (CSVData) {
-    const headings = ['lat', 'lon', 'vs30', 'period', 'statistic'];
+    const headings = ["lat", "lon", "vs30", "period", "statistic"];
     if (data && data?.hazard_curves && data?.hazard_curves?.curves && data?.hazard_curves?.curves[0]?.curve?.levels) {
       data?.hazard_curves?.curves[0]?.curve?.levels.forEach((level) => {
         if (level) {
@@ -183,20 +191,20 @@ export const convertIDsToLocations = (IDs: string[]): string[] => {
 };
 
 export const getPoeInputDisplay = (poe: number | undefined): string => {
-  return poe ? `${poe * 100}` : ' ';
+  return poe ? `${poe * 100}` : " ";
 };
 
 export const validatePoeValue = (poe: string) => {
-  if (poe.length === 0 || poe === ' ') {
+  if (poe.length === 0 || poe === " ") {
     return;
   }
 
   const percentage = Number(poe);
 
   if (percentage >= 100 || percentage <= 0) {
-    throw 'Out of range 0-100';
+    throw "Out of range 0-100";
   } else if (!percentage) {
-    throw 'Not a number';
+    throw "Not a number";
   }
 };
 
@@ -241,8 +249,13 @@ export const sortCurveGroups = (curveGroups: HazardUncertaintyChartData): Hazard
   const sortedCurves: HazardUncertaintyChartData = {};
 
   const curveKeyObjects = Object.keys(curveGroups).map((key) => {
-    const keyArray = key.split(' ');
-    const keyObject = { key: key, vs30: keyArray[0], imt: keyArray[1], location: keyArray.length === 3 ? keyArray[2] : `${keyArray[2]} ${keyArray[3]}` };
+    const keyArray = key.split(" ");
+    const keyObject = {
+      key: key,
+      vs30: keyArray[0],
+      imt: keyArray[1],
+      location: keyArray.length === 3 ? keyArray[2] : `${keyArray[2]} ${keyArray[3]}`,
+    };
     return keyObject;
   });
 
@@ -259,7 +272,10 @@ export const sortCurveGroups = (curveGroups: HazardUncertaintyChartData): Hazard
   return sortedCurves;
 };
 
-export const validateLocationData = (locationData: LocationData[], setLocationError: React.Dispatch<React.SetStateAction<boolean>>) => {
+export const validateLocationData = (
+  locationData: LocationData[],
+  setLocationError: React.Dispatch<React.SetStateAction<boolean>>
+) => {
   if (locationData.length === 0) {
     throw noLocations;
   } else {
@@ -292,6 +308,6 @@ export const readableTimePeriodArray = (timePeriods: number[]): string[] => {
 };
 
 export const parseTimePeriodString = (timePeriod: string): number => {
-  const timePeriodArray = timePeriod.split(' ');
+  const timePeriodArray = timePeriod.split(" ");
   return Number(timePeriodArray[0]);
 };

@@ -1,27 +1,27 @@
-import React from 'react';
-import { styled } from '@mui/material/styles';
-import Grid from '@mui/material/Grid';
-import ReactMarkdown from 'react-markdown';
-// import { graphql } from 'babel-plugin-relay/macro';
+import React from "react";
+import { styled } from "@mui/material/styles";
+import Grid from "@mui/material/Grid";
+import ReactMarkdown from "react-markdown";
+// import { graphql } from 'react-relay';
 // import { useLazyLoadQuery } from 'react-relay';
 // import { ModelVersionsPageQuery } from './__generated__/ModelVersionsPageQuery.graphql';
-import SimpleBackdrop from '../../components/common/SimpleBackdrop';
-import { HAZARD_MODEL } from '../../utils/environmentVariables';
+import SimpleBackdrop from "../../components/common/SimpleBackdrop";
+import { HAZARD_MODEL } from "../../utils/environmentVariables";
 
-import { Typography } from '@mui/material';
+import { Typography } from "@mui/material";
 
-const PageContainer = styled('div')({
-  justifyContent: 'center',
-  alignItems: 'center',
-  padding: '2rem',
-  marginBottom: '2rem',
+const PageContainer = styled("div")({
+  justifyContent: "center",
+  alignItems: "center",
+  padding: "2rem",
+  marginBottom: "2rem",
 });
 
-const TitleContainer = styled('div')({
-  justifyContent: 'left',
-  textAlign: 'left',
-  width: '100%',
-  paddingBottom: '1rem',
+const TitleContainer = styled("div")({
+  justifyContent: "left",
+  textAlign: "left",
+  width: "100%",
+  paddingBottom: "1rem",
 });
 
 const markdown = `

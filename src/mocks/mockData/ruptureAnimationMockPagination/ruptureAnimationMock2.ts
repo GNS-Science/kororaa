@@ -2,7 +2,7 @@ export const ruptureAnimationMock2 = {
   SOLVIS_filter_ruptures: {
     pageInfo: {
       hasNextPage: true,
-      endCursor: 'UnVwdHVyZURldGFpbENvbm5lY3Rpb25DdXJzb3I6MTQ=',
+      endCursor: "UnVwdHVyZURldGFpbENvbm5lY3Rpb25DdXJzb3I6MTQ=",
     },
     edges: [
       {
@@ -13,10 +13,10 @@ export const ruptureAnimationMock2 = {
           rate_weighted_mean: 0.0016868365928530693,
           area: 1122,
           length: 60,
-          id: 'Q29tcG9zaXRlUnVwdHVyZURldGFpbDpQVVk6NDEy',
-          __typename: 'CompositeRuptureDetail',
+          id: "Q29tcG9zaXRlUnVwdHVyZURldGFpbDpQVVk6NDEy",
+          __typename: "CompositeRuptureDetail",
         },
-        cursor: 'UnVwdHVyZURldGFpbENvbm5lY3Rpb25DdXJzb3I6MTA=',
+        cursor: "UnVwdHVyZURldGFpbENvbm5lY3Rpb25DdXJzb3I6MTA=",
       },
       {
         node: {
@@ -26,10 +26,10 @@ export const ruptureAnimationMock2 = {
           rate_weighted_mean: 0.0006276824278756976,
           area: 1346,
           length: 75,
-          id: 'Q29tcG9zaXRlUnVwdHVyZURldGFpbDpQVVk6NDEz',
-          __typename: 'CompositeRuptureDetail',
+          id: "Q29tcG9zaXRlUnVwdHVyZURldGFpbDpQVVk6NDEz",
+          __typename: "CompositeRuptureDetail",
         },
-        cursor: 'UnVwdHVyZURldGFpbENvbm5lY3Rpb25DdXJzb3I6MTE=',
+        cursor: "UnVwdHVyZURldGFpbENvbm5lY3Rpb25DdXJzb3I6MTE=",
       },
       {
         node: {
@@ -39,10 +39,10 @@ export const ruptureAnimationMock2 = {
           rate_weighted_mean: 0.0005716094747185707,
           area: 1571,
           length: 90,
-          id: 'Q29tcG9zaXRlUnVwdHVyZURldGFpbDpQVVk6NDE0',
-          __typename: 'CompositeRuptureDetail',
+          id: "Q29tcG9zaXRlUnVwdHVyZURldGFpbDpQVVk6NDE0",
+          __typename: "CompositeRuptureDetail",
         },
-        cursor: 'UnVwdHVyZURldGFpbENvbm5lY3Rpb25DdXJzb3I6MTI=',
+        cursor: "UnVwdHVyZURldGFpbENvbm5lY3Rpb25DdXJzb3I6MTI=",
       },
       {
         node: {
@@ -52,10 +52,10 @@ export const ruptureAnimationMock2 = {
           rate_weighted_mean: 0.000016897189198061824,
           area: 2468,
           length: 120,
-          id: 'Q29tcG9zaXRlUnVwdHVyZURldGFpbDpQVVk6NDE2',
-          __typename: 'CompositeRuptureDetail',
+          id: "Q29tcG9zaXRlUnVwdHVyZURldGFpbDpQVVk6NDE2",
+          __typename: "CompositeRuptureDetail",
         },
-        cursor: 'UnVwdHVyZURldGFpbENvbm5lY3Rpb25DdXJzb3I6MTM=',
+        cursor: "UnVwdHVyZURldGFpbENvbm5lY3Rpb25DdXJzb3I6MTM=",
       },
       {
         node: {
@@ -65,10 +65,10 @@ export const ruptureAnimationMock2 = {
           rate_weighted_mean: 0.0006188435945659876,
           area: 2244,
           length: 105,
-          id: 'Q29tcG9zaXRlUnVwdHVyZURldGFpbDpQVVk6NDE5',
-          __typename: 'CompositeRuptureDetail',
+          id: "Q29tcG9zaXRlUnVwdHVyZURldGFpbDpQVVk6NDE5",
+          __typename: "CompositeRuptureDetail",
         },
-        cursor: 'UnVwdHVyZURldGFpbENvbm5lY3Rpb25DdXJzb3I6MTQ=',
+        cursor: "UnVwdHVyZURldGFpbENvbm5lY3Rpb25DdXJzb3I6MTQ=",
       },
     ],
   },

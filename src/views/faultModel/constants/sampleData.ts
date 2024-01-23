@@ -1,7 +1,7 @@
 const sampleData = {
-  solution_id: 'SW52ZXJzaW9uU29sdXRpb246MTEzMDMy',
-  location_ids: 'WLG',
-  radius_km: '50',
+  solution_id: "SW52ZXJzaW9uU29sdXRpb246MTEzMDMy",
+  location_ids: "WLG",
+  radius_km: "50",
   rupture_count: 6110,
   section_count: 713,
   ruptures:

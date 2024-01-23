@@ -1,9 +1,9 @@
-import React, { useMemo, useContext } from 'react';
-import { ColorBar, MfdPlot } from '@gns-science/toshi-nest';
-import { Box, Typography, CircularProgress } from '@mui/material';
-import { ComboRuptureMapPageQuery$data } from './__generated__/ComboRuptureMapPageQuery.graphql';
-import TimeDimensionLayerContext from './store';
-import { ComboRuptureMapPageState } from './comboRuptureMapPageReducer';
+import React, { useMemo, useContext } from "react";
+import { ColorBar, MfdPlot } from "@gns-science/toshi-nest";
+import { Box, Typography, CircularProgress } from "@mui/material";
+import { ComboRuptureMapPageQuery$data } from "./__generated__/ComboRuptureMapPageQuery.graphql";
+import TimeDimensionLayerContext from "./store";
+import { ComboRuptureMapPageState } from "./comboRuptureMapPageReducer";
 
 export type SurfaceProperties =
   | {
@@ -24,22 +24,29 @@ export interface RuptureInfoBoxProps {
 const RuptureInfoBox = (props: RuptureInfoBoxProps) => {
   const { timeDimensionTotalLength, surfaceProperties, mapControlsState } = props;
   const context = useContext(TimeDimensionLayerContext);
-  const sortByStringArray = mapControlsState.sortby?.map((sort) => sort?.attribute.replaceAll('_', ' ') + ' ' + (sort?.ascending ? 'ascending' : 'descending'));
-  const sortByJoinedString = sortByStringArray?.join(', ');
+  const sortByStringArray = mapControlsState.sortby?.map(
+    (sort) => sort?.attribute.replaceAll("_", " ") + " " + (sort?.ascending ? "ascending" : "descending")
+  );
+  const sortByJoinedString = sortByStringArray?.join(", ");
   return (
     <Box>
       {surfaceProperties[context.timeIndex] ? (
         <>
-          <Typography variant={'body2'}>
-            Rupture {context.timeIndex + 1} of {timeDimensionTotalLength} {mapControlsState.sortby && mapControlsState.sortby?.length > 0 ? `(sorted by ${sortByJoinedString})` : ''}
+          <Typography variant={"body2"}>
+            Rupture {context.timeIndex + 1} of {timeDimensionTotalLength}{" "}
+            {mapControlsState.sortby && mapControlsState.sortby?.length > 0 ? `(sorted by ${sortByJoinedString})` : ""}
           </Typography>
-          <Typography variant={'body2'}>Mean Rate: {surfaceProperties[context.timeIndex]?.rate_weighted_mean?.toExponential(2)} per year</Typography>
-          <Typography variant={'body2'}>Magnitude: {surfaceProperties[context.timeIndex]?.magnitude?.toFixed(1)}</Typography>
-          <Typography variant={'body2'}>Area: {surfaceProperties[context.timeIndex]?.area} km²</Typography>
-          <Typography variant={'body2'}>Length: {surfaceProperties[context.timeIndex]?.length} km</Typography>
+          <Typography variant={"body2"}>
+            Mean Rate: {surfaceProperties[context.timeIndex]?.rate_weighted_mean?.toExponential(2)} per year
+          </Typography>
+          <Typography variant={"body2"}>
+            Magnitude: {surfaceProperties[context.timeIndex]?.magnitude?.toFixed(1)}
+          </Typography>
+          <Typography variant={"body2"}>Area: {surfaceProperties[context.timeIndex]?.area} km²</Typography>
+          <Typography variant={"body2"}>Length: {surfaceProperties[context.timeIndex]?.length} km</Typography>
         </>
       ) : (
-        <div style={{ display: 'flex', justifyContent: 'center' }}>
+        <div style={{ display: "flex", justifyContent: "center" }}>
           <CircularProgress />
         </div>
       )}
@@ -79,10 +86,19 @@ const ComboInfoPanelComponent = (props: ComboInfoPanelComponentProps) => {
   const mfdData = queryData?.SOLVIS_filter_rupture_sections?.mfd_histogram;
 
   const colorScale = useMemo(() => {
-    if (queryData?.SOLVIS_filter_rupture_sections?.color_scale?.color_map?.levels && queryData?.SOLVIS_filter_rupture_sections?.color_scale?.color_map?.hexrgbs) {
+    if (
+      queryData?.SOLVIS_filter_rupture_sections?.color_scale?.color_map?.levels &&
+      queryData?.SOLVIS_filter_rupture_sections?.color_scale?.color_map?.hexrgbs
+    ) {
       return {
-        levels: queryData?.SOLVIS_filter_rupture_sections?.color_scale?.color_map?.levels.map((level) => level?.toExponential(0)) ?? [],
-        hexrgbs: queryData?.SOLVIS_filter_rupture_sections?.color_scale?.color_map?.hexrgbs.map((color) => color?.toString()) ?? [],
+        levels:
+          queryData?.SOLVIS_filter_rupture_sections?.color_scale?.color_map?.levels.map((level) =>
+            level?.toExponential(0)
+          ) ?? [],
+        hexrgbs:
+          queryData?.SOLVIS_filter_rupture_sections?.color_scale?.color_map?.hexrgbs.map((color) =>
+            color?.toString()
+          ) ?? [],
       };
     }
   }, [queryData]);
@@ -92,17 +108,17 @@ const ComboInfoPanelComponent = (props: ComboInfoPanelComponentProps) => {
       {(mfdData || colorScale) && (
         <Box
           style={{
-            backgroundColor: '#ffffff',
-            position: 'absolute',
+            backgroundColor: "#ffffff",
+            position: "absolute",
             zIndex: fullscreen ? 119700 : 799,
-            bottom: fullscreen ? '72px' : '16.5vh',
-            left: 'calc(100% - 438px)',
-            width: '429px',
-            borderRadius: '4px',
-            borderWidth: '1px',
-            border: '2px solid rgba(0,0,0,0.2)',
-            backgroundClip: 'padding-box',
-            padding: '1rem',
+            bottom: fullscreen ? "72px" : "16.5vh",
+            left: "calc(100% - 438px)",
+            width: "429px",
+            borderRadius: "4px",
+            borderWidth: "1px",
+            border: "2px solid rgba(0,0,0,0.2)",
+            backgroundClip: "padding-box",
+            padding: "1rem",
           }}
         >
           {mapControlsState.showAnimation && <RuptureInfoBox {...props} />}
@@ -118,13 +134,20 @@ const ComboInfoPanelComponent = (props: ComboInfoPanelComponentProps) => {
               header="Magnitude Frequency Distribution"
               yScaleDomain={[1e-7, 1e-1]}
               xScaleDomain={[6.7, 9.7]}
-              lineColours={['silver', '#072B61']}
-              legendDomain={['Incremental', 'Cumulative']}
+              lineColours={["silver", "#072B61"]}
+              legendDomain={["Incremental", "Cumulative"]}
               renderCustomTooltip={renderCustomTooltip}
             />
           )}
           {mapControlsState.showTraceLegend && colorScale && (
-            <ColorBar heading={'Participation Rate (1/yr)'} width={350} height={35} colors={colorScale?.hexrgbs} tickValues={colorScale?.levels} linear={false} />
+            <ColorBar
+              heading={"Participation Rate (1/yr)"}
+              width={350}
+              height={35}
+              colors={colorScale?.hexrgbs}
+              tickValues={colorScale?.levels}
+              linear={false}
+            />
           )}
         </Box>
       )}

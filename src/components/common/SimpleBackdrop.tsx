@@ -1,4 +1,4 @@
-import { CircularProgress, Backdrop } from '@mui/material';
+import { CircularProgress, Backdrop } from "@mui/material";
 
 const SimpleBackdrop: React.FC = () => {
   return (

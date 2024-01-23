@@ -1,20 +1,20 @@
-import React, { useState, useEffect, useReducer, useTransition, useMemo } from 'react';
-import { LeafletDrawer } from '@gns-science/toshi-nest';
-import { Box, Typography } from '@mui/material';
-import { useLazyLoadQuery } from 'react-relay';
-import '../../css/leaflet.timedimension.control.css';
-import { graphql } from 'babel-plugin-relay/macro';
-import { HAZARD_MODEL } from '../../utils/environmentVariables';
-import { GeoJsonObject } from 'geojson';
+import React, { useState, useEffect, useReducer, useTransition, useMemo } from "react";
+import { LeafletDrawer } from "@gns-science/toshi-nest";
+import { Box, Typography } from "@mui/material";
+import { useLazyLoadQuery } from "react-relay";
+import "../../css/leaflet.timedimension.control.css";
+import { graphql } from "react-relay";
+import { HAZARD_MODEL } from "../../utils/environmentVariables";
+import { GeoJsonObject } from "geojson";
 
-import { InfoTooltip } from '../../components/common/InfoTooltip';
-import SimpleBackdrop from '../../components/common/SimpleBackdrop';
-import { comboRuptureMapPageReducer, comboRuptureMapPageReducerInitialState } from './comboRuptureMapPageReducer';
-import { ComboRuptureMapPageQuery } from './__generated__/ComboRuptureMapPageQuery.graphql';
+import { InfoTooltip } from "../../components/common/InfoTooltip";
+import SimpleBackdrop from "../../components/common/SimpleBackdrop";
+import { comboRuptureMapPageReducer, comboRuptureMapPageReducerInitialState } from "./comboRuptureMapPageReducer";
+import { ComboRuptureMapPageQuery } from "./__generated__/ComboRuptureMapPageQuery.graphql";
 
-import ComboRuptureMapControls from './ComboRuptureMapPageControls';
-import ComboRuptureMapComponent from './ComboRuptureMapComponent';
-import ErrorBoundary from '../../components/common/ErrorBoundary';
+import ComboRuptureMapControls from "./ComboRuptureMapPageControls";
+import ComboRuptureMapComponent from "./ComboRuptureMapComponent";
+import ErrorBoundary from "../../components/common/ErrorBoundary";
 
 export const ComboRuptureMap: React.FC = () => {
   const [state, dispatch] = useReducer(comboRuptureMapPageReducer, comboRuptureMapPageReducerInitialState);
@@ -50,21 +50,27 @@ export const ComboRuptureMap: React.FC = () => {
     return initialData?.SOLVIS_filter_rupture_sections?.mfd_histogram;
   }, [initialData]);
 
-  const headerMarkdown = useMemo(() => initialData?.textual_content_header?.content && initialData?.textual_content_header?.content[0]?.text, [initialData]);
-  const headerContentType = useMemo(() => initialData?.textual_content_header?.content && initialData?.textual_content_header?.content[0]?.content_type, [initialData]);
+  const headerMarkdown = useMemo(
+    () => initialData?.textual_content_header?.content && initialData?.textual_content_header?.content[0]?.text,
+    [initialData]
+  );
+  const headerContentType = useMemo(
+    () => initialData?.textual_content_header?.content && initialData?.textual_content_header?.content[0]?.content_type,
+    [initialData]
+  );
 
   useEffect(() => {
     function updateScrollHeight() {
       setScrollHeight(window.scrollY);
     }
-    window.addEventListener('scroll', updateScrollHeight);
+    window.addEventListener("scroll", updateScrollHeight);
     updateScrollHeight();
-    return () => window.removeEventListener('scroll', updateScrollHeight);
+    return () => window.removeEventListener("scroll", updateScrollHeight);
   }, []);
 
   useEffect(() => {
-    if (!faultSurfacesGeojson && state.faultSystem !== '') {
-      setGeoJsonError('No ruptures satisfy the filter.');
+    if (!faultSurfacesGeojson && state.faultSystem !== "") {
+      setGeoJsonError("No ruptures satisfy the filter.");
     } else {
       setGeoJsonError(null);
     }
@@ -72,13 +78,26 @@ export const ComboRuptureMap: React.FC = () => {
 
   return (
     <>
-      <Box id="map" sx={{ width: '100%', height: '80vh' }}>
-        <ComboRuptureMapComponent fullscreen={fullscreen} setFullscreen={setFullscreen} ruptureConnectionRef={initialData} queryData={initialData} isPending={isPending} mapControlsState={state} />
+      <Box id="map" sx={{ width: "100%", height: "80vh" }}>
+        <ComboRuptureMapComponent
+          fullscreen={fullscreen}
+          setFullscreen={setFullscreen}
+          ruptureConnectionRef={initialData}
+          queryData={initialData}
+          isPending={isPending}
+          mapControlsState={state}
+        />
       </Box>
-      <LeafletDrawer drawerHeight={'80vh'} headerHeight={`${100 - scrollHeight}px`} width={'400px'} fullscreen={fullscreen} openAtRender={true}>
-        <Typography variant="h4" sx={{ textAlign: 'center' }}>
+      <LeafletDrawer
+        drawerHeight={"80vh"}
+        headerHeight={`${100 - scrollHeight}px`}
+        width={"400px"}
+        fullscreen={fullscreen}
+        openAtRender={true}
+      >
+        <Typography variant="h4" sx={{ textAlign: "center" }}>
           Rupture Explorer
-          <InfoTooltip content={headerMarkdown || ''} format={headerContentType === 'Markdown'} />
+          <InfoTooltip content={headerMarkdown || ""} format={headerContentType === "Markdown"} />
         </Typography>
         <ComboRuptureMapControls
           startTransition={startTransition}
@@ -134,7 +153,16 @@ export const comboRuptureMapPageQuery = graphql`
         node {
           location_id
           name
-          radius_geojson(radius_km: $radius_km, style: { stroke_color: "royalblue", stroke_width: 3, stroke_opacity: 1, fill_opacity: 0.01, fill_color: "royalblue" })
+          radius_geojson(
+            radius_km: $radius_km
+            style: {
+              stroke_color: "royalblue"
+              stroke_width: 3
+              stroke_opacity: 1
+              fill_opacity: 0.01
+              fill_color: "royalblue"
+            }
+          )
         }
       }
     }

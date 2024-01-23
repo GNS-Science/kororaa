@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<46b0d9b42eaa95db24b97b5e332c8eb2>>
+ * @generated SignedSource<<fe12a8b8af2188ee6f43b2fcd88c2fc1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,42 +9,42 @@
 // @ts-nocheck
 
 import { ConcreteRequest, Query } from 'relay-runtime';
-export type ContentFormatEnum = "Raw" | "Markdown" | "%future added value";
-export type ContentStatusEnum = "Undefined" | "Draft" | "Published" | "Deprecated" | "%future added value";
-export type DisaggregationsPageQuery$variables = {};
+export type ContentFormatEnum = "Markdown" | "Raw" | "%future added value";
+export type ContentStatusEnum = "Deprecated" | "Draft" | "Published" | "Undefined" | "%future added value";
+export type DisaggregationsPageQuery$variables = Record<PropertyKey, never>;
 export type DisaggregationsPageQuery$data = {
   readonly disaggregation_reports: {
     readonly reports: ReadonlyArray<{
+      readonly imt: string | null | undefined;
+      readonly inv_time: number | null | undefined;
       readonly location: {
-        readonly name: string | null;
-        readonly key: string | null;
-        readonly code: string | null;
-        readonly lat: number | null;
-        readonly lon: number | null;
-      } | null;
-      readonly vs30: number | null;
-      readonly inv_time: number | null;
-      readonly poe: number | null;
-      readonly imt: string | null;
-      readonly report_url: string | null;
-    } | null> | null;
-  } | null;
+        readonly code: string | null | undefined;
+        readonly key: string | null | undefined;
+        readonly lat: number | null | undefined;
+        readonly lon: number | null | undefined;
+        readonly name: string | null | undefined;
+      } | null | undefined;
+      readonly poe: number | null | undefined;
+      readonly report_url: string | null | undefined;
+      readonly vs30: number | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
   readonly textual_content: {
-    readonly ok: boolean | null;
     readonly content: ReadonlyArray<{
-      readonly index: string | null;
-      readonly content_type: ContentFormatEnum | null;
-      readonly text: string | null;
-      readonly created: any | null;
-      readonly author: string | null;
-      readonly tags: ReadonlyArray<string | null> | null;
-      readonly status: ContentStatusEnum | null;
-    } | null> | null;
-  } | null;
+      readonly author: string | null | undefined;
+      readonly content_type: ContentFormatEnum | null | undefined;
+      readonly created: any | null | undefined;
+      readonly index: string | null | undefined;
+      readonly status: ContentStatusEnum | null | undefined;
+      readonly tags: ReadonlyArray<string | null | undefined> | null | undefined;
+      readonly text: string | null | undefined;
+    } | null | undefined> | null | undefined;
+    readonly ok: boolean | null | undefined;
+  } | null | undefined;
 };
 export type DisaggregationsPageQuery = {
-  variables: DisaggregationsPageQuery$variables;
   response: DisaggregationsPageQuery$data;
+  variables: DisaggregationsPageQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

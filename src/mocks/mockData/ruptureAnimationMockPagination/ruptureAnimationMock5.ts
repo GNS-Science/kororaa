@@ -2,7 +2,7 @@ export const ruptureAnimationMock5 = {
   SOLVIS_filter_ruptures: {
     pageInfo: {
       hasNextPage: false,
-      endCursor: 'UnVwdHVyZURldGFpbENvbm5lY3Rpb25DdXJzb3I6MjY=',
+      endCursor: "UnVwdHVyZURldGFpbENvbm5lY3Rpb25DdXJzb3I6MjY=",
     },
     edges: [
       {
@@ -13,10 +13,10 @@ export const ruptureAnimationMock5 = {
           rate_weighted_mean: 0.00003822978032985702,
           area: 1795,
           length: 60,
-          id: 'Q29tcG9zaXRlUnVwdHVyZURldGFpbDpQVVk6MjQxOQ==',
-          __typename: 'CompositeRuptureDetail',
+          id: "Q29tcG9zaXRlUnVwdHVyZURldGFpbDpQVVk6MjQxOQ==",
+          __typename: "CompositeRuptureDetail",
         },
-        cursor: 'UnVwdHVyZURldGFpbENvbm5lY3Rpb25DdXJzb3I6MjU=',
+        cursor: "UnVwdHVyZURldGFpbENvbm5lY3Rpb25DdXJzb3I6MjU=",
       },
       {
         node: {
@@ -26,10 +26,10 @@ export const ruptureAnimationMock5 = {
           rate_weighted_mean: 0.00003062476389459334,
           area: 2243,
           length: 75,
-          id: 'Q29tcG9zaXRlUnVwdHVyZURldGFpbDpQVVk6MjQyMA==',
-          __typename: 'CompositeRuptureDetail',
+          id: "Q29tcG9zaXRlUnVwdHVyZURldGFpbDpQVVk6MjQyMA==",
+          __typename: "CompositeRuptureDetail",
         },
-        cursor: 'UnVwdHVyZURldGFpbENvbm5lY3Rpb25DdXJzb3I6MjY=',
+        cursor: "UnVwdHVyZURldGFpbENvbm5lY3Rpb25DdXJzb3I6MjY=",
       },
     ],
   },

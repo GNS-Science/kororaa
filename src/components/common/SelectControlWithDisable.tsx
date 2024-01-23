@@ -1,6 +1,6 @@
-import React from 'react';
-import { styled } from '@mui/material/styles';
-import { FormControl, Input, InputLabel, MenuItem, Select, SelectChangeEvent, Tooltip } from '@mui/material';
+import React from "react";
+import { styled } from "@mui/material/styles";
+import { FormControl, Input, InputLabel, MenuItem, Select, SelectChangeEvent, Tooltip } from "@mui/material";
 
 export interface SelectControlWithDisableProps {
   options: string[];
@@ -12,14 +12,22 @@ export interface SelectControlWithDisableProps {
   onClose?: () => void;
 }
 
-const SelectControlContainer = styled('div')({
+const SelectControlContainer = styled("div")({
   minWidth: 200,
   maxWidth: 300,
 });
 
-const SelectControlWithDisable: React.FC<SelectControlWithDisableProps> = ({ options, selection, setSelection, name, disabled, tooltip = '', onClose = () => null }: SelectControlWithDisableProps) => {
+const SelectControlWithDisable: React.FC<SelectControlWithDisableProps> = ({
+  options,
+  selection,
+  setSelection,
+  name,
+  disabled,
+  tooltip = "",
+  onClose = () => null,
+}: SelectControlWithDisableProps) => {
   const handleChange = (event: SelectChangeEvent<string>) => {
-    const value = (event.target.value as string) || '';
+    const value = (event.target.value as string) || "";
     setSelection(value);
   };
 
@@ -33,7 +41,16 @@ const SelectControlWithDisable: React.FC<SelectControlWithDisableProps> = ({ opt
         ) : (
           <InputLabel>{name}</InputLabel>
         )}
-        <Select labelId={`report-hash-label`} label={name} name={name} value={selection} onChange={handleChange} input={<Input />} variant="standard" onClose={onClose}>
+        <Select
+          labelId={`report-hash-label`}
+          label={name}
+          name={name}
+          value={selection}
+          onChange={handleChange}
+          input={<Input />}
+          variant="standard"
+          onClose={onClose}
+        >
           {options.map((opt: string) => (
             <MenuItem key={opt} value={opt}>
               {opt}

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ee6f2e9bb97fb8b9ee9622e787508e4e>>
+ * @generated SignedSource<<8ce6ea16aaa3cc1d74a8c2916bb8dc8b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,23 +10,23 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 export type RuptureAnimationPageControlsQuery$variables = {
-  radiiSetId: number;
   locationListId: string;
+  radiiSetId: number;
 };
 export type RuptureAnimationPageControlsQuery$data = {
-  readonly SOLVIS_get_radii_set: {
-    readonly radii: ReadonlyArray<number | null> | null;
-  } | null;
   readonly SOLVIS_get_location_list: {
     readonly locations: ReadonlyArray<{
-      readonly name: string | null;
-      readonly location_id: string | null;
-    } | null> | null;
-  } | null;
+      readonly location_id: string | null | undefined;
+      readonly name: string | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
+  readonly SOLVIS_get_radii_set: {
+    readonly radii: ReadonlyArray<number | null | undefined> | null | undefined;
+  } | null | undefined;
 };
 export type RuptureAnimationPageControlsQuery = {
-  variables: RuptureAnimationPageControlsQuery$variables;
   response: RuptureAnimationPageControlsQuery$data;
+  variables: RuptureAnimationPageControlsQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

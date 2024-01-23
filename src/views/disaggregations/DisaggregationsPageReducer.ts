@@ -7,14 +7,17 @@ export type DisaggregationsPageState = {
 };
 
 export const disaggregationsPageReducerInitialState: DisaggregationsPageState = {
-  location: 'Auckland',
-  imt: 'PGA',
+  location: "Auckland",
+  imt: "PGA",
   vs30: 400,
   poe: 0.1,
-  reportUrl: '',
+  reportUrl: "",
 };
 
-export const disaggregationsPageReducer = (state: DisaggregationsPageState, newState: Partial<DisaggregationsPageState>) => {
+export const disaggregationsPageReducer = (
+  state: DisaggregationsPageState,
+  newState: Partial<DisaggregationsPageState>
+) => {
   return {
     ...state,
     ...newState,

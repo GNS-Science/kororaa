@@ -15,10 +15,10 @@ jobs:
       - name: create env file
         run: |
           touch .env
-          echo REACT_APP_MSW=test >> .env
-          echo REACT_APP_DISCLAIMER_VERSION=versionOne >> .env
-          echo REACT_APP_GRAPHQL_ENDPOINT=..../graphql >> .env
-          echo REACT_APP_GRAPHQL_API_KEY=$##@! >> .env
+          echo VITE_MSW=test >> .env
+          echo VITE_DISCLAIMER_VERSION=versionOne >> .env
+          echo VITE_GRAPHQL_ENDPOINT=..../graphql >> .env
+          echo VITE_GRAPHQL_API_KEY=$##@! >> .env
           echo GENERATE_SOURCEMAP=false >> .env
           cat .env
       - name: Node Setup
@@ -30,10 +30,10 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v4
         with:
-          wait-on: 'http://localhost:3000'
+          wait-on: 'http://127.0.0.1:5173'
           record: true
           build: yarn build
-          start: yarn start
+          start: yarn preview
         env:
           NODE_AUTH_TOKEN: ${{ secrets.TOSHI_NEST_PACKAGE_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

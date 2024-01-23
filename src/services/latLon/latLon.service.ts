@@ -1,12 +1,12 @@
-import { hazardPageLocations } from '../../views/hazardCharts/constants/hazardPageOptions';
-import { LocationData } from '../../views/hazardCharts/hazardPageReducer';
+import { hazardPageLocations } from "../../views/hazardCharts/constants/hazardPageOptions";
+import { LocationData } from "../../views/hazardCharts/hazardPageReducer";
 
 export const getLatlonObject = (latlon: string | null): string => {
   if (latlon) {
-    const latlonArray = latlon.split(', ');
+    const latlonArray = latlon.split(", ");
     return `${Number(latlonArray[0])}, ${Number(latlonArray[1])}`;
   } else {
-    return '';
+    return "";
   }
 };
 
@@ -20,7 +20,11 @@ export const getNamesFromLocationData = (locationData: LocationData[]): string[]
 
 export const getLocationDataFromName = (locationName: string): LocationData => {
   const currentLocation = hazardPageLocations.find((location) => locationName === location.name);
-  const currentLocationData = { name: currentLocation?.name, lat: currentLocation?.latitude, lon: currentLocation?.longitude };
+  const currentLocationData = {
+    name: currentLocation?.name,
+    lat: currentLocation?.latitude,
+    lon: currentLocation?.longitude,
+  };
   return currentLocationData as LocationData;
 };
 
@@ -37,13 +41,13 @@ export const getLatLonFromLocationKey = (locationKey: string): string => {
 export const getLocationKeyFromLocationName = (locationName: string): string => {
   const currentLocation = hazardPageLocations.find((location) => locationName === location.name);
   if (currentLocation) return currentLocation.id;
-  return '';
+  return "";
 };
 
 export const getLatLonString = (locations: LocationData[]): string => {
-  let latLonString = '';
+  let latLonString = "";
   const filteredLocations = locations.filter((location) => location.name === null);
-  if (filteredLocations.length === 0) return '';
+  if (filteredLocations.length === 0) return "";
   filteredLocations.forEach((location) => {
     latLonString += `${location.lat}, ${location.lon}; `;
   });
@@ -56,13 +60,13 @@ export const getLatLonArray = (locations: LocationData[]): string[] => {
 };
 
 export const getLocationDataFromLatLonString = (latLonString: string): LocationData[] => {
-  if (latLonString === '') {
+  if (latLonString === "") {
     return [];
   }
-  const latLonArray = latLonString.split(';');
+  const latLonArray = latLonString.split(";");
   if (latLonArray[latLonArray.length - 1].trim().length === 0) latLonArray.pop();
   const locationDataArray = latLonArray.map((latLon) => {
-    const latLonArray = latLon.split(',');
+    const latLonArray = latLon.split(",");
     const latLongData = { lat: Number(latLonArray[0]), lon: Number(latLonArray[1]), name: null };
     return latLongData as LocationData;
   });
@@ -70,17 +74,17 @@ export const getLocationDataFromLatLonString = (latLonString: string): LocationD
 };
 
 export const validateLatLon = (latLon: string): boolean => {
-  if (latLon == '') return true;
-  const latLonArray = latLon.split(';');
+  if (latLon == "") return true;
+  const latLonArray = latLon.split(";");
   if (latLonArray[latLonArray.length - 1].trim().length === 0) latLonArray.pop();
   const isValid = latLonArray.every((latLon) => {
-    const latLonArray = latLon.split(',');
+    const latLonArray = latLon.split(",");
     const lat = Number(latLonArray[0]);
     const lon = Number(latLonArray[1]);
     return lat >= -90 && lat <= 90 && lon >= -180 && lon <= 180;
   });
   if (!isValid) {
-    throw 'Invalid lat, lon input';
+    throw "Invalid lat, lon input";
   }
   return isValid;
 };
@@ -94,8 +98,8 @@ export const combineLocationData = (locations: string[], latLon: string): Locati
 };
 
 export const roundLatLon = (latLon: string | null): string => {
-  if (latLon === null) return '';
-  const latLonArray = latLon.split('~');
+  if (latLon === null) return "";
+  const latLonArray = latLon.split("~");
   const lat = Number(latLonArray[0]).toFixed(1);
   const lon = Number(latLonArray[1]).toFixed(1);
   return `${lat}, ${lon}`;

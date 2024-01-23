@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c36b1429a4281d28fa9323b5c029b7f4>>
+ * @generated SignedSource<<d483773ad6b9e6eeca447b3abf9e94bc>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,28 +9,28 @@
 // @ts-nocheck
 
 import { ConcreteRequest, Query } from 'relay-runtime';
-export type ReportStatusEnum = "Undefined" | "Review" | "Published" | "%future added value";
-export type ScienceReportsPageQuery$variables = {};
+export type ReportStatusEnum = "Published" | "Review" | "Undefined" | "%future added value";
+export type ScienceReportsPageQuery$variables = Record<PropertyKey, never>;
 export type ScienceReportsPageQuery$data = {
   readonly science_reports: {
-    readonly ok: boolean | null;
+    readonly ok: boolean | null | undefined;
     readonly reports: ReadonlyArray<{
-      readonly filename: string | null;
-      readonly title: string | null;
-      readonly status: ReportStatusEnum | null;
-      readonly notes: string | null;
-      readonly report_number: string | null;
+      readonly bibliographic_ref: string | null | undefined;
+      readonly filename: string | null | undefined;
       readonly lead_author: {
-        readonly name: string | null;
-      } | null;
-      readonly publication_date: any | null;
-      readonly bibliographic_ref: string | null;
-    } | null> | null;
-  } | null;
+        readonly name: string | null | undefined;
+      } | null | undefined;
+      readonly notes: string | null | undefined;
+      readonly publication_date: any | null | undefined;
+      readonly report_number: string | null | undefined;
+      readonly status: ReportStatusEnum | null | undefined;
+      readonly title: string | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
 };
 export type ScienceReportsPageQuery = {
-  variables: ScienceReportsPageQuery$variables;
   response: ScienceReportsPageQuery$data;
+  variables: ScienceReportsPageQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

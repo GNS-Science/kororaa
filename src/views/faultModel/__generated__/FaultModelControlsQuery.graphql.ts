@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<489070d6dffe978c3cad5f8e9ac7b4e3>>
+ * @generated SignedSource<<188af292aff92d5ee0fa41759f7299dd>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,61 +10,61 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 export type FaultModelControlsQuery$variables = {
+  locationListId: string;
   model_id: string;
   radiiSetId: number;
-  locationListId: string;
 };
 export type FaultModelControlsQuery$data = {
+  readonly SOLVIS_get_location_list: {
+    readonly list_id: string | null | undefined;
+    readonly locations: ReadonlyArray<{
+      readonly latitude: number | null | undefined;
+      readonly location_id: string | null | undefined;
+      readonly longitude: number | null | undefined;
+      readonly name: string | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
+  readonly SOLVIS_get_radii_set: {
+    readonly radii: ReadonlyArray<number | null | undefined> | null | undefined;
+  } | null | undefined;
   readonly nzshm_model: {
     readonly model: {
-      readonly version: string | null;
-      readonly title: string | null;
       readonly source_logic_tree: {
         readonly fault_system_branches: ReadonlyArray<{
-          readonly long_name: string | null;
-          readonly short_name: string | null;
           readonly branches: ReadonlyArray<{
-            readonly weight: number | null;
-            readonly inversion_solution_id: string | null;
-            readonly inversion_solution_type: string | null;
-            readonly onfault_nrml_id: string | null;
-            readonly distributed_nrml_id: string | null;
+            readonly distributed_nrml_id: string | null | undefined;
+            readonly inversion_solution_id: string | null | undefined;
+            readonly inversion_solution_type: string | null | undefined;
+            readonly onfault_nrml_id: string | null | undefined;
             readonly values: ReadonlyArray<{
-              readonly long_name: string | null;
-              readonly json_value: any | null;
-            } | null> | null;
-          } | null> | null;
-        } | null> | null;
-      } | null;
+              readonly json_value: any | null | undefined;
+              readonly long_name: string | null | undefined;
+            } | null | undefined> | null | undefined;
+            readonly weight: number | null | undefined;
+          } | null | undefined> | null | undefined;
+          readonly long_name: string | null | undefined;
+          readonly short_name: string | null | undefined;
+        } | null | undefined> | null | undefined;
+      } | null | undefined;
       readonly source_logic_tree_spec: {
         readonly fault_system_branches: ReadonlyArray<{
-          readonly short_name: string | null;
-          readonly long_name: string | null;
           readonly branches: ReadonlyArray<{
-            readonly name: string | null;
-            readonly long_name: string | null;
-            readonly value_options: any | null;
-          } | null> | null;
-        } | null> | null;
-      } | null;
-    } | null;
-  } | null;
-  readonly SOLVIS_get_radii_set: {
-    readonly radii: ReadonlyArray<number | null> | null;
-  } | null;
-  readonly SOLVIS_get_location_list: {
-    readonly list_id: string | null;
-    readonly locations: ReadonlyArray<{
-      readonly location_id: string | null;
-      readonly name: string | null;
-      readonly latitude: number | null;
-      readonly longitude: number | null;
-    } | null> | null;
-  } | null;
+            readonly long_name: string | null | undefined;
+            readonly name: string | null | undefined;
+            readonly value_options: any | null | undefined;
+          } | null | undefined> | null | undefined;
+          readonly long_name: string | null | undefined;
+          readonly short_name: string | null | undefined;
+        } | null | undefined> | null | undefined;
+      } | null | undefined;
+      readonly title: string | null | undefined;
+      readonly version: string | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
 };
 export type FaultModelControlsQuery = {
-  variables: FaultModelControlsQuery$variables;
   response: FaultModelControlsQuery$data;
+  variables: FaultModelControlsQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){
