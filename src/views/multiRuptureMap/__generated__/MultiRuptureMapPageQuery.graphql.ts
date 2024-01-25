@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<01b619d851acd83990a9b90243bd5262>>
+ * @generated SignedSource<<470c79a7a516e6c141c2577c115b782c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,48 +10,48 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 export type MultiRuptureMapPageQuery$variables = {
-  model_id: string;
   fault_system: string;
-  location_ids: ReadonlyArray<string | null>;
+  location_ids: ReadonlyArray<string | null | undefined>;
+  maximum_mag?: number | null | undefined;
+  maximum_rate?: number | null | undefined;
+  minimum_mag?: number | null | undefined;
+  minimum_rate?: number | null | undefined;
+  model_id: string;
   radius_km: number;
-  minimum_mag?: number | null;
-  maximum_mag?: number | null;
-  minimum_rate?: number | null;
-  maximum_rate?: number | null;
 };
 export type MultiRuptureMapPageQuery$data = {
+  readonly SOLVIS_filter_rupture_sections: {
+    readonly color_scale: {
+      readonly color_map: {
+        readonly hexrgbs: ReadonlyArray<string | null | undefined> | null | undefined;
+        readonly levels: ReadonlyArray<number | null | undefined> | null | undefined;
+      } | null | undefined;
+      readonly max_value: number | null | undefined;
+      readonly min_value: number | null | undefined;
+      readonly name: string | null | undefined;
+    } | null | undefined;
+    readonly fault_surfaces: any | null | undefined;
+    readonly mfd_histogram: ReadonlyArray<{
+      readonly bin_center: number | null | undefined;
+      readonly cumulative_rate: number | null | undefined;
+      readonly rate: number | null | undefined;
+    } | null | undefined> | null | undefined;
+    readonly model_id: string | null | undefined;
+    readonly section_count: number | null | undefined;
+  } | null | undefined;
   readonly SOLVIS_locations_by_id: {
     readonly edges: ReadonlyArray<{
       readonly node: {
-        readonly location_id: string | null;
-        readonly name: string | null;
-        readonly radius_geojson: any | null;
-      } | null;
-    } | null>;
-  } | null;
-  readonly SOLVIS_filter_rupture_sections: {
-    readonly model_id: string | null;
-    readonly section_count: number | null;
-    readonly fault_surfaces: any | null;
-    readonly color_scale: {
-      readonly name: string | null;
-      readonly min_value: number | null;
-      readonly max_value: number | null;
-      readonly color_map: {
-        readonly levels: ReadonlyArray<number | null> | null;
-        readonly hexrgbs: ReadonlyArray<string | null> | null;
-      } | null;
-    } | null;
-    readonly mfd_histogram: ReadonlyArray<{
-      readonly bin_center: number | null;
-      readonly rate: number | null;
-      readonly cumulative_rate: number | null;
-    } | null> | null;
-  } | null;
+        readonly location_id: string | null | undefined;
+        readonly name: string | null | undefined;
+        readonly radius_geojson: any | null | undefined;
+      } | null | undefined;
+    } | null | undefined>;
+  } | null | undefined;
 };
 export type MultiRuptureMapPageQuery = {
-  variables: MultiRuptureMapPageQuery$variables;
   response: MultiRuptureMapPageQuery$data;
+  variables: MultiRuptureMapPageQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

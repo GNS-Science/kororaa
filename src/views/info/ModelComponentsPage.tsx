@@ -1,21 +1,21 @@
-import React from 'react';
-import { styled } from '@mui/material/styles';
-import Grid from '@mui/material/Grid';
+import React from "react";
+import { styled } from "@mui/material/styles";
+import Grid from "@mui/material/Grid";
 
-import { Typography } from '@mui/material';
+import { Typography } from "@mui/material";
 
-const PageContainer = styled('div')({
-  justifyContent: 'center',
-  alignItems: 'center',
-  padding: '2rem',
-  marginBottom: '2rem',
+const PageContainer = styled("div")({
+  justifyContent: "center",
+  alignItems: "center",
+  padding: "2rem",
+  marginBottom: "2rem",
 });
 
-const TitleContainer = styled('div')({
-  justifyContent: 'left',
-  textAlign: 'left',
-  width: '100%',
-  paddingBottom: '1rem',
+const TitleContainer = styled("div")({
+  justifyContent: "left",
+  textAlign: "left",
+  width: "100%",
+  paddingBottom: "1rem",
 });
 
 const ModelComponentsPage: React.FC = () => {
@@ -32,7 +32,8 @@ const ModelComponentsPage: React.FC = () => {
             </Grid>
             <Grid item xs={12}>
               <Typography variant="body1">
-                Please contact us at <a href="mailto:nshm@gns.cri.nz">nshm@gns.cri.nz</a> for OpenQuake input files and instructions on how to run the NSHM.
+                Please contact us at <a href="mailto:nshm@gns.cri.nz">nshm@gns.cri.nz</a> for OpenQuake input files and
+                instructions on how to run the NSHM.
               </Typography>
             </Grid>
           </Grid>

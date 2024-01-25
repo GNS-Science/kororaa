@@ -7,14 +7,17 @@ export type MultiRuptureMapPageState = {
 };
 
 export const multiRuptureMapPageReducerInitialState: MultiRuptureMapPageState = {
-  faultSystem: '',
+  faultSystem: "",
   locationCodes: [],
   radius: 0,
   magnitudeRange: [6, 10],
   rateRange: [10e-20, 0],
 };
 
-export const multiRuptureMapPageReducer = (state: MultiRuptureMapPageState, newState: Partial<MultiRuptureMapPageState>) => {
+export const multiRuptureMapPageReducer = (
+  state: MultiRuptureMapPageState,
+  newState: Partial<MultiRuptureMapPageState>
+) => {
   return {
     ...state,
     ...newState,

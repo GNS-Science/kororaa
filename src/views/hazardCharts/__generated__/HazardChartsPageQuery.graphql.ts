@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<84ddaeb211108024682fabb9b570e606>>
+ * @generated SignedSource<<a39ce74286527efcdd1aa36b7e38f91d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,26 +9,26 @@
 // @ts-nocheck
 
 import { ConcreteRequest, Query } from 'relay-runtime';
-export type ContentFormatEnum = "Raw" | "Markdown" | "%future added value";
-export type ContentStatusEnum = "Undefined" | "Draft" | "Published" | "Deprecated" | "%future added value";
-export type HazardChartsPageQuery$variables = {};
+export type ContentFormatEnum = "Markdown" | "Raw" | "%future added value";
+export type ContentStatusEnum = "Deprecated" | "Draft" | "Published" | "Undefined" | "%future added value";
+export type HazardChartsPageQuery$variables = Record<PropertyKey, never>;
 export type HazardChartsPageQuery$data = {
   readonly textual_content: {
-    readonly ok: boolean | null;
     readonly content: ReadonlyArray<{
-      readonly index: string | null;
-      readonly content_type: ContentFormatEnum | null;
-      readonly text: string | null;
-      readonly created: any | null;
-      readonly author: string | null;
-      readonly tags: ReadonlyArray<string | null> | null;
-      readonly status: ContentStatusEnum | null;
-    } | null> | null;
-  } | null;
+      readonly author: string | null | undefined;
+      readonly content_type: ContentFormatEnum | null | undefined;
+      readonly created: any | null | undefined;
+      readonly index: string | null | undefined;
+      readonly status: ContentStatusEnum | null | undefined;
+      readonly tags: ReadonlyArray<string | null | undefined> | null | undefined;
+      readonly text: string | null | undefined;
+    } | null | undefined> | null | undefined;
+    readonly ok: boolean | null | undefined;
+  } | null | undefined;
 };
 export type HazardChartsPageQuery = {
-  variables: HazardChartsPageQuery$variables;
   response: HazardChartsPageQuery$data;
+  variables: HazardChartsPageQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { Box, Checkbox, Menu, MenuItem, Button } from '@mui/material';
-import FormGroup from '@mui/material/FormGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
+import React, { useEffect, useState } from "react";
+import { Box, Checkbox, Menu, MenuItem, Button } from "@mui/material";
+import FormGroup from "@mui/material/FormGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
 
 export type MapViewControlsState = {
   showSurfaces: boolean;
@@ -42,7 +42,12 @@ const MapViewControls: React.FC<MapViewControlsProps> = ({ initState, onHandleCh
   };
 
   useEffect(() => {
-    onHandleChange({ showAnimation: showAnimationChecked, showSurfaces: showSurfacesChecked, showMfd: showMfdChecked, showTraceLegend: showTraceLegendChecked });
+    onHandleChange({
+      showAnimation: showAnimationChecked,
+      showSurfaces: showSurfacesChecked,
+      showMfd: showMfdChecked,
+      showTraceLegend: showTraceLegendChecked,
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [showSurfacesChecked, showAnimationChecked, showMfdChecked, showTraceLegendChecked]);
 
@@ -56,12 +61,12 @@ const MapViewControls: React.FC<MapViewControlsProps> = ({ initState, onHandleCh
         open={open}
         onClose={handleClose}
         anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'center',
+          vertical: "bottom",
+          horizontal: "center",
         }}
         transformOrigin={{
-          vertical: 'top',
-          horizontal: 'center',
+          vertical: "top",
+          horizontal: "center",
         }}
       >
         <FormGroup>

@@ -1,16 +1,15 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
 
-import { worker } from './mocks/browser';
+import { worker } from "./mocks/browser";
 
-if (process.env.REACT_APP_MSW === 'test') {
+if (import.meta.env.VITE_MSW === "test") {
   worker.start();
 }
 
-const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
+const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
 root.render(<App />);
 
 // If you want to start measuring performance in your app, pass a function

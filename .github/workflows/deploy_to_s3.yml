@@ -11,17 +11,17 @@ on:
         description: environment to deploy to AWS_TEST or AWS_PROD
         required: true
     secrets:
-      REACT_APP_DISCLAIMER_VERSION:
+      VITE_DISCLAIMER_VERSION:
         required: true
-      REACT_APP_GRAPHQL_ENDPOINT:
+      VITE_GRAPHQL_ENDPOINT:
         required: true
-      REACT_APP_GRAPHQL_API_KEY:
+      VITE_GRAPHQL_API_KEY:
         required: true
-      REACT_APP_RESOLUTION:
+      VITE_RESOLUTION:
         required: true
-      REACT_APP_HAZARD_MODEL:
+      VITE_HAZARD_MODEL:
         required: true
-      REACT_APP_GRID_ID:
+      VITE_GRID_ID:
         required: true
       AWS_ACCESS_KEY_ID:
         required: true
@@ -72,48 +72,48 @@ jobs:
           echo "Configure build environment"
           touch .env
           echo "The following settings can be exposed, and are common to PROD and TEST.."
-          echo "REACT_APP_HAZARD_COLOR_LIMIT=12" >> .env
-          echo "REACT_APP_HAZARD_COLOR_MAP=portland" >> .env
-          echo "REACT_APP_HAZARD_COLOR_UNCERTAINTY_OPACITY=0.8" >> .env
-          echo "REACT_APP_MAP_IMTS=PGA,SA(0.1),SA(0.2),SA(0.3),SA(0.4),SA(0.5),SA(0.7),SA(1.0),SA(1.5),SA(2.0),SA(3.0),SA(4.0),SA(5.0),SA(6.0),SA(7.5),SA(10.0)" >> .env
-          echo "REACT_APP_MAP_VS30S=150,175,200,225,250,275,300,350,375,400,450,600,750" >> .env
-          echo "REACT_APP_MAP_STATISTICS=mean,cov,0.1,0.2,0.5,0.8,0.9" >> .env
-          echo "REACT_APP_MAP_POES=0.02,0.025,0.05,0.1,0.18,0.22,0.39,0.40,0.63" >> .env
-          echo "REACT_APP_MAP_COLOR_SCALE=jet,inferno,viridis,plasma,magma,cividis" >> .env
-          echo "REACT_APP_MAP_ZOOM_MIN=2" >> .env
-          echo "REACT_APP_MAP_ZOOM_MAX=12" >> .env
-          echo "REACT_APP_MAP_ZOOM_SNAP=0.5" >> .env
-          echo "REACT_APP_MAP_ZOOM_DELTA=0.5" >> .env
+          echo "VITE_HAZARD_COLOR_LIMIT=12" >> .env
+          echo "VITE_HAZARD_COLOR_MAP=portland" >> .env
+          echo "VITE_HAZARD_COLOR_UNCERTAINTY_OPACITY=0.8" >> .env
+          echo "VITE_MAP_IMTS=PGA,SA(0.1),SA(0.2),SA(0.3),SA(0.4),SA(0.5),SA(0.7),SA(1.0),SA(1.5),SA(2.0),SA(3.0),SA(4.0),SA(5.0),SA(6.0),SA(7.5),SA(10.0)" >> .env
+          echo "VITE_MAP_VS30S=150,175,200,225,250,275,300,350,375,400,450,600,750" >> .env
+          echo "VITE_MAP_STATISTICS=mean,cov,0.1,0.2,0.5,0.8,0.9" >> .env
+          echo "VITE_MAP_POES=0.02,0.025,0.05,0.1,0.18,0.22,0.39,0.40,0.63" >> .env
+          echo "VITE_MAP_COLOR_SCALE=jet,inferno,viridis,plasma,magma,cividis" >> .env
+          echo "VITE_MAP_ZOOM_MIN=2" >> .env
+          echo "VITE_MAP_ZOOM_MAX=12" >> .env
+          echo "VITE_MAP_ZOOM_SNAP=0.5" >> .env
+          echo "VITE_MAP_ZOOM_DELTA=0.5" >> .env
           echo
-          echo "REACT_APP_HAZARD_GMAX=5" >> .env
-          echo "REACT_APP_HAZARD_GMIN=0" >> .env
-          echo "REACT_APP_HAZARD_GMAX_LOG=5" >> .env
-          echo "REACT_APP_HAZARD_GMIN_LOG=0.01" >> .env
-          echo "REACT_APP_HAZARD_POEMAX=1" >> .env
-          echo "REACT_APP_HAZARD_POEMIN=0.000001" >> .env
+          echo "VITE_HAZARD_GMAX=5" >> .env
+          echo "VITE_HAZARD_GMIN=0" >> .env
+          echo "VITE_HAZARD_GMAX_LOG=5" >> .env
+          echo "VITE_HAZARD_GMIN_LOG=0.01" >> .env
+          echo "VITE_HAZARD_POEMAX=1" >> .env
+          echo "VITE_HAZARD_POEMIN=0.000001" >> .env
           echo
-          echo "REACT_APP_SA_PERIODMAX=10" >> .env
-          echo "REACT_APP_SA_PERIODMIN=0" >> .env
-          echo "REACT_APP_SA_PERIODMAX_LOG=10" >> .env
-          echo "REACT_APP_SA_PERIODMIN_LOG=0.03" >> .env
-          echo "REACT_APP_SA_GMAX=auto" >> .env
-          echo "REACT_APP_SA_GMIN=0" >> .env
-          echo "REACT_APP_SA_LOG_PGA_SUBSTITUTE=0.04" >> .env
+          echo "VITE_SA_PERIODMAX=10" >> .env
+          echo "VITE_SA_PERIODMIN=0" >> .env
+          echo "VITE_SA_PERIODMAX_LOG=10" >> .env
+          echo "VITE_SA_PERIODMIN_LOG=0.03" >> .env
+          echo "VITE_SA_GMAX=auto" >> .env
+          echo "VITE_SA_GMIN=0" >> .env
+          echo "VITE_SA_LOG_PGA_SUBSTITUTE=0.04" >> .env
           echo
-          echo "REACT_APP_MEAN=mean" >> .env
-          echo "REACT_APP_UPPER1=0.9" >> .env
-          echo "REACT_APP_UPPER2=0.95" >> .env
-          echo "REACT_APP_LOWER1=0.1" >> .env
-          echo "REACT_APP_LOWER2=0.05" >> .env
+          echo "VITE_MEAN=mean" >> .env
+          echo "VITE_UPPER1=0.9" >> .env
+          echo "VITE_UPPER2=0.95" >> .env
+          echo "VITE_LOWER1=0.1" >> .env
+          echo "VITE_LOWER2=0.05" >> .env
           echo
           cat .env
           echo "Now add the secrets.."
-          echo "REACT_APP_DISCLAIMER_VERSION=${{secrets.REACT_APP_DISCLAIMER_VERSION}}" >> .env
-          echo "REACT_APP_GRAPHQL_ENDPOINT=${{secrets.REACT_APP_GRAPHQL_ENDPOINT}}" >> .env
-          echo "REACT_APP_GRAPHQL_API_KEY=${{secrets.REACT_APP_GRAPHQL_API_KEY}}" >> .env
-          echo "REACT_APP_RESOLUTION=${{secrets.REACT_APP_RESOLUTION}}" >> .env
-          echo "REACT_APP_HAZARD_MODEL=${{secrets.REACT_APP_HAZARD_MODEL}}" >> .env
-          echo "REACT_APP_GRID_ID=${{secrets.REACT_APP_GRID_ID}}" >> .env
+          echo "VITE_DISCLAIMER_VERSION=${{secrets.VITE_DISCLAIMER_VERSION}}" >> .env
+          echo "VITE_GRAPHQL_ENDPOINT=${{secrets.VITE_GRAPHQL_ENDPOINT}}" >> .env
+          echo "VITE_GRAPHQL_API_KEY=${{secrets.VITE_GRAPHQL_API_KEY}}" >> .env
+          echo "VITE_RESOLUTION=${{secrets.VITE_RESOLUTION}}" >> .env
+          echo "VITE_HAZARD_MODEL=${{secrets.VITE_HAZARD_MODEL}}" >> .env
+          echo "VITE_GRID_ID=${{secrets.VITE_GRID_ID}}" >> .env
           echo
           yarn build
     

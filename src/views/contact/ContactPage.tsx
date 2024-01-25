@@ -1,30 +1,30 @@
-import React from 'react';
-import { styled } from '@mui/material/styles';
-import Grid from '@mui/material/Grid';
+import React from "react";
+import { styled } from "@mui/material/styles";
+import Grid from "@mui/material/Grid";
 
-import { FormControlLabel, IconButton } from '@mui/material';
-import EmailIcon from '@mui/icons-material/Email';
+import { FormControlLabel, IconButton } from "@mui/material";
+import EmailIcon from "@mui/icons-material/Email";
 
-import { Card, CardContent, CardActions, Typography } from '@mui/material';
-import { CardActionArea, CardMedia, Link } from '@mui/material';
+import { Card, CardContent, CardActions, Typography } from "@mui/material";
+import { CardActionArea, CardMedia, Link } from "@mui/material";
 
 const StyledCard = styled(Card)(() => ({
-  justifyContent: 'center',
-  alignItems: 'center',
+  justifyContent: "center",
+  alignItems: "center",
 }));
 
-const PageContainer = styled('div')({
-  justifyContent: 'center',
-  alignItems: 'center',
-  padding: '2rem',
-  marginBottom: '2rem',
+const PageContainer = styled("div")({
+  justifyContent: "center",
+  alignItems: "center",
+  padding: "2rem",
+  marginBottom: "2rem",
 });
 
-const TitleContainer = styled('div')({
-  justifyContent: 'left',
-  textAlign: 'left',
-  width: '100%',
-  paddingBottom: '1rem',
+const TitleContainer = styled("div")({
+  justifyContent: "left",
+  textAlign: "left",
+  width: "100%",
+  paddingBottom: "1rem",
 });
 
 interface EmailCardProps {
@@ -48,7 +48,7 @@ const MenuCard: React.FC<MenuCardProps> = ({ title, text, img, url }: MenuCardPr
             <Typography variant="h5">{title}</Typography>
             <Typography>{text}</Typography>
           </CardContent>
-          <CardMedia component="img" image={img} height="225px" sx={{ objectFit: 'cover' }} />
+          <CardMedia component="img" image={img} height="225px" sx={{ objectFit: "cover" }} />
         </CardActionArea>
       </Card>
     </Grid>
@@ -65,9 +65,9 @@ const EmailCard: React.FC<EmailCardProps> = ({ title, email }: EmailCardProps) =
         <CardActions>
           <FormControlLabel
             control={
-              <a target="_top" rel="noopener noreferrer" href={'mailto:' + email}>
+              <a target="_top" rel="noopener noreferrer" href={"mailto:" + email}>
                 <IconButton color="primary">
-                  <EmailIcon fontSize={'large'} /> {/* icon */}
+                  <EmailIcon fontSize={"large"} /> {/* icon */}
                 </IconButton>
               </a>
             }
@@ -95,14 +95,24 @@ const ContactPage: React.FC = () => {
                 </Typography>
               </TitleContainer>
             </Grid>
-            <MenuCard title="Contact NSHM" text="Web contact form for the NSHM project team at GNS Science." img="images/NSHM-feedback.png" url="https://www.gns.cri.nz/about-us/nshm-feedback/" />
+            <MenuCard
+              title="Contact NSHM"
+              text="Web contact form for the NSHM project team at GNS Science."
+              img="images/NSHM-feedback.png"
+              url="https://www.gns.cri.nz/about-us/nshm-feedback/"
+            />
             <MenuCard
               title="NSHM"
               text="Our main site provides an overview of the work surrounding this web site."
               img="images/NSHM-programme-header-2.png"
               url="https://www.gns.cri.nz/research-projects/national-seismic-hazard-model/"
             />
-            <MenuCard title="GNS" text="NSHM is among the many research programmes of GNS Science." img="images/GNS-home.png" url="https://www.gns.cri.nz/" />
+            <MenuCard
+              title="GNS"
+              text="NSHM is among the many research programmes of GNS Science."
+              img="images/GNS-home.png"
+              url="https://www.gns.cri.nz/"
+            />
             <EmailCard title="Email Address" email="nshm@gns.cri.nz" />
           </Grid>
         </Grid>

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<59489f5c026d2f11ea8c352b1a200e4a>>
+ * @generated SignedSource<<1a6007747e5656b80bca8c2b9f446581>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,40 +10,40 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 export type HazardChartsPlotsViewQuery$variables = {
-  hazard_model?: string | null;
-  vs30s?: ReadonlyArray<number | null> | null;
-  imts?: ReadonlyArray<string | null> | null;
-  locs?: ReadonlyArray<string | null> | null;
-  aggs?: ReadonlyArray<string | null> | null;
-  resolution?: number | null;
+  aggs?: ReadonlyArray<string | null | undefined> | null | undefined;
+  hazard_model?: string | null | undefined;
+  imts?: ReadonlyArray<string | null | undefined> | null | undefined;
+  locs?: ReadonlyArray<string | null | undefined> | null | undefined;
+  resolution?: number | null | undefined;
+  vs30s?: ReadonlyArray<number | null | undefined> | null | undefined;
 };
 export type HazardChartsPlotsViewQuery$data = {
   readonly hazard_curves: {
-    readonly ok: boolean | null;
-    readonly locations: ReadonlyArray<{
-      readonly lat: number | null;
-      readonly lon: number | null;
-      readonly resolution: number | null;
-      readonly code: string | null;
-      readonly name: string | null;
-      readonly key: string | null;
-    } | null> | null;
     readonly curves: ReadonlyArray<{
-      readonly hazard_model: string | null;
-      readonly imt: string | null;
-      readonly loc: string | null;
-      readonly agg: string | null;
-      readonly vs30: number | null;
+      readonly agg: string | null | undefined;
       readonly curve: {
-        readonly levels: ReadonlyArray<number | null> | null;
-        readonly values: ReadonlyArray<number | null> | null;
-      } | null;
-    } | null> | null;
-  } | null;
+        readonly levels: ReadonlyArray<number | null | undefined> | null | undefined;
+        readonly values: ReadonlyArray<number | null | undefined> | null | undefined;
+      } | null | undefined;
+      readonly hazard_model: string | null | undefined;
+      readonly imt: string | null | undefined;
+      readonly loc: string | null | undefined;
+      readonly vs30: number | null | undefined;
+    } | null | undefined> | null | undefined;
+    readonly locations: ReadonlyArray<{
+      readonly code: string | null | undefined;
+      readonly key: string | null | undefined;
+      readonly lat: number | null | undefined;
+      readonly lon: number | null | undefined;
+      readonly name: string | null | undefined;
+      readonly resolution: number | null | undefined;
+    } | null | undefined> | null | undefined;
+    readonly ok: boolean | null | undefined;
+  } | null | undefined;
 };
 export type HazardChartsPlotsViewQuery = {
-  variables: HazardChartsPlotsViewQuery$variables;
   response: HazardChartsPlotsViewQuery$data;
+  variables: HazardChartsPlotsViewQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

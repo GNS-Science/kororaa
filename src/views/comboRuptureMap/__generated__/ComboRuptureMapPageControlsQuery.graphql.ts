@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2295246f862206bd352ebf515a7d8901>>
+ * @generated SignedSource<<6ed93d46e770aed4335b437a4e179c96>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,44 +10,44 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 export type ComboRuptureMapPageControlsQuery$variables = {
-  radiiSetId: number;
   locationListId: string;
+  radiiSetId: number;
 };
 export type ComboRuptureMapPageControlsQuery$data = {
-  readonly textual_content_faults: {
-    readonly content: ReadonlyArray<{
-      readonly text: string | null;
-    } | null> | null;
-  } | null;
-  readonly textual_content_locations: {
-    readonly content: ReadonlyArray<{
-      readonly text: string | null;
-    } | null> | null;
-  } | null;
-  readonly textual_content_animation: {
-    readonly content: ReadonlyArray<{
-      readonly text: string | null;
-    } | null> | null;
-  } | null;
-  readonly textual_content_rate: {
-    readonly content: ReadonlyArray<{
-      readonly text: string | null;
-    } | null> | null;
-  } | null;
-  readonly SOLVIS_get_radii_set: {
-    readonly radii: ReadonlyArray<number | null> | null;
-  } | null;
   readonly SOLVIS_get_location_list: {
     readonly locations: ReadonlyArray<{
-      readonly name: string | null;
-      readonly location_id: string | null;
-    } | null> | null;
-  } | null;
-  readonly SOLVIS_get_parent_fault_names: ReadonlyArray<string | null> | null;
+      readonly location_id: string | null | undefined;
+      readonly name: string | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
+  readonly SOLVIS_get_parent_fault_names: ReadonlyArray<string | null | undefined> | null | undefined;
+  readonly SOLVIS_get_radii_set: {
+    readonly radii: ReadonlyArray<number | null | undefined> | null | undefined;
+  } | null | undefined;
+  readonly textual_content_animation: {
+    readonly content: ReadonlyArray<{
+      readonly text: string | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
+  readonly textual_content_faults: {
+    readonly content: ReadonlyArray<{
+      readonly text: string | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
+  readonly textual_content_locations: {
+    readonly content: ReadonlyArray<{
+      readonly text: string | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
+  readonly textual_content_rate: {
+    readonly content: ReadonlyArray<{
+      readonly text: string | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
 };
 export type ComboRuptureMapPageControlsQuery = {
-  variables: ComboRuptureMapPageControlsQuery$variables;
   response: ComboRuptureMapPageControlsQuery$data;
+  variables: ComboRuptureMapPageControlsQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

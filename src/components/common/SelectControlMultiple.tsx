@@ -1,8 +1,18 @@
-import React from 'react';
-import { Checkbox, FormControl, Input, InputLabel, MenuItem, Select, SelectChangeEvent, Tooltip, FormHelperText } from '@mui/material';
-import { styled } from '@mui/material/styles';
+import React from "react";
+import {
+  Checkbox,
+  FormControl,
+  Input,
+  InputLabel,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
+  Tooltip,
+  FormHelperText,
+} from "@mui/material";
+import { styled } from "@mui/material/styles";
 
-const MultiSelectContainer = styled('div')({
+const MultiSelectContainer = styled("div")({
   minWidth: 200,
   maxWidth: 300,
 });
@@ -17,12 +27,20 @@ export interface SelectControlMultiple {
   errorMessage?: string;
 }
 
-const SelectControlMultiple: React.FC<SelectControlMultiple> = ({ options, selection, setSelection, name, tooltip = '', error = false, errorMessage = '' }: SelectControlMultiple) => {
+const SelectControlMultiple: React.FC<SelectControlMultiple> = ({
+  options,
+  selection,
+  setSelection,
+  name,
+  tooltip = "",
+  error = false,
+  errorMessage = "",
+}: SelectControlMultiple) => {
   const handleChange = (event: SelectChangeEvent<string[]>) => {
     setSelection(event.target.value as string[]);
   };
 
-  if (tooltip !== '') {
+  if (tooltip !== "") {
     return (
       <MultiSelectContainer>
         <FormControl variant="standard" fullWidth>
@@ -38,7 +56,7 @@ const SelectControlMultiple: React.FC<SelectControlMultiple> = ({ options, selec
             renderValue={(selected) => {
               const selectedArray = selected as string[];
               if (selectedArray.length === 1) return selection[0];
-              if (selectedArray.length > 1) return 'Multiple selected';
+              if (selectedArray.length > 1) return "Multiple selected";
             }}
             variant="standard"
           >
@@ -67,7 +85,7 @@ const SelectControlMultiple: React.FC<SelectControlMultiple> = ({ options, selec
             renderValue={(selected) => {
               const selectedArray = selected as string[];
               if (selectedArray.length === 1) return selection[0];
-              if (selectedArray.length > 1) return 'Multiple selected';
+              if (selectedArray.length > 1) return "Multiple selected";
             }}
             variant="standard"
           >

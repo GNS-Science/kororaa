@@ -1,22 +1,22 @@
-import React from 'react';
-import { styled } from '@mui/material/styles';
-import { Typography, Grid } from '@mui/material';
+import React from "react";
+import { styled } from "@mui/material/styles";
+import { Typography, Grid } from "@mui/material";
 
-import { Link } from '@mui/material';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link } from "@mui/material";
+import { Link as RouterLink } from "react-router-dom";
 
-const PageContainer = styled('div')({
-  justifyContent: 'center',
-  alignItems: 'center',
-  padding: '2rem',
-  marginBottom: '2rem',
+const PageContainer = styled("div")({
+  justifyContent: "center",
+  alignItems: "center",
+  padding: "2rem",
+  marginBottom: "2rem",
 });
 
-const TitleContainer = styled('div')({
-  justifyContent: 'left',
-  textAlign: 'left',
-  width: '100%',
-  paddingBottom: '1rem',
+const TitleContainer = styled("div")({
+  justifyContent: "left",
+  textAlign: "left",
+  width: "100%",
+  paddingBottom: "1rem",
 });
 
 const AboutPage: React.FC = () => {
@@ -31,8 +31,9 @@ const AboutPage: React.FC = () => {
                 <Typography variant="h2">About The NSHM</Typography>
                 <Typography variant="body1">
                   <strong>
-                    The National Seismic Hazard Model (NSHM) calculates the likelihood and strength of earthquake shaking that may occur in different parts of Aotearoa New Zealand over specified time
-                    periods. The NSHM provides forecasts of ground shaking for the next 100 years.
+                    The National Seismic Hazard Model (NSHM) calculates the likelihood and strength of earthquake
+                    shaking that may occur in different parts of Aotearoa New Zealand over specified time periods. The
+                    NSHM provides forecasts of ground shaking for the next 100 years.
                   </strong>
                 </Typography>
               </TitleContainer>
@@ -40,14 +41,21 @@ const AboutPage: React.FC = () => {
 
             <Grid item xs={12}>
               <Typography variant="body1">
-                GNS Science is the custodian of the <strong>Aotearoa New Zealand National Seismic Hazard Model</strong>, also known as <strong>Te Tauira Matapae Pūmate Rū i Aotearoa.</strong>
+                GNS Science is the custodian of the <strong>Aotearoa New Zealand National Seismic Hazard Model</strong>,
+                also known as <strong>Te Tauira Matapae Pūmate Rū i Aotearoa.</strong>
               </Typography>
             </Grid>
 
             <Grid item xs={12}>
               <Typography variant="body1">
-                This web site provides scientists and researchers with access to the NSHM results and data. For background information and educational material please visit the&nbsp;
-                <Link color="secondary" target="_blank" rel="noopener" href="https://www.gns.cri.nz/research-projects/national-seismic-hazard-model/">
+                This web site provides scientists and researchers with access to the NSHM results and data. For
+                background information and educational material please visit the&nbsp;
+                <Link
+                  color="secondary"
+                  target="_blank"
+                  rel="noopener"
+                  href="https://www.gns.cri.nz/research-projects/national-seismic-hazard-model/"
+                >
                   GNS page
                 </Link>
                 .

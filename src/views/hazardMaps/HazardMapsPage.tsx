@@ -1,26 +1,26 @@
-import React, { useReducer, useState, useMemo, useTransition, useEffect } from 'react';
-import { Box, Typography } from '@mui/material';
-import { styled } from '@mui/material/styles';
-import { graphql } from 'babel-plugin-relay/macro';
-import { useLazyLoadQuery } from 'react-relay';
-import { LeafletDrawer } from '@gns-science/toshi-nest';
+import React, { useReducer, useState, useMemo, useTransition, useEffect } from "react";
+import { Box, Typography } from "@mui/material";
+import { styled } from "@mui/material/styles";
+import { graphql } from "react-relay";
+import { useLazyLoadQuery } from "react-relay";
+import { LeafletDrawer } from "@gns-science/toshi-nest";
 
-import HazardMaps from './HazardMaps';
-import { hazardMapsReducer, initialState } from './hazardMapReducer';
-import HazardMapsControls from './HazardMapsControls';
-import { flexParentCenter } from '../../utils/styleUtils';
-import { GRID_ID, HAZARD_MODEL } from '../../utils/environmentVariables';
-import { getTickValues, ColorScale } from './hazardMaps.service';
-import { ColourScaleNormalise, HazardMapsPageQuery } from './__generated__/HazardMapsPageQuery.graphql';
-import { InfoTooltip } from '../../components/common/InfoTooltip';
-import SimpleBackdrop from '../../components/common/SimpleBackdrop';
+import HazardMaps from "./HazardMaps";
+import { hazardMapsReducer, initialState } from "./hazardMapReducer";
+import HazardMapsControls from "./HazardMapsControls";
+import { flexParentCenter } from "../../utils/styleUtils";
+import { GRID_ID, HAZARD_MODEL } from "../../utils/environmentVariables";
+import { getTickValues, ColorScale } from "./hazardMaps.service";
+import { ColourScaleNormalise, HazardMapsPageQuery } from "./__generated__/HazardMapsPageQuery.graphql";
+import { InfoTooltip } from "../../components/common/InfoTooltip";
+import SimpleBackdrop from "../../components/common/SimpleBackdrop";
 
 const PageContainer = styled(Box)(({ theme }) => ({
   ...flexParentCenter,
-  margin: '0 5% 0 5% 0.5% 0.5%',
-  flexDirection: 'column',
-  [theme.breakpoints.down('xl')]: {
-    margin: '0 2% 0 2% 0.2% 0.2%',
+  margin: "0 5% 0 5% 0.5% 0.5%",
+  flexDirection: "column",
+  [theme.breakpoints.down("xl")]: {
+    margin: "0 2% 0 2% 0.2% 0.2%",
   },
 }));
 
@@ -34,16 +34,16 @@ const HazardMapsComponent: React.FC = () => {
     function updateScrollHeight() {
       setScrollHeight(window.scrollY);
     }
-    window.addEventListener('scroll', updateScrollHeight);
+    window.addEventListener("scroll", updateScrollHeight);
     updateScrollHeight();
-    return () => window.removeEventListener('scroll', updateScrollHeight);
+    return () => window.removeEventListener("scroll", updateScrollHeight);
   }, []);
 
   const colorScaleNormalise = useMemo<ColourScaleNormalise>(() => {
-    if (state.statistic === 'cov') {
-      return 'LIN';
+    if (state.statistic === "cov") {
+      return "LIN";
     } else {
-      return 'LOG';
+      return "LOG";
     }
   }, [state.statistic]);
 
@@ -63,7 +63,10 @@ const HazardMapsComponent: React.FC = () => {
   });
 
   const markdown = useMemo(() => data?.textual_content?.content && data?.textual_content?.content[0]?.text, [data]);
-  const content_type = useMemo(() => data?.textual_content?.content && data?.textual_content?.content[0]?.content_type, [data]);
+  const content_type = useMemo(
+    () => data?.textual_content?.content && data?.textual_content?.content[0]?.content_type,
+    [data]
+  );
   const geoJson = useMemo<string[]>(() => {
     if (data && data.gridded_hazard && data.gridded_hazard.gridded_hazard?.length) {
       return data.gridded_hazard?.gridded_hazard.map((hazard) => hazard?.hazard_map?.geojson);
@@ -82,8 +85,13 @@ const HazardMapsComponent: React.FC = () => {
       data.gridded_hazard.gridded_hazard[0].hazard_map.colour_scale.hexrgbs
     ) {
       return {
-        levels: getTickValues(data.gridded_hazard.gridded_hazard[0]?.hazard_map?.colour_scale?.levels.map((level) => Number(level))) ?? [],
-        hexrgbs: data.gridded_hazard.gridded_hazard[0]?.hazard_map?.colour_scale?.hexrgbs.map((color) => color?.toString()) ?? [],
+        levels:
+          getTickValues(
+            data.gridded_hazard.gridded_hazard[0]?.hazard_map?.colour_scale?.levels.map((level) => Number(level))
+          ) ?? [],
+        hexrgbs:
+          data.gridded_hazard.gridded_hazard[0]?.hazard_map?.colour_scale?.hexrgbs.map((color) => color?.toString()) ??
+          [],
       };
     }
   }, [data]);
@@ -91,15 +99,34 @@ const HazardMapsComponent: React.FC = () => {
   return (
     <PageContainer>
       {isPending && <SimpleBackdrop />}
-      <Box role="hazardMapsView" sx={{ ...flexParentCenter, justifyContent: 'center', height: '100%', width: '100%' }}>
-        <LeafletDrawer drawerHeight={'80vh'} headerHeight={`${100 - scrollHeight}px`} width={'400px'} fullscreen={fullscreen} openAtRender={true}>
-          <Typography variant="h4" sx={{ textAlign: 'center' }}>
+      <Box role="hazardMapsView" sx={{ ...flexParentCenter, justifyContent: "center", height: "100%", width: "100%" }}>
+        <LeafletDrawer
+          drawerHeight={"80vh"}
+          headerHeight={`${100 - scrollHeight}px`}
+          width={"400px"}
+          fullscreen={fullscreen}
+          openAtRender={true}
+        >
+          <Typography variant="h4" sx={{ textAlign: "center" }}>
             Hazard Maps
-            <InfoTooltip content={markdown || ''} format={content_type === 'Markdown'} />
+            <InfoTooltip content={markdown || ""} format={content_type === "Markdown"} />
           </Typography>
-          <HazardMapsControls startTransition={startTransition} isPending={isPending} geoJson={geoJson} state={state} dispatch={dispatch} />
+          <HazardMapsControls
+            startTransition={startTransition}
+            isPending={isPending}
+            geoJson={geoJson}
+            state={state}
+            dispatch={dispatch}
+          />
         </LeafletDrawer>
-        <HazardMaps state={state} geoJson={geoJson} setFullscreen={setFullscreen} colorScale={colorScale} fullscreen={fullscreen} cov={state.statistic === 'cov'} />
+        <HazardMaps
+          state={state}
+          geoJson={geoJson}
+          setFullscreen={setFullscreen}
+          colorScale={colorScale}
+          fullscreen={fullscreen}
+          cov={state.statistic === "cov"}
+        />
       </Box>
     </PageContainer>
   );
@@ -130,7 +157,14 @@ export const hazardMapsPageQuery = graphql`
     $stroke_opacity: Float
     $color_scale_normalise: ColourScaleNormalise
   ) {
-    gridded_hazard: KORORAA_gridded_hazard(grid_id: $grid_id, hazard_model_id: $hazard_model_id, imt: $imt, agg: $agg, vs30: $vs30, poe: $poe) {
+    gridded_hazard: KORORAA_gridded_hazard(
+      grid_id: $grid_id
+      hazard_model_id: $hazard_model_id
+      imt: $imt
+      agg: $agg
+      vs30: $vs30
+      poe: $poe
+    ) {
       ok
       gridded_hazard {
         grid_id

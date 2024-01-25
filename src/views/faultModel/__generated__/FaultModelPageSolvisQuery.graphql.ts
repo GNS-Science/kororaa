@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<11f80e20af7a230f9993cc25a7a287ce>>
+ * @generated SignedSource<<fcca0257ca91bda10041e1387d2cb675>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,28 +10,28 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 export type FaultModelPageSolvisQuery$variables = {
+  fault_colour?: string | null | undefined;
+  location_colour?: string | null | undefined;
+  location_ids?: ReadonlyArray<string | null | undefined> | null | undefined;
+  maximum_mag?: number | null | undefined;
+  maximum_rate?: number | null | undefined;
+  minimum_mag?: number | null | undefined;
+  minimum_rate?: number | null | undefined;
+  radius_km?: number | null | undefined;
   solution_id: string;
-  location_ids?: ReadonlyArray<string | null> | null;
-  radius_km?: number | null;
-  minimum_mag?: number | null;
-  maximum_mag?: number | null;
-  minimum_rate?: number | null;
-  maximum_rate?: number | null;
-  location_colour?: string | null;
-  fault_colour?: string | null;
 };
 export type FaultModelPageSolvisQuery$data = {
   readonly inversion_solution: {
     readonly analysis: {
-      readonly fault_sections_geojson: any | null;
-      readonly solution_id: string | null;
-      readonly location_geojson: any | null;
-    } | null;
-  } | null;
+      readonly fault_sections_geojson: any | null | undefined;
+      readonly location_geojson: any | null | undefined;
+      readonly solution_id: string | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
 };
 export type FaultModelPageSolvisQuery = {
-  variables: FaultModelPageSolvisQuery$variables;
   response: FaultModelPageSolvisQuery$data;
+  variables: FaultModelPageSolvisQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

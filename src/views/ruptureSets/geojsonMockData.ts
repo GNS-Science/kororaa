@@ -1,7 +1,7 @@
 export const geojsonMockData = {
-  solution_id: 'SW52ZXJzaW9uU29sdXRpb246MTAxMTgw',
-  location_ids: 'CHC,WLG',
-  radius_km: '100',
+  solution_id: "SW52ZXJzaW9uU29sdXRpb246MTAxMTgw",
+  location_ids: "CHC,WLG",
+  radius_km: "100",
   rupture_count: 1268,
   section_count: 239,
   ruptures:

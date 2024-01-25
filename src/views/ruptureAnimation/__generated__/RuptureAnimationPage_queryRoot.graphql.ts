@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d31a7f0e503accda9855adb4f7acabb3>>
+ * @generated SignedSource<<0646af71e3ccb52bd655db8f098770eb>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,26 +12,28 @@ import { ReaderFragment, RefetchableFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type RuptureAnimationPage_queryRoot$data = {
   readonly SOLVIS_filter_ruptures: {
-    readonly pageInfo: {
-      readonly hasNextPage: boolean;
-      readonly endCursor: string | null;
-    };
     readonly edges: ReadonlyArray<{
       readonly node: {
-        readonly fault_surfaces: any | null;
-        readonly magnitude: number | null;
-        readonly rate_weighted_mean: number | null;
-        readonly area: number | null;
-        readonly length: number | null;
-      } | null;
-    } | null>;
-  } | null;
+        readonly area: number | null | undefined;
+        readonly fault_surfaces: any | null | undefined;
+        readonly length: number | null | undefined;
+        readonly magnitude: number | null | undefined;
+        readonly rate_weighted_mean: number | null | undefined;
+      } | null | undefined;
+    } | null | undefined>;
+    readonly pageInfo: {
+      readonly endCursor: string | null | undefined;
+      readonly hasNextPage: boolean;
+    };
+  } | null | undefined;
   readonly " $fragmentType": "RuptureAnimationPage_queryRoot";
 };
 export type RuptureAnimationPage_queryRoot$key = {
   readonly " $data"?: RuptureAnimationPage_queryRoot$data;
   readonly " $fragmentSpreads": FragmentRefs<"RuptureAnimationPage_queryRoot">;
 };
+
+import RuptureAnimationPagePaginationQuery_graphql from './RuptureAnimationPagePaginationQuery.graphql';
 
 const node: ReaderFragment = (function(){
 var v0 = [
@@ -80,7 +82,7 @@ return {
         "path": (v0/*: any*/)
       },
       "fragmentPathInResult": [],
-      "operation": require('./RuptureAnimationPagePaginationQuery.graphql')
+      "operation": RuptureAnimationPagePaginationQuery_graphql
     }
   },
   "name": "RuptureAnimationPage_queryRoot",

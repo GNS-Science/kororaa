@@ -16,7 +16,7 @@ type SortBy =
   | undefined;
 
 export const ruptureAnimationPageReducerInitialState: RuptureAnimationPageState = {
-  faultSystem: '',
+  faultSystem: "",
   locationCodes: [],
   radius: 0,
   magnitudeRange: [6, 10],
@@ -24,7 +24,10 @@ export const ruptureAnimationPageReducerInitialState: RuptureAnimationPageState 
   sortby: [],
 };
 
-export const ruptureAnimationPageReducer = (state: RuptureAnimationPageState, newState: Partial<RuptureAnimationPageState>) => {
+export const ruptureAnimationPageReducer = (
+  state: RuptureAnimationPageState,
+  newState: Partial<RuptureAnimationPageState>
+) => {
   return {
     ...state,
     ...newState,
