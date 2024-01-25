@@ -1,7 +1,6 @@
 import { createTheme } from "@mui/material/styles";
 
 const OLD_PRIMARY_ORANGE = "#e97826";
-const OLD_SECONDARY_GREY = "#7f7f7f";
 const GNS_BLUE = "#072B61";
 const GNS_KHAKI = "#a71930";
 

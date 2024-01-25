@@ -62,7 +62,7 @@ type SortDict = {
   } | null;
 };
 
-type MfdData =
+export type MfdData =
   | readonly ({
       readonly bin_center: number | null;
       readonly rate: number | null;
@@ -217,7 +217,9 @@ const ComboRuptureMapControls: React.FC<ComboRuptureMapControlsProps> = ({
       locations.map((location) => {
         const locationDataItem = locationData?.find((item) => item?.name === location);
         locationIdArray.push(
-          locationDataItem && locationDataItem?.location_id !== null ? locationDataItem?.location_id : ""
+          locationDataItem && locationDataItem?.location_id !== null && locationDataItem?.location_id !== undefined
+            ? locationDataItem?.location_id
+            : ""
         );
       });
       setLocationOptions(locationNameArray.sort());
@@ -309,7 +311,7 @@ const ComboRuptureMapControls: React.FC<ComboRuptureMapControlsProps> = ({
           style={{ minWidth: 200 }}
           value={parentFaultArray}
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          onChange={(event: any, newValue: any | null) => {
+          onChange={(_event: any, newValue: any | null) => {
             setParentFaultArray(newValue);
           }}
         />

@@ -136,7 +136,9 @@ const FaultModelControls: React.FC<FaultModelControlsProps> = ({
       locations.map((location) => {
         const locationDataItem = locationData?.find((item) => item?.name === location);
         locationIdArray.push(
-          locationDataItem && locationDataItem?.location_id !== null ? locationDataItem?.location_id : ""
+          locationDataItem && locationDataItem?.location_id !== null && locationDataItem?.location_id !== undefined
+            ? locationDataItem?.location_id
+            : ""
         );
       });
       setLocationOptions(locationNameArray);
@@ -199,7 +201,7 @@ const FaultModelControls: React.FC<FaultModelControlsProps> = ({
         return filteredBranches;
       }
     };
-    const filteredBranches = filterSolutionId(logicTreeBranches);
+    const filteredBranches = filterSolutionId(logicTreeBranches as Branches);
     if (filteredBranches !== undefined && filteredBranches.length > 0) {
       if (filteredBranches[0]?.inversion_solution_id) {
         setSolutionId(filteredBranches[0]?.inversion_solution_id);

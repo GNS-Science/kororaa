@@ -92,7 +92,7 @@ export const calculateSpectralAccelCurve = (
 
   curves.forEach((currentCurve) => {
     if (currentCurve) {
-      const imt = hazardPageOptions.imts.find((imt) => currentCurve.imt === imt);
+      const imt = hazardPageOptions.imts.find((imt: string | null | undefined) => currentCurve.imt === imt);
       try {
         let p1: number[] = [];
         let p2: number[] = [];

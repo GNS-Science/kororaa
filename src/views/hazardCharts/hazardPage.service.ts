@@ -51,7 +51,7 @@ export const getAllCurveGroups = (data: HazardChartsPlotsViewQuery$data): Hazard
 
     if (imt && levels && values && agg) {
       const curveGroupKey = `${currentCurve.vs30}m/s ${currentCurve.imt} ${
-        location && location[0]?.key ? location[0]?.name : roundLatLon(currentCurve?.loc)
+        location && location[0]?.key ? location[0]?.name : roundLatLon(currentCurve?.loc || "")
       } `;
       const curveName = convertAgg(agg);
 
@@ -94,7 +94,12 @@ export const getHazardCSVData = (data: HazardChartsPlotsViewQuery$data): string[
   const regExp = /\(([^)]+)\)/g;
   const hazardCurves: HazardCurve[] = [];
   //create mutable copy of hazard curves
-  data.hazard_curves?.curves && data.hazard_curves?.curves.forEach((val) => hazardCurves.push(Object.assign({}, val)));
+  data.hazard_curves?.curves &&
+    data.hazard_curves?.curves.forEach((val) => {
+      if (val?.hazard_model) {
+        hazardCurves.push(Object.assign({}, val) as HazardCurve);
+      }
+    });
   //separate hazard curves by location
   const hazardCurvesByLoc: HazardCurve[][] = [];
   hazardCurves.forEach((curve) => {

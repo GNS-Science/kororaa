@@ -12,7 +12,7 @@ import SimpleBackdrop from "../../components/common/SimpleBackdrop";
 import { comboRuptureMapPageReducer, comboRuptureMapPageReducerInitialState } from "./comboRuptureMapPageReducer";
 import { ComboRuptureMapPageQuery } from "./__generated__/ComboRuptureMapPageQuery.graphql";
 
-import ComboRuptureMapControls from "./ComboRuptureMapPageControls";
+import ComboRuptureMapControls, { MfdData } from "./ComboRuptureMapPageControls";
 import ComboRuptureMapComponent from "./ComboRuptureMapComponent";
 import ErrorBoundary from "../../components/common/ErrorBoundary";
 
@@ -107,7 +107,7 @@ export const ComboRuptureMap: React.FC = () => {
           state={state}
           faultSurfacesGeojson={faultSurfacesGeojson as typeof GeoJsonObject}
           faultTracesGeojson={faultTracesGeojson as typeof GeoJsonObject}
-          mfdData={mfdData}
+          mfdData={mfdData as MfdData}
         />
       </LeafletDrawer>
     </>

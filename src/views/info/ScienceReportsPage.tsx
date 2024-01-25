@@ -56,9 +56,9 @@ const ScienceReportCard: React.FC<IScienceReportCardProps> = ({ report }: IScien
               <Typography variant="h4">{report.title}</Typography>
             </Grid>
             <Grid item xs={2}>
-              <Link component={Button} target="_blank" rel="noopener" color="primary" href={file_url}>
+              <Button component={Link} target="_blank" rel="noopener" color="primary" href={file_url}>
                 View report
-              </Link>
+              </Button>
             </Grid>
           </Grid>
           <Typography>

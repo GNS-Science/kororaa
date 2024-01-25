@@ -1,4 +1,4 @@
-import React, { useMemo, useContext } from "react";
+import { useMemo, useContext } from "react";
 import { ColorBar, MfdPlot } from "@gns-science/toshi-nest";
 import { Box, Typography, CircularProgress } from "@mui/material";
 import { ComboRuptureMapPageQuery$data } from "./__generated__/ComboRuptureMapPageQuery.graphql";

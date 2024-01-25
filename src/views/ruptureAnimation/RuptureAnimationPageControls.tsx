@@ -114,7 +114,9 @@ const RuptureAnimationControls: React.FC<RuptureAnimationControlsProps> = ({
       locations.map((location) => {
         const locationDataItem = locationData?.find((item) => item?.name === location);
         locationIdArray.push(
-          locationDataItem && locationDataItem?.location_id !== null ? locationDataItem?.location_id : ""
+          locationDataItem && locationDataItem?.location_id !== null && locationDataItem?.location_id !== undefined
+            ? locationDataItem?.location_id
+            : ""
         );
       });
       setLocationOptions(locationNameArray);

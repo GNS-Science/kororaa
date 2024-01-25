@@ -51,7 +51,7 @@ const RangeSliderWithInfoTooltip: React.FC<RangeSliderWithInfoTooltipProps> = ({
         <Grid item xs>
           <Slider
             value={valuesRange}
-            onChange={(event: Event, newValue: number | number[]) => setValues(newValue as number[])}
+            onChange={(_event: Event, newValue: number | number[]) => setValues(newValue as number[])}
             valueLabelDisplay="auto"
             min={inputProps.min}
             max={inputProps.max}

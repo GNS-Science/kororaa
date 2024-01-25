@@ -1,7 +1,9 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { ThemeProvider } from "@emotion/react";
+import { ThemeProvider } from "@mui/material/styles";
+import { ThemeProvider as EmotionThemeProvider } from "@emotion/react";
+import { describe, expect, test, vi } from "vitest";
 
 import DisclaimerLayer from "./DisclaimerLayer";
 import theme from "../../themeGulf";
@@ -10,22 +12,24 @@ describe("For <DisclaimerLayer />: ", () => {
   const Wrapper = () => {
     return (
       <ThemeProvider theme={theme}>
-        <DisclaimerLayer>
-          <p>hello</p>
-        </DisclaimerLayer>
+        <EmotionThemeProvider theme={theme}>
+          <DisclaimerLayer>
+            <p>hello</p>
+          </DisclaimerLayer>
+        </EmotionThemeProvider>
       </ThemeProvider>
     );
   };
 
-  const env = import.meta.env;
+  // const env = import.meta.env;
 
   beforeEach(() => {
-    jest.resetModules();
-    import.meta.env = { ...env };
+    vi.resetModules();
+    // import.meta.env = { ...env };
   });
 
   afterEach(() => {
-    import.meta.env = env;
+    // import.meta.env = env;
   });
 
   const user = userEvent.setup();
@@ -57,13 +61,13 @@ describe("For <DisclaimerLayer />: ", () => {
   });
 
   test("LocalStorage contains correct version string after clicking Accept Button", async () => {
-    jest.spyOn(Object.getPrototypeOf(window.localStorage), "setItem");
-    Object.setPrototypeOf(window.localStorage.setItem, jest.fn());
-    import.meta.env.VITE_DISCLAIMER_VERSION = "testDisclaimerVersion";
+    vi.spyOn(Object.getPrototypeOf(window.localStorage), "setItem");
+    Object.setPrototypeOf(window.localStorage.setItem, vi.fn());
+    process.env.VITE_DISCLAIMER_VERSION = "testDisclaimerVersion";
 
     render(<Wrapper />);
 
-    const acceptButton = screen.getByRole("button");
+    const acceptButton = screen.getByText("Accept");
     await user.click(acceptButton);
 
     const disclaimerVersion = localStorage.getItem("disclaimer-version");

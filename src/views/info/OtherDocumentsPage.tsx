@@ -40,8 +40,8 @@ const OtherDocumentsPage: React.FC = () => {
                         <Typography variant="h4">NSHM Project Assurance Review</Typography>
                       </Grid>
                       <Grid item xs={2}>
-                        <Link
-                          component={Button}
+                        <Button
+                          component={Link}
                           target="_blank"
                           rel="noopener"
                           color="primary"
@@ -50,7 +50,7 @@ const OtherDocumentsPage: React.FC = () => {
                           }
                         >
                           View report
-                        </Link>
+                        </Button>
                       </Grid>
                     </Grid>
                     <Typography>
