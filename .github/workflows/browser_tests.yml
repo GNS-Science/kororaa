@@ -28,12 +28,10 @@ jobs:
           registry-url: https://npm.pkg.github.com/
           scope: '@gns-science'
       - name: Cypress run
-        uses: cypress-io/github-action@v4
+        uses: cypress-io/github-action@v5
         with:
-          wait-on: 'http://localhost:4173'
-          record: true
-          build: yarn build
-          start: yarn preview
+          wait-on: http://localhost:5173
+          start: yarn run vite --host
         env:
           NODE_AUTH_TOKEN: ${{ secrets.TOSHI_NEST_PACKAGE_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
