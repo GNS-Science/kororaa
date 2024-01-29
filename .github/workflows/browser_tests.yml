@@ -31,6 +31,7 @@ jobs:
         uses: cypress-io/github-action@v5
         with:
           wait-on: http://localhost:5173
+          record: true
           start: yarn run vite --host
         env:
           NODE_AUTH_TOKEN: ${{ secrets.TOSHI_NEST_PACKAGE_TOKEN }}
