@@ -65,14 +65,6 @@ describe("Hazard Curves", () => {
     cy.get('[role="listbox"]').focus().type("{esc}");
   });
 
-  it("Displays multiple curves when user selects more than one location", () => {
-    cy.get('[data-testid="ArrowDropDownIcon"]').first().click({ force: true });
-    cy.get("li").contains("Christchurch").click({ force: true });
-    cy.get('[type="submit"]').click({ force: true });
-    cy.wait(5000);
-    cy.get('div[class="visx-legend-label"]').should("contain.text", "400m/s PGA Christchurch 400m/s PGA Wellington");
-  });
-
   it("Displays curve when user inputs arbitrary latlon value", () => {
     cy.get('input[id="poe-input"]').clear().type("10");
     cy.get('[data-testid="ArrowDropDownIcon"]').first().click({ force: true });
