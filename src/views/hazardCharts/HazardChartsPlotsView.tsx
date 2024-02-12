@@ -34,7 +34,6 @@ const HazardChartsPlotsView: React.FC<HazardChartsPlotsViewProps> = ({
     data.hazard_curves?.curves?.some((curve) => curve && curve.loc !== location?.code)
   );
 
-  //if not, it will return the location name
   const missingCurvesWarning = missingCurves?.map((loc) => loc?.lat + ", " + loc?.lon).join("; ");
   return (
     <Box role="plotsView" sx={{ width: "100%" }}>
