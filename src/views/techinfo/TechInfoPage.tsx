@@ -58,7 +58,7 @@ const TechInfoPage: React.FC = () => {
 
 export const techInfoPageQuery = graphql`
   query TechInfoPageQuery {
-    KORORAA_textual_content(index: "TECHINFO.md") {
+    KORORAA_textual_content(index: "tech_info.md") {
       ok
       content {
         index

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<47885a53138e3eabbf611f259fb0b60e>>
+ * @generated SignedSource<<00309861bd33be4b9596add5f32a1d96>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -39,7 +39,7 @@ var v0 = [
       {
         "kind": "Literal",
         "name": "index",
-        "value": "TECHINFO.md"
+        "value": "tech_info.md"
       }
     ],
     "concreteType": "TextualContentResult",
@@ -115,7 +115,7 @@ var v0 = [
         "storageKey": null
       }
     ],
-    "storageKey": "KORORAA_textual_content(index:\"TECHINFO.md\")"
+    "storageKey": "KORORAA_textual_content(index:\"tech_info.md\")"
   }
 ];
 return {
@@ -136,16 +136,16 @@ return {
     "selections": (v0/*: any*/)
   },
   "params": {
-    "cacheID": "97e29455aca8863debeee2f926589dd6",
+    "cacheID": "fbccbd6dc415b9ee1945abb36cacf633",
     "id": null,
     "metadata": {},
     "name": "TechInfoPageQuery",
     "operationKind": "query",
-    "text": "query TechInfoPageQuery {\n  KORORAA_textual_content(index: \"TECHINFO.md\") {\n    ok\n    content {\n      index\n      content_type\n      text\n      created\n      author\n      tags\n      status\n    }\n  }\n}\n"
+    "text": "query TechInfoPageQuery {\n  KORORAA_textual_content(index: \"tech_info.md\") {\n    ok\n    content {\n      index\n      content_type\n      text\n      created\n      author\n      tags\n      status\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "6742b2b770c174ba72d03267f19633dd";
+(node as any).hash = "f00729ec5eb628a8c7b09f1deb847a50";
 
 export default node;
