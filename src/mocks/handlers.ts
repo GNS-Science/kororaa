@@ -4,6 +4,7 @@ import {
   wellingtonChristchurchResponse,
   arbitraryLatLonResponse,
   initialResponse,
+  missingLocationResponse,
 } from "./mockData/hazardMocks/HazardChartsPlotsViewMockData";
 import { hazardMapMockData } from "./mockData/hazardMocks/HazardMapMockData";
 import { IFMAllLocationsMockData } from "./mockData/IFMMocks/IFMAllLocationsMockData";
@@ -30,6 +31,9 @@ export const handlers = [
 
     if (vs30.includes(250)) {
       return res(ctx.data(initialResponse));
+    }
+    if (locations.includes("-40~180")) {
+      return res(ctx.data(missingLocationResponse));
     }
 
     if (locations.includes("-41.3~174.78") && locations.includes("-43.53~172.63") && vs30.includes(400)) {

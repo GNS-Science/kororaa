@@ -30,9 +30,13 @@ const HazardChartsPlotsView: React.FC<HazardChartsPlotsViewProps> = ({
     resolution: RESOLUTION,
   });
 
-  const missingCurves = data.hazard_curves?.locations?.filter((location) =>
-    data.hazard_curves?.curves?.some((curve) => curve && curve.loc !== location?.code)
-  );
+  const missingCurves = data.hazard_curves?.locations?.filter((location) => {
+    if (data.hazard_curves?.curves?.some((curve) => curve && curve.loc === location?.code)) {
+      return null;
+    } else {
+      return location;
+    }
+  });
 
   const missingCurvesWarning = missingCurves?.map((loc) => loc?.lat + ", " + loc?.lon).join("; ");
   return (

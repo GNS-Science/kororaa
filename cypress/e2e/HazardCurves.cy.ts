@@ -80,6 +80,29 @@ describe("Hazard Curves", () => {
     cy.get('div[class="visx-legend-label"]').should("contain.text", "400m/s PGA -42.0, 173.0");
   });
 
+  it("Displays error when user inputs invalid latlon value", () => {
+    cy.get(
+      '[class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-1x51dt5-MuiInputBase-input-MuiInput-input"]'
+    )
+      .first()
+      .clear()
+      .type("-40, 180");
+    cy.get('[type="submit"]').click({ force: true });
+    cy.get("div").contains("Location not in data: -40, 180");
+  });
+
+  it.skip("Displays one curve and error when only one latlon is in data", () => {
+    cy.get(
+      '[class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-1x51dt5-MuiInputBase-input-MuiInput-input"]'
+    )
+      .first()
+      .clear()
+      .type("-37.78, 175.28; -40, 180");
+    cy.get('[type="submit"]').click({ force: true });
+    cy.get("div").contains("Location not in data: -40, 180");
+    cy.get('[role="curve"]').should("have.length", 5);
+  });
+
   it.skip("Displays multiple curves when user selects more than one VS30", () => {
     cy.get("div").contains("400").click();
     cy.get("li").contains("350").click();
