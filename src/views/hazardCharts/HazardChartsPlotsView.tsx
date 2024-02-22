@@ -1,7 +1,7 @@
 import React from "react";
 import { graphql } from "react-relay";
 import { useLazyLoadQuery } from "react-relay";
-import { Box } from "@mui/material";
+import { Box, Alert } from "@mui/material";
 
 import { HazardChartsPlotsViewQuery } from "./__generated__/HazardChartsPlotsViewQuery.graphql";
 import { hazardPageOptions } from "./constants/hazardPageOptions";
@@ -30,8 +30,24 @@ const HazardChartsPlotsView: React.FC<HazardChartsPlotsViewProps> = ({
     resolution: RESOLUTION,
   });
 
+  const missingCurves = data.hazard_curves?.locations?.filter((location) => {
+    if (data.hazard_curves?.curves?.some((curve) => curve && curve.loc === location?.code)) {
+      return null;
+    } else {
+      return location;
+    }
+  });
+
+  const missingCurvesWarning = missingCurves?.map((loc) => loc?.lat + ", " + loc?.lon).join("; ");
   return (
     <Box role="plotsView" sx={{ width: "100%" }}>
+      <Box sx={{ padding: "10px", marginBottom: "10px" }}>
+        {missingCurves && missingCurves.length > 0 && (
+          <Alert severity="warning">
+            Location{missingCurves.length > 1 && "s"} not in data: {missingCurvesWarning}
+          </Alert>
+        )}
+      </Box>
       <div ref={printTargetRef}>
         <HazardCharts data={data} state={state} dispatch={dispatch} />
       </div>
