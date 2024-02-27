@@ -83,12 +83,14 @@ jobs:
           echo "VITE_GA_DEBUG_MODE=true" >> .env
           cat .env
           echo "Now add the secrets.."
-          echo "VITE_DISCLAIMER_VERSION=${{secrets.VITE_DISCLAIMER_VERSION}}" >> .env
-          echo "VITE_GRAPHQL_ENDPOINT=${{secrets.VITE_GRAPHQL_ENDPOINT}}" >> .env
           echo "VITE_GRAPHQL_API_KEY=${{secrets.VITE_GRAPHQL_API_KEY}}" >> .env
-          echo "VITE_RESOLUTION=${{secrets.VITE_RESOLUTION}}" >> .env
-          echo "VITE_HAZARD_MODEL=${{secrets.VITE_HAZARD_MODEL}}" >> .env
-          echo "VITE_GRID_ID=${{secrets.VITE_GRID_ID}}" >> .env
+          echo "Now add the vars.."
+          echo "VITE_DISCLAIMER_VERSION=${{vars.VITE_DISCLAIMER_VERSION}}" >> .env
+          echo "VITE_GRAPHQL_ENDPOINT=${{vars.VITE_GRAPHQL_ENDPOINT}}" >> .env
+          echo "VITE_RESOLUTION=${{vars.VITE_RESOLUTION}}" >> .env
+          echo "VITE_HAZARD_MODEL=${{vars.VITE_HAZARD_MODEL}}" >> .env
+          echo "VITE_GRID_ID=${{vars.VITE_GRID_ID}}" >> .env
+          echo "VITE_RADII_ID=${{vars.VITE_RADII_ID}}" >> .env
           echo
           yarn build
 
