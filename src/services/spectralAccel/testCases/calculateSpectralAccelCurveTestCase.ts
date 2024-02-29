@@ -1,4 +1,4 @@
-import { SA_LOG_PGA_SUBSTITUTE } from '../../../utils/environmentVariables';
+import { SA_LOG_PGA_SUBSTITUTE } from "../../../utils/environmentVariables";
 
 export const expected = [
   [SA_LOG_PGA_SUBSTITUTE, 1.5840401423927233],

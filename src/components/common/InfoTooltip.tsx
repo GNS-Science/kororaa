@@ -1,9 +1,9 @@
-import React, { useRef, useState, useEffect } from 'react';
-import { styled } from '@mui/material/styles';
-import { Dialog, DialogContent, IconButton } from '@mui/material';
-import InfoIcon from '@mui/icons-material/Info';
-import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
+import React, { useRef, useState, useEffect } from "react";
+import { styled } from "@mui/material/styles";
+import { Dialog, DialogContent, IconButton } from "@mui/material";
+import InfoIcon from "@mui/icons-material/Info";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 interface InfoTooltipProps {
   content: string;
@@ -11,8 +11,8 @@ interface InfoTooltipProps {
 }
 
 const StyledIconButton = styled(IconButton)(() => ({
-  bottom: '10px',
-  right: '3px',
+  bottom: "10px",
+  right: "3px",
 }));
 
 export const InfoTooltip: React.FC<InfoTooltipProps> = ({ content, format }) => {
@@ -33,7 +33,7 @@ export const InfoTooltip: React.FC<InfoTooltipProps> = ({ content, format }) => 
   }, []);
 
   useEffect(() => {
-    window.addEventListener('resize', getPosition);
+    window.addEventListener("resize", getPosition);
   }, []);
 
   const handleOpen = () => {
@@ -51,10 +51,10 @@ export const InfoTooltip: React.FC<InfoTooltipProps> = ({ content, format }) => 
       <Dialog
         PaperProps={{
           style: {
-            position: 'absolute',
-            top: y + 'px',
-            left: x + 'px',
-            maxHeight: '70vh',
+            position: "absolute",
+            top: y + "px",
+            left: x + "px",
+            maxHeight: "70vh",
           },
         }}
         open={open}
@@ -62,7 +62,7 @@ export const InfoTooltip: React.FC<InfoTooltipProps> = ({ content, format }) => 
       >
         <DialogContent>
           {format ? (
-            <ReactMarkdown linkTarget={'_blank'} remarkPlugins={[remarkGfm]}>
+            <ReactMarkdown linkTarget={"_blank"} remarkPlugins={[remarkGfm]}>
               {content}
             </ReactMarkdown>
           ) : (

@@ -1,5 +1,5 @@
-import * as hazardPageService from '../hazardPage.service';
-import { HazardChartsPlotsViewQuery$data } from '../__generated__/HazardChartsPlotsViewQuery.graphql';
+import * as hazardPageService from "../hazardPage.service";
+import { HazardChartsPlotsViewQuery$data } from "../__generated__/HazardChartsPlotsViewQuery.graphql";
 
 //   it('should return the curve in xy format if imt, levels, and values are all present', () => {
 //     const data: HazardChartsPlotsViewQuery$data = {
@@ -61,7 +61,7 @@ import { HazardChartsPlotsViewQuery$data } from '../__generated__/HazardChartsPl
 //   });
 // });
 
-test.todo('For the getSpectralAccelerationData function');
-test.todo('For the getImtValue function');
-test.todo('For the getHazardCSVdata function');
-test.todo('For the getCSVheadings funcstion');
+test.todo("For the getSpectralAccelerationData function");
+test.todo("For the getImtValue function");
+test.todo("For the getHazardCSVdata function");
+test.todo("For the getCSVheadings funcstion");

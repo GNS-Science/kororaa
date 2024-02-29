@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a082969b823038093a34372c1adbf99b>>
+ * @generated SignedSource<<b117967c63954de1b5c015a0191d8805>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,38 +11,38 @@
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type SimpleSortRupturesArgs = {
-  attribute?: string | null;
-  ascending?: boolean | null;
+  ascending?: boolean | null | undefined;
+  attribute?: string | null | undefined;
 };
 export type RuptureAnimationPageQuery$variables = {
-  first: number;
-  after?: string | null;
-  model_id: string;
+  after?: string | null | undefined;
   fault_system: string;
-  location_ids: ReadonlyArray<string | null>;
+  first: number;
+  location_ids: ReadonlyArray<string | null | undefined>;
+  maximum_mag?: number | null | undefined;
+  maximum_rate?: number | null | undefined;
+  minimum_mag?: number | null | undefined;
+  minimum_rate?: number | null | undefined;
+  model_id: string;
   radius_km: number;
-  minimum_mag?: number | null;
-  maximum_mag?: number | null;
-  minimum_rate?: number | null;
-  maximum_rate?: number | null;
-  sortby?: ReadonlyArray<SimpleSortRupturesArgs | null> | null;
+  sortby?: ReadonlyArray<SimpleSortRupturesArgs | null | undefined> | null | undefined;
 };
 export type RuptureAnimationPageQuery$data = {
+  readonly SOLVIS_filter_ruptures: {
+    readonly total_count: number | null | undefined;
+  } | null | undefined;
   readonly SOLVIS_locations_by_id: {
     readonly edges: ReadonlyArray<{
       readonly node: {
-        readonly radius_geojson: any | null;
-      } | null;
-    } | null>;
-  } | null;
-  readonly SOLVIS_filter_ruptures: {
-    readonly total_count: number | null;
-  } | null;
+        readonly radius_geojson: any | null | undefined;
+      } | null | undefined;
+    } | null | undefined>;
+  } | null | undefined;
   readonly " $fragmentSpreads": FragmentRefs<"RuptureAnimationPage_queryRoot">;
 };
 export type RuptureAnimationPageQuery = {
-  variables: RuptureAnimationPageQuery$variables;
   response: RuptureAnimationPageQuery$data;
+  variables: RuptureAnimationPageQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

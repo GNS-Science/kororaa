@@ -1,21 +1,30 @@
-import React, { useEffect, useState } from 'react';
-import { Box, Button, styled } from '@mui/material';
-import { SelectControl } from '@gns-science/toshi-nest';
-import { toPng } from 'html-to-image';
+import React, { useEffect, useState } from "react";
+import { Box, Button, styled } from "@mui/material";
+import { SelectControl } from "@gns-science/toshi-nest";
+import { toPng } from "html-to-image";
 
-import { flexParentCenter } from '../../utils/styleUtils';
-import { getHazardMapCSVData } from './hazardMaps.service';
-import { HazardMapsState } from './hazardMapReducer';
-import CustomControlsBar from '../../components/common/CustomControlsBar';
-import { MAP_IMTS, MAP_POES, MAP_STATISTICS, MAP_VS30S, MAP_GRID_STYLE_DEFAULT, MAP_GRID_VMAX, MAP_GRID_STROKE_WIDTH, HAZARD_MODEL } from '../../utils/environmentVariables';
+import { flexParentCenter } from "../../utils/styleUtils";
+import { getHazardMapCSVData } from "./hazardMaps.service";
+import { HazardMapsState } from "./hazardMapReducer";
+import CustomControlsBar from "../../components/common/CustomControlsBar";
+import {
+  MAP_IMTS,
+  MAP_POES,
+  MAP_STATISTICS,
+  MAP_VS30S,
+  MAP_GRID_STYLE_DEFAULT,
+  MAP_GRID_VMAX,
+  MAP_GRID_STROKE_WIDTH,
+  HAZARD_MODEL,
+} from "../../utils/environmentVariables";
 
-import StyledCSVLink from '../../components/common/StyledCSVLink';
-import { parsePoeString, readablePoe, readablePoeArray } from './hazardMaps.service';
-import { statisticTooltip, gridStyleOptions, gridStyleTooltip } from './constants/hazardMaps';
-import { imtTooltip, poeTooltip, vs30Tooltip } from '../../constants/tooltips';
+import StyledCSVLink from "../../components/common/StyledCSVLink";
+import { parsePoeString, readablePoe, readablePoeArray } from "./hazardMaps.service";
+import { statisticTooltip, gridStyleOptions, gridStyleTooltip } from "./constants/hazardMaps";
+import { imtTooltip, poeTooltip, vs30Tooltip } from "../../constants/tooltips";
 
 const StyledButton = styled(Button)(() => ({
-  margin: '0 0 0 10px',
+  margin: "0 0 0 10px",
 }));
 
 interface HazardMapsControlsProps {
@@ -26,14 +35,20 @@ interface HazardMapsControlsProps {
   dispatch: React.Dispatch<Partial<HazardMapsState>>;
 }
 
-const HazardMapsControls: React.FC<HazardMapsControlsProps> = ({ startTransition, isPending, geoJson, state, dispatch }: HazardMapsControlsProps) => {
+const HazardMapsControls: React.FC<HazardMapsControlsProps> = ({
+  startTransition,
+  isPending,
+  geoJson,
+  state,
+  dispatch,
+}: HazardMapsControlsProps) => {
   const [spectralPeriod, setSpectralPeriod] = useState<string>(state.spectralPeriod);
   const [statistic, setStatistic] = useState<string>(state.statistic);
   const [vs30, setVs30] = useState<number>(state.vs30);
   const [poe, setPoe] = useState<number>(state.poe);
-  const [colorScale, setColorScale] = useState<string>('inferno');
-  const [fillOpacity, setFillOpacity] = useState<string>('0.5');
-  const [strokeOpacity, setStrokeOpacity] = useState<string>('0.5');
+  const [colorScale, setColorScale] = useState<string>("inferno");
+  const [fillOpacity, setFillOpacity] = useState<string>("0.5");
+  const [strokeOpacity, setStrokeOpacity] = useState<string>("0.5");
   const [gridStyle, setGridStyle] = useState<string>(MAP_GRID_STYLE_DEFAULT);
   const [dataFetched, setDataFetched] = useState<boolean>(true);
   const [controlsChanged, setControlsChanged] = useState<number>(0);
@@ -49,10 +64,10 @@ const HazardMapsControls: React.FC<HazardMapsControlsProps> = ({ startTransition
   useEffect(() => {
     setFillOpacity(gridStyleOptions[gridStyle].opacity);
     setStrokeOpacity(gridStyleOptions[gridStyle].strokeOpacity);
-    if (statistic === 'cov') {
-      setColorScale('viridis');
+    if (statistic === "cov") {
+      setColorScale("viridis");
     } else {
-      setColorScale('inferno');
+      setColorScale("inferno");
     }
   }, [gridStyle, statistic]);
 
@@ -74,12 +89,12 @@ const HazardMapsControls: React.FC<HazardMapsControlsProps> = ({ startTransition
   };
 
   const handleDownload = () => {
-    const element = document.getElementById('map');
+    const element = document.getElementById("map");
     if (element === null) {
       return;
     }
     toPng(element, { quality: 0.95 }).then((dataUrl: string) => {
-      const link = document.createElement('a');
+      const link = document.createElement("a");
       link.download = `hazard map-${HAZARD_MODEL}.png`;
       link.href = dataUrl;
       link.click();
@@ -87,11 +102,29 @@ const HazardMapsControls: React.FC<HazardMapsControlsProps> = ({ startTransition
   };
 
   return (
-    <Box sx={{ width: '100%', ...flexParentCenter, flexDirection: 'column' }}>
+    <Box sx={{ width: "100%", ...flexParentCenter, flexDirection: "column" }}>
       <CustomControlsBar direction="column">
-        <SelectControl name="Spectral Period" options={MAP_IMTS} selection={spectralPeriod} setSelection={setSpectralPeriod} tooltip={imtTooltip} />
-        <SelectControl name="Statistic" options={MAP_STATISTICS} selection={statistic} setSelection={setStatistic} tooltip={statisticTooltip} />
-        <SelectControl name="Vs30 (m/s)" options={MAP_VS30S} selection={vs30.toString()} setSelection={(newValue: string[]) => setVs30(Number(newValue))} tooltip={vs30Tooltip} />
+        <SelectControl
+          name="Spectral Period"
+          options={MAP_IMTS}
+          selection={spectralPeriod}
+          setSelection={setSpectralPeriod}
+          tooltip={imtTooltip}
+        />
+        <SelectControl
+          name="Statistic"
+          options={MAP_STATISTICS}
+          selection={statistic}
+          setSelection={setStatistic}
+          tooltip={statisticTooltip}
+        />
+        <SelectControl
+          name="Vs30 (m/s)"
+          options={MAP_VS30S}
+          selection={vs30.toString()}
+          setSelection={(newValue: string[]) => setVs30(Number(newValue))}
+          tooltip={vs30Tooltip}
+        />
         <SelectControl
           name="Probability of Exceedence"
           options={readablePoeArray(MAP_POES)}
@@ -99,12 +132,27 @@ const HazardMapsControls: React.FC<HazardMapsControlsProps> = ({ startTransition
           setSelection={(newValue: string) => setPoe(parsePoeString(newValue))}
           tooltip={poeTooltip}
         />
-        <SelectControl name="Grid Style" options={Object.keys(gridStyleOptions)} selection={gridStyle} setSelection={setGridStyle} tooltip={gridStyleTooltip} />
+        <SelectControl
+          name="Grid Style"
+          options={Object.keys(gridStyleOptions)}
+          selection={gridStyle}
+          setSelection={setGridStyle}
+          tooltip={gridStyleTooltip}
+        />
         <StyledButton disabled={isPending || dataFetched} variant="contained" type="submit" onClick={handleSubmit}>
           Submit
         </StyledButton>
         <div>
-          <StyledCSVLink data={getHazardMapCSVData(geoJson, state.vs30, state.spectralPeriod, readablePoe(state.poe), state.statistic)} filename="hazard-maps.csv">
+          <StyledCSVLink
+            data={getHazardMapCSVData(
+              geoJson,
+              state.vs30,
+              state.spectralPeriod,
+              readablePoe(state.poe),
+              state.statistic
+            )}
+            filename="hazard-maps.csv"
+          >
             <StyledButton disabled={isPending} variant="contained" type="submit" color="primary">
               Download CSV
             </StyledButton>

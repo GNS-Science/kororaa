@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0700f65ed741a9d26d1ab409c21d8efc>>
+ * @generated SignedSource<<2a4c105deab57d484ecb8dae8aafa3b2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,40 +10,40 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type SetOperationEnum = "UNION" | "INTERSECTION" | "DIFFERENCE" | "%future added value";
+export type SetOperationEnum = "DIFFERENCE" | "INTERSECTION" | "UNION" | "%future added value";
 export type FilterRupturesArgsInput = {
-  model_id: string;
+  corupture_fault_names?: ReadonlyArray<string | null | undefined> | null | undefined;
   fault_system: string;
-  corupture_fault_names?: ReadonlyArray<string | null> | null;
-  location_ids?: ReadonlyArray<string | null> | null;
-  radius_km?: number | null;
-  filter_set_options?: FilterSetLogicOptionsInput | null;
-  minimum_rate?: number | null;
-  maximum_rate?: number | null;
-  minimum_mag?: number | null;
-  maximum_mag?: number | null;
+  filter_set_options?: FilterSetLogicOptionsInput | null | undefined;
+  location_ids?: ReadonlyArray<string | null | undefined> | null | undefined;
+  maximum_mag?: number | null | undefined;
+  maximum_rate?: number | null | undefined;
+  minimum_mag?: number | null | undefined;
+  minimum_rate?: number | null | undefined;
+  model_id: string;
+  radius_km?: number | null | undefined;
 };
 export type FilterSetLogicOptionsInput = {
-  multiple_locations?: SetOperationEnum | null;
-  multiple_faults?: SetOperationEnum | null;
-  locations_and_faults?: SetOperationEnum | null;
+  locations_and_faults?: SetOperationEnum | null | undefined;
+  multiple_faults?: SetOperationEnum | null | undefined;
+  multiple_locations?: SetOperationEnum | null | undefined;
 };
 export type SimpleSortRupturesArgs = {
-  attribute?: string | null;
-  ascending?: boolean | null;
+  ascending?: boolean | null | undefined;
+  attribute?: string | null | undefined;
 };
 export type RuptureAnimationPagePaginationQuery$variables = {
-  after?: string | null;
+  after?: string | null | undefined;
   filter: FilterRupturesArgsInput;
-  first?: number | null;
-  sortby?: ReadonlyArray<SimpleSortRupturesArgs | null> | null;
+  first?: number | null | undefined;
+  sortby?: ReadonlyArray<SimpleSortRupturesArgs | null | undefined> | null | undefined;
 };
 export type RuptureAnimationPagePaginationQuery$data = {
   readonly " $fragmentSpreads": FragmentRefs<"RuptureAnimationPage_queryRoot">;
 };
 export type RuptureAnimationPagePaginationQuery = {
-  variables: RuptureAnimationPagePaginationQuery$variables;
   response: RuptureAnimationPagePaginationQuery$data;
+  variables: RuptureAnimationPagePaginationQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){

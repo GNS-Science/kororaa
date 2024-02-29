@@ -1,19 +1,21 @@
-import React, { useMemo, useState, useEffect, useReducer, useTransition } from 'react';
-import { LeafletMap, LeafletDrawer } from '@gns-science/toshi-nest';
-import { Box, Typography } from '@mui/material';
-import { useLazyLoadQuery, usePaginationFragment } from 'react-relay';
-import '../../css/leaflet.timedimension.control.css';
-import { graphql } from 'babel-plugin-relay/macro';
-import { HAZARD_MODEL } from '../../utils/environmentVariables';
-import { GeoJsonObject } from 'geojson';
-import { LatLngExpression } from 'leaflet';
+import React, { useMemo, useState, useEffect, useReducer, useTransition } from "react";
+import { LeafletMap, LeafletDrawer } from "@gns-science/toshi-nest";
+import { Box, Typography } from "@mui/material";
+import { useLazyLoadQuery, usePaginationFragment, graphql } from "react-relay";
+import "../../css/leaflet.timedimension.control.css";
+import { HAZARD_MODEL } from "../../utils/environmentVariables";
+import { GeoJsonObject } from "geojson";
+import { LatLngExpression } from "leaflet";
 
-import { InfoTooltip } from '../../components/common/InfoTooltip';
-import RuptureAnimationControls from './RuptureAnimationPageControls';
-import SimpleBackdrop from '../../components/common/SimpleBackdrop';
-import { ruptureAnimationPageReducer, ruptureAnimationPageReducerInitialState } from './ruptureAnimationPageReducer';
-import { RuptureAnimationPageQuery, RuptureAnimationPageQuery$data } from './__generated__/RuptureAnimationPageQuery.graphql';
-import { RuptureAnimationPage_queryRoot$key } from './__generated__/RuptureAnimationPage_queryRoot.graphql';
+import { InfoTooltip } from "../../components/common/InfoTooltip";
+import RuptureAnimationControls from "./RuptureAnimationPageControls";
+import SimpleBackdrop from "../../components/common/SimpleBackdrop";
+import { ruptureAnimationPageReducer, ruptureAnimationPageReducerInitialState } from "./ruptureAnimationPageReducer";
+import {
+  RuptureAnimationPageQuery,
+  RuptureAnimationPageQuery$data,
+} from "./__generated__/RuptureAnimationPageQuery.graphql";
+import { RuptureAnimationPage_queryRoot$key } from "./__generated__/RuptureAnimationPage_queryRoot.graphql";
 
 type Props = {
   queryData: RuptureAnimationPageQuery$data;
@@ -47,22 +49,38 @@ export const RuptureAnimationComponent: React.FC = () => {
     function updateScrollHeight() {
       setScrollHeight(window.scrollY);
     }
-    window.addEventListener('scroll', updateScrollHeight);
+    window.addEventListener("scroll", updateScrollHeight);
     updateScrollHeight();
-    return () => window.removeEventListener('scroll', updateScrollHeight);
+    return () => window.removeEventListener("scroll", updateScrollHeight);
   }, []);
 
   return (
     <>
-      <Box id="map" sx={{ width: '100%', height: '80vh' }}>
-        <RuptureAnimationPaginationComponent setFullscreen={setFullscreen} ruptureConnectionRef={initialData} queryData={initialData} isPending={isPending} setGeoJsonError={setGeoJsonError} />
+      <Box id="map" sx={{ width: "100%", height: "80vh" }}>
+        <RuptureAnimationPaginationComponent
+          setFullscreen={setFullscreen}
+          ruptureConnectionRef={initialData}
+          queryData={initialData}
+          isPending={isPending}
+          setGeoJsonError={setGeoJsonError}
+        />
       </Box>
-      <LeafletDrawer drawerHeight={'80vh'} headerHeight={`${100 - scrollHeight}px`} width={'400px'} fullscreen={fullscreen}>
-        <Typography variant="h4" sx={{ textAlign: 'center' }}>
+      <LeafletDrawer
+        drawerHeight={"80vh"}
+        headerHeight={`${100 - scrollHeight}px`}
+        width={"400px"}
+        fullscreen={fullscreen}
+      >
+        <Typography variant="h4" sx={{ textAlign: "center" }}>
           IFM Rupture Animation
-          <InfoTooltip content={'tooltip to come'} format={false} />
+          <InfoTooltip content={"tooltip to come"} format={false} />
         </Typography>
-        <RuptureAnimationControls startTransition={startTransition} isPending={isPending} dispatch={dispatch} geoJsonError={geoJsonError} />
+        <RuptureAnimationControls
+          startTransition={startTransition}
+          isPending={isPending}
+          dispatch={dispatch}
+          geoJsonError={geoJsonError}
+        />
       </LeafletDrawer>
     </>
   );
@@ -70,7 +88,10 @@ export const RuptureAnimationComponent: React.FC = () => {
 
 export const RuptureAnimationPaginationComponent: React.FC<Props> = (props: Props) => {
   const { queryData, setFullscreen, ruptureConnectionRef, isPending, setGeoJsonError } = props;
-  const { data, hasNext, loadNext } = usePaginationFragment<RuptureAnimationPageQuery, RuptureAnimationPage_queryRoot$key>(ruptureAnimationPage_queryRoot, ruptureConnectionRef);
+  const { data, hasNext, loadNext } = usePaginationFragment<
+    RuptureAnimationPageQuery,
+    RuptureAnimationPage_queryRoot$key
+  >(ruptureAnimationPage_queryRoot, ruptureConnectionRef);
   const [zoomLevel, setZoomLevel] = useState<number>(5);
   const [needsMore, setNeedsMore] = useState<boolean>(false);
   const [hasNoMore, setHasNoMore] = useState<boolean>(false);
@@ -91,13 +112,18 @@ export const RuptureAnimationPaginationComponent: React.FC<Props> = (props: Prop
 
   const surfaceProperties = useMemo(() => {
     return data?.SOLVIS_filter_ruptures?.edges?.map((edge) => {
-      return { magnitude: edge?.node?.magnitude, area: edge?.node?.area, length: edge?.node?.length, rate_weighted_mean: edge?.node?.rate_weighted_mean };
+      return {
+        magnitude: edge?.node?.magnitude,
+        area: edge?.node?.area,
+        length: edge?.node?.length,
+        rate_weighted_mean: edge?.node?.rate_weighted_mean,
+      };
     });
   }, [data]);
 
   useEffect(() => {
     if (locationData && locationData.length > 0 && ruptureData?.length === 0) {
-      setGeoJsonError('No ruptures satisfy the filter.');
+      setGeoJsonError("No ruptures satisfy the filter.");
     } else {
       setGeoJsonError(null);
     }
@@ -118,12 +144,12 @@ export const RuptureAnimationPaginationComponent: React.FC<Props> = (props: Prop
   const timeDimensionOptions = {
     currentTime: 1,
     times: timeArray || [],
-    timeInterval: 'P1M/2021-01-01T00:00:00Z/P1M',
-    period: 'P1D',
+    timeInterval: "P1M/2021-01-01T00:00:00Z/P1M",
+    period: "P1D",
   };
 
   const timeDimensionControlOptions = {
-    position: 'bottomright',
+    position: "bottomright",
     displayDate: false,
     maxSpeed: 5,
     minSpeed: 1,
@@ -146,7 +172,7 @@ export const RuptureAnimationPaginationComponent: React.FC<Props> = (props: Prop
   }, [needsMore, hasNoMore]);
 
   const timeDimensionLayerProps = {
-    geoJsonData: (ruptureData as typeof GeoJsonObject[]) || '',
+    geoJsonData: (ruptureData as typeof GeoJsonObject[]) || "",
     setTimeDimensionNeedsMore: setNeedsMore,
     setTimeDimensionHasNoMore: setHasNoMore,
     surfaceProperties: surfaceProperties || [],
@@ -162,9 +188,9 @@ export const RuptureAnimationPaginationComponent: React.FC<Props> = (props: Prop
           zoomLevel={zoomLevel}
           setZoomLevel={setZoomLevel}
           nzCentre={nzCentre as typeof LatLngExpression}
-          geoJsonData={locationData ? locationData : ['']}
-          height={'80vh'}
-          width={'100%'}
+          geoJsonData={locationData ? locationData : [""]}
+          height={"80vh"}
+          width={"100%"}
           setFullscreen={setFullscreen}
           timeDimension={true}
           timeDimensionOptions={timeDimensionOptions}
@@ -196,8 +222,14 @@ export default RuptureAnimationPage;
 export const ruptureAnimationPage_queryRoot = graphql`
   fragment RuptureAnimationPage_queryRoot on Query
   @refetchable(queryName: "RuptureAnimationPagePaginationQuery")
-  @argumentDefinitions(first: { type: "Int", defaultValue: 5 }, after: { type: "String" }, filter: { type: "FilterRupturesArgsInput!" }, sortby: { type: "[SimpleSortRupturesArgs]" }) {
-    SOLVIS_filter_ruptures(first: $first, after: $after, filter: $filter, sortby: $sortby) @connection(key: "RuptureAnimationPage_queryRoot_SOLVIS_filter_ruptures") {
+  @argumentDefinitions(
+    first: { type: "Int", defaultValue: 5 }
+    after: { type: "String" }
+    filter: { type: "FilterRupturesArgsInput!" }
+    sortby: { type: "[SimpleSortRupturesArgs]" }
+  ) {
+    SOLVIS_filter_ruptures(first: $first, after: $after, filter: $filter, sortby: $sortby)
+      @connection(key: "RuptureAnimationPage_queryRoot_SOLVIS_filter_ruptures") {
       pageInfo {
         hasNextPage
         endCursor
@@ -233,7 +265,16 @@ export const ruptureAnimationPageQuery = graphql`
       edges {
         node {
           ... on LocationDetail {
-            radius_geojson(radius_km: $radius_km, style: { stroke_color: "royalblue", stroke_width: 3, stroke_opacity: 0.2, fill_opacity: 0.5, fill_color: "royalblue" })
+            radius_geojson(
+              radius_km: $radius_km
+              style: {
+                stroke_color: "royalblue"
+                stroke_width: 3
+                stroke_opacity: 0.2
+                fill_opacity: 0.5
+                fill_color: "royalblue"
+              }
+            )
           }
         }
       }

@@ -1,17 +1,17 @@
-import React, { useEffect } from 'react';
-import { FaultModelTable } from '@gns-science/toshi-nest';
-import { Box, Accordion, AccordionDetails, AccordionSummary, Button } from '@mui/material';
-import { styled } from '@mui/material/styles';
+import React, { useEffect } from "react";
+import { FaultModelTable } from "@gns-science/toshi-nest";
+import { Box, Accordion, AccordionDetails, AccordionSummary, Button } from "@mui/material";
+import { styled } from "@mui/material/styles";
 
 const StyledButton = styled(Button)(() => ({
-  margin: '0 0 0 10px',
+  margin: "0 0 0 10px",
 }));
 
 const ButtonContainer = styled(Box)(() => ({
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  width: '100%',
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  width: "100%",
 }));
 
 interface FaultModelTableContainerProps {
@@ -20,7 +20,9 @@ interface FaultModelTableContainerProps {
   disabled?: boolean;
 }
 
-export const FaultModelTableContainer: React.FC<FaultModelTableContainerProps> = (props: FaultModelTableContainerProps) => {
+export const FaultModelTableContainer: React.FC<FaultModelTableContainerProps> = (
+  props: FaultModelTableContainerProps
+) => {
   const [expanded, setExpanded] = React.useState<boolean>(false);
   const handleClick = () => {
     setExpanded(!expanded);
@@ -33,17 +35,17 @@ export const FaultModelTableContainer: React.FC<FaultModelTableContainerProps> =
   }, [props.disabled]);
 
   return (
-    <Box id="table" sx={{ width: '100%', justifyContent: 'center' }}>
+    <Box id="table" sx={{ width: "100%", justifyContent: "center" }}>
       <Accordion expanded={expanded}>
         <AccordionSummary>
           <ButtonContainer>
             <StyledButton disabled={props.disabled} variant="contained" onClick={handleClick}>
-              {expanded ? 'Hide' : 'Show'} Fault Model Table
+              {expanded ? "Hide" : "Show"} Fault Model Table
             </StyledButton>
           </ButtonContainer>
         </AccordionSummary>
         <AccordionDetails>
-          <Box sx={{ width: '100%' }}>
+          <Box sx={{ width: "100%" }}>
             <FaultModelTable data={props.data} id={props.id} />
           </Box>
         </AccordionDetails>

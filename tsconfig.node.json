@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "types": ["cypress", "node", "cypress-real-events"],
+    "allowJs": true,
+    "composite": true,
+    "skipLibCheck": true,
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "allowSyntheticDefaultImports": true
+  },
+  "include": ["vite.config.ts", "*.config.ts"]
+}

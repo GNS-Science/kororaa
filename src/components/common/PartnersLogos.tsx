@@ -1,9 +1,9 @@
-import React from 'react';
-import { styled } from '@mui/material/styles';
+import React from "react";
+import { styled } from "@mui/material/styles";
 
-import { PartnersLogo } from '../../constants/partnersLogos';
-import { Typography } from '@mui/material';
-import { Card, CardContent } from '@mui/material';
+import { PartnersLogo } from "../../constants/partnersLogos";
+import { Typography } from "@mui/material";
+import { Card, CardContent } from "@mui/material";
 
 export interface LogoCardProps {
   title: string;
@@ -11,15 +11,15 @@ export interface LogoCardProps {
   logos: PartnersLogo[];
 }
 
-export const Logo = styled('img')(({ theme }) => ({
-  width: 'auto',
+export const Logo = styled("img")(({ theme }) => ({
+  width: "auto",
   maxWidth: 80,
-  height: 'auto',
+  height: "auto",
   maxHeight: 50,
   // valign: 'center',
-  objectFit: 'contain',
+  objectFit: "contain",
   margin: 5,
-  [theme.breakpoints.down('md')]: {
+  [theme.breakpoints.down("md")]: {
     madWidth: 40,
     maxHeight: 20,
   },

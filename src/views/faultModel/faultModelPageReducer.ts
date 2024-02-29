@@ -7,7 +7,7 @@ export type FaultModelPageState = {
 };
 
 export const faultModelPageReducerInitialState: FaultModelPageState = {
-  solutionId: '',
+  solutionId: "",
   locationCodes: [],
   radius: 0,
   magnitudeRange: [6, 10],

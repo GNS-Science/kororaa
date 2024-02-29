@@ -2,7 +2,7 @@ export const ruptureAnimationMock3 = {
   SOLVIS_filter_ruptures: {
     pageInfo: {
       hasNextPage: true,
-      endCursor: 'UnVwdHVyZURldGFpbENvbm5lY3Rpb25DdXJzb3I6MTk=',
+      endCursor: "UnVwdHVyZURldGFpbENvbm5lY3Rpb25DdXJzb3I6MTk=",
     },
     edges: [
       {
@@ -13,10 +13,10 @@ export const ruptureAnimationMock3 = {
           rate_weighted_mean: 0.00020275142742320895,
           area: 2917,
           length: 120,
-          id: 'Q29tcG9zaXRlUnVwdHVyZURldGFpbDpQVVk6NDIw',
-          __typename: 'CompositeRuptureDetail',
+          id: "Q29tcG9zaXRlUnVwdHVyZURldGFpbDpQVVk6NDIw",
+          __typename: "CompositeRuptureDetail",
         },
-        cursor: 'UnVwdHVyZURldGFpbENvbm5lY3Rpb25DdXJzb3I6MTU=',
+        cursor: "UnVwdHVyZURldGFpbENvbm5lY3Rpb25DdXJzb3I6MTU=",
       },
       {
         node: {
@@ -26,10 +26,10 @@ export const ruptureAnimationMock3 = {
           rate_weighted_mean: 0.00030193926068022847,
           area: 1122,
           length: 45,
-          id: 'Q29tcG9zaXRlUnVwdHVyZURldGFpbDpQVVk6NTMw',
-          __typename: 'CompositeRuptureDetail',
+          id: "Q29tcG9zaXRlUnVwdHVyZURldGFpbDpQVVk6NTMw",
+          __typename: "CompositeRuptureDetail",
         },
-        cursor: 'UnVwdHVyZURldGFpbENvbm5lY3Rpb25DdXJzb3I6MTY=',
+        cursor: "UnVwdHVyZURldGFpbENvbm5lY3Rpb25DdXJzb3I6MTY=",
       },
       {
         node: {
@@ -39,10 +39,10 @@ export const ruptureAnimationMock3 = {
           rate_weighted_mean: 0.0003288069856353104,
           area: 1347,
           length: 60,
-          id: 'Q29tcG9zaXRlUnVwdHVyZURldGFpbDpQVVk6NTMx',
-          __typename: 'CompositeRuptureDetail',
+          id: "Q29tcG9zaXRlUnVwdHVyZURldGFpbDpQVVk6NTMx",
+          __typename: "CompositeRuptureDetail",
         },
-        cursor: 'UnVwdHVyZURldGFpbENvbm5lY3Rpb25DdXJzb3I6MTc=',
+        cursor: "UnVwdHVyZURldGFpbENvbm5lY3Rpb25DdXJzb3I6MTc=",
       },
       {
         node: {
@@ -52,10 +52,10 @@ export const ruptureAnimationMock3 = {
           rate_weighted_mean: 0.000371750007616356,
           area: 1571,
           length: 75,
-          id: 'Q29tcG9zaXRlUnVwdHVyZURldGFpbDpQVVk6NTMy',
-          __typename: 'CompositeRuptureDetail',
+          id: "Q29tcG9zaXRlUnVwdHVyZURldGFpbDpQVVk6NTMy",
+          __typename: "CompositeRuptureDetail",
         },
-        cursor: 'UnVwdHVyZURldGFpbENvbm5lY3Rpb25DdXJzb3I6MTg=',
+        cursor: "UnVwdHVyZURldGFpbENvbm5lY3Rpb25DdXJzb3I6MTg=",
       },
       {
         node: {
@@ -65,10 +65,10 @@ export const ruptureAnimationMock3 = {
           rate_weighted_mean: 0.0003941903414670378,
           area: 1795,
           length: 90,
-          id: 'Q29tcG9zaXRlUnVwdHVyZURldGFpbDpQVVk6NTMz',
-          __typename: 'CompositeRuptureDetail',
+          id: "Q29tcG9zaXRlUnVwdHVyZURldGFpbDpQVVk6NTMz",
+          __typename: "CompositeRuptureDetail",
         },
-        cursor: 'UnVwdHVyZURldGFpbENvbm5lY3Rpb25DdXJzb3I6MTk=',
+        cursor: "UnVwdHVyZURldGFpbENvbm5lY3Rpb25DdXJzb3I6MTk=",
       },
     ],
   },

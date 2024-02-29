@@ -21,7 +21,7 @@ type SortBy =
   | undefined;
 
 export const comboRuptureMapPageReducerInitialState: ComboRuptureMapPageState = {
-  faultSystem: '',
+  faultSystem: "",
   locationCodes: [],
   radius: 0,
   parentFaultArray: [],
@@ -34,7 +34,10 @@ export const comboRuptureMapPageReducerInitialState: ComboRuptureMapPageState = 
   sortby: [],
 };
 
-export const comboRuptureMapPageReducer = (state: ComboRuptureMapPageState, newState: Partial<ComboRuptureMapPageState>) => {
+export const comboRuptureMapPageReducer = (
+  state: ComboRuptureMapPageState,
+  newState: Partial<ComboRuptureMapPageState>
+) => {
   return {
     ...state,
     ...newState,

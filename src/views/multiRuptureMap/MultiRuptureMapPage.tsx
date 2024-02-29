@@ -1,17 +1,20 @@
-import React, { useState, useEffect, useReducer, useTransition, useMemo } from 'react';
-import { LeafletMap, LeafletDrawer, ColorBar, MfdPlot } from '@gns-science/toshi-nest';
-import { Box, GlobalStyles, Typography } from '@mui/material';
-import { useLazyLoadQuery } from 'react-relay';
-import '../../css/leaflet.timedimension.control.css';
-import { graphql } from 'babel-plugin-relay/macro';
-import { HAZARD_MODEL } from '../../utils/environmentVariables';
-import { LatLngExpression } from 'leaflet';
+import React, { useState, useEffect, useReducer, useTransition, useMemo } from "react";
+import { LeafletMap, LeafletDrawer, ColorBar, MfdPlot } from "@gns-science/toshi-nest";
+import { Box, GlobalStyles, Typography } from "@mui/material";
+import { useLazyLoadQuery } from "react-relay";
+import "../../css/leaflet.timedimension.control.css";
+import { graphql } from "react-relay";
+import { HAZARD_MODEL } from "../../utils/environmentVariables";
+import { LatLngExpression } from "leaflet";
 
-import { InfoTooltip } from '../../components/common/InfoTooltip';
-import MultiRuptureMapControls from './MultiRuptureMapPageControls';
-import SimpleBackdrop from '../../components/common/SimpleBackdrop';
-import { multiRuptureMapPageReducer, multiRuptureMapPageReducerInitialState } from './multiRuptureMapPageReducer';
-import { MultiRuptureMapPageQuery, MultiRuptureMapPageQuery$data } from './__generated__/MultiRuptureMapPageQuery.graphql';
+import { InfoTooltip } from "../../components/common/InfoTooltip";
+import MultiRuptureMapControls from "./MultiRuptureMapPageControls";
+import SimpleBackdrop from "../../components/common/SimpleBackdrop";
+import { multiRuptureMapPageReducer, multiRuptureMapPageReducerInitialState } from "./multiRuptureMapPageReducer";
+import {
+  MultiRuptureMapPageQuery,
+  MultiRuptureMapPageQuery$data,
+} from "./__generated__/MultiRuptureMapPageQuery.graphql";
 type Props = {
   queryData: MultiRuptureMapPageQuery$data;
   fullscreen: boolean;
@@ -42,22 +45,38 @@ export const MultiRuptureMap: React.FC = () => {
     function updateScrollHeight() {
       setScrollHeight(window.scrollY);
     }
-    window.addEventListener('scroll', updateScrollHeight);
+    window.addEventListener("scroll", updateScrollHeight);
     updateScrollHeight();
-    return () => window.removeEventListener('scroll', updateScrollHeight);
+    return () => window.removeEventListener("scroll", updateScrollHeight);
   }, []);
 
   return (
     <>
-      <Box id="map" sx={{ width: '100%', height: '80vh' }}>
-        <MultiRuptureMapComponent fullscreen={fullscreen} setFullscreen={setFullscreen} setGeoJsonError={setGeoJsonError} queryData={data} isPending={isPending} />
+      <Box id="map" sx={{ width: "100%", height: "80vh" }}>
+        <MultiRuptureMapComponent
+          fullscreen={fullscreen}
+          setFullscreen={setFullscreen}
+          setGeoJsonError={setGeoJsonError}
+          queryData={data}
+          isPending={isPending}
+        />
       </Box>
-      <LeafletDrawer drawerHeight={'80vh'} headerHeight={`${100 - scrollHeight}px`} width={'400px'} fullscreen={fullscreen}>
-        <Typography variant="h4" sx={{ textAlign: 'center' }}>
+      <LeafletDrawer
+        drawerHeight={"80vh"}
+        headerHeight={`${100 - scrollHeight}px`}
+        width={"400px"}
+        fullscreen={fullscreen}
+      >
+        <Typography variant="h4" sx={{ textAlign: "center" }}>
           Multi-Rupture Map
-          <InfoTooltip content={'tooltip to come'} format={false} />
+          <InfoTooltip content={"tooltip to come"} format={false} />
         </Typography>
-        <MultiRuptureMapControls startTransition={startTransition} isPending={isPending} geoJsonError={geoJsonError} dispatch={dispatch} />
+        <MultiRuptureMapControls
+          startTransition={startTransition}
+          isPending={isPending}
+          geoJsonError={geoJsonError}
+          dispatch={dispatch}
+        />
       </LeafletDrawer>
     </>
   );
@@ -76,10 +95,19 @@ export const MultiRuptureMapComponent: React.FC<Props> = (props: Props) => {
   const mfdData = queryData?.SOLVIS_filter_rupture_sections?.mfd_histogram;
 
   const colorScale = useMemo(() => {
-    if (queryData?.SOLVIS_filter_rupture_sections?.color_scale?.color_map?.levels && queryData?.SOLVIS_filter_rupture_sections?.color_scale?.color_map?.hexrgbs) {
+    if (
+      queryData?.SOLVIS_filter_rupture_sections?.color_scale?.color_map?.levels &&
+      queryData?.SOLVIS_filter_rupture_sections?.color_scale?.color_map?.hexrgbs
+    ) {
       return {
-        levels: queryData?.SOLVIS_filter_rupture_sections?.color_scale?.color_map?.levels.map((level) => level?.toExponential(0)) ?? [],
-        hexrgbs: queryData?.SOLVIS_filter_rupture_sections?.color_scale?.color_map?.hexrgbs.map((color) => color?.toString()) ?? [],
+        levels:
+          queryData?.SOLVIS_filter_rupture_sections?.color_scale?.color_map?.levels.map((level) =>
+            level?.toExponential(0)
+          ) ?? [],
+        hexrgbs:
+          queryData?.SOLVIS_filter_rupture_sections?.color_scale?.color_map?.hexrgbs.map((color) =>
+            color?.toString()
+          ) ?? [],
       };
     }
   }, [queryData]);
@@ -98,7 +126,7 @@ export const MultiRuptureMapComponent: React.FC<Props> = (props: Props) => {
 
   useEffect(() => {
     if (locationData && locationData.length > 0 && !geoJsonData) {
-      setGeoJsonError('No ruptures satisfy the filter.');
+      setGeoJsonError("No ruptures satisfy the filter.");
     } else {
       setGeoJsonError(null);
     }
@@ -111,10 +139,10 @@ export const MultiRuptureMapComponent: React.FC<Props> = (props: Props) => {
     if (feature?.properties?.FaultID) {
       const faultId = feature?.properties?.FaultID;
       const faultName = feature?.properties?.FaultName;
-      const ruptureCount = feature?.properties?.['Magnitude.count'];
-      const participationRate = feature?.properties?.['rate_weighted_mean.sum'];
-      const upperMag = feature?.properties?.['Magnitude.max'];
-      const lowerMag = feature?.properties?.['Magnitude.min'];
+      const ruptureCount = feature?.properties?.["Magnitude.count"];
+      const participationRate = feature?.properties?.["rate_weighted_mean.sum"];
+      const upperMag = feature?.properties?.["Magnitude.max"];
+      const lowerMag = feature?.properties?.["Magnitude.min"];
       const dipDegrees = feature?.properties?.DipDeg;
       const dipDirection = feature?.properties?.DipDir;
       const rake = feature?.properties?.Rake;
@@ -143,15 +171,15 @@ export const MultiRuptureMapComponent: React.FC<Props> = (props: Props) => {
     <>
       <React.Suspense fallback={<SimpleBackdrop />}>
         {isPending && <SimpleBackdrop />}
-        <GlobalStyles styles={{ '.leaflet-popup-content p': { margin: '0' } }} />
+        <GlobalStyles styles={{ ".leaflet-popup-content p": { margin: "0" } }} />
         <LeafletMap
           zoom={zoom}
           zoomLevel={zoomLevel}
           setZoomLevel={setZoomLevel}
           nzCentre={nzCentre as typeof LatLngExpression}
           geoJsonData={geoJson}
-          height={'80vh'}
-          width={'100%'}
+          height={"80vh"}
+          width={"100%"}
           setFullscreen={setFullscreen}
           onEachFeature={onEachFeature}
         />
@@ -160,28 +188,28 @@ export const MultiRuptureMapComponent: React.FC<Props> = (props: Props) => {
             style={
               !fullscreen
                 ? {
-                    backgroundColor: '#ffffff',
-                    position: 'relative',
+                    backgroundColor: "#ffffff",
+                    position: "relative",
                     zIndex: 119700,
-                    top: '-435px',
-                    left: 'calc(100% - 396px)',
-                    width: '395px',
-                    borderRadius: '4px',
-                    borderWidth: '1px',
-                    border: '2px solid rgba(0,0,0,0.2)',
-                    backgroundClip: 'padding-box',
+                    top: "-435px",
+                    left: "calc(100% - 396px)",
+                    width: "395px",
+                    borderRadius: "4px",
+                    borderWidth: "1px",
+                    border: "2px solid rgba(0,0,0,0.2)",
+                    backgroundClip: "padding-box",
                   }
                 : {
-                    backgroundColor: '#ffffff',
-                    position: 'absolute',
+                    backgroundColor: "#ffffff",
+                    position: "absolute",
                     zIndex: 119700,
-                    bottom: '20px',
-                    left: 'calc(100% - 396px)',
-                    width: '395px',
-                    borderRadius: '4px',
-                    borderWidth: '1px',
-                    border: '2px solid rgba(0,0,0,0.2)',
-                    backgroundClip: 'padding-box',
+                    bottom: "20px",
+                    left: "calc(100% - 396px)",
+                    width: "395px",
+                    borderRadius: "4px",
+                    borderWidth: "1px",
+                    border: "2px solid rgba(0,0,0,0.2)",
+                    backgroundClip: "padding-box",
                   }
             }
           >
@@ -196,10 +224,17 @@ export const MultiRuptureMapComponent: React.FC<Props> = (props: Props) => {
               header="Magnitude Frequency Distribution"
               yScaleDomain={[1e-7, 1e-1]}
               xScaleDomain={[6.7, 9.6]}
-              lineColours={['green', 'red']}
-              legendDomain={['Incremental', 'Cumulative']}
+              lineColours={["green", "red"]}
+              legendDomain={["Incremental", "Cumulative"]}
             />
-            <ColorBar heading={'Participation Rate'} width={350} height={35} colors={colorScale?.hexrgbs} tickValues={colorScale?.levels} linear={false} />
+            <ColorBar
+              heading={"Participation Rate"}
+              width={350}
+              height={35}
+              colors={colorScale?.hexrgbs}
+              tickValues={colorScale?.levels}
+              linear={false}
+            />
           </Box>
         )}
       </React.Suspense>
@@ -233,7 +268,16 @@ export const multiRuptureMapPageQuery = graphql`
         node {
           location_id
           name
-          radius_geojson(radius_km: $radius_km, style: { stroke_color: "royalblue", stroke_width: 3, stroke_opacity: 1, fill_opacity: 0.01, fill_color: "royalblue" })
+          radius_geojson(
+            radius_km: $radius_km
+            style: {
+              stroke_color: "royalblue"
+              stroke_width: 3
+              stroke_opacity: 1
+              fill_opacity: 0.01
+              fill_color: "royalblue"
+            }
+          )
         }
       }
     }

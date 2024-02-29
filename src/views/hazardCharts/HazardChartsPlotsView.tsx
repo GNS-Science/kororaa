@@ -1,14 +1,14 @@
-import React from 'react';
-import { graphql } from 'babel-plugin-relay/macro';
-import { useLazyLoadQuery } from 'react-relay';
-import { Box } from '@mui/material';
+import React from "react";
+import { graphql } from "react-relay";
+import { useLazyLoadQuery } from "react-relay";
+import { Box, Alert } from "@mui/material";
 
-import { HazardChartsPlotsViewQuery } from './__generated__/HazardChartsPlotsViewQuery.graphql';
-import { hazardPageOptions } from './constants/hazardPageOptions';
-import HazardCharts from './HazardCharts';
-import { HazardPageState } from './hazardPageReducer';
-import { getLatLonArray } from '../../services/latLon/latLon.service';
-import { RESOLUTION, HAZARD_MODEL, MEAN, UPPER1, UPPER2, LOWER1, LOWER2 } from '../../utils/environmentVariables';
+import { HazardChartsPlotsViewQuery } from "./__generated__/HazardChartsPlotsViewQuery.graphql";
+import { hazardPageOptions } from "./constants/hazardPageOptions";
+import HazardCharts from "./HazardCharts";
+import { HazardPageState } from "./hazardPageReducer";
+import { getLatLonArray } from "../../services/latLon/latLon.service";
+import { RESOLUTION, HAZARD_MODEL, MEAN, UPPER1, UPPER2, LOWER1, LOWER2 } from "../../utils/environmentVariables";
 
 interface HazardChartsPlotsViewProps {
   state: HazardPageState;
@@ -16,7 +16,11 @@ interface HazardChartsPlotsViewProps {
   printTargetRef: React.RefObject<HTMLDivElement>;
 }
 
-const HazardChartsPlotsView: React.FC<HazardChartsPlotsViewProps> = ({ state, dispatch, printTargetRef }: HazardChartsPlotsViewProps) => {
+const HazardChartsPlotsView: React.FC<HazardChartsPlotsViewProps> = ({
+  state,
+  dispatch,
+  printTargetRef,
+}: HazardChartsPlotsViewProps) => {
   const data = useLazyLoadQuery<HazardChartsPlotsViewQuery>(hazardChartsPlotsViewQuery, {
     hazard_model: HAZARD_MODEL,
     locs: getLatLonArray(state.locationData),
@@ -26,8 +30,24 @@ const HazardChartsPlotsView: React.FC<HazardChartsPlotsViewProps> = ({ state, di
     resolution: RESOLUTION,
   });
 
+  const missingCurves = data.hazard_curves?.locations?.filter((location) => {
+    if (data.hazard_curves?.curves?.some((curve) => curve && curve.loc === location?.code)) {
+      return null;
+    } else {
+      return location;
+    }
+  });
+
+  const missingCurvesWarning = missingCurves?.map((loc) => loc?.lat + ", " + loc?.lon).join("; ");
   return (
-    <Box role="plotsView" sx={{ width: '100%' }}>
+    <Box role="plotsView" sx={{ width: "100%" }}>
+      <Box sx={{ padding: "10px", marginBottom: "10px" }}>
+        {missingCurves && missingCurves.length > 0 && (
+          <Alert severity="warning">
+            Location{missingCurves.length > 1 && "s"} not in data: {missingCurvesWarning}
+          </Alert>
+        )}
+      </Box>
       <div ref={printTargetRef}>
         <HazardCharts data={data} state={state} dispatch={dispatch} />
       </div>
@@ -37,9 +57,23 @@ const HazardChartsPlotsView: React.FC<HazardChartsPlotsViewProps> = ({ state, di
 
 export default HazardChartsPlotsView;
 
-export const hazardChartsPlotsViewQuery = graphql`
-  query HazardChartsPlotsViewQuery($hazard_model: String, $vs30s: [Int], $imts: [String], $locs: [String], $aggs: [String], $resolution: Float) {
-    hazard_curves: KORORAA_hazard_curves(hazard_model: $hazard_model, vs30s: $vs30s, imts: $imts, locs: $locs, aggs: $aggs, resolution: $resolution) {
+const hazardChartsPlotsViewQuery = graphql`
+  query HazardChartsPlotsViewQuery(
+    $hazard_model: String
+    $vs30s: [Int]
+    $imts: [String]
+    $locs: [String]
+    $aggs: [String]
+    $resolution: Float
+  ) {
+    hazard_curves: KORORAA_hazard_curves(
+      hazard_model: $hazard_model
+      vs30s: $vs30s
+      imts: $imts
+      locs: $locs
+      aggs: $aggs
+      resolution: $resolution
+    ) {
       ok
       locations {
         lat

@@ -1,13 +1,23 @@
-import React, { useMemo } from 'react';
-import { Box } from '@mui/material';
-import { styled } from '@mui/material/styles';
-import { GroupCurveChartResponsive } from '@gns-science/toshi-nest';
+import React, { useMemo } from "react";
+import { Box } from "@mui/material";
+import { styled } from "@mui/material/styles";
+import { GroupCurveChartResponsive } from "@gns-science/toshi-nest";
 
-import { HazardChartsPlotsViewQuery$data } from './__generated__/HazardChartsPlotsViewQuery.graphql';
-import { getAllCurveGroups, getFilteredCurveGroups, getLocationList, getYScale, sortCurveGroups } from './hazardPage.service';
-import { HazardPageState } from './hazardPageReducer';
-import { addColorsToCurves, getSpectralAccelUncertaintyCurves, sortSACurveGroups } from '../../services/spectralAccel/spectralAccel.service';
-import HazardChartsSettings from './HazardChartsSettings';
+import { HazardChartsPlotsViewQuery$data } from "./__generated__/HazardChartsPlotsViewQuery.graphql";
+import {
+  getAllCurveGroups,
+  getFilteredCurveGroups,
+  getLocationList,
+  getYScale,
+  sortCurveGroups,
+} from "./hazardPage.service";
+import { HazardPageState } from "./hazardPageReducer";
+import {
+  addColorsToCurves,
+  getSpectralAccelUncertaintyCurves,
+  sortSACurveGroups,
+} from "../../services/spectralAccel/spectralAccel.service";
+import HazardChartsSettings from "./HazardChartsSettings";
 import {
   HAZARD_GMAX,
   HAZARD_GMAX_LOG,
@@ -21,7 +31,7 @@ import {
   SA_PERIODMAX_LOG,
   SA_PERIODMIN,
   SA_PERIODMIN_LOG,
-} from '../../utils/environmentVariables';
+} from "../../utils/environmentVariables";
 
 interface HazardChartsProps {
   data: HazardChartsPlotsViewQuery$data;
@@ -32,15 +42,29 @@ interface HazardChartsProps {
 const HazardCharts: React.FC<HazardChartsProps> = ({ data, state, dispatch }: HazardChartsProps) => {
   const locationList = useMemo(() => getLocationList(data), [data]);
   const allCurveGroups = useMemo(() => getAllCurveGroups(data), [data]);
-  const filteredCurveGroups = useMemo(() => getFilteredCurveGroups(allCurveGroups, state.imts), [allCurveGroups, state.imts]);
+  const filteredCurveGroups = useMemo(
+    () => getFilteredCurveGroups(allCurveGroups, state.imts),
+    [allCurveGroups, state.imts]
+  );
   const curveGroupWithColors = useMemo(() => addColorsToCurves(filteredCurveGroups), [filteredCurveGroups]);
   const sortedCurveGroup = useMemo(() => sortCurveGroups(curveGroupWithColors), [curveGroupWithColors]);
-  const saCurvesUncertainty = useMemo(() => getSpectralAccelUncertaintyCurves(state.vs30s, locationList, data, state.poe, state.spectraXScale, state.timePeriod), [locationList, state, data]);
+  const saCurvesUncertainty = useMemo(
+    () =>
+      getSpectralAccelUncertaintyCurves(
+        state.vs30s,
+        locationList,
+        data,
+        state.poe,
+        state.spectraXScale,
+        state.timePeriod
+      ),
+    [locationList, state, data]
+  );
   const saCurvesWithColors = useMemo(() => addColorsToCurves(saCurvesUncertainty), [saCurvesUncertainty]);
   const sortedSaCurves = useMemo(() => sortSACurveGroups(saCurvesWithColors), [saCurvesWithColors]);
 
   const spectralYLimits = useMemo(() => {
-    if (SA_GMAX === 'auto') {
+    if (SA_GMAX === "auto") {
       const yScale = getYScale(saCurvesWithColors, SA_GMIN);
       if (isNaN(yScale[1])) return [SA_GMIN, 0.1];
       return yScale;
@@ -50,21 +74,21 @@ const HazardCharts: React.FC<HazardChartsProps> = ({ data, state, dispatch }: Ha
   }, [saCurvesWithColors]);
 
   const HazardChartsContainer = styled(Box)(({ theme }) => ({
-    display: 'flex',
+    display: "flex",
     padding: 20,
-    width: '100%',
-    height: 'calc(50vw * 0.75)',
-    border: 'solid black 1px',
-    [theme.breakpoints.down('md')]: {
-      flexDirection: 'column',
-      height: 'calc(100vw * 0.75 * 2)',
+    width: "100%",
+    height: "calc(50vw * 0.75)",
+    border: "solid black 1px",
+    [theme.breakpoints.down("md")]: {
+      flexDirection: "column",
+      height: "calc(100vw * 0.75 * 2)",
     },
   }));
 
   const ChartContainer = styled(Box)(({ theme }) => ({
-    width: '50%',
-    [theme.breakpoints.down('md')]: {
-      width: '100%',
+    width: "50%",
+    [theme.breakpoints.down("md")]: {
+      width: "100%",
     },
   }));
 
@@ -76,10 +100,12 @@ const HazardCharts: React.FC<HazardChartsProps> = ({ data, state, dispatch }: Ha
           <div id="hazardChart">
             <GroupCurveChartResponsive
               scaleType={state.hazardXScale}
-              yScaleType={'log'}
+              yScaleType={"log"}
               xLabel="Acceleration (g)"
               yLabel="Annual Probability of Exceedance"
-              xLimits={state.hazardXScale === 'linear' ? [HAZARD_GMIN, HAZARD_GMAX] : [HAZARD_GMIN_LOG, HAZARD_GMAX_LOG]}
+              xLimits={
+                state.hazardXScale === "linear" ? [HAZARD_GMIN, HAZARD_GMAX] : [HAZARD_GMIN_LOG, HAZARD_GMAX_LOG]
+              }
               yLimits={[HAZARD_POEMIN, HAZARD_POEMAX]}
               tooltip={true}
               crosshair={true}
@@ -99,10 +125,12 @@ const HazardCharts: React.FC<HazardChartsProps> = ({ data, state, dispatch }: Ha
                 testId="sa-chart"
                 spectral={true}
                 scaleType={state.spectraXScale}
-                yScaleType={'linear'}
+                yScaleType={"linear"}
                 xLabel="Period (s)"
                 yLabel="Acceleration (g)"
-                xLimits={state.spectraXScale === 'linear' ? [SA_PERIODMIN, SA_PERIODMAX] : [SA_PERIODMIN_LOG, SA_PERIODMAX_LOG]}
+                xLimits={
+                  state.spectraXScale === "linear" ? [SA_PERIODMIN, SA_PERIODMAX] : [SA_PERIODMIN_LOG, SA_PERIODMAX_LOG]
+                }
                 yLimits={spectralYLimits}
                 tooltip={true}
                 crosshair={true}

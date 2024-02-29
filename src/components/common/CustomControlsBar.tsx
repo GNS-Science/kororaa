@@ -1,32 +1,32 @@
-import React from 'react';
-import { styled } from '@mui/material/styles';
+import React from "react";
+import { styled } from "@mui/material/styles";
 
-const Control = styled('span')({
+const Control = styled("span")({
   margin: 10,
-  width: 'auto',
+  width: "auto",
 });
 
 interface CustomControlsBarProps {
   children: React.ReactNode;
-  direction: 'row' | 'column';
+  direction: "row" | "column";
 }
 
-const ControlsContainerRow = styled('div')({
-  width: '100%',
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  flexWrap: 'wrap',
-  flexDirection: 'row',
+const ControlsContainerRow = styled("div")({
+  width: "100%",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  flexWrap: "wrap",
+  flexDirection: "row",
 });
 
-const ControlsContainerColumn = styled('div')({
-  width: '100%',
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  flexWrap: 'wrap',
-  flexDirection: 'column',
+const ControlsContainerColumn = styled("div")({
+  width: "100%",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  flexWrap: "wrap",
+  flexDirection: "column",
 });
 
 const CustomControlsBar: React.FC<CustomControlsBarProps> = ({ children, direction }: CustomControlsBarProps) => {
@@ -34,7 +34,7 @@ const CustomControlsBar: React.FC<CustomControlsBarProps> = ({ children, directi
     return <Control>{child}</Control>;
   });
 
-  if (direction === 'row') return <ControlsContainerRow>{childrenWithMargin}</ControlsContainerRow>;
+  if (direction === "row") return <ControlsContainerRow>{childrenWithMargin}</ControlsContainerRow>;
   else return <ControlsContainerColumn>{childrenWithMargin}</ControlsContainerColumn>;
 };
 

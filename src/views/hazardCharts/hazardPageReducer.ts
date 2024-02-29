@@ -1,5 +1,5 @@
-import { getLocationDataFromName } from '../../services/latLon/latLon.service';
-import { hazardPageLocations } from './constants/hazardPageOptions';
+import { getLocationDataFromName } from "../../services/latLon/latLon.service";
+import { hazardPageLocations } from "./constants/hazardPageOptions";
 
 export type HazardPageState = {
   locationData: LocationData[];
@@ -8,20 +8,20 @@ export type HazardPageState = {
   poe: number | undefined;
   hazardUncertainty: boolean;
   spectralUncertainty: boolean;
-  hazardXScale: 'log' | 'linear';
-  spectraXScale: 'log' | 'linear';
+  hazardXScale: "log" | "linear";
+  spectraXScale: "log" | "linear";
   timePeriod: number;
 };
 
 export const hazardPageReducerInitialState: HazardPageState = {
   locationData: [getLocationDataFromName(hazardPageLocations[0].name)],
   vs30s: [400],
-  imts: ['PGA'],
+  imts: ["PGA"],
   poe: 0.1,
   hazardUncertainty: true,
   spectralUncertainty: true,
-  hazardXScale: 'log',
-  spectraXScale: 'log',
+  hazardXScale: "log",
+  spectraXScale: "log",
   timePeriod: 50,
 };
 export interface LocationData {

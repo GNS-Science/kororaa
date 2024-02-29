@@ -1,10 +1,19 @@
-import * as mathjs from 'mathjs';
+import * as mathjs from "mathjs";
 
-import { hazardPageOptions } from '../../views/hazardCharts/constants/hazardPageOptions';
-import { HazardChartsPlotsViewQuery$data } from '../../views/hazardCharts/__generated__/HazardChartsPlotsViewQuery.graphql';
-import { getLatLonFromLocationName, roundLatLon } from '../latLon/latLon.service';
-import { getColor } from '../../utils/colorUtils';
-import { SA_LOG_PGA_SUBSTITUTE, HAZARD_IMTS, MEAN, LOWER1, LOWER2, UPPER1, UPPER2, HAZARD_MODEL } from '../../utils/environmentVariables';
+import { hazardPageOptions } from "../../views/hazardCharts/constants/hazardPageOptions";
+import { HazardChartsPlotsViewQuery$data } from "../../views/hazardCharts/__generated__/HazardChartsPlotsViewQuery.graphql";
+import { getLatLonFromLocationName, roundLatLon } from "../latLon/latLon.service";
+import { getColor } from "../../utils/colorUtils";
+import {
+  SA_LOG_PGA_SUBSTITUTE,
+  HAZARD_IMTS,
+  MEAN,
+  LOWER1,
+  LOWER2,
+  UPPER1,
+  UPPER2,
+  HAZARD_MODEL,
+} from "../../utils/environmentVariables";
 
 export interface UncertaintyCurve {
   strokeSize?: number;
@@ -18,10 +27,10 @@ export type UncertaintyChartCurveGroup = Record<string, UncertaintyCurve>;
 export type UncertaintyChartData = Record<string, UncertaintyChartCurveGroup>;
 export type UncertaintyDatum = number[];
 
-export type HazardCurves = NonNullable<HazardChartsPlotsViewQuery$data['hazard_curves']>;
-export type Curves = NonNullable<HazardCurves['curves']>;
+export type HazardCurves = NonNullable<HazardChartsPlotsViewQuery$data["hazard_curves"]>;
+export type Curves = NonNullable<HazardCurves["curves"]>;
 
-const curveTypes = ['upper2', 'upper1', 'mean', 'lower1', 'lower2'];
+const curveTypes = ["upper2", "upper1", "mean", "lower1", "lower2"];
 
 export const getSpectralAccelUncertaintyCurves = (
   vs30s: number[],
@@ -29,7 +38,7 @@ export const getSpectralAccelUncertaintyCurves = (
   data: HazardChartsPlotsViewQuery$data,
   poe: number | undefined,
   scaleType: string,
-  timePeriod: number,
+  timePeriod: number
 ): UncertaintyChartData => {
   const saCurveGroups: UncertaintyChartData = {};
   poe &&
@@ -51,9 +60,20 @@ export const getSpectralAccelUncertaintyCurves = (
   return saCurveGroups;
 };
 
-export const getSpectralAccelCurve = (curveType: string, vs30: number, loc: string, data: HazardChartsPlotsViewQuery$data, poe: number, scaleType: string, timePeriod: number) => {
+export const getSpectralAccelCurve = (
+  curveType: string,
+  vs30: number,
+  loc: string,
+  data: HazardChartsPlotsViewQuery$data,
+  poe: number,
+  scaleType: string,
+  timePeriod: number
+) => {
   if (data.hazard_curves?.curves?.length) {
-    const curves: Curves = data.hazard_curves?.curves?.filter((curve) => curve !== null && curve?.vs30 === vs30 && curve?.loc === loc && convertAgg(curve?.agg as string) === curveType);
+    const curves: Curves = data.hazard_curves?.curves?.filter(
+      (curve) =>
+        curve !== null && curve?.vs30 === vs30 && curve?.loc === loc && convertAgg(curve?.agg as string) === curveType
+    );
     const saCurve = calculateSpectralAccelCurve(curves, poe, scaleType, timePeriod);
     const sortedCurve = saCurve.sort((a, b) => a[0] - b[0]);
     return sortedCurve;
@@ -61,13 +81,18 @@ export const getSpectralAccelCurve = (curveType: string, vs30: number, loc: stri
 };
 
 //TODO: add this function as utility method in toshi-nest as it is shared between Kororaa and TUI
-export const calculateSpectralAccelCurve = (curves: Curves, poe: number, scaleType: string, timePeriod: number): number[][] => {
+export const calculateSpectralAccelCurve = (
+  curves: Curves,
+  poe: number,
+  scaleType: string,
+  timePeriod: number
+): number[][] => {
   const data: number[][] = [];
   const yValue: number = -Math.log(1 - poe) / timePeriod;
 
   curves.forEach((currentCurve) => {
     if (currentCurve) {
-      const imt = hazardPageOptions.imts.find((imt) => currentCurve.imt === imt);
+      const imt = hazardPageOptions.imts.find((imt: string | null | undefined) => currentCurve.imt === imt);
       try {
         let p1: number[] = [];
         let p2: number[] = [];
@@ -88,9 +113,19 @@ export const calculateSpectralAccelCurve = (curves: Curves, poe: number, scaleTy
           });
         const point = mathjs.intersect(p1, p2, p3, p4);
         const result = [Math.exp(point[0] as number), mathjs.exp(mathjs.exp(point[1] as number))];
-        data.push([imt === 'PGA' && scaleType === 'log' ? SA_LOG_PGA_SUBSTITUTE : parseFloat(getImtValue(imt as string, scaleType === 'linear')), result[0]]);
+        data.push([
+          imt === "PGA" && scaleType === "log"
+            ? SA_LOG_PGA_SUBSTITUTE
+            : parseFloat(getImtValue(imt as string, scaleType === "linear")),
+          result[0],
+        ]);
       } catch {
-        data.push([imt === 'PGA' && scaleType === 'log' ? SA_LOG_PGA_SUBSTITUTE : parseFloat(getImtValue(imt as string, scaleType === 'linear')), 0]);
+        data.push([
+          imt === "PGA" && scaleType === "log"
+            ? SA_LOG_PGA_SUBSTITUTE
+            : parseFloat(getImtValue(imt as string, scaleType === "linear")),
+          0,
+        ]);
       }
     }
   });
@@ -103,11 +138,11 @@ export const addColorsToCurves = (curveGroups: UncertaintyChartData): Uncertaint
 
   Object.keys(curveGroups).forEach((key, index) => {
     Object.keys(curveGroups[key]).forEach((curveType) => {
-      if (curveType === 'mean') {
-        curveGroups[key][curveType]['strokeColor'] = getColor(curveGroupLength, index);
+      if (curveType === "mean") {
+        curveGroups[key][curveType]["strokeColor"] = getColor(curveGroupLength, index);
       } else {
-        curveGroups[key][curveType]['strokeColor'] = getColor(curveGroupLength, index);
-        curveGroups[key][curveType]['strokeOpacity'] = 0.5;
+        curveGroups[key][curveType]["strokeColor"] = getColor(curveGroupLength, index);
+        curveGroups[key][curveType]["strokeOpacity"] = 0.5;
       }
     });
   });
@@ -119,8 +154,8 @@ export const sortSACurveGroups = (curveGroups: UncertaintyChartData): Uncertaint
   const sortedCurveGroups: UncertaintyChartData = {};
   Object.keys(curveGroups)
     .sort((a, b) => {
-      const aSplit = a.split(' ');
-      const bSplit = b.split(' ');
+      const aSplit = a.split(" ");
+      const bSplit = b.split(" ");
       const aVs30 = parseFloat(aSplit[0]);
       const bVs30 = parseFloat(bSplit[0]);
       const aLoc = aSplit[1];
@@ -137,24 +172,34 @@ export const sortSACurveGroups = (curveGroups: UncertaintyChartData): Uncertaint
 };
 
 export const tryParseLatLon = (loc: string): string[] => {
-  if (loc.split(',').length === 1) {
+  if (loc.split(",").length === 1) {
     return getLatLonFromLocationName(loc)
-      .split(',')
+      .split(",")
       .map((l) => l.trim());
-  } else return loc.split(',').map((l) => l.trim());
+  } else return loc.split(",").map((l) => l.trim());
 };
 
-export const getSpectralCSVData = (curves: UncertaintyChartData, poe: number | undefined, timePeriod: number): string[][] => {
-  const datetimeAndVersion = [`date-time: ${new Date().toLocaleString('en-GB', { timeZone: 'UTC' })}, (UTC)`, `NSHM model version: ${HAZARD_MODEL}`];
-  const saHeaderArray = ['lat', 'lon', 'vs30', `PoE (% in ${timePeriod} years)`, 'statistic', ...HAZARD_IMTS];
+export const getSpectralCSVData = (
+  curves: UncertaintyChartData,
+  poe: number | undefined,
+  timePeriod: number
+): string[][] => {
+  const datetimeAndVersion = [
+    `date-time: ${new Date().toLocaleString("en-GB", { timeZone: "UTC" })}, (UTC)`,
+    `NSHM model version: ${HAZARD_MODEL}`,
+  ];
+  const saHeaderArray = ["lat", "lon", "vs30", `PoE (% in ${timePeriod} years)`, "statistic", ...HAZARD_IMTS];
   const csvData: string[][] = [];
   Object.fromEntries(
     Object.entries(curves).map((curve) => {
-      const vs30 = curve[0].split(' ')[0].replace('m/s', '');
-      const location = curve[0].split(' ').length === 3 ? `${curve[0].split(' ')[1]} ${curve[0].split(' ')[2]}` : curve[0].split(' ')[1];
+      const vs30 = curve[0].split(" ")[0].replace("m/s", "");
+      const location =
+        curve[0].split(" ").length === 3
+          ? `${curve[0].split(" ")[1]} ${curve[0].split(" ")[2]}`
+          : curve[0].split(" ")[1];
       const latLon = tryParseLatLon(location);
       Object.entries(curve[1])?.forEach((value) => {
-        const curveCSVData = [latLon[0], latLon[1], vs30, (poe && poe * 100)?.toString() || ''];
+        const curveCSVData = [latLon[0], latLon[1], vs30, (poe && poe * 100)?.toString() || ""];
         curveCSVData.push(convertAgg(value[0]));
         if (value) {
           value[1].data.forEach((point) => {
@@ -164,7 +209,7 @@ export const getSpectralCSVData = (curves: UncertaintyChartData, poe: number | u
         csvData.push(curveCSVData);
       });
       return csvData;
-    }),
+    })
   );
   csvData.unshift(saHeaderArray);
   csvData.unshift(datetimeAndVersion);
@@ -183,16 +228,16 @@ export const convertAgg = (agg: string): string => {
     upper1: UPPER1,
     upper2: UPPER2,
   };
-  aggDict[LOWER2] = 'lower2';
-  aggDict[LOWER1] = 'lower1';
-  aggDict[UPPER1] = 'upper1';
-  aggDict[UPPER2] = 'upper2';
+  aggDict[LOWER2] = "lower2";
+  aggDict[LOWER1] = "lower1";
+  aggDict[UPPER1] = "upper1";
+  aggDict[UPPER2] = "upper2";
   return aggDict[agg];
 };
 
 const getImtValue = (imt: string, linear: boolean): string => {
-  if (imt === 'PGA') {
-    return linear ? '0' : SA_LOG_PGA_SUBSTITUTE.toString();
+  if (imt === "PGA") {
+    return linear ? "0" : SA_LOG_PGA_SUBSTITUTE.toString();
   }
-  return imt.replace('SA(', '').replace(')', '');
+  return imt.replace("SA(", "").replace(")", "");
 };

@@ -1,5 +1,5 @@
-import { GeoJsonObject } from 'geojson';
-import { LatLngExpression } from 'leaflet';
+import { GeoJsonObject } from "geojson";
+import { LatLngExpression } from "leaflet";
 
 export interface LeafletMapProps {
   geoJsonData: string[];
