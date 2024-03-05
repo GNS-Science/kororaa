@@ -176,7 +176,7 @@ export const hazardMapsPageQuery = graphql`
           color_scale_vmax: $color_scale_vmax
           fill_opacity: $fill_opacity
           stroke_width: $stroke_width
-          stroke_opacity: $stroke_opacity
+          stroke_opacity: 0
           color_scale_normalise: $color_scale_normalise
         ) {
           geojson
