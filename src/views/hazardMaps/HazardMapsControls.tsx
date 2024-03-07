@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Box, Button, Slider, styled } from "@mui/material";
+import { Box, Button, styled } from "@mui/material";
 import { SelectControl } from "@gns-science/toshi-nest";
 import { toPng } from "html-to-image";
 
@@ -79,7 +79,7 @@ const HazardMapsControls: React.FC<HazardMapsControlsProps> = ({
         color_scale_vmax: MAP_GRID_VMAX,
         fill_opacity: Number(gridOpacity / 100),
         stroke_width: MAP_GRID_STROKE_WIDTH,
-        stroke_opacity: 0,
+        stroke_opacity: 0.0,
       });
     });
   };

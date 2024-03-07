@@ -172,7 +172,7 @@ export const RuptureAnimationPaginationComponent: React.FC<Props> = (props: Prop
   }, [needsMore, hasNoMore]);
 
   const timeDimensionLayerProps = {
-    geoJsonData: (ruptureData as typeof GeoJsonObject[]) || "",
+    geoJsonData: (ruptureData as (typeof GeoJsonObject)[]) || "",
     setTimeDimensionNeedsMore: setNeedsMore,
     setTimeDimensionHasNoMore: setHasNoMore,
     surfaceProperties: surfaceProperties || [],
@@ -195,8 +195,7 @@ export const RuptureAnimationPaginationComponent: React.FC<Props> = (props: Prop
           timeDimension={true}
           timeDimensionOptions={timeDimensionOptions}
           timeDimensionControlOptions={timeDimensionControlOptions}
-          // eslint-disable-next-line prettier/prettier
-          timeDimensionGeoJsonData={(ruptureData as typeof GeoJsonObject[]) || ''}
+          timeDimensionGeoJsonData={(ruptureData as (typeof GeoJsonObject)[]) || ""}
           timeDimensionLayerProps={timeDimensionLayerProps}
           //timeDimensionUnderlay={'' as unknown as typeof GeoJsonObject}
           // setTimeDimensionNeedsMore={setNeedsMore}
