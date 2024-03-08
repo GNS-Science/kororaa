@@ -6,7 +6,8 @@ export const tooManyCurves = `Maximum of ${HAZARD_COLOR_LIMIT} curves can be sho
 
 export const locationTooltip = "Standard model locations are provided for larger population centres.";
 
-export const latLonTooltip = 'Coordinates in lat,lon form (WGS84). For multiple locations use the `;` separator. Values will be rounded to the nearest location on the NSHM model grid.';
+export const latLonTooltip =
+  "Coordinates in lat,lon form (WGS84). For multiple locations use the `;` separator. Values will be rounded to the nearest location on the NSHM model grid.";
 
 export const noLocations = "Please enter at least one location";
 

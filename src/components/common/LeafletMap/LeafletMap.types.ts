@@ -19,7 +19,7 @@ export interface LeafletMapProps {
   timeDimension?: boolean;
   timeDimensionOptions?: TimeDimensionOptions;
   timeDimensionControlOptions?: TimeDimensionControlOptions;
-  timeDimensionGeoJsonData?: typeof GeoJsonObject[];
+  timeDimensionGeoJsonData?: (typeof GeoJsonObject)[];
   timeDimensionUnderlay?: typeof GeoJsonObject;
   setZoomLevel: (setZoomLevel: number) => void;
   setTimeDimensionNeedsMore?: (setTimeDimensionNeedsMore: boolean) => void;
@@ -57,7 +57,7 @@ export interface LeafletLayersProps {
   zoomLevel: number;
   setZoomLevel: (setZoomLevel: number) => void;
   timeDimension?: boolean;
-  timeDimensionGeoJsonData?: typeof GeoJsonObject[];
+  timeDimensionGeoJsonData?: (typeof GeoJsonObject)[];
   timeDimensionUnderlay?: typeof GeoJsonObject;
   setTimeDimensionHasNoMore?: (setTimeDimensionHasNoMore: boolean) => void;
   setTimeDimensionNeedsMore?: (setTimeDimensionNeedsMore: boolean) => void;
@@ -66,7 +66,7 @@ export interface LeafletLayersProps {
 }
 
 export interface TimeDimensionLayerProps {
-  geoJsonData: typeof GeoJsonObject[];
+  geoJsonData: (typeof GeoJsonObject)[];
   setTimeDimensionHasNoMore: (setTimeDimensionHasNoMore: boolean) => void;
   setTimeDimensionNeedsMore: (setTimeDimensionNeedsMore: boolean) => void;
   surfaceProperties: SurfaceProperties[];

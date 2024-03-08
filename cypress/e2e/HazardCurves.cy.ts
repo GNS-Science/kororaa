@@ -1,4 +1,3 @@
-/* eslint-disable cypress/no-unnecessary-waiting */
 /* eslint-disable cypress/unsafe-to-chain-command */
 describe("Hazard Curves", () => {
   before(() => {
