@@ -47,7 +47,7 @@ const HazardMapsControls: React.FC<HazardMapsControlsProps> = ({
   const [vs30, setVs30] = useState<number>(state.vs30);
   const [poe, setPoe] = useState<number>(state.poe);
   const [colorScale, setColorScale] = useState<string>("inferno");
-  const [gridOpacity, setGridOpacity] = useState<number>(10);
+  const [gridOpacity, setGridOpacity] = useState<number>(100);
   const [dataFetched, setDataFetched] = useState<boolean>(true);
   const [controlsChanged, setControlsChanged] = useState<number>(0);
 
@@ -77,7 +77,7 @@ const HazardMapsControls: React.FC<HazardMapsControlsProps> = ({
         poe: poe,
         color_scale: colorScale,
         color_scale_vmax: MAP_GRID_VMAX,
-        fill_opacity: Number(gridOpacity / 10),
+        fill_opacity: Number(gridOpacity / 100),
         stroke_width: MAP_GRID_STROKE_WIDTH,
         stroke_opacity: 0.0,
       });
