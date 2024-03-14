@@ -30,8 +30,8 @@ export const SliderWithInput: React.FC<SliderWithInputProps> = ({
   const handleBlur = () => {
     if (value < 0) {
       setValue(0);
-    } else if (value > 100) {
-      setValue(100);
+    } else if (value > 10) {
+      setValue(10);
     }
   };
 
@@ -46,9 +46,11 @@ export const SliderWithInput: React.FC<SliderWithInputProps> = ({
         <Grid item xs>
           <Slider
             value={typeof value === "number" ? value : 0}
-            step={10}
+            step={1}
             onChange={handleSliderChange}
             aria-labelledby="input-slider"
+            min={1}
+            max={10}
           />
         </Grid>
         <Grid item>
@@ -58,9 +60,9 @@ export const SliderWithInput: React.FC<SliderWithInputProps> = ({
             onChange={handleInputChange}
             onBlur={handleBlur}
             inputProps={{
-              step: 10,
-              min: 0,
-              max: 100,
+              step: 1,
+              min: 1,
+              max: 10,
               type: "number",
               "aria-labelledby": "input-slider",
             }}
