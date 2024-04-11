@@ -149,6 +149,42 @@ export const addColorsToCurves = (curveGroups: UncertaintyChartData): Uncertaint
 
   return curveGroups;
 };
+export const addColorsToUHSCurves = (
+  curveGroups: UncertaintyChartData,
+  hazardCurveGroups: UncertaintyChartData
+): UncertaintyChartData => {
+  const hazardCurveKeyObjects = Object.keys(hazardCurveGroups).map((key) => {
+    const keyArray = key.split(" ");
+    const curveGroupKey = `${keyArray[0]} ${
+      keyArray.length === 3 ? keyArray[2] : `${keyArray[2]} ${keyArray[3]}`
+    }`.trimEnd();
+    const keyObject = {
+      key: key,
+      curveGroupKey: curveGroupKey,
+      vs30: keyArray[0],
+      imt: keyArray[1],
+      location: keyArray.length === 3 ? keyArray[2] : `${keyArray[2]} ${keyArray[3]}`,
+      colour: hazardCurveGroups[key]["mean"]["strokeColor"],
+    };
+
+    return keyObject;
+  });
+
+  hazardCurveKeyObjects.forEach((keyObject) => {
+    if (curveGroups[keyObject.curveGroupKey]) {
+      Object.keys(curveGroups[keyObject.curveGroupKey]).forEach((curveType) => {
+        if (curveType === "mean") {
+          curveGroups[keyObject.curveGroupKey][curveType]["strokeColor"] = keyObject.colour;
+        } else {
+          curveGroups[keyObject.curveGroupKey][curveType]["strokeColor"] = keyObject.colour;
+          curveGroups[keyObject.curveGroupKey][curveType]["strokeOpacity"] = 0.5;
+        }
+      });
+    }
+  });
+
+  return curveGroups;
+};
 
 export const sortSACurveGroups = (curveGroups: UncertaintyChartData): UncertaintyChartData => {
   const sortedCurveGroups: UncertaintyChartData = {};

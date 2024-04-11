@@ -1,7 +1,7 @@
 import { roundLatLon } from "../../services/latLon/latLon.service";
 import { HAZARD_COLOR_LIMIT, HAZARD_MODEL } from "../../utils/environmentVariables";
 
-import { tooManyCurves, noLocations, noImts, noVs30s } from "./constants/hazardCharts";
+import { tooManyCurves, noLocations, noImts, noVs30s, tooManyImts } from "./constants/hazardCharts";
 import { hazardPageLocations } from "./constants/hazardPageOptions";
 import { LocationData } from "./hazardPageReducer";
 import { convertAgg } from "../../services/spectralAccel/spectralAccel.service";
@@ -299,6 +299,8 @@ export const validateVs30s = (vs30s: number[], setVs30Error: React.Dispatch<Reac
 export const validateImts = (imts: string[], setImtError: React.Dispatch<React.SetStateAction<boolean>>) => {
   if (imts.length === 0) {
     throw noImts;
+  } else if (imts.length > 3) {
+    throw tooManyImts;
   } else {
     setImtError(false);
   }
