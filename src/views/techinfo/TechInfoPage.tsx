@@ -2,6 +2,7 @@ import React from "react";
 import { styled } from "@mui/material/styles";
 import Grid from "@mui/material/Grid";
 import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import { graphql } from "react-relay";
 import { useLazyLoadQuery } from "react-relay";
 import { TechInfoPageQuery } from "./__generated__/TechInfoPageQuery.graphql";
@@ -22,6 +23,31 @@ const TitleContainer = styled("div")({
   paddingBottom: "1rem",
 });
 
+const StyledReactMarkdown = styled(ReactMarkdown)({
+  "& table": {
+    borderSpacing: 0,
+    borderCollapse: "collapse",
+    display: "block",
+    marginTop: 0,
+    marginBottom: "16px",
+    width: "50vw",
+    maxWidth: "100%",
+    overflow: "auto",
+  },
+  "& tr": {
+    padding: "6px 13px",
+    backgroundColor: "#ffffff",
+    borderTop: "1px solid hsla(210, 18%, 87%, 1)",
+  },
+  "& tr:nth-of-type(2n)": {
+    backgroundColor: "#f6f8fa",
+  },
+  "&td, th": {
+    padding: "6px 13px",
+    border: "1px solid #ffffff",
+  },
+});
+
 const TechInfoComponent: React.FC = () => {
   const data = useLazyLoadQuery<TechInfoPageQuery>(techInfoPageQuery, {});
   const markdown = data?.KORORAA_textual_content?.content && data?.KORORAA_textual_content?.content[0]?.text;
@@ -38,7 +64,9 @@ const TechInfoComponent: React.FC = () => {
               </TitleContainer>
             </Grid>
             <Grid item xs={12}>
-              <ReactMarkdown linkTarget={"_blank"}>{markdown as string}</ReactMarkdown>
+              <StyledReactMarkdown remarkPlugins={[remarkGfm]} linkTarget={"_blank"}>
+                {markdown as string}
+              </StyledReactMarkdown>
             </Grid>
           </Grid>
         </Grid>
