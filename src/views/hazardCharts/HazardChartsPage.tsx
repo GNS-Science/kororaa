@@ -10,6 +10,7 @@ import { hazardPageReducer, hazardPageReducerInitialState } from "./hazardPageRe
 import { InfoTooltip } from "../../components/common/InfoTooltip";
 import SimpleBackdrop from "../../components/common/SimpleBackdrop";
 import { HazardChartsPageQuery } from "./__generated__/HazardChartsPageQuery.graphql";
+import ErrorBoundary from "../../components/common/ErrorBoundary";
 
 const PageContainer = styled(Box)(({ theme }) => ({
   display: "flex",
@@ -41,16 +42,18 @@ const HazardChartsPage: React.FC = () => {
 
   return (
     <PageContainer>
-      <TitleContainer>
-        <Typography variant="h2">
-          Hazard Curves and Uniform Hazard Spectra
-          <InfoTooltip content={markdown || ""} format={content_type === "Markdown"} />
-        </Typography>
-      </TitleContainer>
-      <HazardChartsControls state={state} dispatch={dispatch} printTargetRef={printTargetRef} />
-      <React.Suspense fallback={<SimpleBackdrop />}>
-        <HazardChartsPlotsView state={state} dispatch={dispatch} printTargetRef={printTargetRef} />
-      </React.Suspense>
+      <ErrorBoundary>
+        <TitleContainer>
+          <Typography variant="h2">
+            Hazard Curves and Uniform Hazard Spectra
+            <InfoTooltip content={markdown || ""} format={content_type === "Markdown"} />
+          </Typography>
+        </TitleContainer>
+        <HazardChartsControls state={state} dispatch={dispatch} printTargetRef={printTargetRef} />
+        <React.Suspense fallback={<SimpleBackdrop />}>
+          <HazardChartsPlotsView state={state} dispatch={dispatch} printTargetRef={printTargetRef} />
+        </React.Suspense>
+      </ErrorBoundary>
     </PageContainer>
   );
 };
