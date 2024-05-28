@@ -638,10 +638,10 @@
   resolved "https://registry.yarnpkg.com/@floating-ui/utils/-/utils-0.2.1.tgz#16308cea045f0fc777b6ff20a9f25474dd8293d2"
   integrity sha512-9TANp6GPoMtYzQdt54kfAyMmz1+osLlXdg2ENroU7zzrtflTLrrC/lgrIfaSe+Wu0b89GKccT7vxXA0MoAIO+Q==
 
-"@gns-science/toshi-nest@^3.9.13":
-  version "3.9.13"
-  resolved "https://npm.pkg.github.com/download/@GNS-Science/toshi-nest/3.9.13/f5b2419761d648df2eea20ce9b7f64162c82c148#f5b2419761d648df2eea20ce9b7f64162c82c148"
-  integrity sha512-/58qKlqqQnZiJ8G2GZYLForoMnVzN/6EkNWwFV82cTk2FlbQyRR98ZbxZG6U6yA6OT5q0xHC69OVQrbIhhgZxw==
+"@gns-science/toshi-nest@^3.9.14":
+  version "3.9.14"
+  resolved "https://npm.pkg.github.com/download/@GNS-Science/toshi-nest/3.9.14/858218b2fd15bdd026cb6f418fd8273034d29db0#858218b2fd15bdd026cb6f418fd8273034d29db0"
+  integrity sha512-SY8154eZmDMyNEVbFDAy0td6JWZ5/H55NAs9s6e8k8tie7/JBCGRoGZxncHjByoScmlARn1O7S2he00kGm0bIw==
   dependencies:
     "@emotion/react" "^11.8.2"
     "@emotion/styled" "^11.8.1"
