@@ -2,7 +2,7 @@ import React from "react";
 import CssBaseline from "@mui/material/CssBaseline";
 import { ThemeProvider } from "@emotion/react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Box, Container } from "@mui/material";
+import { Box } from "@mui/material";
 
 import { Environment, RelayEnvironmentProvider } from "react-relay/hooks";
 import RelayEnvironment from "./RelayEnvironment";
@@ -47,8 +47,7 @@ function App(props: { environment?: Environment }) {
           <BrowserRouter>
             <Box sx={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}>
               <NavBar />
-              <Container maxWidth="xl" style={{ paddingTop: "40px", wordWrap: "break-word" }}>
-                {/* <Box sx={{ flexGrow: 1 }}> */}
+              <Box sx={{ flexGrow: 1 }}>
                 <DisclaimerLayer>
                   <Routes>
                     <Route
@@ -82,7 +81,7 @@ function App(props: { environment?: Environment }) {
                     <Route path="/" element={<Home />} />
                   </Routes>
                 </DisclaimerLayer>
-              </Container>
+              </Box>
               <Footer />
             </Box>
           </BrowserRouter>
