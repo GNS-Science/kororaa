@@ -8,6 +8,7 @@ import { convertAgg } from "../../services/spectralAccel/spectralAccel.service";
 
 import { HazardChartsPlotsViewQuery$data } from "./__generated__/HazardChartsPlotsViewQuery.graphql";
 
+import { getColor } from "../../utils/colorUtils";
 export interface XY {
   x: number;
   y: number;
@@ -18,6 +19,7 @@ export interface HazardUncertaintyChart {
   strokeOpacity?: number;
   strokeColor?: string;
   strokeStyle?: string;
+  strokeDashArray?: string;
   data: UncertaintyDatum[];
 }
 
@@ -38,6 +40,13 @@ export type HazardUncertaintyChartCurveGroup = Record<string, HazardUncertaintyC
 export type HazardUncertaintyChartData = Record<string, HazardUncertaintyChartCurveGroup>;
 
 export type UncertaintyDatum = number[];
+
+export interface CurveKeyObject {
+  key: string;
+  vs30: string;
+  imt: string;
+  location: string;
+}
 
 export const getAllCurveGroups = (data: HazardChartsPlotsViewQuery$data): HazardUncertaintyChartData => {
   const curveGroups: HazardUncertaintyChartData = {};
@@ -275,6 +284,75 @@ export const sortCurveGroups = (curveGroups: HazardUncertaintyChartData): Hazard
   });
 
   return sortedCurves;
+};
+export const getCurveKeyObjects = (data: HazardUncertaintyChartData): CurveKeyObject[] => {
+  return Object.keys(data).map((key) => {
+    const keyArray = key.split(" ");
+    const keyObject = {
+      key: key,
+      vs30: keyArray[0],
+      imt: keyArray[1],
+      location: keyArray.length === 3 ? keyArray[2] : `${keyArray[2]} ${keyArray[3]}`,
+    };
+    return keyObject;
+  });
+};
+export const groupByLocationAndVs30 = (objects: CurveKeyObject[]): Record<string, CurveKeyObject[]> => {
+  return objects.reduce((acc, obj) => {
+    const key = `${obj.location} ${obj.vs30}`;
+    if (!acc[key]) {
+      acc[key] = [];
+    }
+    acc[key].push(obj);
+    return acc;
+  }, {} as Record<string, CurveKeyObject[]>);
+};
+
+export const addColorsToCurves = (data: HazardUncertaintyChartData): HazardUncertaintyChartData => {
+  const curveKeyObjects = getCurveKeyObjects(data);
+  const groupedData = groupByLocationAndVs30(curveKeyObjects);
+  const numberOfColours = Object.keys(groupedData).length;
+
+  console.log("groupedData", groupedData);
+
+  groupedData &&
+    Object.keys(groupedData).forEach((groupKey, i) => {
+      groupedData[groupKey].map((curveKey) => {
+        if (data[curveKey.key]) {
+          Object.keys(data[curveKey.key]).forEach((curveType) => {
+            if (curveType === "mean") {
+              data[curveKey.key][curveType]["strokeColor"] = getColor(numberOfColours, i);
+            } else {
+              data[curveKey.key][curveType]["strokeColor"] = getColor(numberOfColours, i);
+              data[curveKey.key][curveType]["strokeOpacity"] = 0.5;
+            }
+          });
+        }
+      });
+    });
+
+  return data;
+};
+
+export const addDashArrayToCurves = (data: HazardUncertaintyChartData): HazardUncertaintyChartData => {
+  const dashedCurves: HazardUncertaintyChartData = {};
+  const strokeDashArrayValues = ["0", "4,5", "1,3"];
+  const curveKeyObjects = getCurveKeyObjects(data);
+  const groupedData = groupByLocationAndVs30(curveKeyObjects);
+
+  groupedData &&
+    Object.keys(groupedData).forEach((key) => {
+      const curveGroup = groupedData[key];
+      curveGroup.forEach((curve, i) => {
+        dashedCurves[curve.key] = {
+          ...data[curve.key],
+        };
+        dashedCurves[curve.key]["mean"].strokeDashArray = strokeDashArrayValues[i];
+      });
+    });
+
+  console.log("dashed", dashedCurves);
+  return dashedCurves;
 };
 
 export const validateLocationData = (

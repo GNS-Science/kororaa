@@ -5,15 +5,16 @@ import { GroupCurveChartResponsive } from "@gns-science/toshi-nest";
 
 import { HazardChartsPlotsViewQuery$data } from "./__generated__/HazardChartsPlotsViewQuery.graphql";
 import {
+  addDashArrayToCurves,
   getAllCurveGroups,
   getFilteredCurveGroups,
   getLocationList,
   getYScale,
   sortCurveGroups,
+  addColorsToCurves,
 } from "./hazardPage.service";
 import { HazardPageState } from "./hazardPageReducer";
 import {
-  addColorsToCurves,
   addColorsToUHSCurves,
   getSpectralAccelUncertaintyCurves,
   sortSACurveGroups,
@@ -66,7 +67,11 @@ const HazardCharts: React.FC<HazardChartsProps> = ({ data, state, dispatch }: Ha
     [saCurvesUncertainty, curveGroupWithColors]
   );
 
+  addDashArrayToCurves(sortedCurveGroup);
+
   const sortedSaCurves = useMemo(() => sortSACurveGroups(saCurvesWithColors), [saCurvesWithColors]);
+  console.log("sortedCurveGroup", sortedCurveGroup);
+  console.log("sortedSaCurves", sortedSaCurves);
 
   const spectralYLimits = useMemo(() => {
     if (SA_GMAX === "auto") {

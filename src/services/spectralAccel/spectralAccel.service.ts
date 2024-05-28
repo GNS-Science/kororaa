@@ -3,7 +3,6 @@ import * as mathjs from "mathjs";
 import { hazardPageOptions } from "../../views/hazardCharts/constants/hazardPageOptions";
 import { HazardChartsPlotsViewQuery$data } from "../../views/hazardCharts/__generated__/HazardChartsPlotsViewQuery.graphql";
 import { getLatLonFromLocationName, roundLatLon } from "../latLon/latLon.service";
-import { getColor } from "../../utils/colorUtils";
 import {
   SA_LOG_PGA_SUBSTITUTE,
   HAZARD_IMTS,
@@ -133,22 +132,6 @@ export const calculateSpectralAccelCurve = (
   return data;
 };
 
-export const addColorsToCurves = (curveGroups: UncertaintyChartData): UncertaintyChartData => {
-  const curveGroupLength = Object.keys(curveGroups).length;
-
-  Object.keys(curveGroups).forEach((key, index) => {
-    Object.keys(curveGroups[key]).forEach((curveType) => {
-      if (curveType === "mean") {
-        curveGroups[key][curveType]["strokeColor"] = getColor(curveGroupLength, index);
-      } else {
-        curveGroups[key][curveType]["strokeColor"] = getColor(curveGroupLength, index);
-        curveGroups[key][curveType]["strokeOpacity"] = 0.5;
-      }
-    });
-  });
-
-  return curveGroups;
-};
 export const addColorsToUHSCurves = (
   curveGroups: UncertaintyChartData,
   hazardCurveGroups: UncertaintyChartData
