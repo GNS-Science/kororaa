@@ -299,6 +299,7 @@ const ComboRuptureMapControls: React.FC<ComboRuptureMapControlsProps> = ({
         <Autocomplete
           multiple={true}
           disabled={faultSystem !== "Crustal"}
+          disableCloseOnSelect={true}
           options={parentFaultOptions}
           renderInput={(params) => (
             <Tooltip title={faultsMarkdown || ""} placement="right" arrow={true}>
