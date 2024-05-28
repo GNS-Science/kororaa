@@ -1,8 +1,9 @@
 import colormap from "colormap";
 
 import { expected as calculateSpectralAccelCurveExpected } from "./testCases/calculateSpectralAccelCurveTestCase";
-import { addColorsToCurves, getSpectralAccelCurve, UncertaintyChartData } from "./spectralAccel.service";
+import { getSpectralAccelCurve, UncertaintyChartData } from "./spectralAccel.service";
 import { hazardPlotsViewQueryMockData } from "./testCases/hazardPlotViewsQueryMockData";
+import { addColorsToCurves } from "../../views/hazardCharts/hazardPage.service";
 import { HAZARD_COLOR_MAP } from "../../utils/environmentVariables";
 
 test("getAllOfCurveType function", () => {
