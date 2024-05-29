@@ -208,7 +208,7 @@ export const getPoeInputDisplay = (poe: number | undefined): string => {
   return poe ? `${poe * 100}` : " ";
 };
 
-export const validatePoeValue = (poe: string) => {
+export const validatePoeValue = (poe: string, setPoeError: React.Dispatch<React.SetStateAction<boolean>>) => {
   if (poe.length === 0 || poe === " ") {
     return;
   }
@@ -219,6 +219,8 @@ export const validatePoeValue = (poe: string) => {
     throw "Out of range 0-100";
   } else if (!percentage) {
     throw "Not a number";
+  } else {
+    setPoeError(false);
   }
 };
 
@@ -285,6 +287,7 @@ export const sortCurveGroups = (curveGroups: HazardUncertaintyChartData): Hazard
 
   return sortedCurves;
 };
+
 export const getCurveKeyObjects = (data: HazardUncertaintyChartData): CurveKeyObject[] => {
   return Object.keys(data).map((key) => {
     const keyArray = key.split(" ");
@@ -297,6 +300,7 @@ export const getCurveKeyObjects = (data: HazardUncertaintyChartData): CurveKeyOb
     return keyObject;
   });
 };
+
 export const groupByLocationAndVs30 = (objects: CurveKeyObject[]): Record<string, CurveKeyObject[]> => {
   return objects.reduce((acc, obj) => {
     const key = `${obj.location} ${obj.vs30}`;
@@ -312,8 +316,6 @@ export const addColorsToCurves = (data: HazardUncertaintyChartData): HazardUncer
   const curveKeyObjects = getCurveKeyObjects(data);
   const groupedData = groupByLocationAndVs30(curveKeyObjects);
   const numberOfColours = Object.keys(groupedData).length;
-
-  console.log("groupedData", groupedData);
 
   groupedData &&
     Object.keys(groupedData).forEach((groupKey, i) => {
@@ -350,8 +352,6 @@ export const addDashArrayToCurves = (data: HazardUncertaintyChartData): HazardUn
         dashedCurves[curve.key]["mean"].strokeDashArray = strokeDashArrayValues[i];
       });
     });
-
-  console.log("dashed", dashedCurves);
   return dashedCurves;
 };
 
