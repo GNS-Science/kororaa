@@ -70,8 +70,6 @@ const HazardCharts: React.FC<HazardChartsProps> = ({ data, state, dispatch }: Ha
   addDashArrayToCurves(sortedCurveGroup);
 
   const sortedSaCurves = useMemo(() => sortSACurveGroups(saCurvesWithColors), [saCurvesWithColors]);
-  console.log("sortedCurveGroup", sortedCurveGroup);
-  console.log("sortedSaCurves", sortedSaCurves);
 
   const spectralYLimits = useMemo(() => {
     if (SA_GMAX === "auto") {
