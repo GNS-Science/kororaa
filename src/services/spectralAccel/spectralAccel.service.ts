@@ -3,7 +3,6 @@ import * as mathjs from "mathjs";
 import { hazardPageOptions } from "../../views/hazardCharts/constants/hazardPageOptions";
 import { HazardChartsPlotsViewQuery$data } from "../../views/hazardCharts/__generated__/HazardChartsPlotsViewQuery.graphql";
 import { getLatLonFromLocationName, roundLatLon } from "../latLon/latLon.service";
-import { getColor } from "../../utils/colorUtils";
 import {
   SA_LOG_PGA_SUBSTITUTE,
   HAZARD_IMTS,
@@ -133,18 +132,38 @@ export const calculateSpectralAccelCurve = (
   return data;
 };
 
-export const addColorsToCurves = (curveGroups: UncertaintyChartData): UncertaintyChartData => {
-  const curveGroupLength = Object.keys(curveGroups).length;
+export const addColorsToUHSCurves = (
+  curveGroups: UncertaintyChartData,
+  hazardCurveGroups: UncertaintyChartData
+): UncertaintyChartData => {
+  const hazardCurveKeyObjects = Object.keys(hazardCurveGroups).map((key) => {
+    const keyArray = key.split(" ");
+    const curveGroupKey = `${keyArray[0]} ${
+      keyArray.length === 3 ? keyArray[2] : `${keyArray[2]} ${keyArray[3]}`
+    }`.trimEnd();
+    const keyObject = {
+      key: key,
+      curveGroupKey: curveGroupKey,
+      vs30: keyArray[0],
+      imt: keyArray[1],
+      location: keyArray.length === 3 ? keyArray[2] : `${keyArray[2]} ${keyArray[3]}`,
+      colour: hazardCurveGroups[key]["mean"]["strokeColor"],
+    };
 
-  Object.keys(curveGroups).forEach((key, index) => {
-    Object.keys(curveGroups[key]).forEach((curveType) => {
-      if (curveType === "mean") {
-        curveGroups[key][curveType]["strokeColor"] = getColor(curveGroupLength, index);
-      } else {
-        curveGroups[key][curveType]["strokeColor"] = getColor(curveGroupLength, index);
-        curveGroups[key][curveType]["strokeOpacity"] = 0.5;
-      }
-    });
+    return keyObject;
+  });
+
+  hazardCurveKeyObjects.forEach((keyObject) => {
+    if (curveGroups[keyObject.curveGroupKey]) {
+      Object.keys(curveGroups[keyObject.curveGroupKey]).forEach((curveType) => {
+        if (curveType === "mean") {
+          curveGroups[keyObject.curveGroupKey][curveType]["strokeColor"] = keyObject.colour;
+        } else {
+          curveGroups[keyObject.curveGroupKey][curveType]["strokeColor"] = keyObject.colour;
+          curveGroups[keyObject.curveGroupKey][curveType]["strokeOpacity"] = 0.5;
+        }
+      });
+    }
   });
 
   return curveGroups;

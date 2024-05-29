@@ -634,10 +634,11 @@
   resolved "https://registry.yarnpkg.com/@floating-ui/utils/-/utils-0.2.2.tgz#d8bae93ac8b815b2bd7a98078cf91e2724ef11e5"
   integrity sha512-J4yDIIthosAsRZ5CPYP/jQvUAQtlZTTD/4suA08/FEnlxqW3sKS9iAhgsa9VYLZ6vDHn/ixJgIqRQPotoBjxIw==
 
-"@gns-science/toshi-nest@^3.9.9":
-  version "3.9.11"
-  resolved "https://npm.pkg.github.com/download/@GNS-Science/toshi-nest/3.9.11/c10d078051c0a1000c6b55b190e7ae123f4340ce#c10d078051c0a1000c6b55b190e7ae123f4340ce"
-  integrity sha512-cJ17bocXzgOpv6XH4EwW6mQlsTUyY4b3T1XX5zHB7OhG9h/XuXJMsKHfe3aHVQQ+qNX8OM5btHQX6ysdomXUog==
+
+"@gns-science/toshi-nest@^3.9.14":
+  version "3.9.14"
+  resolved "https://npm.pkg.github.com/download/@GNS-Science/toshi-nest/3.9.14/858218b2fd15bdd026cb6f418fd8273034d29db0#858218b2fd15bdd026cb6f418fd8273034d29db0"
+  integrity sha512-SY8154eZmDMyNEVbFDAy0td6JWZ5/H55NAs9s6e8k8tie7/JBCGRoGZxncHjByoScmlARn1O7S2he00kGm0bIw==
   dependencies:
     "@emotion/react" "^11.8.2"
     "@emotion/styled" "^11.8.1"
@@ -8066,6 +8067,7 @@ robust-predicates@^3.0.2:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/robust-predicates/-/robust-predicates-3.0.2.tgz#d5b28528c4824d20fc48df1928d41d9efa1ad771"
   integrity sha512-IXgzBWvWQwE6PrDI05OvmXUIruQTcoMDzRsOd5CDvHCVLcLHMTSYvOK5Cm46kWqlV3yAbuSpBZdJ5oP5OUoStg==
+
 
 rollup@^4.13.0:
   version "4.17.2"

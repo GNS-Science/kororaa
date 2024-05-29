@@ -14,3 +14,5 @@ export const noLocations = "Please enter at least one location";
 export const noVs30s = "Please select at least one Vs30";
 
 export const noImts = "Please select at least one spectral period";
+
+export const tooManyImts = "Maximum of 3 spectral periods can be shown together. Please select fewer options.";
