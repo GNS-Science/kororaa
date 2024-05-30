@@ -133,7 +133,7 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({
 
   const handleSubmit = async () => {
     try {
-      validatePoeValue(poeInput);
+      validatePoeValue(poeInput, setPoeInputError);
       validateLatLon(latLon);
       validateLocationData(locationData, setLocationError);
       validateVs30s(vs30s, setVs30Error);
