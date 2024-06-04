@@ -1,6 +1,6 @@
 {
   "name": "kororaa",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "private": true,
   "type": "module",
   "dependencies": {
@@ -40,7 +40,8 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "relay": "relay-compiler",
-    "test": "vitest"
+    "test": "vitest",
+    "changelog": "auto-changelog -p -o src/CHANGELOG.md"
   },
   "lint-staged": {
     "./src/**/*.{ts,tsx}": [
