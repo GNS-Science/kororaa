@@ -1,17 +1,43 @@
-# Changelog
+### Changelog
 
-All notable changes to this project will be documented in this file.
+All notable changes to this project will be documented in this file. Dates are displayed in UTC.
 
-## [v1.2.2](https://github.com/GNS-Science/kororaa/compare/v1.2.0...v1.2.2)
+#### [1.2.3](https://github.com/GNS-Science/kororaa/compare/1.2.2...1.2.3)
 
-### Merged
+- fix tests; remove console.logs; [`#456`](https://github.com/GNS-Science/kororaa/pull/456)
+- feature/450_reconcile_lines [`#453`](https://github.com/GNS-Science/kororaa/pull/453)
+- add remark-gfm; add table styling; [`#454`](https://github.com/GNS-Science/kororaa/pull/454)
+- change back to 100; change styling; [`#452`](https://github.com/GNS-Science/kororaa/pull/452)
+- Feature/444 opacity slider default 100 [`#451`](https://github.com/GNS-Science/kororaa/pull/451)
+- rupture map parent fault stays open on select; [`#449`](https://github.com/GNS-Science/kororaa/pull/449)
+- Feature/444 opacity slider [`#448`](https://github.com/GNS-Science/kororaa/pull/448)
+- Feature/444 Opacity Slider [`#447`](https://github.com/GNS-Science/kororaa/pull/447)
+- Feature/427 dynamic techinfo [`#446`](https://github.com/GNS-Science/kororaa/pull/446)
+- change haz curve coordinate tooltip; [`#429`](https://github.com/GNS-Science/kororaa/pull/429)
+- make legend lines thicker; [`#437`](https://github.com/GNS-Science/kororaa/pull/437)
+- change secrets to vars for prod deployment yml; [`#445`](https://github.com/GNS-Science/kororaa/pull/445)
+- change secrets to vars; [`#443`](https://github.com/GNS-Science/kororaa/pull/443)
+- Feature/438 latlon warning [`#440`](https://github.com/GNS-Science/kororaa/pull/440)
+- fix cypress test; [`#436`](https://github.com/GNS-Science/kororaa/pull/436)
+- change cypress config host; [`#435`](https://github.com/GNS-Science/kororaa/pull/435)
+- update cypress gha; [`#434`](https://github.com/GNS-Science/kororaa/pull/434)
+- change cypress test wait-on; [`#433`](https://github.com/GNS-Science/kororaa/pull/433)
+- Feature/426 vite migration [`#432`](https://github.com/GNS-Science/kororaa/pull/432)
+- change node version; [`#431`](https://github.com/GNS-Science/kororaa/pull/431)
+- Feature/426 vite migration [`#430`](https://github.com/GNS-Science/kororaa/pull/430)
+- feature/419 hazard map poes [`#420`](https://github.com/GNS-Science/kororaa/pull/420)
+- update changelog; [`#417`](https://github.com/GNS-Science/kororaa/pull/417)
+- Fix/cypress test [`#414`](https://github.com/GNS-Science/kororaa/pull/414)
+- fix changelog link; [`#413`](https://github.com/GNS-Science/kororaa/pull/413)
+- fix build errors; [`d36ea3f`](https://github.com/GNS-Science/kororaa/commit/d36ea3f78f1530bacdee16c41dad7fcaa03a8fb4)
+- migrate to vite; fix cypress; [`7d7e973`](https://github.com/GNS-Science/kororaa/commit/7d7e9738077a45d4bf1f3784707e888f3ce954aa)
+- delete dist; [`a9764d9`](https://github.com/GNS-Science/kororaa/commit/a9764d956e3bc6df0f8dc047ba2102577c314fc9)
 
-- update hazard curve tooltips; [`#412`](https://github.com/GNS-Science/kororaa/pull/412)
- 
-## [v1.2.0](https://github.com/GNS-Science/kororaa/compare/v1.1.0...v1.2.0)
+#### [v1.2.2](https://github.com/GNS-Science/kororaa/compare/v1.2.0...v1.2.2)
 
-### Merged
+> 2 November 2023
 
+- Fix/410 hazard tooltips [`#412`](https://github.com/GNS-Science/kororaa/pull/412)
 - move cypress fix to right test; [`#409`](https://github.com/GNS-Science/kororaa/pull/409)
 - Feature/406 hazard poe [`#408`](https://github.com/GNS-Science/kororaa/pull/408)
 - update hazard curve poe controls; [`#407`](https://github.com/GNS-Science/kororaa/pull/407)
@@ -23,16 +49,17 @@ All notable changes to this project will be documented in this file.
 - feature/389 rate tooltip [`#390`](https://github.com/GNS-Science/kororaa/pull/390)
 - Fix/386 menu caps [`#387`](https://github.com/GNS-Science/kororaa/pull/387)
 - update rupture map tooltips; format geojson downloads; reformat tech info page; add ids to tech info headers;   [`#380`](https://github.com/GNS-Science/kororaa/pull/380)
-
-### Commits
-
 - fix cypress tests; [`df848f7`](https://github.com/GNS-Science/kororaa/commit/df848f7a39b3a6e30364be33d04cb4d0431f4d71)
 - skip tests; [`8cc347a`](https://github.com/GNS-Science/kororaa/commit/8cc347a67680fa73efefbfa0850a18ab3ec19e58)
 - add tooltip to rupture map rate control; update mock for cypress; [`094a4ad`](https://github.com/GNS-Science/kororaa/commit/094a4ad10070f5cdaf02eea953f6cad93eb76110)
 
-## [v1.1.0](https://github.com/GNS-Science/kororaa/compare/v1.0.7...v1.1.0) - 2023-07-25
+#### [v1.2.0](https://github.com/GNS-Science/kororaa/compare/v1.1.0...v1.2.0)
 
-### Merged
+> 25 July 2023
+
+#### [v1.1.0](https://github.com/GNS-Science/kororaa/compare/v1.0.7...v1.1.0)
+
+> 25 July 2023
 
 - Feature/372 UI update [`#378`](https://github.com/GNS-Science/kororaa/pull/378)
 - Feature/multi fault [`#371`](https://github.com/GNS-Science/kororaa/pull/371)
@@ -45,59 +72,47 @@ All notable changes to this project will be documented in this file.
 - Deploy test [`#314`](https://github.com/GNS-Science/kororaa/pull/314)
 - Fix/UHS CSV (#309) [`#311`](https://github.com/GNS-Science/kororaa/pull/311)
 - Deploy test [`#306`](https://github.com/GNS-Science/kororaa/pull/306)
-
-### Commits
-
 - Rupture info circular progress instead of broken text; [`c2b9db3`](https://github.com/GNS-Science/kororaa/commit/c2b9db35de59ee26010c6f3a1c0b016170f03a9c)
 - cypress tests fixed; [`cda112b`](https://github.com/GNS-Science/kororaa/commit/cda112bb524409af33919c75becd9b1ac0599f47)
 - refactoring; [`b996663`](https://github.com/GNS-Science/kororaa/commit/b99666325c72a6d9984c587e8467ac7ed6501d46)
 
-## [v1.0.7](https://github.com/GNS-Science/kororaa/compare/v1.0.6...v1.0.7) - 2023-01-05
+#### [v1.0.7](https://github.com/GNS-Science/kororaa/compare/v1.0.6...v1.0.7)
 
-### Merged
+> 5 January 2023
 
 - Fix/Arcgis Basemap [`#313`](https://github.com/GNS-Science/kororaa/pull/313)
-
-### Commits
-
 - update nest; fixes hazard map arcgis basemap; [`d44b160`](https://github.com/GNS-Science/kororaa/commit/d44b1603434ab04585aa1ebb1f8a9498a8838023)
 
-## [v1.0.6](https://github.com/GNS-Science/kororaa/compare/v1.0.5...v1.0.6) - 2022-12-13
+#### [v1.0.6](https://github.com/GNS-Science/kororaa/compare/v1.0.5...v1.0.6)
 
-### Merged
+> 13 December 2022
 
 - Fix/310 Sort SA CSV [`#312`](https://github.com/GNS-Science/kororaa/pull/312)
 - Fix/UHS CSV [`#309`](https://github.com/GNS-Science/kororaa/pull/309)
-
-### Commits
-
 - sort hazard curve CSV SA; [`a370396`](https://github.com/GNS-Science/kororaa/commit/a370396ff63530cc2ad872ce67623008c95a6013)
 
-## [v1.0.5](https://github.com/GNS-Science/kororaa/compare/v1.0.4...v1.0.5) - 2022-12-07
+#### [v1.0.5](https://github.com/GNS-Science/kororaa/compare/v1.0.4...v1.0.5)
 
-### Merged
+> 7 December 2022
 
 - Fix/Cypress MSW [`#307`](https://github.com/GNS-Science/kororaa/pull/307)
 - Feature/301 disagg csv [`#305`](https://github.com/GNS-Science/kororaa/pull/305)
 - update tech info text; [`#304`](https://github.com/GNS-Science/kororaa/pull/304)
 - Feature/290 model versioning [`#298`](https://github.com/GNS-Science/kororaa/pull/298)
 - Deploy test [`#296`](https://github.com/GNS-Science/kororaa/pull/296)
-
-### Commits
-
 - update hazard curve MSW mocks; [`3d91e53`](https://github.com/GNS-Science/kororaa/commit/3d91e534a8142158a342b967a12e76c952f797eb)
 
-## [v1.0.4](https://github.com/GNS-Science/kororaa/compare/v1.0.3...v1.0.4) - 2022-11-16
+#### [v1.0.4](https://github.com/GNS-Science/kororaa/compare/v1.0.3...v1.0.4)
 
-### Merged
+> 16 November 2022
 
 - Feature/287 Nested Hamburger [`#295`](https://github.com/GNS-Science/kororaa/pull/295)
 - Feature/289_hazard_controls_errors [`#291`](https://github.com/GNS-Science/kororaa/pull/291)
 - Deploy test [`#286`](https://github.com/GNS-Science/kororaa/pull/286)
 
-## [v1.0.3](https://github.com/GNS-Science/kororaa/compare/v1.0.2...v1.0.3) - 2022-11-10
+#### [v1.0.3](https://github.com/GNS-Science/kororaa/compare/v1.0.2...v1.0.3)
 
-### Merged
+> 10 November 2022
 
 - removes changelog text from start of changelog page; adds new intro text; [`#285`](https://github.com/GNS-Science/kororaa/pull/285)
 - Fix/cypress tests [`#284`](https://github.com/GNS-Science/kororaa/pull/284)
@@ -107,33 +122,27 @@ All notable changes to this project will be documented in this file.
 - Feature/277 Other Reports [`#278`](https://github.com/GNS-Science/kororaa/pull/278)
 - Deploy test [`#276`](https://github.com/GNS-Science/kororaa/pull/276)
 
-## [v1.0.2](https://github.com/GNS-Science/kororaa/compare/v1.0.1...v1.0.2) - 2022-10-26
+#### [v1.0.2](https://github.com/GNS-Science/kororaa/compare/v1.0.1...v1.0.2)
 
-### Merged
+> 26 October 2022
 
 - hazard chart and UHS chart both use "Acceleration (g)"; hazard map CSV shows cov if statistic is cov; [`#271`](https://github.com/GNS-Science/kororaa/pull/271)
 - Feature/242 changelog [`#269`](https://github.com/GNS-Science/kororaa/pull/269)
-
-### Commits
-
 - update nest; add cov property to map component; adds tooltip to map; [`2b14a0d`](https://github.com/GNS-Science/kororaa/commit/2b14a0d7b50917fa8f3196b16dda2bcbb27e90f6)
 
-## [v1.0.1](https://github.com/GNS-Science/kororaa/compare/v1.0.0...v1.0.1) - 2022-10-20
+#### [v1.0.1](https://github.com/GNS-Science/kororaa/compare/v1.0.0...v1.0.1)
 
-### Merged
+> 20 October 2022
 
 -  - Fix/120 webpack warnings (#257) [`#266`](https://github.com/GNS-Science/kororaa/pull/266)
 - new GA4 code for GNS Science org; [`#265`](https://github.com/GNS-Science/kororaa/pull/265)
-
-### Commits
-
 - changelog page styling; [`5c1141c`](https://github.com/GNS-Science/kororaa/commit/5c1141c22a49fa0aa670f4cbdf162396f9ab5612)
 - alter version path in package.json; [`7002af9`](https://github.com/GNS-Science/kororaa/commit/7002af9d4d86c14a62c2763cf68d69dfb7083592)
 - add release workflow; change changelog template; [`adddb15`](https://github.com/GNS-Science/kororaa/commit/adddb1532ff1a0286d3990ac53c16449a13cb155)
 
-## v1.0.0 - 2022-10-17
+#### v1.0.0
 
-### Merged
+> 17 October 2022
 
 - Feature/241 ga tracking [`#263`](https://github.com/GNS-Science/kororaa/pull/263)
 - Feature/241_ga_tracking [`#262`](https://github.com/GNS-Science/kororaa/pull/262)
@@ -246,9 +255,6 @@ All notable changes to this project will be documented in this file.
 - Feature/13 hazard page improvements [`#15`](https://github.com/GNS-Science/kororaa/pull/15)
 - Feature/9 hazard curves [`#12`](https://github.com/GNS-Science/kororaa/pull/12)
 - Feature/3 landing page [`#6`](https://github.com/GNS-Science/kororaa/pull/6)
-
-### Commits
-
 - create react app [`7503457`](https://github.com/GNS-Science/kororaa/commit/7503457296c34bc74b9a3fd4354d548b66a1ef34)
 - add named legend; update schema; add hazard model and resolution env; update msw data; fix cypress tests; [`8661b0a`](https://github.com/GNS-Science/kororaa/commit/8661b0a73d5de523c32173459a0548dce3dd2957)
 - add hazard curves view [`f1c7af5`](https://github.com/GNS-Science/kororaa/commit/f1c7af5b484195e5bd57c786a6c6b1a46c6c2704)
