@@ -4,34 +4,18 @@ All notable changes to this project will be documented in this file. Dates are d
 
 #### [1.2.3](https://github.com/GNS-Science/kororaa/compare/1.2.2...1.2.3)
 
-- fix tests; remove console.logs; [`#456`](https://github.com/GNS-Science/kororaa/pull/456)
-- feature/450_reconcile_lines [`#453`](https://github.com/GNS-Science/kororaa/pull/453)
-- add remark-gfm; add table styling; [`#454`](https://github.com/GNS-Science/kororaa/pull/454)
-- change back to 100; change styling; [`#452`](https://github.com/GNS-Science/kororaa/pull/452)
-- Feature/444 opacity slider default 100 [`#451`](https://github.com/GNS-Science/kororaa/pull/451)
-- rupture map parent fault stays open on select; [`#449`](https://github.com/GNS-Science/kororaa/pull/449)
-- Feature/444 opacity slider [`#448`](https://github.com/GNS-Science/kororaa/pull/448)
-- Feature/444 Opacity Slider [`#447`](https://github.com/GNS-Science/kororaa/pull/447)
-- Feature/427 dynamic techinfo [`#446`](https://github.com/GNS-Science/kororaa/pull/446)
-- change haz curve coordinate tooltip; [`#429`](https://github.com/GNS-Science/kororaa/pull/429)
-- make legend lines thicker; [`#437`](https://github.com/GNS-Science/kororaa/pull/437)
-- change secrets to vars for prod deployment yml; [`#445`](https://github.com/GNS-Science/kororaa/pull/445)
-- change secrets to vars; [`#443`](https://github.com/GNS-Science/kororaa/pull/443)
-- Feature/438 latlon warning [`#440`](https://github.com/GNS-Science/kororaa/pull/440)
-- fix cypress test; [`#436`](https://github.com/GNS-Science/kororaa/pull/436)
-- change cypress config host; [`#435`](https://github.com/GNS-Science/kororaa/pull/435)
-- update cypress gha; [`#434`](https://github.com/GNS-Science/kororaa/pull/434)
-- change cypress test wait-on; [`#433`](https://github.com/GNS-Science/kororaa/pull/433)
-- Feature/426 vite migration [`#432`](https://github.com/GNS-Science/kororaa/pull/432)
-- change node version; [`#431`](https://github.com/GNS-Science/kororaa/pull/431)
-- Feature/426 vite migration [`#430`](https://github.com/GNS-Science/kororaa/pull/430)
-- feature/419 hazard map poes [`#420`](https://github.com/GNS-Science/kororaa/pull/420)
-- update changelog; [`#417`](https://github.com/GNS-Science/kororaa/pull/417)
-- Fix/cypress test [`#414`](https://github.com/GNS-Science/kororaa/pull/414)
-- fix changelog link; [`#413`](https://github.com/GNS-Science/kororaa/pull/413)
-- fix build errors; [`d36ea3f`](https://github.com/GNS-Science/kororaa/commit/d36ea3f78f1530bacdee16c41dad7fcaa03a8fb4)
-- migrate to vite; fix cypress; [`7d7e973`](https://github.com/GNS-Science/kororaa/commit/7d7e9738077a45d4bf1f3784707e888f3ce954aa)
-- delete dist; [`a9764d9`](https://github.com/GNS-Science/kororaa/commit/a9764d956e3bc6df0f8dc047ba2102577c314fc9)
+> 5 June 2024
+
+### Added
+
+Hazard map opacity slider;
+
+### Changed
+Hazard curve charts update;
+Hazard curve line colour synced;
+Dynamic TechInfo page;
+Adds Error boundary to hazard charts page
+
 
 #### [v1.2.2](https://github.com/GNS-Science/kororaa/compare/v1.2.0...v1.2.2)
 
