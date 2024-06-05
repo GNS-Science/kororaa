@@ -1,7 +1,7 @@
 import React from "react";
 import { graphql } from "react-relay";
 import { useLazyLoadQuery } from "react-relay";
-import { Box, Alert } from "@mui/material";
+import { Alert, Box, GlobalStyles } from "@mui/material";
 
 import { HazardChartsPlotsViewQuery } from "./__generated__/HazardChartsPlotsViewQuery.graphql";
 import { hazardPageOptions } from "./constants/hazardPageOptions";
@@ -49,6 +49,7 @@ const HazardChartsPlotsView: React.FC<HazardChartsPlotsViewProps> = ({
         )}
       </Box>
       <div ref={printTargetRef}>
+        <GlobalStyles styles={{ ".visx-legend-shape svg g line": { strokeWidth: 4 } }} />
         <HazardCharts data={data} state={state} dispatch={dispatch} />
       </div>
     </Box>

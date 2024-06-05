@@ -2,16 +2,23 @@
 
 All notable changes to this project will be documented in this file.
 
-## [v1.2.2](https://github.com/GNS-Science/kororaa/compare/v1.2.0...v1.2.2)
+## [v1.2.3](https://github.com/GNS-Science/kororaa/compare/v1.2.2...v1.2.3)
+
+### Added
+
+Hazard map opacity slider;
+
+### Changed
+Hazard curve charts update;
+Hazard curve line colour synced;
+Dynamic TechInfo page;
+Adds Error boundary to hazard charts page;
+
+## [v1.2.2](https://github.com/GNS-Science/kororaa/compare/v1.2.0...v1.2.2) - 2023-11-02
 
 ### Merged
 
-- update hazard curve tooltips; [`#412`](https://github.com/GNS-Science/kororaa/pull/412)
- 
-## [v1.2.0](https://github.com/GNS-Science/kororaa/compare/v1.1.0...v1.2.0)
-
-### Merged
-
+- Fix/410 hazard tooltips [`#412`](https://github.com/GNS-Science/kororaa/pull/412)
 - move cypress fix to right test; [`#409`](https://github.com/GNS-Science/kororaa/pull/409)
 - Feature/406 hazard poe [`#408`](https://github.com/GNS-Science/kororaa/pull/408)
 - update hazard curve poe controls; [`#407`](https://github.com/GNS-Science/kororaa/pull/407)
@@ -29,6 +36,8 @@ All notable changes to this project will be documented in this file.
 - fix cypress tests; [`df848f7`](https://github.com/GNS-Science/kororaa/commit/df848f7a39b3a6e30364be33d04cb4d0431f4d71)
 - skip tests; [`8cc347a`](https://github.com/GNS-Science/kororaa/commit/8cc347a67680fa73efefbfa0850a18ab3ec19e58)
 - add tooltip to rupture map rate control; update mock for cypress; [`094a4ad`](https://github.com/GNS-Science/kororaa/commit/094a4ad10070f5cdaf02eea953f6cad93eb76110)
+
+## [v1.2.0](https://github.com/GNS-Science/kororaa/compare/v1.1.0...v1.2.0) - 2023-07-25
 
 ## [v1.1.0](https://github.com/GNS-Science/kororaa/compare/v1.0.7...v1.1.0) - 2023-07-25
 

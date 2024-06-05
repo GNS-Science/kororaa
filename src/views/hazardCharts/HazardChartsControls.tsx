@@ -46,7 +46,15 @@ import {
   getNamesFromLocationData,
   validateLatLon,
 } from "../../services/latLon/latLon.service";
-import { locationTooltip, tooManyCurves, latLonTooltip, noLocations, noVs30s, noImts } from "./constants/hazardCharts";
+import {
+  locationTooltip,
+  tooManyCurves,
+  latLonTooltip,
+  noLocations,
+  noVs30s,
+  noImts,
+  tooManyImts,
+} from "./constants/hazardCharts";
 import { imtTooltip, vs30Tooltip } from "../../constants/tooltips";
 
 interface HazardChartsControlsProps {
@@ -125,7 +133,7 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({
 
   const handleSubmit = async () => {
     try {
-      validatePoeValue(poeInput);
+      validatePoeValue(poeInput, setPoeInputError);
       validateLatLon(latLon);
       validateLocationData(locationData, setLocationError);
       validateVs30s(vs30s, setVs30Error);
@@ -153,6 +161,9 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({
         setVs30Error(true);
         setControlsErrorMessage(err as string);
       } else if (err === noImts) {
+        setImtError(true);
+        setControlsErrorMessage(err as string);
+      } else if (err === tooManyImts) {
         setImtError(true);
         setControlsErrorMessage(err as string);
       } else {

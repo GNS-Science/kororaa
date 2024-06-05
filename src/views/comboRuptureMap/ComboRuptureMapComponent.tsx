@@ -175,7 +175,7 @@ export const ComboRuptureMapComponent = (props: ComboRuptureMapComponentProps) =
   }, [data]);
 
   const timeDimensionLayerProps = {
-    geoJsonData: (ruptureData as typeof GeoJsonObject[]) || "",
+    geoJsonData: (ruptureData as (typeof GeoJsonObject)[]) || "",
     setTimeDimensionNeedsMore: setNeedsMore,
     setTimeDimensionHasNoMore: setHasNoMore,
     surfaceProperties: surfaceProperties || [],

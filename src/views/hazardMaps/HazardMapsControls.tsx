@@ -12,7 +12,6 @@ import {
   MAP_POES,
   MAP_STATISTICS,
   MAP_VS30S,
-  MAP_GRID_STYLE_DEFAULT,
   MAP_GRID_VMAX,
   MAP_GRID_STROKE_WIDTH,
   HAZARD_MODEL,
@@ -20,8 +19,9 @@ import {
 
 import StyledCSVLink from "../../components/common/StyledCSVLink";
 import { parsePoeString, readablePoe, readablePoeArray } from "./hazardMaps.service";
-import { statisticTooltip, gridStyleOptions, gridStyleTooltip } from "./constants/hazardMaps";
+import { statisticTooltip } from "./constants/hazardMaps";
 import { imtTooltip, poeTooltip, vs30Tooltip } from "../../constants/tooltips";
+import { SliderWithInput } from "../../components/common/SliderWithInput";
 
 const StyledButton = styled(Button)(() => ({
   margin: "0 0 0 10px",
@@ -47,9 +47,7 @@ const HazardMapsControls: React.FC<HazardMapsControlsProps> = ({
   const [vs30, setVs30] = useState<number>(state.vs30);
   const [poe, setPoe] = useState<number>(state.poe);
   const [colorScale, setColorScale] = useState<string>("inferno");
-  const [fillOpacity, setFillOpacity] = useState<string>("0.5");
-  const [strokeOpacity, setStrokeOpacity] = useState<string>("0.5");
-  const [gridStyle, setGridStyle] = useState<string>(MAP_GRID_STYLE_DEFAULT);
+  const [gridOpacity, setGridOpacity] = useState<number>(100);
   const [dataFetched, setDataFetched] = useState<boolean>(true);
   const [controlsChanged, setControlsChanged] = useState<number>(0);
 
@@ -59,17 +57,15 @@ const HazardMapsControls: React.FC<HazardMapsControlsProps> = ({
       setDataFetched(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [spectralPeriod, statistic, vs30, poe, gridStyle]);
+  }, [spectralPeriod, statistic, vs30, poe, gridOpacity]);
 
   useEffect(() => {
-    setFillOpacity(gridStyleOptions[gridStyle].opacity);
-    setStrokeOpacity(gridStyleOptions[gridStyle].strokeOpacity);
     if (statistic === "cov") {
       setColorScale("viridis");
     } else {
       setColorScale("inferno");
     }
-  }, [gridStyle, statistic]);
+  }, [statistic]);
 
   const handleSubmit = () => {
     setDataFetched(true);
@@ -81,9 +77,9 @@ const HazardMapsControls: React.FC<HazardMapsControlsProps> = ({
         poe: poe,
         color_scale: colorScale,
         color_scale_vmax: MAP_GRID_VMAX,
-        fill_opacity: Number(fillOpacity),
+        fill_opacity: Number(gridOpacity / 100),
         stroke_width: MAP_GRID_STROKE_WIDTH,
-        stroke_opacity: Number(strokeOpacity),
+        stroke_opacity: 0.0,
       });
     });
   };
@@ -132,12 +128,11 @@ const HazardMapsControls: React.FC<HazardMapsControlsProps> = ({
           setSelection={(newValue: string) => setPoe(parsePoeString(newValue))}
           tooltip={poeTooltip}
         />
-        <SelectControl
-          name="Grid Style"
-          options={Object.keys(gridStyleOptions)}
-          selection={gridStyle}
-          setSelection={setGridStyle}
-          tooltip={gridStyleTooltip}
+        <SliderWithInput
+          value={gridOpacity}
+          setValue={setGridOpacity}
+          label={"Grid Opacity"}
+          tooltipContent="Select an opacity for the hazard map layer"
         />
         <StyledButton disabled={isPending || dataFetched} variant="contained" type="submit" onClick={handleSubmit}>
           Submit

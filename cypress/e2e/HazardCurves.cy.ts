@@ -1,4 +1,3 @@
-/* eslint-disable cypress/no-unnecessary-waiting */
 /* eslint-disable cypress/unsafe-to-chain-command */
 describe("Hazard Curves", () => {
   before(() => {
@@ -41,24 +40,21 @@ describe("Hazard Curves", () => {
     cy.get("div").contains("PGA").click();
     cy.get('li[data-value="SA(0.1)"]').click();
     cy.get('li[data-value="SA(0.2)"]').click();
-    cy.get('li[data-value="SA(0.3)"]').click();
     cy.get("body").click();
     cy.get('[type="submit"]').click({ force: true });
-    cy.get('[role="curve"]').should("have.length", 20);
+    cy.get('[role="curve"]').should("have.length", 15);
   });
 
   it("Displays tooltips for all selected spectral periods", () => {
     cy.get('div[class="visx-legend-label"]').should("contain.text", "PGA");
     cy.get('div[class="visx-legend-label"]').should("contain.text", "SA(0.1)");
     cy.get('div[class="visx-legend-label"]').should("contain.text", "SA(0.2)");
-    cy.get('div[class="visx-legend-label"]').should("contain.text", "SA(0.3)");
   });
 
   it("Displays one curve after user deselects spectral periods", () => {
     cy.get("div").contains("Multiple selected").click({ force: true });
     cy.get('li[data-value="SA(0.1)"]').click();
     cy.get('li[data-value="SA(0.2)"]').click();
-    cy.get('li[data-value="SA(0.3)"]').click();
     cy.get("body").click();
     cy.get('[type="submit"]').click({ force: true });
     cy.get('[role="curve"]').should("have.length", 5);
