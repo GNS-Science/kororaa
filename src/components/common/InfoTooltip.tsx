@@ -3,7 +3,6 @@ import { styled } from "@mui/material/styles";
 import { Dialog, DialogContent, IconButton } from "@mui/material";
 import InfoIcon from "@mui/icons-material/Info";
 import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
 
 interface InfoTooltipProps {
   content: string;
@@ -60,15 +59,7 @@ export const InfoTooltip: React.FC<InfoTooltipProps> = ({ content, format }) => 
         open={open}
         onClose={handleClose}
       >
-        <DialogContent>
-          {format ? (
-            <ReactMarkdown linkTarget={"_blank"} remarkPlugins={[remarkGfm]}>
-              {content}
-            </ReactMarkdown>
-          ) : (
-            <p>{content}</p>
-          )}
-        </DialogContent>
+        <DialogContent>{format ? <ReactMarkdown>{content}</ReactMarkdown> : <p>{content}</p>}</DialogContent>
       </Dialog>
     </>
   );
