@@ -67,7 +67,7 @@ describe("Hazard Curves", () => {
     cy.get("li").contains("Christchurch").click({ force: true });
     cy.get("li").contains("Wellington").click({ force: true });
     cy.get(
-      '[class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-1x51dt5-MuiInputBase-input-MuiInput-input"]'
+      '[class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-1x51dt5-MuiInputBase-input-MuiInput-input"]',
     )
       .first()
       .type("-42, 173");
@@ -78,7 +78,7 @@ describe("Hazard Curves", () => {
 
   it("Displays error when user inputs invalid latlon value", () => {
     cy.get(
-      '[class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-1x51dt5-MuiInputBase-input-MuiInput-input"]'
+      '[class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-1x51dt5-MuiInputBase-input-MuiInput-input"]',
     )
       .first()
       .clear()
@@ -89,7 +89,7 @@ describe("Hazard Curves", () => {
 
   it.skip("Displays one curve and error when only one latlon is in data", () => {
     cy.get(
-      '[class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-1x51dt5-MuiInputBase-input-MuiInput-input"]'
+      '[class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-1x51dt5-MuiInputBase-input-MuiInput-input"]',
     )
       .first()
       .clear()
@@ -109,7 +109,7 @@ describe("Hazard Curves", () => {
 
   it.skip("When the save data button is clicked, a CSV file is downloaded", () => {
     cy.get(
-      'button[class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-9z10d6-MuiButtonBase-root-MuiIconButton-root"]'
+      'button[class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-9z10d6-MuiButtonBase-root-MuiIconButton-root"]',
     ).click();
     cy.get("li").contains("get CSV").click();
     cy.readFile("./hazard-curves.csv");

@@ -46,7 +46,7 @@ const HazardCharts: React.FC<HazardChartsProps> = ({ data, state, dispatch }: Ha
   const allCurveGroups = useMemo(() => getAllCurveGroups(data), [data]);
   const filteredCurveGroups = useMemo(
     () => getFilteredCurveGroups(allCurveGroups, state.imts),
-    [allCurveGroups, state.imts]
+    [allCurveGroups, state.imts],
   );
   const curveGroupWithColors = useMemo(() => addColorsToCurves(filteredCurveGroups), [filteredCurveGroups]);
   const sortedCurveGroup = useMemo(() => sortCurveGroups(curveGroupWithColors), [curveGroupWithColors]);
@@ -58,13 +58,13 @@ const HazardCharts: React.FC<HazardChartsProps> = ({ data, state, dispatch }: Ha
         data,
         state.poe,
         state.spectraXScale,
-        state.timePeriod
+        state.timePeriod,
       ),
-    [locationList, state, data]
+    [locationList, state, data],
   );
   const saCurvesWithColors = useMemo(
     () => addColorsToUHSCurves(saCurvesUncertainty, curveGroupWithColors),
-    [saCurvesUncertainty, curveGroupWithColors]
+    [saCurvesUncertainty, curveGroupWithColors],
   );
 
   addDashArrayToCurves(sortedCurveGroup);

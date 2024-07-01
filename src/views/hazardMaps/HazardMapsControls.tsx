@@ -143,7 +143,7 @@ const HazardMapsControls: React.FC<HazardMapsControlsProps> = ({
               state.vs30,
               state.spectralPeriod,
               readablePoe(state.poe),
-              state.statistic
+              state.statistic,
             )}
             filename="hazard-maps.csv"
           >

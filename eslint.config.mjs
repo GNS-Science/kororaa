@@ -24,8 +24,8 @@ export default [
       "plugin:@typescript-eslint/recommended",
       "plugin:react-hooks/recommended",
       "plugin:react/recommended",
-      "plugin:prettier/recommended"
-    )
+      "plugin:prettier/recommended",
+    ),
   ),
   {
     languageOptions: {

@@ -65,7 +65,7 @@ export const handlers = [
             },
           ],
         },
-      })
+      }),
     );
   }),
   graphql.query("HazardMapsPageQuery", (_req, res, ctx) => {
