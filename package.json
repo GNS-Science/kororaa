@@ -37,7 +37,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "lint": "eslint -c eslint.config.mjs . --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "relay": "relay-compiler",
     "test": "vitest",
@@ -74,6 +74,7 @@
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@eslint/compat": "^1.1.0",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^13.0.0",
     "@testing-library/user-event": "^14.0.4",
@@ -96,7 +97,7 @@
     "cypress": "^10.1.0",
     "cypress-localstorage-commands": "^2.1.0",
     "cypress-real-events": "^1.7.6",
-    "eslint": "^8.15.0",
+    "eslint": "^9.6.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-cypress": "^2.15.1",
     "eslint-plugin-prettier": "^4.0.0",

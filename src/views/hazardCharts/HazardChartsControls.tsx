@@ -102,7 +102,6 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({
     if (controlsChanged >= 2) {
       setDataFetched(false);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [locationData, latLon, vs30s, imts, poeInput, timePeriod]);
 
   const handleLatLonBlur = () => {

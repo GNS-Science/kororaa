@@ -284,7 +284,6 @@ const ComboRuptureMapControls: React.FC<ComboRuptureMapControlsProps> = ({
 
   useEffect(() => {
     dispatch({ ...mapViewControlsState });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mapViewControlsState]);
 
   return (
