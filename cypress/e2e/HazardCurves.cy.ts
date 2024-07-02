@@ -1,8 +1,17 @@
 /* eslint-disable cypress/unsafe-to-chain-command */
 describe("Hazard Curves", () => {
   before(() => {
+    // NB in cypress config we've set Pre 12 compatability
+    // https://docs.cypress.io/guides/references/migration-guide#Simulating-Pre-Test-Isolation-Behavior
+    cy.clearLocalStorage();
+    cy.clearCookies();
     cy.visit("/HazardCurves");
   });
+
+  // beforeEach(() => {
+  //   cy.clearLocalStorage()
+  //   cy.clearCookies()
+  // });
 
   it("Hits graphql with hazard curve query", () => {
     cy.get("button").contains("Accept").click();
@@ -15,22 +24,19 @@ describe("Hazard Curves", () => {
   it("Displays field error if invalid location coordinates are entered ", () => {
     cy.get(
       '[class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-1x51dt5-MuiInputBase-input-MuiInput-input"]',
-      )
+    )
       .first()
       .clear()
-      .type("-40, 181")
+      .type("-40, 181");
+
+    cy.get('p[id="lat-lon-component-helper-text"]').should("contain.text", "Invalid lat, lon input");
 
     cy.get(
-        'p[id="lat-lon-component-helper-text"]')
-      .should("contain.text", "Invalid lat, lon input");
-    
-     cy.get(
-        '[class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-1x51dt5-MuiInputBase-input-MuiInput-input"]',
-      )
-        .first()
-        .clear()
-    });
-
+      '[class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-1x51dt5-MuiInputBase-input-MuiInput-input"]',
+    )
+      .first()
+      .clear();
+  });
 
   it("Displays out of range error when POE over 100 or below 0 is selected", () => {
     cy.get('input[id="poe-input"]').type("1000");
@@ -103,17 +109,14 @@ describe("Hazard Curves", () => {
       .first()
       .clear()
       .type("-40, 180");
-    cy.get('[type="submit"]').click({ force: true })
-    
+    cy.get('[type="submit"]').click({ force: true });
+
     // get the plots view message
-    cy.get('div[role="plotsView"]')
-      .get('div[role="alert"]')
-      .should("contain.text", "Location not in data: -40, 180");
+    cy.get('div[role="plotsView"]').get('div[role="alert"]').should("contain.text", "Location not in data: -40, 180");
   });
 
   // MSW mocking required after here
   it.skip("Displays one curve and error when only one latlon is in data", () => {
-  
     cy.get(
       '[class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-1x51dt5-MuiInputBase-input-MuiInput-input"]',
     )
@@ -121,9 +124,7 @@ describe("Hazard Curves", () => {
       .clear()
       .type("-37.78, 175.28; -40, 180"); //Hamilton + non-location
     cy.get('[type="submit"]').click({ force: true });
-    cy.get('div[role="plotsView"]')
-      .get('div[role="alert"]')
-      .should("contain.text", "Location not in data: -40, 180");      
+    cy.get('div[role="plotsView"]').get('div[role="alert"]').should("contain.text", "Location not in data: -40, 180");
     cy.get('[role="curve"]').should("have.length", 5);
   });
 
