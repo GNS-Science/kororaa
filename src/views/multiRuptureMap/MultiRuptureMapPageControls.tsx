@@ -84,7 +84,7 @@ const MultiRuptureMapControls: React.FC<MultiRuptureMapControlsProps> = ({
         locationIdArray.push(
           locationDataItem && locationDataItem?.location_id !== null && locationDataItem?.location_id !== undefined
             ? locationDataItem?.location_id
-            : ""
+            : "",
         );
       });
       setLocationOptions(locationNameArray);

@@ -157,26 +157,26 @@ const ComboRuptureMapControls: React.FC<ComboRuptureMapControlsProps> = ({
 
   const faultsMarkdown = useMemo(
     () => data?.textual_content_faults?.content && data?.textual_content_faults?.content[0]?.text,
-    [data]
+    [data],
   );
   const locationsMarkdown = useMemo(
     () => data?.textual_content_locations?.content && data?.textual_content_locations?.content[0]?.text,
-    [data]
+    [data],
   );
   const animationMarkdown = useMemo(
     () => data?.textual_content_animation?.content && data?.textual_content_animation?.content[0]?.text,
-    [data]
+    [data],
   );
   const rateMarkdown = useMemo(
     () => data?.textual_content_rate?.content && data?.textual_content_rate?.content[0]?.text,
-    [data]
+    [data],
   );
   const parentFaultOptions: string[] = useMemo(
     () =>
       data?.SOLVIS_get_parent_fault_names
         ? data?.SOLVIS_get_parent_fault_names.filter((el) => el !== null && el !== undefined).map((el) => el as string)
         : [],
-    [data]
+    [data],
   );
 
   const sortByOptions = useMemo(
@@ -191,7 +191,7 @@ const ComboRuptureMapControls: React.FC<ComboRuptureMapControlsProps> = ({
       "Rate ↑ (minimum)",
       "Rate ↓ (minimum)",
     ],
-    []
+    [],
   );
   const sortByOptions2 = useMemo(() => sortByOptions.filter((option) => option !== sortBy1), [sortBy1, sortByOptions]);
 
@@ -219,7 +219,7 @@ const ComboRuptureMapControls: React.FC<ComboRuptureMapControlsProps> = ({
         locationIdArray.push(
           locationDataItem && locationDataItem?.location_id !== null && locationDataItem?.location_id !== undefined
             ? locationDataItem?.location_id
-            : ""
+            : "",
         );
       });
       setLocationOptions(locationNameArray.sort());
@@ -284,7 +284,6 @@ const ComboRuptureMapControls: React.FC<ComboRuptureMapControlsProps> = ({
 
   useEffect(() => {
     dispatch({ ...mapViewControlsState });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mapViewControlsState]);
 
   return (

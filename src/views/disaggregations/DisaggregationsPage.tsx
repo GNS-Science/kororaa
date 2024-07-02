@@ -54,7 +54,7 @@ export const DisaggregationsComponent: React.FC = () => {
   const markdown = useMemo(() => data?.textual_content?.content && data?.textual_content?.content[0]?.text, [data]);
   const content_type = useMemo(
     () => data?.textual_content?.content && data?.textual_content?.content[0]?.content_type,
-    [data]
+    [data],
   );
 
   return (

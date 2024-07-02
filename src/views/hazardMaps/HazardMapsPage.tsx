@@ -65,7 +65,7 @@ const HazardMapsComponent: React.FC = () => {
   const markdown = useMemo(() => data?.textual_content?.content && data?.textual_content?.content[0]?.text, [data]);
   const content_type = useMemo(
     () => data?.textual_content?.content && data?.textual_content?.content[0]?.content_type,
-    [data]
+    [data],
   );
   const geoJson = useMemo<string[]>(() => {
     if (data && data.gridded_hazard && data.gridded_hazard.gridded_hazard?.length) {
@@ -87,7 +87,7 @@ const HazardMapsComponent: React.FC = () => {
       return {
         levels:
           getTickValues(
-            data.gridded_hazard.gridded_hazard[0]?.hazard_map?.colour_scale?.levels.map((level) => Number(level))
+            data.gridded_hazard.gridded_hazard[0]?.hazard_map?.colour_scale?.levels.map((level) => Number(level)),
           ) ?? [],
         hexrgbs:
           data.gridded_hazard.gridded_hazard[0]?.hazard_map?.colour_scale?.hexrgbs.map((color) => color?.toString()) ??

@@ -37,7 +37,7 @@ export const getSpectralAccelUncertaintyCurves = (
   data: HazardChartsPlotsViewQuery$data,
   poe: number | undefined,
   scaleType: string,
-  timePeriod: number
+  timePeriod: number,
 ): UncertaintyChartData => {
   const saCurveGroups: UncertaintyChartData = {};
   poe &&
@@ -66,12 +66,12 @@ export const getSpectralAccelCurve = (
   data: HazardChartsPlotsViewQuery$data,
   poe: number,
   scaleType: string,
-  timePeriod: number
+  timePeriod: number,
 ) => {
   if (data.hazard_curves?.curves?.length) {
     const curves: Curves = data.hazard_curves?.curves?.filter(
       (curve) =>
-        curve !== null && curve?.vs30 === vs30 && curve?.loc === loc && convertAgg(curve?.agg as string) === curveType
+        curve !== null && curve?.vs30 === vs30 && curve?.loc === loc && convertAgg(curve?.agg as string) === curveType,
     );
     const saCurve = calculateSpectralAccelCurve(curves, poe, scaleType, timePeriod);
     const sortedCurve = saCurve.sort((a, b) => a[0] - b[0]);
@@ -84,7 +84,7 @@ export const calculateSpectralAccelCurve = (
   curves: Curves,
   poe: number,
   scaleType: string,
-  timePeriod: number
+  timePeriod: number,
 ): number[][] => {
   const data: number[][] = [];
   const yValue: number = -Math.log(1 - poe) / timePeriod;
@@ -134,7 +134,7 @@ export const calculateSpectralAccelCurve = (
 
 export const addColorsToUHSCurves = (
   curveGroups: UncertaintyChartData,
-  hazardCurveGroups: UncertaintyChartData
+  hazardCurveGroups: UncertaintyChartData,
 ): UncertaintyChartData => {
   const hazardCurveKeyObjects = Object.keys(hazardCurveGroups).map((key) => {
     const keyArray = key.split(" ");
@@ -201,7 +201,7 @@ export const tryParseLatLon = (loc: string): string[] => {
 export const getSpectralCSVData = (
   curves: UncertaintyChartData,
   poe: number | undefined,
-  timePeriod: number
+  timePeriod: number,
 ): string[][] => {
   const datetimeAndVersion = [
     `date-time: ${new Date().toLocaleString("en-GB", { timeZone: "UTC" })}, (UTC)`,
@@ -228,7 +228,7 @@ export const getSpectralCSVData = (
         csvData.push(curveCSVData);
       });
       return csvData;
-    })
+    }),
   );
   csvData.unshift(saHeaderArray);
   csvData.unshift(datetimeAndVersion);

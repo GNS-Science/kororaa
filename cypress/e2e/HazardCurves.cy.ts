@@ -1,8 +1,17 @@
 /* eslint-disable cypress/unsafe-to-chain-command */
 describe("Hazard Curves", () => {
   before(() => {
+    // NB in cypress config we've set Pre 12 compatability
+    // https://docs.cypress.io/guides/references/migration-guide#Simulating-Pre-Test-Isolation-Behavior
+    cy.clearLocalStorage();
+    cy.clearCookies();
     cy.visit("/HazardCurves");
   });
+
+  // beforeEach(() => {
+  //   cy.clearLocalStorage()
+  //   cy.clearCookies()
+  // });
 
   it("Hits graphql with hazard curve query", () => {
     cy.get("button").contains("Accept").click();
@@ -10,6 +19,23 @@ describe("Hazard Curves", () => {
 
   it("Displays inital charts when first visiting page", () => {
     cy.get('[role="curve"]').should("have.length", 10);
+  });
+
+  it("Displays field error if invalid location coordinates are entered ", () => {
+    cy.get(
+      '[class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-1x51dt5-MuiInputBase-input-MuiInput-input"]',
+    )
+      .first()
+      .clear()
+      .type("-40, 181");
+
+    cy.get('p[id="lat-lon-component-helper-text"]').should("contain.text", "Invalid lat, lon input");
+
+    cy.get(
+      '[class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-1x51dt5-MuiInputBase-input-MuiInput-input"]',
+    )
+      .first()
+      .clear();
   });
 
   it("Displays out of range error when POE over 100 or below 0 is selected", () => {
@@ -67,35 +93,38 @@ describe("Hazard Curves", () => {
     cy.get("li").contains("Christchurch").click({ force: true });
     cy.get("li").contains("Wellington").click({ force: true });
     cy.get(
-      '[class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-1x51dt5-MuiInputBase-input-MuiInput-input"]'
+      '[class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-1x51dt5-MuiInputBase-input-MuiInput-input"]',
     )
       .first()
-      .type("-42, 173");
+      .type("-42, 173"); // MSW returns a single curve
     cy.get('[type="submit"]').click({ force: true });
     cy.get('[role="curve"]').should("have.length", 10);
     cy.get('div[class="visx-legend-label"]').should("contain.text", "400m/s PGA -42.0, 173.0");
   });
 
-  it("Displays error when user inputs invalid latlon value", () => {
+  it("Displays error on chart if some location data is missing", () => {
     cy.get(
-      '[class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-1x51dt5-MuiInputBase-input-MuiInput-input"]'
+      '[class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-1x51dt5-MuiInputBase-input-MuiInput-input"]',
     )
       .first()
       .clear()
       .type("-40, 180");
     cy.get('[type="submit"]').click({ force: true });
-    cy.get("div").contains("Location not in data: -40, 180");
+
+    // get the plots view message
+    cy.get('div[role="plotsView"]').get('div[role="alert"]').should("contain.text", "Location not in data: -40, 180");
   });
 
+  // MSW mocking required after here
   it.skip("Displays one curve and error when only one latlon is in data", () => {
     cy.get(
-      '[class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-1x51dt5-MuiInputBase-input-MuiInput-input"]'
+      '[class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-1x51dt5-MuiInputBase-input-MuiInput-input"]',
     )
       .first()
       .clear()
-      .type("-37.78, 175.28; -40, 180");
+      .type("-37.78, 175.28; -40, 180"); //Hamilton + non-location
     cy.get('[type="submit"]').click({ force: true });
-    cy.get("div").contains("Location not in data: -40, 180");
+    cy.get('div[role="plotsView"]').get('div[role="alert"]').should("contain.text", "Location not in data: -40, 180");
     cy.get('[role="curve"]').should("have.length", 5);
   });
 
@@ -109,7 +138,7 @@ describe("Hazard Curves", () => {
 
   it.skip("When the save data button is clicked, a CSV file is downloaded", () => {
     cy.get(
-      'button[class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-9z10d6-MuiButtonBase-root-MuiIconButton-root"]'
+      'button[class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-9z10d6-MuiButtonBase-root-MuiIconButton-root"]',
     ).click();
     cy.get("li").contains("get CSV").click();
     cy.readFile("./hazard-curves.csv");

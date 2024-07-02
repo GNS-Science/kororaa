@@ -25,7 +25,7 @@ const RuptureInfoBox = (props: RuptureInfoBoxProps) => {
   const { timeDimensionTotalLength, surfaceProperties, mapControlsState } = props;
   const context = useContext(TimeDimensionLayerContext);
   const sortByStringArray = mapControlsState.sortby?.map(
-    (sort) => sort?.attribute.replaceAll("_", " ") + " " + (sort?.ascending ? "ascending" : "descending")
+    (sort) => sort?.attribute.replaceAll("_", " ") + " " + (sort?.ascending ? "ascending" : "descending"),
   );
   const sortByJoinedString = sortByStringArray?.join(", ");
   return (
@@ -93,11 +93,11 @@ const ComboInfoPanelComponent = (props: ComboInfoPanelComponentProps) => {
       return {
         levels:
           queryData?.SOLVIS_filter_rupture_sections?.color_scale?.color_map?.levels.map((level) =>
-            level?.toExponential(0)
+            level?.toExponential(0),
           ) ?? [],
         hexrgbs:
           queryData?.SOLVIS_filter_rupture_sections?.color_scale?.color_map?.hexrgbs.map((color) =>
-            color?.toString()
+            color?.toString(),
           ) ?? [],
       };
     }

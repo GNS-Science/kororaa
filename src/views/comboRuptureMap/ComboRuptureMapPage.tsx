@@ -52,11 +52,11 @@ export const ComboRuptureMap: React.FC = () => {
 
   const headerMarkdown = useMemo(
     () => initialData?.textual_content_header?.content && initialData?.textual_content_header?.content[0]?.text,
-    [initialData]
+    [initialData],
   );
   const headerContentType = useMemo(
     () => initialData?.textual_content_header?.content && initialData?.textual_content_header?.content[0]?.content_type,
-    [initialData]
+    [initialData],
   );
 
   useEffect(() => {

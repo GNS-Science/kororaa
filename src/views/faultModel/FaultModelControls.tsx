@@ -101,7 +101,7 @@ const FaultModelControls: React.FC<FaultModelControlsProps> = ({
   const faultSystemBranches =
     data?.nzshm_model?.model?.source_logic_tree_spec?.fault_system_branches &&
     data?.nzshm_model?.model?.source_logic_tree_spec?.fault_system_branches.filter(
-      (branch) => branch && branch?.short_name === "CRU"
+      (branch) => branch && branch?.short_name === "CRU",
     )[0]?.branches;
 
   const options = faultSystemBranches?.map((branch) => {
@@ -113,14 +113,14 @@ const FaultModelControls: React.FC<FaultModelControlsProps> = ({
   });
 
   const logicTreeBranches = data?.nzshm_model?.model?.source_logic_tree?.fault_system_branches?.filter(
-    (branch) => branch && branch?.short_name === "CRU"
+    (branch) => branch && branch?.short_name === "CRU",
   )[0];
   const deformationModelOptions = JSON.parse(options?.filter((option) => option.value === "dm")?.[0]?.value_options);
   const timeDependenceOptions = JSON.parse(options?.filter((option) => option.value === "td")?.[0]?.value_options).map(
-    (option: boolean) => (option ? "Time Dependent" : "Time Independent")
+    (option: boolean) => (option ? "Time Dependent" : "Time Independent"),
   );
   const bNPairOptions = JSON.parse(options?.filter((option) => option.value === "bN")?.[0]?.value_options).map(
-    (option: string[]) => option[0]
+    (option: string[]) => option[0],
   );
   const momentRateScalingOptions = JSON.parse(options?.filter((option) => option.value === "s")?.[0]?.value_options);
 
@@ -138,7 +138,7 @@ const FaultModelControls: React.FC<FaultModelControlsProps> = ({
         locationIdArray.push(
           locationDataItem && locationDataItem?.location_id !== null && locationDataItem?.location_id !== undefined
             ? locationDataItem?.location_id
-            : ""
+            : "",
         );
       });
       setLocationOptions(locationNameArray);
@@ -179,24 +179,24 @@ const FaultModelControls: React.FC<FaultModelControlsProps> = ({
             (branch) =>
               branch !== null &&
               JSON.parse(branch?.values?.find((value) => value?.long_name === "deformation model")?.json_value) ===
-                deformationModel
+                deformationModel,
           )
           .filter(
             (branch) =>
               branch !== null &&
               JSON.parse(branch?.values?.find((value) => value?.long_name === "time dependent")?.json_value) ===
-                (timeDependence === "Time Dependent")
+                (timeDependence === "Time Dependent"),
           )
           .filter(
             (branch) =>
               branch !== null &&
-              JSON.parse(branch?.values?.find((value) => value?.long_name === "bN pair")?.json_value)[0] === bNPair
+              JSON.parse(branch?.values?.find((value) => value?.long_name === "bN pair")?.json_value)[0] === bNPair,
           )
           .filter(
             (branch) =>
               branch !== null &&
               JSON.parse(branch?.values?.find((value) => value?.long_name === "moment rate scaling")?.json_value) ===
-                momentScaling
+                momentScaling,
           );
         return filteredBranches;
       }

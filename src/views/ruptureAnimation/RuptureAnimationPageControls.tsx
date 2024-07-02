@@ -88,7 +88,7 @@ const RuptureAnimationControls: React.FC<RuptureAnimationControlsProps> = ({
   const radiiData = data?.SOLVIS_get_radii_set?.radii;
   const sortByOptions = useMemo(
     () => ["Unsorted", "Magnitude", "Rate (weighted mean)", "Rate (maximum)", "Rate (minimum)"],
-    []
+    [],
   );
   const sortByOptions2 = useMemo(() => sortByOptions.filter((option) => option !== sortBy1), [sortBy1, sortByOptions]);
 
@@ -116,7 +116,7 @@ const RuptureAnimationControls: React.FC<RuptureAnimationControlsProps> = ({
         locationIdArray.push(
           locationDataItem && locationDataItem?.location_id !== null && locationDataItem?.location_id !== undefined
             ? locationDataItem?.location_id
-            : ""
+            : "",
         );
       });
       setLocationOptions(locationNameArray);

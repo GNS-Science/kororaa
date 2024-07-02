@@ -8,8 +8,8 @@ export const getLocationOptions = (data: DisaggregationsPageQuery$data): (string
         if (report && report?.location && report?.location !== undefined) {
           return report.location.name || "";
         }
-      })
-    )
+      }),
+    ),
   );
 };
 
@@ -20,8 +20,8 @@ export const getPoeOptions = (data: DisaggregationsPageQuery$data): (number | un
         if (report && report?.poe && report?.poe !== undefined) {
           return report.poe;
         }
-      })
-    )
+      }),
+    ),
   );
 };
 
@@ -32,8 +32,8 @@ export const getImtOptions = (data: DisaggregationsPageQuery$data): (string | un
         if (report && report?.imt && report?.imt !== undefined) {
           return report.imt;
         }
-      })
-    )
+      }),
+    ),
   );
 };
 
@@ -44,8 +44,8 @@ export const getVs30Options = (data: DisaggregationsPageQuery$data): (number | u
         if (report && report?.vs30 && report?.vs30 !== undefined) {
           return report.vs30;
         }
-      })
-    )
+      }),
+    ),
   );
 };
 

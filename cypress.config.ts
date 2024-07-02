@@ -8,5 +8,6 @@ export default defineConfig({
     },
     baseUrl: "http://localhost:5173",
     excludeSpecPattern: ["./cypress/e2e/FaultModel.cy.ts"],
+    testIsolation: false, // our e2e tests are setup assuming no isolation
   },
 });

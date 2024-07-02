@@ -1,5 +1,9 @@
 describe("HazardMapsPage", () => {
   before(() => {
+    // NB in cypress config we've set Pre 12 compatability
+    // https://docs.cypress.io/guides/references/migration-guide#Simulating-Pre-Test-Isolation-Behavior
+    cy.clearLocalStorage();
+    cy.clearCookies();
     cy.visit("/HazardMaps");
   });
 

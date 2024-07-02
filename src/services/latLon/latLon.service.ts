@@ -56,6 +56,8 @@ export const getLatLonString = (locations: LocationData[]): string => {
 
 export const getLatLonArray = (locations: LocationData[]): string[] => {
   const latLonArray = locations.map((location) => `${location.lat}~${location.lon}`);
+  // helpful for MSW mock configuration ..
+  // console.log("latLonArray => ", latLonArray)
   return latLonArray;
 };
 
