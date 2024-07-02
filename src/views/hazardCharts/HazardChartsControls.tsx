@@ -105,7 +105,7 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({
   }, [locationData, latLon, vs30s, imts, poeInput, timePeriod]);
 
   const handleLatLonBlur = () => {
-    console.log("handleLatLonBlur ", latLon);
+    // console.log("handleLatLonBlur ", latLon);
     try {
       validateLatLon(latLon);
       setLatLonError(false);
@@ -121,7 +121,7 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({
   });
 
   const handleLatLonChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log("handleLatLonChange event", event.target.value);
+    // console.log("handleLatLonChange event", event.target.value);
     setLatLon(event.target.value);
     try {
       validateLatLon(event.target.value);
@@ -142,7 +142,7 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({
   };
 
   const handleSubmit = async () => {
-    console.log("handleSubmit event latlon:", latLon, locationData);
+    // console.log("handleSubmit event latlon:", latLon, locationData);
     try {
       setControlsError(false);
       // setControlsErrorMessage("")
@@ -161,7 +161,7 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({
         timePeriod,
       });
     } catch (err) {
-      console.log("Error", err);
+      // console.log("Error", err);
       if (err === "Invalid lat, lon input") {
         // setLatLonError(true);
         // setLatLonErrorMessage(err as string);
@@ -186,8 +186,8 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({
         setPoeInputError(true);
         setPoeInputErrorMessage(err as string);
       }
-      console.log("controlsErrorMessage", controlsErrorMessage);
-      console.log(controlsError, locationError, vs30Error, imtError, latLonError);
+      // console.log("controlsErrorMessage", controlsErrorMessage);
+      // console.log(controlsError, locationError, vs30Error, imtError, latLonError);
     }
   };
 
