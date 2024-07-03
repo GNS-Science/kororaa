@@ -102,11 +102,11 @@ export const MultiRuptureMapComponent: React.FC<Props> = (props: Props) => {
       return {
         levels:
           queryData?.SOLVIS_filter_rupture_sections?.color_scale?.color_map?.levels.map((level) =>
-            level?.toExponential(0)
+            level?.toExponential(0),
           ) ?? [],
         hexrgbs:
           queryData?.SOLVIS_filter_rupture_sections?.color_scale?.color_map?.hexrgbs.map((color) =>
-            color?.toString()
+            color?.toString(),
           ) ?? [],
       };
     }

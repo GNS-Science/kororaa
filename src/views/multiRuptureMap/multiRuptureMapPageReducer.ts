@@ -16,7 +16,7 @@ export const multiRuptureMapPageReducerInitialState: MultiRuptureMapPageState = 
 
 export const multiRuptureMapPageReducer = (
   state: MultiRuptureMapPageState,
-  newState: Partial<MultiRuptureMapPageState>
+  newState: Partial<MultiRuptureMapPageState>,
 ) => {
   return {
     ...state,

@@ -21,7 +21,7 @@ interface FaultModelTableContainerProps {
 }
 
 export const FaultModelTableContainer: React.FC<FaultModelTableContainerProps> = (
-  props: FaultModelTableContainerProps
+  props: FaultModelTableContainerProps,
 ) => {
   const [expanded, setExpanded] = React.useState<boolean>(false);
   const handleClick = () => {

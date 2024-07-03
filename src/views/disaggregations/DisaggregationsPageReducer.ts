@@ -16,7 +16,7 @@ export const disaggregationsPageReducerInitialState: DisaggregationsPageState = 
 
 export const disaggregationsPageReducer = (
   state: DisaggregationsPageState,
-  newState: Partial<DisaggregationsPageState>
+  newState: Partial<DisaggregationsPageState>,
 ) => {
   return {
     ...state,

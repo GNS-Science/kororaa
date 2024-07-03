@@ -42,13 +42,13 @@ const HazardChartsSettings: React.FC<HazardChartsSettingsProps> = ({
         data,
         state.poe,
         state.spectraXScale,
-        state.timePeriod
+        state.timePeriod,
       ),
-    [locationList, state, data]
+    [locationList, state, data],
   );
   const saCSVData = useMemo(
     () => getSpectralCSVData(saCurves, state.poe, state.timePeriod),
-    [saCurves, state.poe, state.timePeriod]
+    [saCurves, state.poe, state.timePeriod],
   );
 
   const open = Boolean(anchorEl);
