@@ -222,7 +222,7 @@ export const getSpectralCSVData = (
         curveCSVData.push(convertAgg(value[0]));
         if (value) {
           value[1].data.forEach((point) => {
-            curveCSVData.push(point[1].toFixed(2).toString());
+            curveCSVData.push(point[1].toPrecision(4).toString());
           });
         }
         csvData.push(curveCSVData);
