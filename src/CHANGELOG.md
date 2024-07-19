@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v1.2.5](https://github.com/GNS-Science/kororaa/compare/v1.2.4...v1.2.5) - 2024-07-19
+
+### Changed
+ - higher floating point precision for csv files of hazard curves and UHS
+
+
 ## [v1.2.4](https://github.com/GNS-Science/kororaa/compare/v1.2.3...v1.2.4) - 2024-07-02
 
 ### Changed
