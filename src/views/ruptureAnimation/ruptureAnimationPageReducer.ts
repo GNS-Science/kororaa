@@ -26,7 +26,7 @@ export const ruptureAnimationPageReducerInitialState: RuptureAnimationPageState 
 
 export const ruptureAnimationPageReducer = (
   state: RuptureAnimationPageState,
-  newState: Partial<RuptureAnimationPageState>
+  newState: Partial<RuptureAnimationPageState>,
 ) => {
   return {
     ...state,

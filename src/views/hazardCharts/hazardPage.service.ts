@@ -84,7 +84,7 @@ export const getAllCurveGroups = (data: HazardChartsPlotsViewQuery$data): Hazard
 
 export const getFilteredCurveGroups = (
   curveGroups: HazardUncertaintyChartData,
-  imts: string[]
+  imts: string[],
 ): HazardUncertaintyChartData => {
   const filteredCurveGroups: HazardUncertaintyChartData = {};
 
@@ -138,7 +138,7 @@ export const getHazardCSVData = (data: HazardChartsPlotsViewQuery$data): string[
           }
         }
         return 0;
-      })
+      }),
     )
     .flat();
 
@@ -152,7 +152,7 @@ export const getHazardCSVData = (data: HazardChartsPlotsViewQuery$data): string[
       const curveCSVData = [latLonArray[0], latLonArray[1], curve?.vs30.toString(), curve?.imt, curve?.agg];
       curve?.curve?.values.forEach((value) => {
         if (value) {
-          curveCSVData.push(value.toFixed(6).toString());
+          curveCSVData.push(value.toPrecision(6).toString());
         }
       });
       return curveCSVData;
@@ -302,14 +302,17 @@ export const getCurveKeyObjects = (data: HazardUncertaintyChartData): CurveKeyOb
 };
 
 export const groupByLocationAndVs30 = (objects: CurveKeyObject[]): Record<string, CurveKeyObject[]> => {
-  return objects.reduce((acc, obj) => {
-    const key = `${obj.location} ${obj.vs30}`;
-    if (!acc[key]) {
-      acc[key] = [];
-    }
-    acc[key].push(obj);
-    return acc;
-  }, {} as Record<string, CurveKeyObject[]>);
+  return objects.reduce(
+    (acc, obj) => {
+      const key = `${obj.location} ${obj.vs30}`;
+      if (!acc[key]) {
+        acc[key] = [];
+      }
+      acc[key].push(obj);
+      return acc;
+    },
+    {} as Record<string, CurveKeyObject[]>,
+  );
 };
 
 export const addColorsToCurves = (data: HazardUncertaintyChartData): HazardUncertaintyChartData => {
@@ -357,7 +360,7 @@ export const addDashArrayToCurves = (data: HazardUncertaintyChartData): HazardUn
 
 export const validateLocationData = (
   locationData: LocationData[],
-  setLocationError: React.Dispatch<React.SetStateAction<boolean>>
+  setLocationError: React.Dispatch<React.SetStateAction<boolean>>,
 ) => {
   if (locationData.length === 0) {
     throw noLocations;

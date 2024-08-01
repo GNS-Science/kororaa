@@ -195,7 +195,6 @@ export const RuptureAnimationPaginationComponent: React.FC<Props> = (props: Prop
           timeDimension={true}
           timeDimensionOptions={timeDimensionOptions}
           timeDimensionControlOptions={timeDimensionControlOptions}
-          // eslint-disable-next-line prettier/prettier
           timeDimensionGeoJsonData={(ruptureData as (typeof GeoJsonObject)[]) || ""}
           timeDimensionLayerProps={timeDimensionLayerProps}
           //timeDimensionUnderlay={'' as unknown as typeof GeoJsonObject}

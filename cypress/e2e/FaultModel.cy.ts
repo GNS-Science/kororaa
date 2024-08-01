@@ -34,7 +34,7 @@ describe.skip("Fault Model all locations", () => {
     cy.get("button").contains("Show").click({ force: true });
     cy.get('[class="MuiTablePagination-displayedRows css-levciy-MuiTablePagination-displayedRows"]').should(
       "contain",
-      "1–100 of 2099"
+      "1–100 of 2099",
     );
   });
 });
@@ -71,7 +71,7 @@ describe("Fault Model wellington", () => {
     cy.get("button").contains("Show").click({ force: true });
     cy.get('[class="MuiTablePagination-displayedRows css-levciy-MuiTablePagination-displayedRows"]').should(
       "contain",
-      "1–100 of 875"
+      "1–100 of 875",
     );
   });
 });

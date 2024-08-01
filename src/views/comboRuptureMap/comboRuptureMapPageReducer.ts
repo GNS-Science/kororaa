@@ -36,7 +36,7 @@ export const comboRuptureMapPageReducerInitialState: ComboRuptureMapPageState = 
 
 export const comboRuptureMapPageReducer = (
   state: ComboRuptureMapPageState,
-  newState: Partial<ComboRuptureMapPageState>
+  newState: Partial<ComboRuptureMapPageState>,
 ) => {
   return {
     ...state,

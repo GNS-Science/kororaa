@@ -56,7 +56,6 @@ const HazardMapsControls: React.FC<HazardMapsControlsProps> = ({
     if (controlsChanged >= 1) {
       setDataFetched(false);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [spectralPeriod, statistic, vs30, poe, gridOpacity]);
 
   useEffect(() => {
@@ -144,7 +143,7 @@ const HazardMapsControls: React.FC<HazardMapsControlsProps> = ({
               state.vs30,
               state.spectralPeriod,
               readablePoe(state.poe),
-              state.statistic
+              state.statistic,
             )}
             filename="hazard-maps.csv"
           >

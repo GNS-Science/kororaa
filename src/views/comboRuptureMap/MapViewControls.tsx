@@ -48,7 +48,6 @@ const MapViewControls: React.FC<MapViewControlsProps> = ({ initState, onHandleCh
       showMfd: showMfdChecked,
       showTraceLegend: showTraceLegendChecked,
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [showSurfacesChecked, showAnimationChecked, showMfdChecked, showTraceLegendChecked]);
 
   return (

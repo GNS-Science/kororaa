@@ -1,5 +1,9 @@
 describe("ComboRuptureMapPage", () => {
   before(() => {
+    // NB in cypress config we've set Pre 12 compatability
+    // https://docs.cypress.io/guides/references/migration-guide#Simulating-Pre-Test-Isolation-Behavior
+    cy.clearLocalStorage();
+    cy.clearCookies();
     cy.visit("/RuptureMap");
   });
 
@@ -48,14 +52,14 @@ describe("ComboRuptureMapPage", () => {
   });
 
   it("Map renders", () => {
-    cy.get("button").contains("Accept").click({ force: true });
+    // cy.get("button").contains("Accept").click({ force: true });
     cy.get('[id="leaflet-map-container"]').should("exist");
   });
 
   it("Displays geojson when selected", () => {
     cy.get('[data-testid="ChevronRightIcon"]').click({ force: true });
     cy.get(
-      '[class="MuiSelect-select MuiSelect-standard MuiInputBase-input MuiInput-input css-1rxz5jq-MuiSelect-select-MuiInputBase-input-MuiInput-input"]'
+      '[class="MuiSelect-select MuiSelect-standard MuiInputBase-input MuiInput-input css-1rxz5jq-MuiSelect-select-MuiInputBase-input-MuiInput-input"]',
     )
       .first()
       .click({ force: true });

@@ -78,7 +78,7 @@ const ScienceReportCard: React.FC<IScienceReportCardProps> = ({ report }: IScien
 const ScienceReportsComponent: React.FC = () => {
   const data = useLazyLoadQuery<ScienceReportsPageQuery>(scienceReportsPageQuery, {});
   const published = data?.science_reports?.reports?.filter(
-    (report) => report?.status === "Published" && report?.filename
+    (report) => report?.status === "Published" && report?.filename,
   );
   // const reviewing = data?.science_reports?.reports?.filter((report) => report?.status === 'Review');
 

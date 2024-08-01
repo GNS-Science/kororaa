@@ -102,13 +102,14 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({
     if (controlsChanged >= 2) {
       setDataFetched(false);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [locationData, latLon, vs30s, imts, poeInput, timePeriod]);
 
   const handleLatLonBlur = () => {
+    // console.log("handleLatLonBlur ", latLon);
     try {
       validateLatLon(latLon);
       setLatLonError(false);
+      setLatLonErrorMessage("");
     } catch (err) {
       setLatLonError(true);
       setLatLonErrorMessage(err as string);
@@ -120,8 +121,17 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({
   });
 
   const handleLatLonChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    // console.log("handleLatLonChange event", event.target.value);
     setLatLon(event.target.value);
-    setLatLonError(validateLatLon(event.target.value));
+    try {
+      validateLatLon(event.target.value);
+      setLatLonError(false);
+      setLatLonErrorMessage("");
+    } catch (err) {
+      // console.log("handleLatLonChange Error", err)
+      setLatLonError(true);
+      setLatLonErrorMessage(err as string);
+    }
   };
 
   const handleLocationChange = (_: unknown, newValue: string[] | null) => {
@@ -132,7 +142,10 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({
   };
 
   const handleSubmit = async () => {
+    // console.log("handleSubmit event latlon:", latLon, locationData);
     try {
+      setControlsError(false);
+      // setControlsErrorMessage("")
       validatePoeValue(poeInput, setPoeInputError);
       validateLatLon(latLon);
       validateLocationData(locationData, setLocationError);
@@ -148,9 +161,12 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({
         timePeriod,
       });
     } catch (err) {
+      // console.log("Error", err);
       if (err === "Invalid lat, lon input") {
-        setLatLonError(true);
-        setLatLonErrorMessage(err as string);
+        // setLatLonError(true);
+        // setLatLonErrorMessage(err as string);
+        setControlsError(true);
+        setControlsErrorMessage(err as string);
       } else if (err === tooManyCurves) {
         setControlsError(true);
         setControlsErrorMessage(err as string);
@@ -170,6 +186,8 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({
         setPoeInputError(true);
         setPoeInputErrorMessage(err as string);
       }
+      // console.log("controlsErrorMessage", controlsErrorMessage);
+      // console.log(controlsError, locationError, vs30Error, imtError, latLonError);
     }
   };
 
@@ -215,7 +233,7 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({
         />
         <FormControl sx={{ width: 200 }} variant="standard">
           <Tooltip title={latLonTooltip} arrow placement="top">
-            <InputLabel shrink={true} htmlFor="component-helper">
+            <InputLabel shrink={true} htmlFor="lat-lon-component-helper">
               Coordinates (lat, lon)
             </InputLabel>
           </Tooltip>
@@ -225,7 +243,7 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({
             value={latLon}
             onChange={handleLatLonChange}
             onBlurCapture={handleLatLonBlur}
-            aria-describedby="component-helper-text"
+            aria-describedby="lat-lon-component-helper-text"
             endAdornment={
               <InputAdornment position="end" onClick={() => setLatLon("")}>
                 <IconButton>
@@ -234,7 +252,7 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({
               </InputAdornment>
             }
           />
-          {latLonError && <FormHelperText id="component-helper-text">{latLonErrorMessage}</FormHelperText>}
+          {latLonError && <FormHelperText id="lat-lon-component-helper-text">{latLonErrorMessage}</FormHelperText>}
         </FormControl>
         <FormControl sx={{ width: 200 }} variant="standard">
           <SelectControlMultiple
