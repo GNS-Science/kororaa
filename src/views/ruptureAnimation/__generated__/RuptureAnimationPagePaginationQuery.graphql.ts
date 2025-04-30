@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2a4c105deab57d484ecb8dae8aafa3b2>>
+ * @generated SignedSource<<c6c61b12f971de3463b22c9d44ea0ec7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -166,6 +166,13 @@ return {
                     "alias": null,
                     "args": null,
                     "kind": "ScalarField",
+                    "name": "rupture_index",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
                     "name": "fault_surfaces",
                     "storageKey": null
                   },
@@ -242,16 +249,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "687a3366bc7f896dfb93bdd4685d2b28",
+    "cacheID": "d717e40f8e5a72ec28d62c0ffb6e017b",
     "id": null,
     "metadata": {},
     "name": "RuptureAnimationPagePaginationQuery",
     "operationKind": "query",
-    "text": "query RuptureAnimationPagePaginationQuery(\n  $after: String\n  $filter: FilterRupturesArgsInput!\n  $first: Int = 5\n  $sortby: [SimpleSortRupturesArgs]\n) {\n  ...RuptureAnimationPage_queryRoot_108mgy\n}\n\nfragment RuptureAnimationPage_queryRoot_108mgy on Query {\n  SOLVIS_filter_ruptures(first: $first, after: $after, filter: $filter, sortby: $sortby) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    edges {\n      node {\n        fault_surfaces\n        magnitude\n        rate_weighted_mean\n        area\n        length\n        id\n        __typename\n      }\n      cursor\n    }\n  }\n}\n"
+    "text": "query RuptureAnimationPagePaginationQuery(\n  $after: String\n  $filter: FilterRupturesArgsInput!\n  $first: Int = 5\n  $sortby: [SimpleSortRupturesArgs]\n) {\n  ...RuptureAnimationPage_queryRoot_108mgy\n}\n\nfragment RuptureAnimationPage_queryRoot_108mgy on Query {\n  SOLVIS_filter_ruptures(first: $first, after: $after, filter: $filter, sortby: $sortby) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    edges {\n      node {\n        rupture_index\n        fault_surfaces\n        magnitude\n        rate_weighted_mean\n        area\n        length\n        id\n        __typename\n      }\n      cursor\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "7fc988ec6e6bf303e320ece385bbce4a";
+(node as any).hash = "e49092cd51e40628d741e2b28a9ed44d";
 
 export default node;

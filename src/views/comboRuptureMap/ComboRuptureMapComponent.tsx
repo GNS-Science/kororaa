@@ -170,6 +170,7 @@ export const ComboRuptureMapComponent = (props: ComboRuptureMapComponentProps) =
         area: edge?.node?.area,
         length: edge?.node?.length,
         rate_weighted_mean: edge?.node?.rate_weighted_mean,
+        rupture_index: edge?.node?.rupture_index,
       };
     });
   }, [data]);
@@ -192,30 +193,28 @@ export const ComboRuptureMapComponent = (props: ComboRuptureMapComponentProps) =
   };
 
   return (
-    <>
-      <React.Suspense fallback={<SimpleBackdrop />}>
-        {isPending && <SimpleBackdrop />}
-        <TimeDimensionLayerContext.Provider value={timeDimensionLayerState}>
-          <GlobalStyles styles={{ ".leaflet-popup-content p": { margin: "0" } }} />
-          <LeafletMap
-            zoom={zoom}
-            zoomLevel={zoomLevel}
-            setZoomLevel={setZoomLevel}
-            nzCentre={nzCentre as typeof LatLngExpression}
-            geoJsonData={geoJson}
-            height={"80vh"}
-            width={"100%"}
-            setFullscreen={setFullscreen}
-            onEachFeature={onEachFeature}
-            timeDimension={true}
-            timeDimensionOptions={timeDimensionOptions}
-            timeDimensionControlOptions={timeDimensionControlOptions}
-            timeDimensionLayerProps={timeDimensionLayerProps}
-          />
-          <ComboInfoPanelComponent {...comboInfoPanelComponentProps} />
-        </TimeDimensionLayerContext.Provider>
-      </React.Suspense>
-    </>
+    <React.Suspense fallback={<SimpleBackdrop />}>
+      {isPending && <SimpleBackdrop />}
+      <TimeDimensionLayerContext.Provider value={timeDimensionLayerState}>
+        <GlobalStyles styles={{ ".leaflet-popup-content p": { margin: "0" } }} />
+        <LeafletMap
+          zoom={zoom}
+          zoomLevel={zoomLevel}
+          setZoomLevel={setZoomLevel}
+          nzCentre={nzCentre as typeof LatLngExpression}
+          geoJsonData={geoJson}
+          height={"80vh"}
+          width={"100%"}
+          setFullscreen={setFullscreen}
+          onEachFeature={onEachFeature}
+          timeDimension={true}
+          timeDimensionOptions={timeDimensionOptions}
+          timeDimensionControlOptions={timeDimensionControlOptions}
+          timeDimensionLayerProps={timeDimensionLayerProps}
+        />
+        <ComboInfoPanelComponent {...comboInfoPanelComponentProps} />
+      </TimeDimensionLayerContext.Provider>
+    </React.Suspense>
   );
 };
 

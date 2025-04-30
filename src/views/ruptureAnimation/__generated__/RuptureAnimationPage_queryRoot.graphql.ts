@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0646af71e3ccb52bd655db8f098770eb>>
+ * @generated SignedSource<<d69a9d05a8079482dff6e4fe4dcde6bb>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,6 +19,7 @@ export type RuptureAnimationPage_queryRoot$data = {
         readonly length: number | null | undefined;
         readonly magnitude: number | null | undefined;
         readonly rate_weighted_mean: number | null | undefined;
+        readonly rupture_index: number | null | undefined;
       } | null | undefined;
     } | null | undefined>;
     readonly pageInfo: {
@@ -151,6 +152,13 @@ return {
                   "alias": null,
                   "args": null,
                   "kind": "ScalarField",
+                  "name": "rupture_index",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
                   "name": "fault_surfaces",
                   "storageKey": null
                 },
@@ -211,6 +219,6 @@ return {
 };
 })();
 
-(node as any).hash = "7fc988ec6e6bf303e320ece385bbce4a";
+(node as any).hash = "e49092cd51e40628d741e2b28a9ed44d";
 
 export default node;
