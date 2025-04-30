@@ -47,7 +47,8 @@ const RuptureInfoBox = (props: RuptureInfoBoxProps) => {
         }_fault_surfaces`;
 
         const json = data?.SOLVIS_composite_rupture_detail?.fault_surfaces;
-        const blob = new Blob([json], { type: "application/json" });
+        const prettyJson = JSON.stringify(JSON.parse(json), null, 2);
+        const blob = new Blob([prettyJson], { type: "application/json" });
         const href = URL.createObjectURL(blob);
 
         const link = document.createElement("a");
