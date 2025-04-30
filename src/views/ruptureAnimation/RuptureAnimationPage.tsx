@@ -235,6 +235,7 @@ export const ruptureAnimationPage_queryRoot = graphql`
       }
       edges {
         node {
+          rupture_index
           fault_surfaces
           magnitude
           rate_weighted_mean
