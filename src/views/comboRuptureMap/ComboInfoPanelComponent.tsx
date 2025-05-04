@@ -1,12 +1,18 @@
 import { useMemo, useContext } from "react";
 import { ColorBar, MfdPlot } from "@gns-science/toshi-nest";
-import { Box, Typography, CircularProgress } from "@mui/material";
+import { Box, Fab, Typography, CircularProgress } from "@mui/material";
+import FileDownloadOutlinedIcon from "@mui/icons-material/FileDownloadOutlined";
 import { ComboRuptureMapPageQuery$data } from "./__generated__/ComboRuptureMapPageQuery.graphql";
 import TimeDimensionLayerContext from "./store";
 import { ComboRuptureMapPageState } from "./comboRuptureMapPageReducer";
+import { graphql, fetchQuery } from "react-relay";
+import { HAZARD_MODEL } from "../../utils/environmentVariables";
+import { ComboInfoPanelComponentQuery } from "./__generated__/ComboInfoPanelComponentQuery.graphql";
+import RelayEnvironment from "../../RelayEnvironment";
 
 export type SurfaceProperties =
   | {
+      rupture_index?: number | null;
       rate_weighted_mean?: number | null;
       area?: number | null;
       length?: number | null;
@@ -28,6 +34,35 @@ const RuptureInfoBox = (props: RuptureInfoBoxProps) => {
     (sort) => sort?.attribute.replaceAll("_", " ") + " " + (sort?.ascending ? "ascending" : "descending"),
   );
   const sortByJoinedString = sortByStringArray?.join(", ");
+
+  const handleDownload = () => {
+    fetchQuery<ComboInfoPanelComponentQuery>(RelayEnvironment, comboInfoPanelComponentQuery, {
+      model_id: HAZARD_MODEL,
+      fault_system: mapControlsState.faultSystem.slice(0, 3).toUpperCase(),
+      rupture_index: surfaceProperties[context.timeIndex]?.rupture_index || 0,
+    }).subscribe({
+      next: (data) => {
+        const fileName = `${HAZARD_MODEL}_${mapControlsState.faultSystem.slice(0, 3).toUpperCase()}_${
+          data?.SOLVIS_composite_rupture_detail?.rupture_index
+        }_fault_surfaces`;
+
+        const json = data?.SOLVIS_composite_rupture_detail?.fault_surfaces;
+        const prettyJson = JSON.stringify(JSON.parse(json), null, 2);
+        const blob = new Blob([prettyJson], { type: "application/json" });
+        const href = URL.createObjectURL(blob);
+
+        const link = document.createElement("a");
+        link.href = href;
+        link.download = fileName + ".json";
+        document.body.appendChild(link);
+        link.click();
+
+        document.body.removeChild(link);
+        URL.revokeObjectURL(href);
+      },
+    });
+  };
+
   return (
     <Box>
       {surfaceProperties[context.timeIndex] ? (
@@ -37,6 +72,9 @@ const RuptureInfoBox = (props: RuptureInfoBoxProps) => {
             {mapControlsState.sortby && mapControlsState.sortby?.length > 0 ? `(sorted by ${sortByJoinedString})` : ""}
           </Typography>
           <Typography variant={"body2"}>
+            Rupture Index: {surfaceProperties[context.timeIndex]?.rupture_index}{" "}
+          </Typography>
+          <Typography variant={"body2"}>
             Mean Rate: {surfaceProperties[context.timeIndex]?.rate_weighted_mean?.toExponential(2)} per year
           </Typography>
           <Typography variant={"body2"}>
@@ -44,6 +82,15 @@ const RuptureInfoBox = (props: RuptureInfoBoxProps) => {
           </Typography>
           <Typography variant={"body2"}>Area: {surfaceProperties[context.timeIndex]?.area} km²</Typography>
           <Typography variant={"body2"}>Length: {surfaceProperties[context.timeIndex]?.length} km</Typography>
+          <Fab
+            sx={{ position: "absolute", right: "5%", top: "15%" }}
+            onClick={handleDownload}
+            color="primary"
+            size="small"
+            title="Download rupture as geojson"
+          >
+            <FileDownloadOutlinedIcon />
+          </Fab>
         </>
       ) : (
         <div style={{ display: "flex", justifyContent: "center" }}>
@@ -156,3 +203,22 @@ const ComboInfoPanelComponent = (props: ComboInfoPanelComponentProps) => {
 };
 
 export default ComboInfoPanelComponent;
+
+export const comboInfoPanelComponentQuery = graphql`
+  query ComboInfoPanelComponentQuery($model_id: String!, $rupture_index: Int!, $fault_system: String!) {
+    SOLVIS_composite_rupture_detail(
+      filter: { model_id: $model_id, fault_system: $fault_system, rupture_index: $rupture_index }
+    ) {
+      __typename
+      magnitude
+      length
+      area
+      rupture_index
+      rate_max
+      rate_min
+      rate_count
+      rake_mean
+      fault_surfaces
+    }
+  }
+`;
