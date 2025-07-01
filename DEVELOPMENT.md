@@ -7,8 +7,8 @@ This project uses the following:
  - Jest testing for basic features.
  - Cypress testing for key cross-browser features. 
 
-The NSHM project https://github.com/GNS-Science/toshi-nest is a key dependency of Kororaa, providing resuable 
-UI React conponenets. It is published in the github NPM registry, and is provate, so the following steps are 
+The NSHM project https://github.com/GNS-Science/toshi-nest is a key dependency of Kororaa, providing reusable 
+UI React conponents. It is published in the github NPM registry, and is private, so the following steps are 
 required to get this dependency satisfied.
 
 You will need to authenticate in order to install the `@gns-science/toshi-nest` dependency. For this:
