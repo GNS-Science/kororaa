@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v1.2.7] - 2025-06-01
+
+### Added
+ - DEVELOPMENT.md file with start up info for developers.
+
+## [v1.2.6] - 2025-05-05
+
+### Added
+ - add 86% in 50 yr PoE map.
+ - rupture download feature.
+
+### Changed
+ - NODE_AUTH_TOKEN used in GHA scripts changed is now same as GITUB_TOKEN
+
 ## [v1.2.5](https://github.com/GNS-Science/kororaa/compare/v1.2.4...v1.2.5) - 2024-07-19
 
 ### Changed
