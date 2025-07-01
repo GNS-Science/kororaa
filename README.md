@@ -1,6 +1,8 @@
 # Kororaa
 The public web UI of the NSHM project
 
+For details of the development setup, please see [DEVELOPMENT](./DEVELOPMENT.md).
+
 ## Available Scripts
 
 In the project directory, you can run:
@@ -31,3 +33,4 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 ### `yarn relay`
 
 Run this whenever any of the GraphQL queries has been modified.
+
