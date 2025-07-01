@@ -16,7 +16,7 @@ You will need to authenticate in order to install the `@gns-science/toshi-nest` 
 ## Create a Github Personal Access Token (PAT).
  - follow guidance in the https://github.com/GNS-Science/toshi-nest README.md.
  - make sure your Github Personal Access Token (PAT) lifetime is <= 90days.
- - give the PAT, SSO access got GNS_Science when you create it
+ - give the PAT, SSO access to GNS_Science when you create it
 
 For more background, see the Github doc [#about-personal-access-tokens](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#about-personal-access-tokens).
 
