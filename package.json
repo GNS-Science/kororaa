@@ -4,8 +4,6 @@
   "private": true,
   "type": "module",
   "dependencies": {
-    "@emotion/react": "^11.9.0",
-    "@emotion/styled": "^11.8.1",
     "@gns-science/toshi-nest": "^3.9.14",
     "@mui/icons-material": "^5.15.21",
     "@mui/material": "^5.15.21",
