@@ -67,7 +67,7 @@ const hazardChartsPlotsViewQuery = graphql`
     $aggs: [String]
     $resolution: Float
   ) {
-    hazard_curves: KORORAA_hazard_curves(
+    hazard_curves: HAZARD_hazard_curves(
       hazard_model: $hazard_model
       vs30s: $vs30s
       imts: $imts

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1a6007747e5656b80bca8c2b9f446581>>
+ * @generated SignedSource<<7572a6cca407babfa4226662c8e6e987>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -114,7 +114,7 @@ v6 = [
     ],
     "concreteType": "ToshiHazardCurveResult",
     "kind": "LinkedField",
-    "name": "KORORAA_hazard_curves",
+    "name": "HAZARD_hazard_curves",
     "plural": false,
     "selections": [
       {
@@ -284,16 +284,16 @@ return {
     "selections": (v6/*: any*/)
   },
   "params": {
-    "cacheID": "7f4e8bdb2399692ffc76da863313eea4",
+    "cacheID": "abc3434508bddc1a158cce78bfbeda81",
     "id": null,
     "metadata": {},
     "name": "HazardChartsPlotsViewQuery",
     "operationKind": "query",
-    "text": "query HazardChartsPlotsViewQuery(\n  $hazard_model: String\n  $vs30s: [Int]\n  $imts: [String]\n  $locs: [String]\n  $aggs: [String]\n  $resolution: Float\n) {\n  hazard_curves: KORORAA_hazard_curves(hazard_model: $hazard_model, vs30s: $vs30s, imts: $imts, locs: $locs, aggs: $aggs, resolution: $resolution) {\n    ok\n    locations {\n      lat\n      lon\n      resolution\n      code\n      name\n      key\n    }\n    curves {\n      hazard_model\n      imt\n      loc\n      agg\n      vs30\n      curve {\n        levels\n        values\n      }\n    }\n  }\n}\n"
+    "text": "query HazardChartsPlotsViewQuery(\n  $hazard_model: String\n  $vs30s: [Int]\n  $imts: [String]\n  $locs: [String]\n  $aggs: [String]\n  $resolution: Float\n) {\n  hazard_curves: HAZARD_hazard_curves(hazard_model: $hazard_model, vs30s: $vs30s, imts: $imts, locs: $locs, aggs: $aggs, resolution: $resolution) {\n    ok\n    locations {\n      lat\n      lon\n      resolution\n      code\n      name\n      key\n    }\n    curves {\n      hazard_model\n      imt\n      loc\n      agg\n      vs30\n      curve {\n        levels\n        values\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "a49726e2958542d158788b478f0f7ab7";
+(node as any).hash = "2859b7096e8f3f3f3259c33fb4acc13d";
 
 export default node;
