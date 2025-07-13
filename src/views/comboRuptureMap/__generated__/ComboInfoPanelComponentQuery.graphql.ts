@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a144bbcd46620130626ca99eb0611ed3>>
+ * @generated SignedSource<<8f974e8a0460762dba5125c6192b75fc>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 export type ComboInfoPanelComponentQuery$variables = {
   fault_system: string;
   model_id: string;

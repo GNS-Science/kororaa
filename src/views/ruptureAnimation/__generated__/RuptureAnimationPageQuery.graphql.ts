@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<93b5aee588f3dc1cd9984332b691f18e>>
+ * @generated SignedSource<<0dea45987fbe7a6891fbf2b84058db14>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type SimpleSortRupturesArgs = {
   ascending?: boolean | null | undefined;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<188af292aff92d5ee0fa41759f7299dd>>
+ * @generated SignedSource<<780e7789f76848228fc37f48ac5fdeb8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 export type FaultModelControlsQuery$variables = {
   locationListId: string;
   model_id: string;

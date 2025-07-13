@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a1fd18012998b27f1317938d98cb5879>>
+ * @generated SignedSource<<a4b86536a1fd6d86b6ed4072c435d2cc>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 export type ColourScaleNormalise = "LIN" | "LOG" | "%future added value";
 export type ContentFormatEnum = "Markdown" | "Raw" | "%future added value";
 export type ContentStatusEnum = "Deprecated" | "Draft" | "Published" | "Undefined" | "%future added value";

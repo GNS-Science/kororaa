@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d483773ad6b9e6eeca447b3abf9e94bc>>
+ * @generated SignedSource<<a368ba7838ab54c122bc4ba5b05286b7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 export type ReportStatusEnum = "Published" | "Review" | "Undefined" | "%future added value";
 export type ScienceReportsPageQuery$variables = Record<PropertyKey, never>;
 export type ScienceReportsPageQuery$data = {

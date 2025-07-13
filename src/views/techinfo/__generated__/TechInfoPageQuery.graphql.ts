@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<00309861bd33be4b9596add5f32a1d96>>
+ * @generated SignedSource<<f39775593ad5e4780380383105b346bf>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 export type ContentFormatEnum = "Markdown" | "Raw" | "%future added value";
 export type ContentStatusEnum = "Deprecated" | "Draft" | "Published" | "Undefined" | "%future added value";
 export type TechInfoPageQuery$variables = Record<PropertyKey, never>;

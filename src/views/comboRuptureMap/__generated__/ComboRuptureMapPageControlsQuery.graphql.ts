@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6ed93d46e770aed4335b437a4e179c96>>
+ * @generated SignedSource<<3827287756b4cd87d9c2ff1b76822f83>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 export type ComboRuptureMapPageControlsQuery$variables = {
   locationListId: string;
   radiiSetId: number;

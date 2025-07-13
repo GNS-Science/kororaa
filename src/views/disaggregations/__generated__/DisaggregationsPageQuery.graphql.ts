@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fe12a8b8af2188ee6f43b2fcd88c2fc1>>
+ * @generated SignedSource<<7a2e37515d62555d94922f9967d3a13e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 export type ContentFormatEnum = "Markdown" | "Raw" | "%future added value";
 export type ContentStatusEnum = "Deprecated" | "Draft" | "Published" | "Undefined" | "%future added value";
 export type DisaggregationsPageQuery$variables = Record<PropertyKey, never>;

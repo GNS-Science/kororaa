@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<470c79a7a516e6c141c2577c115b782c>>
+ * @generated SignedSource<<901f289e1284e7ddcdd55585edda7e83>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 export type MultiRuptureMapPageQuery$variables = {
   fault_system: string;
   location_ids: ReadonlyArray<string | null | undefined>;

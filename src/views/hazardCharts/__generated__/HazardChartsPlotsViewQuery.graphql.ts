@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7572a6cca407babfa4226662c8e6e987>>
+ * @generated SignedSource<<abe9f350ae4165f886cdd68eceb0e95f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 export type HazardChartsPlotsViewQuery$variables = {
   aggs?: ReadonlyArray<string | null | undefined> | null | undefined;
   hazard_model?: string | null | undefined;

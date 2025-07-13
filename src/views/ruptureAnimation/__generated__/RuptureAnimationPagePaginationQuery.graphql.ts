@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c6c61b12f971de3463b22c9d44ea0ec7>>
+ * @generated SignedSource<<dfe32725d611dcbab15f0623d4e08346>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type SetOperationEnum = "DIFFERENCE" | "INTERSECTION" | "UNION" | "%future added value";
 export type FilterRupturesArgsInput = {

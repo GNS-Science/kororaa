@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a39ce74286527efcdd1aa36b7e38f91d>>
+ * @generated SignedSource<<6c51e0a941788d32c45853d8c1fd44ba>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 export type ContentFormatEnum = "Markdown" | "Raw" | "%future added value";
 export type ContentStatusEnum = "Deprecated" | "Draft" | "Published" | "Undefined" | "%future added value";
 export type HazardChartsPageQuery$variables = Record<PropertyKey, never>;

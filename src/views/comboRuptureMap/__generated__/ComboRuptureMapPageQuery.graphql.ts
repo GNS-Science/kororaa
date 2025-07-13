@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ea4af90757ae20979f64514df21515d3>>
+ * @generated SignedSource<<19466217bdab1c41889d287bba300a9e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ContentFormatEnum = "Markdown" | "Raw" | "%future added value";
 export type SimpleSortRupturesArgs = {

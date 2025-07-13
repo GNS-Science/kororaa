@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d69a9d05a8079482dff6e4fe4dcde6bb>>
+ * @generated SignedSource<<f167ac1e42209f517641e160a30906ac>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment, RefetchableFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type RuptureAnimationPage_queryRoot$data = {
   readonly SOLVIS_filter_ruptures: {

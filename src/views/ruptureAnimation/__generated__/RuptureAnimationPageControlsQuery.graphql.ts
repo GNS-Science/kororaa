@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8ce6ea16aaa3cc1d74a8c2916bb8dc8b>>
+ * @generated SignedSource<<415f93f54789e53ab59ce7152481916d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 export type RuptureAnimationPageControlsQuery$variables = {
   locationListId: string;
   radiiSetId: number;

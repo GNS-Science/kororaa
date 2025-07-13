@@ -6437,10 +6437,10 @@ markdown-table@^3.0.0:
   resolved "https://registry.yarnpkg.com/markdown-table/-/markdown-table-3.0.3.tgz#e6331d30e493127e031dd385488b5bd326e4a6bd"
   integrity sha512-Z1NL3Tb1M9wH4XESsCDEksWoKTdlUafKc4pt0GRwjUyXaCFZ+dc3g2erqB6zm3szA2IUSi7VnPI+o/9jnxh9hw==
 
-markdown-to-jsx@^7.1.7:
-  version "7.4.7"
-  resolved "https://registry.yarnpkg.com/markdown-to-jsx/-/markdown-to-jsx-7.4.7.tgz#740ee7ec933865ef5cc683a0992797685a75e2ee"
-  integrity sha512-0+ls1IQZdU6cwM1yu0ZjjiVWYtkbExSyUIFU2ZeDIFuZM1W42Mh4OlJ4nb4apX4H8smxDHRdFaoIVJGwfv5hkg==
+markdown-to-jsx@^7.7.10:
+  version "7.7.10"
+  resolved "https://registry.yarnpkg.com/markdown-to-jsx/-/markdown-to-jsx-7.7.10.tgz#74cbc4689f7e635c3195148b60f47dca47284943"
+  integrity sha512-au62yyLyJukhC2P1TYi3uBi/RScGYai69uT72D8a048QH8rRj+yhND3C21GdZHE+6emtsf6Yqemcf//K+EIWDg==
 
 math-expression-evaluator@^1.2.14:
   version "1.4.0"
@@ -8075,10 +8075,10 @@ regl@^2.0.0:
   resolved "https://registry.yarnpkg.com/@plotly/regl/-/regl-2.1.2.tgz#fd31e3e820ed8824d59a67ab5e766bb101b810b6"
   integrity sha512-Mdk+vUACbQvjd0m/1JJjOOafmkp/EpmHjISsopEz5Av44CBq7rPC05HHNbYGKVyNUF2zmEoBS/TT0pd0SPFFyw==
 
-relay-compiler@^17.0.0:
-  version "17.0.0"
-  resolved "https://registry.yarnpkg.com/relay-compiler/-/relay-compiler-17.0.0.tgz#5013e83267f45d78e24232ae7da90ed5ad3c1116"
-  integrity sha512-U2e/R0o40HJOQ13pwkvToqWqk6J3ASMyHmcxixVMZKfcwcpsTTOiKob215ZRh+4bqPwkNy97+V9CuzJ5hJmGtw==
+relay-compiler@^20.0.0:
+  version "20.0.0"
+  resolved "https://registry.yarnpkg.com/relay-compiler/-/relay-compiler-20.0.0.tgz#319d7754a331c3e672deed139554776a94d561a8"
+  integrity sha512-SnsN9/Yjh5kmZbt91Wr70xv3VKORRHx3W4cB+yhz9FpzStlI7qkB9jDlGkvUa6hICZ+rbIooe7OekejjSQ2j5Q==
 
 relay-runtime@17.0.0:
   version "17.0.0"
@@ -9412,10 +9412,10 @@ weak-map@^1.0.5:
   resolved "https://registry.yarnpkg.com/weak-map/-/weak-map-1.0.8.tgz#394c18a9e8262e790544ed8b55c6a4ddad1cb1a3"
   integrity sha512-lNR9aAefbGPpHO7AEnY0hCFjz1eTkWCXYvkTRrTHs9qv8zJp+SkVYpzfLIFXQQiG3tVvbNFQgVg2bQS8YGgxyw==
 
-web-vitals@^2.1.0:
-  version "2.1.4"
-  resolved "https://registry.yarnpkg.com/web-vitals/-/web-vitals-2.1.4.tgz#76563175a475a5e835264d373704f9dde718290c"
-  integrity sha512-sVWcwhU5mX6crfI5Vd2dC4qchyTqxV8URinzt25XqVh+bHEPGH4C3NPrNionCP7Obx59wrYEbNlw4Z8sjALzZg==
+web-vitals@^5.0.3:
+  version "5.0.3"
+  resolved "https://registry.yarnpkg.com/web-vitals/-/web-vitals-5.0.3.tgz#29708ca3ab7ff96f676c6ff68fa8e8ed09a93d9b"
+  integrity sha512-4KmOFYxj7qT6RAdCH0SWwq8eKeXNhAFXR4PmgF6nrWFmrJ41n7lq3UCA6UK0GebQ4uu+XP8e8zGjaDO3wZlqTg==
 
 webgl-context@^2.2.0:
   version "2.2.0"

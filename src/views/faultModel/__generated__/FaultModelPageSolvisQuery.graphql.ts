@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fcca0257ca91bda10041e1387d2cb675>>
+ * @generated SignedSource<<9c4954d2756a370f0046bcb2f8e98aaa>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 export type FaultModelPageSolvisQuery$variables = {
   fault_colour?: string | null | undefined;
   location_colour?: string | null | undefined;
