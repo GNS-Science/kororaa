@@ -112,7 +112,6 @@ export const handlers = [
     if (faultSystem === "HIK" && locationIds.length === 2) {
       return res(ctx.data(multiRupturePageLocationsNoRuptures));
     }
-
     if (faultSystem === "PUY" && locationIds[0] === "ZQN" && radiusKm === 100 && sortBy === null) {
       if (after === null) {
         return res(ctx.data(ruptureAnimationMock1));

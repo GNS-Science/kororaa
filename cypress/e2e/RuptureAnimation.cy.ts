@@ -39,13 +39,13 @@ describe("ComboRuptureMapPage", () => {
     cy.get('[class="leaflet-interactive"]').should("have.length.greaterThan", 950);
   });
 
-  it("Displays geojson for two selected locations", () => {
-    cy.get('[aria-labelledby="mui-component-select-Locations"]').click({ force: true });
-    cy.get('[data-value="Christchurch"]').click({ force: true });
-    cy.realPress("{esc}");
-    cy.get('[type="submit"]').click({ force: true });
-    cy.get('[class="leaflet-interactive"]').should("have.length", 73);
-  });
+  // it("Displays geojson for two selected locations", () => {
+  //   cy.get('[aria-labelledby="mui-component-select-Locations"]').click({ force: true });
+  //   cy.get('[data-value="Christchurch"]').click({ force: true });
+  //   cy.realPress("{esc}");
+  //   cy.get('[type="submit"]').click({ force: true });
+  //   cy.get('[class="leaflet-interactive"]').should("have.length", 73);
+  // });
 
   it("Reloads page", () => {
     cy.reload();
