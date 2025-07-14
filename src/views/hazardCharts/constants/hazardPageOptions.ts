@@ -206,18 +206,18 @@ export const hazardPageLocations: HazardPageLocations[] = [
     latitude: -39.59,
     longitude: 174.28,
   },
-  // {
-  //   id: "srg_164",
-  //   name: "Franz Josef",
-  //   latitude: -43.376,
-  //   longitude: 170.188,
-  // },
   {
-    id: "WHO",
+    id: "srg_164",
     name: "Franz Josef",
-    latitude: -43.35,
-    longitude: 170.17,
+    latitude: -43.376,
+    longitude: 170.188,
   },
+  // {
+  //   id: 'WHO',
+  //   name: 'Franz Josef',
+  //   latitude: -43.35,
+  //   longitude: 170.17
+  // },
   {
     id: "WSZ",
     name: "Westport",
