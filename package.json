@@ -36,6 +36,8 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "lint": "eslint -c eslint.config.mjs . --report-unused-disable-directives --max-warnings 0",
+    "prettier-check": "prettier -c --ignore-path .gitignore \"**/*.{css,html,ts,tsx,js,json,md,yaml,yml}\"",
+    "prettify": "prettier --write --ignore-path .gitignore \"**/*.{css,html,ts,tsx,js,json,md,yaml,yml}\"",
     "preview": "vite preview",
     "relay": "relay-compiler",
     "test": "vitest",

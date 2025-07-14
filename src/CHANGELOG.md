@@ -5,28 +5,32 @@ All notable changes to this project will be documented in this file.
 ## [v1.2.7] - 2025-06-01
 
 ### Added
- - DEVELOPMENT.md file with start up info for developers.
+
+- DEVELOPMENT.md file with start up info for developers.
 
 ## [v1.2.6] - 2025-05-05
 
 ### Added
- - add 86% in 50 yr PoE map.
- - rupture download feature.
+
+- add 86% in 50 yr PoE map.
+- rupture download feature.
 
 ### Changed
- - NODE_AUTH_TOKEN used in GHA scripts changed is now same as GITUB_TOKEN
+
+- NODE_AUTH_TOKEN used in GHA scripts changed is now same as GITUB_TOKEN
 
 ## [v1.2.5](https://github.com/GNS-Science/kororaa/compare/v1.2.4...v1.2.5) - 2024-07-19
 
 ### Changed
- - higher floating point precision for csv files of hazard curves and UHS
 
+- higher floating point precision for csv files of hazard curves and UHS
 
 ## [v1.2.4](https://github.com/GNS-Science/kororaa/compare/v1.2.3...v1.2.4) - 2024-07-02
 
 ### Changed
- - updated package dependencies, with associated test and code changes
- - /HazardCurves page has improved latitude/longitude error messages for user.
+
+- updated package dependencies, with associated test and code changes
+- /HazardCurves page has improved latitude/longitude error messages for user.
 
 ## [v1.2.3](https://github.com/GNS-Science/kororaa/compare/v1.2.2...v1.2.3)
 
@@ -35,6 +39,7 @@ All notable changes to this project will be documented in this file.
 Hazard map opacity slider;
 
 ### Changed
+
 Hazard curve charts update;
 Hazard curve line colour synced;
 Dynamic TechInfo page;
@@ -55,7 +60,7 @@ Adds Error boundary to hazard charts page;
 - change rate label; [`#391`](https://github.com/GNS-Science/kororaa/pull/391)
 - feature/389 rate tooltip [`#390`](https://github.com/GNS-Science/kororaa/pull/390)
 - Fix/386 menu caps [`#387`](https://github.com/GNS-Science/kororaa/pull/387)
-- update rupture map tooltips; format geojson downloads; reformat tech info page; add ids to tech info headers;   [`#380`](https://github.com/GNS-Science/kororaa/pull/380)
+- update rupture map tooltips; format geojson downloads; reformat tech info page; add ids to tech info headers; [`#380`](https://github.com/GNS-Science/kororaa/pull/380)
 
 ### Commits
 
@@ -157,7 +162,7 @@ Adds Error boundary to hazard charts page;
 
 ### Merged
 
--  - Fix/120 webpack warnings (#257) [`#266`](https://github.com/GNS-Science/kororaa/pull/266)
+- - Fix/120 webpack warnings (#257) [`#266`](https://github.com/GNS-Science/kororaa/pull/266)
 - new GA4 code for GNS Science org; [`#265`](https://github.com/GNS-Science/kororaa/pull/265)
 
 ### Commits
@@ -208,10 +213,10 @@ Adds Error boundary to hazard charts page;
 - Feature/161 r and m 4 [`#185`](https://github.com/GNS-Science/kororaa/pull/185)
 - Fix/147 missing location codes [`#184`](https://github.com/GNS-Science/kororaa/pull/184)
 - Feature/176 Uncertainty Bounds [`#183`](https://github.com/GNS-Science/kororaa/pull/183)
-- feature/162 Spectral periods  [`#175`](https://github.com/GNS-Science/kororaa/pull/175)
+- feature/162 Spectral periods [`#175`](https://github.com/GNS-Science/kororaa/pull/175)
 - Feature/167 collab logos update [`#174`](https://github.com/GNS-Science/kororaa/pull/174)
 - Feature/CSV formatting [`#173`](https://github.com/GNS-Science/kororaa/pull/173)
-- Feature/home titles rats n  mice [`#163`](https://github.com/GNS-Science/kororaa/pull/163)
+- Feature/home titles rats n mice [`#163`](https://github.com/GNS-Science/kororaa/pull/163)
 - Feature/150 download [`#160`](https://github.com/GNS-Science/kororaa/pull/160)
 - Feature/home page revisions rebase [`#159`](https://github.com/GNS-Science/kororaa/pull/159)
 - Fix/157 faster gridded hazard [`#158`](https://github.com/GNS-Science/kororaa/pull/158)
@@ -251,7 +256,7 @@ Adds Error boundary to hazard charts page;
 - change favicon and title; [`#84`](https://github.com/GNS-Science/kororaa/pull/84)
 - Feature/64 move hazard controls v2 [`#77`](https://github.com/GNS-Science/kororaa/pull/77)
 - Feature/51 map colorbar v2 [`#79`](https://github.com/GNS-Science/kororaa/pull/79)
-- Feature/60 info page - WIP  [`#76`](https://github.com/GNS-Science/kororaa/pull/76)
+- Feature/60 info page - WIP [`#76`](https://github.com/GNS-Science/kororaa/pull/76)
 - Feature/55 map data download [`#74`](https://github.com/GNS-Science/kororaa/pull/74)
 - fix cypress test for latlon; [`#73`](https://github.com/GNS-Science/kororaa/pull/73)
 - fix fussy latlon; [`#72`](https://github.com/GNS-Science/kororaa/pull/72)

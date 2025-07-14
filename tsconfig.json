@@ -20,11 +20,7 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
- "include": [
-    "src",
-    "*.config.js",
-    "decs.d.ts"
-  ],
+  "include": ["src", "*.config.js", "decs.d.ts"],
   "exclude": ["**/*.test.ts", "**/*.test.tsx", "**/*.spec.ts", "**/*.spec.tsx"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
