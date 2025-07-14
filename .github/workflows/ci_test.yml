@@ -25,7 +25,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           registry-url: https://npm.pkg.github.com/
-          scope: '@gns-science'
+          scope: "@gns-science"
 
       - name: Yarn setup
         env:
