@@ -2,7 +2,7 @@ name: Deploy PROD
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   build:
@@ -24,7 +24,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           registry-url: https://npm.pkg.github.com/
-          scope: '@gns-science'
+          scope: "@gns-science"
 
       - name: Yarn Test
         env:

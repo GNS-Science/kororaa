@@ -1,5 +1,5 @@
-import * as hazardPageService from "../hazardPage.service";
-import { HazardChartsPlotsViewQuery$data } from "../__generated__/HazardChartsPlotsViewQuery.graphql";
+// import * as hazardPageService from "../hazardPage.service";
+// import { HazardChartsPlotsViewQuery$data } from "../__generated__/HazardChartsPlotsViewQuery.graphql";
 
 //   it('should return the curve in xy format if imt, levels, and values are all present', () => {
 //     const data: HazardChartsPlotsViewQuery$data = {

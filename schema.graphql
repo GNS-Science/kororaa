@@ -61,19 +61,6 @@ enum AggregationFn {
   MEAN
 }
 
-input AppendInversionSolutionTablesInput {
-  id: ID
-  tables: [LabelledTableRelationInput]!
-  clientMutationId: String
-}
-
-"""Append LabelledTableRelationTable to an existing Inversion Solution"""
-type AppendInversionSolutionTablesPayload {
-  inversion_solution: InversionSolution
-  ok: Boolean
-  clientMutationId: String
-}
-
 type AutomationTask implements Node & Thing & AutomationTaskInterface {
   id: ID!
 
@@ -111,28 +98,6 @@ type AutomationTask implements Node & Thing & AutomationTaskInterface {
   inversion_solution: InversionSolution
 }
 
-input AutomationTaskInput {
-  result: EventResult!
-  state: EventState!
-
-  """The time the task was created"""
-  created: DateTime!
-
-  """The final duraton of the task in seconds"""
-  duration: Float
-
-  """
-  input arguments for the rupture generation task, as a list of Key Value pairs.
-  """
-  arguments: [KeyValuePairInput]
-
-  """execution environment details, as a list of Key Value pairs."""
-  environment: [KeyValuePairInput]
-
-  """result metrics from the task, as a list of Key Value pairs."""
-  metrics: [KeyValuePairInput]
-}
-
 """An AutomationTask in the NSHM process"""
 interface AutomationTaskInterface {
   result: EventResult
@@ -160,26 +125,6 @@ interface AutomationTaskInterface {
 }
 
 union AutomationTaskUnion = RuptureGenerationTask | AutomationTask
-
-input AutomationTaskUpdateInput {
-  task_id: ID!
-  result: EventResult
-  state: EventState
-
-  """The final duraton of the task in seconds"""
-  duration: Float
-
-  """
-  input arguments for the rupture generation task, as a list of Key Value pairs.
-  """
-  arguments: [KeyValuePairInput]
-
-  """execution environment details, as a list of Key Value pairs."""
-  environment: [KeyValuePairInput]
-
-  """result metrics from the task, as a list of Key Value pairs."""
-  metrics: [KeyValuePairInput]
-}
 
 """
 BigInt is an extension of the regular Int field
@@ -326,359 +271,6 @@ enum ContentStatusEnum {
   Draft
   Published
   Deprecated
-}
-
-input CreateAggregateInversionSolutionInput {
-  """The name of the file"""
-  file_name: String
-
-  """The base64-encoded md5 digest of the file"""
-  md5_digest: String
-
-  """The size of the file in bytes"""
-  file_size: BigInt
-
-  """additional file meta data, as a list of Key Value pairs."""
-  meta: [KeyValuePairInput]
-
-  """
-  ID of common rupture set. Aggregations must use solutions based on the same rupture set.
-  """
-  common_rupture_set: ID!
-
-  """The solutions used to build the aggregate"""
-  source_solutions: [ID]!
-
-  """aggregation function on rupture rates."""
-  aggregation_fn: AggregationFn!
-  produced_by: ID
-
-  """When the solution was created"""
-  created: DateTime
-
-  """list of predecessors"""
-  predecessors: [PredecessorInput]
-  clientMutationId: String
-}
-
-"""Create a AggregateInversionSolution file"""
-type CreateAggregateInversionSolutionPayload {
-  solution: AggregateInversionSolution
-  ok: Boolean
-  clientMutationId: String
-}
-
-type CreateAutomationTask {
-  task_result: AutomationTask
-}
-
-type CreateFile {
-  ok: Boolean
-  file_result: File
-}
-
-type CreateFileRelation {
-  ok: Boolean
-  file_relation: FileRelation
-}
-
-input CreateGeneralTaskInput {
-  """notes about the task, potentially Markdown"""
-  notes: String
-
-  """count of subtasks"""
-  subtask_count: Int
-  subtask_type: TaskSubType
-  model_type: ModelType
-  subtask_result: EventResult
-
-  """When the taskrecord was created"""
-  created: DateTime
-
-  """The name of the person or process responsible for the task"""
-  agent_name: String
-
-  """A title always helps"""
-  title: String
-
-  """Some description of the task, potentially Markdown"""
-  description: String
-
-  """subtask arguments, as a list of Key Value List pairs."""
-  argument_lists: [KeyValueListPairInput]
-
-  """arbitrary metadata for the task, as a list of Key Value pairs."""
-  meta: [KeyValuePairInput]
-  clientMutationId: String
-}
-
-type CreateGeneralTaskPayload {
-  general_task: GeneralTask
-  clientMutationId: String
-}
-
-input CreateInversionSolutionInput {
-  """The name of the file"""
-  file_name: String
-
-  """The base64-encoded md5 digest of the file"""
-  md5_digest: String
-
-  """The size of the file in bytes"""
-  file_size: BigInt
-
-  """additional file meta data, as a list of Key Value pairs."""
-  meta: [KeyValuePairInput]
-
-  """When the solution was created"""
-  created: DateTime
-
-  """deprecated"""
-  mfd_table_id: ID
-  hazard_table_id: ID
-  produced_by: ID
-
-  """list of predecessors"""
-  predecessors: [PredecessorInput]
-  tables: [LabelledTableRelationInput]
-
-  """result metrics from the solution, as a list of Key Value pairs."""
-  metrics: [KeyValuePairInput]
-  clientMutationId: String
-}
-
-input CreateInversionSolutionNrmlInput {
-  """The name of the file"""
-  file_name: String
-
-  """The base64-encoded md5 digest of the file"""
-  md5_digest: String
-
-  """The size of the file in bytes"""
-  file_size: BigInt
-
-  """additional file meta data, as a list of Key Value pairs."""
-  meta: [KeyValuePairInput]
-
-  """When the scaled solution file was created"""
-  created: DateTime
-  source_solution: ID
-
-  """list of predecessors"""
-  predecessors: [PredecessorInput]
-  clientMutationId: String
-}
-
-"""Create a InversionSolutionNrml file"""
-type CreateInversionSolutionNrmlPayload {
-  inversion_solution_nrml: InversionSolutionNrml
-  ok: Boolean
-  clientMutationId: String
-}
-
-"""Create an Inversion Solution file"""
-type CreateInversionSolutionPayload {
-  inversion_solution: InversionSolution
-  ok: Boolean
-  clientMutationId: String
-}
-
-input CreateOpenquakeHazardConfigInput {
-  """When the thing was created"""
-  created: DateTime
-
-  """List of Source NRML"""
-  source_models: [ID]
-
-  """ID of an archive file, containing the config inputs."""
-  template_archive: ID
-  clientMutationId: String
-}
-
-type CreateOpenquakeHazardConfigPayload {
-  config: OpenquakeHazardConfig
-  ok: Boolean
-  clientMutationId: String
-}
-
-input CreateOpenquakeHazardSolutionInput {
-  """When it was created (UTZ)"""
-  created: DateTime
-  config: ID!
-  produced_by: ID!
-  csv_archive: ID
-  hdf5_archive: ID
-  modified_config: ID
-  task_args: ID
-
-  """additional file meta data, as a list of Key Value pairs."""
-  meta: [KeyValuePairInput]
-
-  """result metrics from the solution, as a list of Key Value pairs."""
-  metrics: [KeyValuePairInput]
-
-  """list of predecessors"""
-  predecessors: [PredecessorInput]
-  clientMutationId: String
-}
-
-"""Create an OpenquakeHazardSolution"""
-type CreateOpenquakeHazardSolutionPayload {
-  openquake_hazard_solution: OpenquakeHazardSolution
-  ok: Boolean
-  clientMutationId: String
-}
-
-type CreateOpenquakeHazardTask {
-  ok: Boolean
-  openquake_hazard_task: OpenquakeHazardTask
-}
-
-type CreateRuptureGenerationTask {
-  task_result: RuptureGenerationTask
-}
-
-input CreateScaledInversionSolutionInput {
-  """The name of the file"""
-  file_name: String
-
-  """The base64-encoded md5 digest of the file"""
-  md5_digest: String
-
-  """The size of the file in bytes"""
-  file_size: BigInt
-
-  """additional file meta data, as a list of Key Value pairs."""
-  meta: [KeyValuePairInput]
-  source_solution: ID
-  produced_by: ID
-
-  """When the solution was created"""
-  created: DateTime
-
-  """list of predecessors"""
-  predecessors: [PredecessorInput]
-  clientMutationId: String
-}
-
-"""Create a ScaledInversionSolution file"""
-type CreateScaledInversionSolutionPayload {
-  solution: ScaledInversionSolution
-  ok: Boolean
-  clientMutationId: String
-}
-
-type CreateSmsFile {
-  ok: Boolean
-  file_result: SmsFile
-}
-
-input CreateStrongMotionStationInput {
-  """When the SMS record was created"""
-  created: DateTime
-
-  """When SMS record was updated"""
-  updated: DateTime
-
-  """A unique, four character SMS identifier"""
-  site_code: String
-
-  """The NZS1170.5 Site Class"""
-  site_class: SmsSiteClass
-
-  """The data source used for site classification"""
-  site_class_basis: SmsSiteClassBasis
-
-  """Array of Vs30 mean measurements"""
-  Vs30_mean: [Float]
-
-  """Array of Vs30 mean measurements"""
-  Vs30_std_dev: [Float]
-
-  """Indicate whether subsurface investigations have encountered bedrock"""
-  bedrock_encountered: Boolean
-
-  """Indicate presence of soils that can liquify"""
-  liquefiable: Boolean
-
-  """Indicate presence of soft clay or peat soils"""
-  soft_clay_or_peat: Boolean
-  clientMutationId: String
-}
-
-type CreateStrongMotionStationPayload {
-  strong_motion_station: StrongMotionStation
-  clientMutationId: String
-}
-
-input CreateTableInput {
-  """a name for the table"""
-  name: String
-
-  """ID of the object this data relates to"""
-  object_id: ID
-
-  """When the task record was created"""
-  created: DateTime
-
-  """column headings"""
-  column_headers: [String]
-
-  """column types"""
-  column_types: [RowItemType]
-
-  """
-  The table rows. Each row is a list of strings that can be coerced according to column_types.
-  """
-  rows: [[String]]
-
-  """additional meta data, as a list of Key Value pairs."""
-  meta: [KeyValuePairInput]
-  table_type: TableType!
-
-  """table dimensions, as a list of Key Value List pairs."""
-  dimensions: [KeyValueListPairInput]
-  clientMutationId: String
-}
-
-type CreateTablePayload {
-  table: Table
-  clientMutationId: String
-}
-
-type CreateTaskTaskRelation {
-  ok: Boolean
-  thing_relation: TaskTaskRelation
-}
-
-input CreateTimeDependentInversionSolutionInput {
-  """The name of the file"""
-  file_name: String
-
-  """The base64-encoded md5 digest of the file"""
-  md5_digest: String
-
-  """The size of the file in bytes"""
-  file_size: BigInt
-
-  """additional file meta data, as a list of Key Value pairs."""
-  meta: [KeyValuePairInput]
-  source_solution: ID
-  produced_by: ID
-
-  """When the solution was created"""
-  created: DateTime
-
-  """list of predecessors"""
-  predecessors: [PredecessorInput]
-  clientMutationId: String
-}
-
-"""Create a TimeDependentInversionSolution file"""
-type CreateTimeDependentInversionSolutionPayload {
-  solution: TimeDependentInversionSolution
-  ok: Boolean
-  clientMutationId: String
 }
 
 """
@@ -1035,7 +627,7 @@ type GriddedHazard {
 
   """Acceleration values."""
   values: [Float]
-  hazard_map(color_scale: String = "jet", color_scale_vmax: Float, color_scale_vmin: Float = 0, color_scale_normalise: ColourScaleNormalise, stroke_width: Float, stroke_opacity: Float, fill_opacity: Float): GeoJsonHazardMap
+  hazard_map(color_scale: String = "jet", color_scale_vmax: Float, color_scale_vmin: Float = 0, color_scale_normalise: ColourScaleNormalise, stroke_width: Float = 0.1, stroke_opacity: Float = 1, fill_opacity: Float = 1): GeoJsonHazardMap
   grid_locations: [GriddedLocation]
 }
 
@@ -1238,26 +830,8 @@ type KeyValueListPair {
   v: [String]
 }
 
-"""Simple container for KVL lists of strings"""
-input KeyValueListPairInput {
-  """key"""
-  k: String
-
-  """list of values"""
-  v: [String]
-}
-
 """Simple container for string-based KV pair data"""
 type KeyValuePair {
-  """key"""
-  k: String
-
-  """value"""
-  v: String
-}
-
-"""Simple container for string-based KV pair data"""
-input KeyValuePairInput {
   """key"""
   k: String
 
@@ -1295,23 +869,6 @@ type LabelledTableRelation {
 
   """table dimensions, as a list of Key Value List pairs."""
   dimensions: [KeyValueListPair]
-}
-
-input LabelledTableRelationInput {
-  """the object responsible for creating this relationship."""
-  produced_by_id: ID
-
-  """Label used to differentiate this relationsip for humans."""
-  label: String
-
-  """the ID of the table"""
-  table_id: ID
-
-  """table type"""
-  table_type: TableType
-
-  """table dimensions, as a list of Key Value List pairs."""
-  dimensions: [KeyValueListPairInput]
 }
 
 type Location {
@@ -1382,78 +939,6 @@ enum ModelType {
   CRUSTAL
   SUBDUCTION
   COMPOSITE
-}
-
-type Mutation {
-  """Append LabelledTableRelationTable to an existing Inversion Solution"""
-  TOSHI_append_inversion_solution_tables(input: AppendInversionSolutionTablesInput!): AppendInversionSolutionTablesPayload
-  TOSHI_create_automation_task(input: NewAutomationTaskInput!): CreateAutomationTask
-  TOSHI_create_file(
-    file_name: String
-    file_size: BigInt
-    md5_digest: String = "The base64-encoded md5 digest of the file"
-
-    """additional file meta data, as a list of Key Value pairs."""
-    meta: [KeyValuePairInput]
-
-    """list of predecessors"""
-    predecessors: [PredecessorInput]
-  ): CreateFile
-  TOSHI_create_file_relation(file_id: ID!, role: FileRole!, thing_id: ID!): CreateFileRelation
-  TOSHI_create_general_task(input: CreateGeneralTaskInput!): CreateGeneralTaskPayload
-
-  """Create an Inversion Solution file"""
-  TOSHI_create_inversion_solution(input: CreateInversionSolutionInput!): CreateInversionSolutionPayload
-  TOSHI_create_rupture_generation_task(input: AutomationTaskInput!): CreateRuptureGenerationTask
-  TOSHI_create_sms_file(file_name: String, file_size: BigInt, file_type: SmsFileType!, md5_digest: String = "The base64-encoded md5 digest of the file"): CreateSmsFile
-  TOSHI_create_strong_motion_station(input: CreateStrongMotionStationInput!): CreateStrongMotionStationPayload
-  TOSHI_create_table(input: CreateTableInput!): CreateTablePayload
-  TOSHI_create_task_relation(child_id: ID!, parent_id: ID!): CreateTaskTaskRelation
-  TOSHI_update_automation_task(input: AutomationTaskUpdateInput!): UpdateAutomationTask
-  TOSHI_update_general_task(input: UpdateGeneralTaskInput!): UpdateGeneralTaskPayload
-  TOSHI_update_rupture_generation_task(input: AutomationTaskUpdateInput!): UpdateRuptureGenerationTask
-
-  """Create a AggregateInversionSolution file"""
-  TOSHI_create_aggregate_inversion_solution(input: CreateAggregateInversionSolutionInput!): CreateAggregateInversionSolutionPayload
-
-  """Create a ScaledInversionSolution file"""
-  TOSHI_create_scaled_inversion_solution(input: CreateScaledInversionSolutionInput!): CreateScaledInversionSolutionPayload
-
-  """Create a TimeDependentInversionSolution file"""
-  TOSHI_create_time_dependent_inversion_solution(input: CreateTimeDependentInversionSolutionInput!): CreateTimeDependentInversionSolutionPayload
-
-  """Create a InversionSolutionNrml file"""
-  TOSHI_create_inversion_solution_nrml(input: CreateInversionSolutionNrmlInput!): CreateInversionSolutionNrmlPayload
-
-  """Create an OpenquakeHazardSolution"""
-  TOSHI_create_openquake_hazard_solution(input: CreateOpenquakeHazardSolutionInput!): CreateOpenquakeHazardSolutionPayload
-  TOSHI_create_openquake_hazard_config(input: CreateOpenquakeHazardConfigInput!): CreateOpenquakeHazardConfigPayload
-  TOSHI_create_openquake_hazard_task(input: OpenquakeHazardTaskInput!): CreateOpenquakeHazardTask
-  TOSHI_update_openquake_hazard_task(input: OpenquakeHazardTaskUpdateInput!): UpdateOpenquakeHazardTask
-}
-
-input NewAutomationTaskInput {
-  result: EventResult!
-  state: EventState!
-
-  """The time the task was created"""
-  created: DateTime!
-
-  """The final duraton of the task in seconds"""
-  duration: Float
-
-  """
-  input arguments for the rupture generation task, as a list of Key Value pairs.
-  """
-  arguments: [KeyValuePairInput]
-
-  """execution environment details, as a list of Key Value pairs."""
-  environment: [KeyValuePairInput]
-
-  """result metrics from the task, as a list of Key Value pairs."""
-  metrics: [KeyValuePairInput]
-  model_type: ModelType
-  task_type: TaskSubType!
 }
 
 interface Node {
@@ -1585,51 +1070,6 @@ type OpenquakeHazardTask implements Node & Thing & AutomationTaskInterface {
   model_type: ModelType
 }
 
-input OpenquakeHazardTaskInput {
-  result: EventResult!
-  state: EventState!
-
-  """The time the task was created"""
-  created: DateTime!
-
-  """The final duraton of the task in seconds"""
-  duration: Float
-
-  """
-  input arguments for the rupture generation task, as a list of Key Value pairs.
-  """
-  arguments: [KeyValuePairInput]
-
-  """execution environment details, as a list of Key Value pairs."""
-  environment: [KeyValuePairInput]
-
-  """result metrics from the task, as a list of Key Value pairs."""
-  metrics: [KeyValuePairInput]
-  config: ID!
-  model_type: ModelType!
-}
-
-input OpenquakeHazardTaskUpdateInput {
-  task_id: ID!
-  result: EventResult
-  state: EventState
-
-  """The final duraton of the task in seconds"""
-  duration: Float
-
-  """
-  input arguments for the rupture generation task, as a list of Key Value pairs.
-  """
-  arguments: [KeyValuePairInput]
-
-  """execution environment details, as a list of Key Value pairs."""
-  environment: [KeyValuePairInput]
-
-  """result metrics from the task, as a list of Key Value pairs."""
-  metrics: [KeyValuePairInput]
-  hazard_solution: ID
-}
-
 """Some NRML files are just files i.e BG seismicity XML."""
 union OpenquakeNrmlUnion = File | InversionSolutionNrml
 
@@ -1668,15 +1108,6 @@ type Predecessor {
   """The predecessor relationship in Title case."""
   relationship: String
   node: PredecessorUnion
-}
-
-"""Represents a something that came before this thing."""
-input PredecessorInput {
-  """The id of the predecessor object"""
-  id: ID
-
-  """The predecessor relationship numerically"""
-  depth: Int
 }
 
 """A interface for things having predecessors"""
@@ -1721,9 +1152,6 @@ type Query {
   KORORAA_disaggregation_reports: DisaggregationReportResult
   KORORAA_science_reports: ScienceReportResult
   KORORAA_textual_content(index: String, tags: [String]): TextualContentResult
-  KORORAA_gridded_location(lat: Float, lon: Float, resolution: Float): GriddedLocationResult
-  KORORAA_hazard_curves(hazard_model: String, imts: [String], locs: [String], aggs: [String], vs30s: [Int], resolution: Float = 0.1): ToshiHazardCurveResult
-  KORORAA_gridded_hazard(grid_id: RegionGrid, hazard_model_id: String, imt: String, loc: String, agg: String, vs30: Int, poe: Float): GriddedHazardResult
   SOLVIS_color_scale(name: String, min_value: Float, max_value: Float, normalization: ColourScaleNormaliseEnum): ColorScale
   SOLVIS_node(
     """The ID of the object"""
@@ -1778,6 +1206,16 @@ type Query {
 
   """Return all the available location lists"""
   SOLVIS_get_location_lists: [LocationList]
+  HAZARD_node(
+    """The ID of the object"""
+    id: ID!
+  ): Node
+
+  """About this API """
+  HAZARD_about: String
+  HAZARD_gridded_location(lat: Float, lon: Float, resolution: Float): GriddedLocationResult
+  HAZARD_hazard_curves(hazard_model: String, imts: [String], locs: [String], aggs: [String], vs30s: [Int], resolution: Float = 0.1): ToshiHazardCurveResult
+  HAZARD_gridded_hazard(grid_id: RegionGrid, hazard_model_id: String, imt: String, loc: String, agg: String, vs30: Int, poe: Float): GriddedHazardResult
   node(id: ID!): Node
 }
 
@@ -1789,7 +1227,7 @@ type RadiiSet {
   radii: [Int]
 }
 
-"""An enumeration."""
+"""An enumerated collection of region grids defined in this module."""
 enum RegionGrid {
   NZ_0_1_NB_1_0
   NZ_0_1_NB_1_1
@@ -2305,58 +1743,5 @@ type ToshiHazardResult {
   agg: String
   vs30: Float
   curve: ToshiHazardCurve
-}
-
-type UpdateAutomationTask {
-  task_result: AutomationTask
-}
-
-input UpdateGeneralTaskInput {
-  """When the task record was created"""
-  created: DateTime
-
-  """When the task record was last updated"""
-  updated: DateTime
-
-  """The name of the person or process responsible for the task"""
-  agent_name: String
-
-  """A title always helps"""
-  title: String
-
-  """Some description of the task, potentially Markdown"""
-  description: String
-
-  """notes about the task, potentially Markdown"""
-  notes: String
-
-  """count of subtasks"""
-  subtask_count: Int
-  subtask_type: TaskSubType
-  model_type: ModelType
-  subtask_result: EventResult
-  task_id: ID!
-
-  """subtask arguments, as a list of Key Value List pairs."""
-  argument_lists: [KeyValueListPairInput]
-
-  """arbitrary metadata for the task, as a list of Key Value pairs."""
-  meta: [KeyValuePairInput]
-  clientMutationId: String
-}
-
-type UpdateGeneralTaskPayload {
-  general_task: GeneralTask
-  ok: Boolean
-  clientMutationId: String
-}
-
-type UpdateOpenquakeHazardTask {
-  ok: Boolean
-  openquake_hazard_task: OpenquakeHazardTask
-}
-
-type UpdateRuptureGenerationTask {
-  task_result: RuptureGenerationTask
 }
 

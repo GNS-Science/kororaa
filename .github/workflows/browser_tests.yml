@@ -26,7 +26,7 @@ jobs:
         with:
           node-version: 18
           registry-url: https://npm.pkg.github.com/
-          scope: '@gns-science'
+          scope: "@gns-science"
       - name: Cypress run
         uses: cypress-io/github-action@v5
         with:

@@ -2,10 +2,10 @@ name: Deploy TEST
 
 on:
   push:
-    branches: [ deploy-test ]
-  
+    branches: [deploy-test]
+
   # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:    
+  workflow_dispatch:
 
 jobs:
   build:
@@ -15,19 +15,19 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [18]
+        node-version: [22]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@4
 
       - name: Node Setup
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
           registry-url: https://npm.pkg.github.com/
-          scope: '@gns-science'
+          scope: "@gns-science"
 
       - name: Yarn Test
         env:
@@ -36,6 +36,8 @@ jobs:
           GENERATE_SOURCEMAP: false
         run: |
           yarn install --frozen-lockfile
+          yarn lint
+          yarn prettier-check          
           yarn test
 
       - name: Yarn build

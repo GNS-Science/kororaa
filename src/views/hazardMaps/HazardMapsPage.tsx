@@ -157,7 +157,7 @@ export const hazardMapsPageQuery = graphql`
     $stroke_opacity: Float
     $color_scale_normalise: ColourScaleNormalise
   ) {
-    gridded_hazard: KORORAA_gridded_hazard(
+    gridded_hazard: HAZARD_gridded_hazard(
       grid_id: $grid_id
       hazard_model_id: $hazard_model_id
       imt: $imt
