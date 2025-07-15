@@ -2,13 +2,28 @@
 
 All notable changes to this project will be documented in this file.
 
+## v1.2.8 - 2025-07-15
+
+### Changed
+
+- update to latest API Gateway schema [`#479`](https://github.com/GNS-Science/kororaa/issues/479)
+- updated node to version 22.
+- updated GHA actions.
+- node package updates.
+- fixed unstable cypress tests.
+
+### Added
+
+- added `yarn prettier-check` and `yarn prettify` commands for linting.
+- ci_test script for PR Q/A.
+
 ## [v1.2.7] - 2025-06-01
 
 ### Added
 
 - DEVELOPMENT.md file with start up info for developers.
 
-## [v1.2.6] - 2025-05-05
+## v1.2.6 - 2025-05-05
 
 ### Added
 
