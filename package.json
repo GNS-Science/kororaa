@@ -20,7 +20,7 @@
     "react-dom": "^19.1.0",
     "react-ga4": "^2.1.0",
     "react-markdown": "^9.0.1",
-    "react-relay": "^17.0.0",
+    "react-relay": "^20.1.0",
     "react-router-dom": "^7.6.3",
     "react-to-print": "^2.14.7",
     "react-tooltip": "^5.29.1",
@@ -111,7 +111,7 @@
     "lint-staged": "^15.2.7",
     "msw": "^0.42.1",
     "prettier": "^3.3.2",
-    "relay-compiler": "^20.0.0",
+    "relay-compiler": "^20.1.0",
     "typescript": "^5.8.3"
   },
   "msw": {
