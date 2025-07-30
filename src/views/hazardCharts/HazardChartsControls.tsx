@@ -60,6 +60,7 @@ import { imtTooltip, vs30Tooltip } from "../../constants/tooltips";
 interface HazardChartsControlsProps {
   state: HazardPageState;
   dispatch: React.Dispatch<Partial<HazardPageState>>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   printTargetRef: React.RefObject<any>;
 }
 
