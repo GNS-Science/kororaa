@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## v1.2.9 - 2025-07-31
+
+### Changed
+- package updates
+- MUI pinned at 5 for `toshi-nest` compatability
+
 ## v1.2.8 - 2025-07-15
 
 ### Changed
