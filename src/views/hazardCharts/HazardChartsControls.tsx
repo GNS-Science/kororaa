@@ -60,7 +60,7 @@ import { imtTooltip, vs30Tooltip } from "../../constants/tooltips";
 interface HazardChartsControlsProps {
   state: HazardPageState;
   dispatch: React.Dispatch<Partial<HazardPageState>>;
-  printTargetRef: React.RefObject<HTMLDivElement>;
+  printTargetRef: React.RefObject<any>;
 }
 
 const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({

@@ -38,7 +38,7 @@ const HazardChartsPage: React.FC = () => {
     () => data?.textual_content?.content && data?.textual_content?.content[0]?.content_type,
     [data],
   );
-  const printTargetRef = useRef<HTMLDivElement>(null);
+  const printTargetRef = useRef(null);
 
   return (
     <PageContainer>

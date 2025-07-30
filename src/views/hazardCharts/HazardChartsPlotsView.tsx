@@ -13,7 +13,7 @@ import { RESOLUTION, HAZARD_MODEL, MEAN, UPPER1, UPPER2, LOWER1, LOWER2 } from "
 interface HazardChartsPlotsViewProps {
   state: HazardPageState;
   dispatch: React.Dispatch<Partial<HazardPageState>>;
-  printTargetRef: React.RefObject<HTMLDivElement>;
+  printTargetRef: React.RefObject<any>;
 }
 
 const HazardChartsPlotsView: React.FC<HazardChartsPlotsViewProps> = ({
