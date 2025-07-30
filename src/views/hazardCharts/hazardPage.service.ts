@@ -103,12 +103,13 @@ export const getHazardCSVData = (data: HazardChartsPlotsViewQuery$data): string[
   const regExp = /\(([^)]+)\)/g;
   const hazardCurves: HazardCurve[] = [];
   //create mutable copy of hazard curves
-  data.hazard_curves?.curves &&
+  if (data.hazard_curves?.curves) {
     data.hazard_curves?.curves.forEach((val) => {
       if (val?.hazard_model) {
         hazardCurves.push(Object.assign({}, val) as HazardCurve);
       }
     });
+  }
   //separate hazard curves by location
   const hazardCurvesByLoc: HazardCurve[][] = [];
   hazardCurves.forEach((curve) => {
@@ -178,7 +179,9 @@ export const convertLocationsToIDs = (locations: string[]): string[] => {
 
   locations.forEach((currentLocation) => {
     const locationObject = hazardPageLocations.find((location) => currentLocation === location.name);
-    locationObject?.id && locationIDs.push(locationObject.id);
+    if (locationObject?.id) {
+      locationIDs.push(locationObject.id);
+    }
   });
 
   return locationIDs;
@@ -188,7 +191,9 @@ export const filterLocationNames = (locations: LocationData[]): string[] => {
   const namedLocations = locations.filter((location) => location.name);
   const locationNames: string[] = [];
   namedLocations.forEach((location) => {
-    location.name && locationNames.push(location.name);
+    if (location.name) {
+      locationNames.push(location.name);
+    }
   });
   return locationNames;
 };
@@ -198,7 +203,9 @@ export const convertIDsToLocations = (IDs: string[]): string[] => {
 
   IDs.forEach((currentID) => {
     const locationObject = hazardPageLocations.find((location) => currentID === location.id);
-    locationObject?.name && locationNames.push(locationObject.name);
+    if (locationObject?.name) {
+      locationNames.push(locationObject.name);
+    }
   });
 
   return locationNames;
@@ -235,7 +242,9 @@ export const stringsToNumbers = (values: string[]) => {
 export const getLocationList = (data: HazardChartsPlotsViewQuery$data): string[] => {
   const locationList = new Set<string>();
   data.hazard_curves?.curves?.forEach((curve) => {
-    curve?.loc && locationList.add(curve.loc);
+    if (curve?.loc) {
+      locationList.add(curve.loc);
+    }
   });
 
   return Array.from(locationList);
@@ -320,7 +329,7 @@ export const addColorsToCurves = (data: HazardUncertaintyChartData): HazardUncer
   const groupedData = groupByLocationAndVs30(curveKeyObjects);
   const numberOfColours = Object.keys(groupedData).length;
 
-  groupedData &&
+  if (groupedData) {
     Object.keys(groupedData).forEach((groupKey, i) => {
       groupedData[groupKey].map((curveKey) => {
         if (data[curveKey.key]) {
@@ -335,6 +344,7 @@ export const addColorsToCurves = (data: HazardUncertaintyChartData): HazardUncer
         }
       });
     });
+  }
 
   return data;
 };
@@ -345,7 +355,7 @@ export const addDashArrayToCurves = (data: HazardUncertaintyChartData): HazardUn
   const curveKeyObjects = getCurveKeyObjects(data);
   const groupedData = groupByLocationAndVs30(curveKeyObjects);
 
-  groupedData &&
+  if (groupedData) {
     Object.keys(groupedData).forEach((key) => {
       const curveGroup = groupedData[key];
       curveGroup.forEach((curve, i) => {
@@ -355,6 +365,7 @@ export const addDashArrayToCurves = (data: HazardUncertaintyChartData): HazardUn
         dashedCurves[curve.key]["mean"].strokeDashArray = strokeDashArrayValues[i];
       });
     });
+  }
   return dashedCurves;
 };
 

@@ -13,7 +13,9 @@ export const getLatlonObject = (latlon: string | null): string => {
 export const getNamesFromLocationData = (locationData: LocationData[]): string[] => {
   const names: string[] = [];
   locationData.forEach((location) => {
-    location.name && names.push(location.name);
+    if (location.name) {
+      names.push(location.name);
+    }
   });
   return names;
 };
