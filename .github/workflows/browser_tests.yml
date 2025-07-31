@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
       - name: create env file
         run: |
           touch .env
@@ -22,11 +22,11 @@ jobs:
           echo GENERATE_SOURCEMAP=false >> .env
           cat .env
       - name: Node Setup
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 22
           registry-url: https://npm.pkg.github.com/
-          scope: '@gns-science'
+          scope: "@gns-science"
       - name: Cypress run
         uses: cypress-io/github-action@v5
         with:

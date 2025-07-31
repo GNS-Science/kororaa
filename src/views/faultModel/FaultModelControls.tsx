@@ -129,9 +129,11 @@ const FaultModelControls: React.FC<FaultModelControlsProps> = ({
       const locationNameArray: string[] = [];
       const locationIdArray: string[] = [];
       locationData.forEach((location) => {
-        location?.name !== undefined && location?.name !== null
-          ? locationNameArray.push(location?.name)
-          : locationNameArray.push("");
+        if (location?.name !== undefined && location?.name !== null) {
+          locationNameArray.push(location?.name);
+        } else {
+          locationNameArray.push("");
+        }
       });
       locations.map((location) => {
         const locationDataItem = locationData?.find((item) => item?.name === location);

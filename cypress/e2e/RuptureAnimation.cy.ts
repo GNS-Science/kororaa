@@ -26,7 +26,7 @@ describe("ComboRuptureMapPage", () => {
   it("Displays geojson for whole map when no locations selected", () => {
     cy.get('[data-testid="ChevronRightIcon"]').click();
     cy.get('[type="submit"]').click({ force: true });
-    cy.get('[class="leaflet-interactive"]').should("have.length.greaterThan", 950);
+    cy.get('[class="leaflet-interactive"]').should("have.length", 959);
   });
 
   it("Displays geojson for selected location", () => {
@@ -36,15 +36,16 @@ describe("ComboRuptureMapPage", () => {
     cy.get('[id="mui-component-select-Radius"]').click({ force: true });
     cy.get('[data-value="100km"]').click({ force: true });
     cy.get('[type="submit"]').click({ force: true });
-    cy.get('[class="leaflet-interactive"]').should("have.length.greaterThan", 950);
+    cy.get('[class="leaflet-interactive"]').should("have.length", 73);
   });
 
   it("Displays geojson for two selected locations", () => {
     cy.get('[aria-labelledby="mui-component-select-Locations"]').click({ force: true });
     cy.get('[data-value="Christchurch"]').click({ force: true });
     cy.realPress("{esc}");
+
     cy.get('[type="submit"]').click({ force: true });
-    cy.get('[class="leaflet-interactive"]').should("have.length", 73);
+    cy.get('[class="leaflet-interactive"]').should("have.length", 27);
   });
 
   it("Reloads page", () => {

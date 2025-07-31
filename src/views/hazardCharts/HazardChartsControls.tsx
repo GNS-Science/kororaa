@@ -60,7 +60,8 @@ import { imtTooltip, vs30Tooltip } from "../../constants/tooltips";
 interface HazardChartsControlsProps {
   state: HazardPageState;
   dispatch: React.Dispatch<Partial<HazardPageState>>;
-  printTargetRef: React.RefObject<HTMLDivElement>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  printTargetRef: React.RefObject<any>;
 }
 
 const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({
@@ -117,7 +118,7 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({
   };
 
   const handlePrint = useReactToPrint({
-    content: () => printTargetRef.current,
+    contentRef: printTargetRef,
   });
 
   const handleLatLonChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -326,7 +327,7 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({
         <Button disabled={dataFetched} variant="contained" type="submit" onClick={handleSubmit}>
           Submit
         </Button>
-        <Fab color="primary" aria-label="print" onClick={handlePrint}>
+        <Fab color="primary" aria-label="printCharts" onClick={handlePrint}>
           <PrintIcon />
         </Fab>
       </CustomControlsBar>

@@ -1,5 +1,8 @@
 # Kororaa
+
 The public web UI of the NSHM project
+
+For details of the development setup, please see [DEVELOPMENT](./DEVELOPMENT.md).
 
 ## Available Scripts
 

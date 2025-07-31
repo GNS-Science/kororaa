@@ -1,4 +1,3 @@
-/* eslint-disable cypress/unsafe-to-chain-command */
 describe("Hazard Curves", () => {
   before(() => {
     // NB in cypress config we've set Pre 12 compatability
@@ -17,8 +16,30 @@ describe("Hazard Curves", () => {
     cy.get("button").contains("Accept").click();
   });
 
-  it("Displays inital charts when first visiting page", () => {
+  it("Displays initial charts when first visiting page", () => {
     cy.get('[role="curve"]').should("have.length", 10);
+  });
+
+  it.skip("should call window.print when the print button is clicked", () => {
+    /* 
+
+    https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/stubbing-spying__window-print
+    
+    This test follows the example above ..
+     - it does actually invoke the print handler (react-to-print) as expected
+     - but the stub is not working, and maybe we can't stub a win.print call done by react-to-print
+    */
+
+    // Stub the window.print method
+    cy.window().then((win) => {
+      cy.stub(win, "handlePrint").as("printStub");
+    });
+
+    // Click the print button
+    cy.get('button[aria-label="printCharts"]').click();
+
+    // Assert that window.print was called
+    cy.get("@printStub").should("have.been.calledOnce");
   });
 
   it("Displays field error if invalid location coordinates are entered ", () => {
@@ -90,13 +111,19 @@ describe("Hazard Curves", () => {
   it("Displays curve when user inputs arbitrary latlon value", () => {
     cy.get('input[id="poe-input"]').clear().type("10");
     cy.get('[data-testid="ArrowDropDownIcon"]').first().click({ force: true });
-    cy.get("li").contains("Christchurch").click({ force: true });
+    // cy.get("li").contains("Christchurch").click({ force: true });
     cy.get("li").contains("Wellington").click({ force: true });
     cy.get(
       '[class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-1x51dt5-MuiInputBase-input-MuiInput-input"]',
     )
       .first()
       .type("-42, 173"); // MSW returns a single curve
+
+    // // Change VS30 temporary workaround for API change issue
+    // cy.get("div").contains("400").click();
+    // cy.get("li").contains("350").click();
+    // cy.get("li").contains("400").click(); // deselect 400
+    // cy.get('[role="listbox"]').focus().type("{esc}");  // hack to close the VS30 menu
     cy.get('[type="submit"]').click({ force: true });
     cy.get('[role="curve"]').should("have.length", 10);
     cy.get('div[class="visx-legend-label"]').should("contain.text", "400m/s PGA -42.0, 173.0");

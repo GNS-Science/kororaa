@@ -1,0 +1,42 @@
+name: CI Pull request run tests
+on:
+  pull_request:
+    branches: [main, deploy-test]
+
+  workflow_call:
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  run-tests:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [22]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Node Setup
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          registry-url: https://npm.pkg.github.com/
+          scope: "@gns-science"
+
+      - name: Yarn setup
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GENERATE_SOURCEMAP: false
+        run: |
+          yarn install --frozen-lockfile
+
+      - name: Code QA
+        run: |
+          yarn lint
+          yarn prettier-check
+          yarn test

@@ -13,7 +13,8 @@ import { RESOLUTION, HAZARD_MODEL, MEAN, UPPER1, UPPER2, LOWER1, LOWER2 } from "
 interface HazardChartsPlotsViewProps {
   state: HazardPageState;
   dispatch: React.Dispatch<Partial<HazardPageState>>;
-  printTargetRef: React.RefObject<HTMLDivElement>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  printTargetRef: React.RefObject<any>;
 }
 
 const HazardChartsPlotsView: React.FC<HazardChartsPlotsViewProps> = ({
@@ -67,7 +68,7 @@ const hazardChartsPlotsViewQuery = graphql`
     $aggs: [String]
     $resolution: Float
   ) {
-    hazard_curves: KORORAA_hazard_curves(
+    hazard_curves: HAZARD_hazard_curves(
       hazard_model: $hazard_model
       vs30s: $vs30s
       imts: $imts

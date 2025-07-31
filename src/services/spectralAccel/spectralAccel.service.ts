@@ -40,7 +40,7 @@ export const getSpectralAccelUncertaintyCurves = (
   timePeriod: number,
 ): UncertaintyChartData => {
   const saCurveGroups: UncertaintyChartData = {};
-  poe &&
+  if (poe) {
     vs30s.forEach((vs30) => {
       locs.forEach((loc) => {
         const location = data.hazard_curves?.locations?.filter((location) => location?.code === loc);
@@ -56,6 +56,7 @@ export const getSpectralAccelUncertaintyCurves = (
         });
       });
     });
+  }
   return saCurveGroups;
 };
 
@@ -101,8 +102,7 @@ export const calculateSpectralAccelCurve = (
         const xArray = currentCurve?.curve?.levels ?? [];
         const yArray = currentCurve?.curve?.values ?? [];
 
-        xArray.length &&
-          yArray.length &&
+        if (xArray.length && yArray.length) {
           yArray.find((pointY, i) => {
             if ((pointY as number) <= yValue) {
               p1 = [Math.log(xArray[i] as number), Math.log(pointY as number)];
@@ -110,6 +110,7 @@ export const calculateSpectralAccelCurve = (
               return true;
             }
           });
+        }
         const point = mathjs.intersect(p1, p2, p3, p4);
         const result = [Math.exp(point[0] as number), mathjs.exp(mathjs.exp(point[1] as number))];
         data.push([
