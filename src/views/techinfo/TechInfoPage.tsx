@@ -22,7 +22,7 @@ const TitleContainer = styled("div")({
   paddingBottom: "1rem",
 });
 
-const StyledReactMarkdown = styled(ReactMarkdown)({
+const StyledReactMarkdownContainer = styled("div")({
   "& table": {
     borderSpacing: 0,
     borderCollapse: "collapse",
@@ -63,7 +63,9 @@ const TechInfoComponent: React.FC = () => {
               </TitleContainer>
             </Grid>
             <Grid item xs={12}>
-              <StyledReactMarkdown>{markdown as string}</StyledReactMarkdown>
+              <StyledReactMarkdownContainer>
+                <ReactMarkdown>{markdown as string}</ReactMarkdown>
+              </StyledReactMarkdownContainer>
             </Grid>
           </Grid>
         </Grid>

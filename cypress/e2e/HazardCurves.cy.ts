@@ -16,8 +16,30 @@ describe("Hazard Curves", () => {
     cy.get("button").contains("Accept").click();
   });
 
-  it("Displays inital charts when first visiting page", () => {
+  it("Displays initial charts when first visiting page", () => {
     cy.get('[role="curve"]').should("have.length", 10);
+  });
+
+  it.skip("should call window.print when the print button is clicked", () => {
+    /* 
+
+    https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/stubbing-spying__window-print
+    
+    This test follows the example above ..
+     - it does actually invoke the print handler (react-to-print) as expected
+     - but the stub is not working, and maybe we can't stub a win.print call done by react-to-print
+    */
+
+    // Stub the window.print method
+    cy.window().then((win) => {
+      cy.stub(win, "handlePrint").as("printStub");
+    });
+
+    // Click the print button
+    cy.get('button[aria-label="printCharts"]').click();
+
+    // Assert that window.print was called
+    cy.get("@printStub").should("have.been.calledOnce");
   });
 
   it("Displays field error if invalid location coordinates are entered ", () => {

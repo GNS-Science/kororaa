@@ -113,9 +113,11 @@ const HazardChartsSettings: React.FC<HazardChartsSettingsProps> = ({
               <Checkbox
                 checked={spectral ? state.spectralUncertainty : state.hazardUncertainty}
                 onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                  spectral
-                    ? dispatch({ spectralUncertainty: event?.target.checked })
-                    : dispatch({ hazardUncertainty: event?.target.checked });
+                  if (spectral) {
+                    dispatch({ spectralUncertainty: event?.target.checked });
+                  } else {
+                    dispatch({ hazardUncertainty: event?.target.checked });
+                  }
                 }}
               />
             }
@@ -129,9 +131,11 @@ const HazardChartsSettings: React.FC<HazardChartsSettingsProps> = ({
               <Checkbox
                 checked={spectral ? state.spectraXScale === "linear" : state.hazardXScale === "linear"}
                 onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                  spectral
-                    ? dispatch({ spectraXScale: event?.target.checked ? "linear" : "log" })
-                    : dispatch({ hazardXScale: event?.target.checked ? "linear" : "log" });
+                  if (spectral) {
+                    dispatch({ spectraXScale: event?.target.checked ? "linear" : "log" });
+                  } else {
+                    dispatch({ hazardXScale: event?.target.checked ? "linear" : "log" });
+                  }
                 }}
               />
             }
