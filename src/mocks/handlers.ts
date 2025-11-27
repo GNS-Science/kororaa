@@ -6,12 +6,6 @@ import {
   initialResponse,
   missingLocationResponse,
 } from "./mockData/hazardMocks/HazardChartsPlotsViewMockData";
-import { hazardMapMockData } from "./mockData/hazardMocks/HazardMapMockData";
-import { IFMAllLocationsMockData } from "./mockData/IFMMocks/IFMAllLocationsMockData";
-import { IFMControlsMockData } from "./mockData/IFMMocks/IFMControlsMockData";
-import { IFMEmptyMockData } from "./mockData/IFMMocks/IFMEmptyMockData";
-import { IFMTextualContentMockData } from "./mockData/IFMMocks/IFMTextualContentMockData";
-import { IFMWellington100kmMockData } from "./mockData/IFMMocks/IFMWellington100kmMockData";
 import { ruptureAnimationMock1 } from "./mockData/ruptureAnimationMockPagination/ruptureAnimationMock1";
 import { ruptureAnimationMock2 } from "./mockData/ruptureAnimationMockPagination/ruptureAnimationMock2";
 import { ruptureAnimationMock3 } from "./mockData/ruptureAnimationMockPagination/ruptureAnimationMock3";
@@ -67,28 +61,6 @@ export const handlers = [
         },
       }),
     );
-  }),
-  graphql.query("HazardMapsPageQuery", (_req, res, ctx) => {
-    return res(ctx.data(hazardMapMockData));
-  }),
-  graphql.query("FaultModelPageQuery", (_req, res, ctx) => {
-    return res(ctx.data(IFMTextualContentMockData));
-  }),
-  graphql.query("FaultModelPageSolvisQuery", (req, res, ctx) => {
-    const locations = req.variables.location_codes;
-    const id = req.variables.solution_id;
-    if (id === "") {
-      return res(ctx.data(IFMEmptyMockData));
-    }
-    if (locations.length === 0 && id !== "") {
-      return res(ctx.data(IFMAllLocationsMockData));
-    }
-    if (locations.includes("WLG")) {
-      return res(ctx.data(IFMWellington100kmMockData));
-    }
-  }),
-  graphql.query("FaultModelControlsQuery", (_req, res, ctx) => {
-    return res(ctx.data(IFMControlsMockData));
   }),
   graphql.query("ComboRuptureMapPageQuery", (req, res, ctx) => {
     const after = req.variables.after;
