@@ -19,6 +19,7 @@ import { multiRupturePageCrustalGYMCHC100km } from "./mockData/multiRupturePageM
 import { multiRupturePageLocationsNoRuptures } from "./mockData/multiRupturePageMocks/multiRupturePageLocationsNoRuptures";
 import {textual_content_tech_info, textual_content_science_reports} from "./mockData/textMocks";
 import {disaggregation_reports} from "./mockData/disaggregationMocks/disaggregationQuery";
+import { hazardMapMockData } from "./mockData/hazardMocks/HazardMapMockData";
 
 export const handlers = [
   graphql.query("HazardChartsPlotsViewQuery", (req, res, ctx) => {
@@ -121,5 +122,8 @@ export const handlers = [
   }),
   graphql.query("DisaggregationsPageQuery", (_req, res, ctx) => {
     return res(ctx.data(disaggregation_reports));
+  }),
+  graphql.query("HazardMapsPageQuery", (_req, res, ctx) => {
+    return res(ctx.data(hazardMapMockData));
   })
 ];
