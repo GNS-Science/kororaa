@@ -34,3 +34,14 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 ### `yarn relay`
 
 Run this whenever any of the GraphQL queries has been modified.
+
+## Cypress
+
+Ensure that `VITE_MSW=test` is set in `.env` or wherever you manage your environment variables. This will make vite use the mocked graphql handlers in [./src/mocks/handlers.ts](./src/mocks/handlers.ts), replicating how we run cypress on GitHub.
+
+```
+yarn dev --host
+yarn run cypress open
+```
+
+and choose E2E tests.

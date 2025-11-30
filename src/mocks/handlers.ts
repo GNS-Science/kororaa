@@ -6,12 +6,6 @@ import {
   initialResponse,
   missingLocationResponse,
 } from "./mockData/hazardMocks/HazardChartsPlotsViewMockData";
-import { hazardMapMockData } from "./mockData/hazardMocks/HazardMapMockData";
-import { IFMAllLocationsMockData } from "./mockData/IFMMocks/IFMAllLocationsMockData";
-import { IFMControlsMockData } from "./mockData/IFMMocks/IFMControlsMockData";
-import { IFMEmptyMockData } from "./mockData/IFMMocks/IFMEmptyMockData";
-import { IFMTextualContentMockData } from "./mockData/IFMMocks/IFMTextualContentMockData";
-import { IFMWellington100kmMockData } from "./mockData/IFMMocks/IFMWellington100kmMockData";
 import { ruptureAnimationMock1 } from "./mockData/ruptureAnimationMockPagination/ruptureAnimationMock1";
 import { ruptureAnimationMock2 } from "./mockData/ruptureAnimationMockPagination/ruptureAnimationMock2";
 import { ruptureAnimationMock3 } from "./mockData/ruptureAnimationMockPagination/ruptureAnimationMock3";
@@ -23,6 +17,9 @@ import { multiRupturePageCrustalAllLocations } from "./mockData/multiRupturePage
 import { multiRupturePageCrustalGYM100km } from "./mockData/multiRupturePageMocks/multiRupturePageCrustalGYM100km";
 import { multiRupturePageCrustalGYMCHC100km } from "./mockData/multiRupturePageMocks/multiRupturePageCrustalGYMCHC100km";
 import { multiRupturePageLocationsNoRuptures } from "./mockData/multiRupturePageMocks/multiRupturePageLocationsNoRuptures";
+import { textual_content_tech_info, textual_content_science_reports } from "./mockData/textMocks";
+import { disaggregation_reports } from "./mockData/disaggregationMocks/disaggregationQuery";
+import { hazardMapMockData } from "./mockData/hazardMocks/HazardMapMockData";
 
 export const handlers = [
   graphql.query("HazardChartsPlotsViewQuery", (req, res, ctx) => {
@@ -67,28 +64,6 @@ export const handlers = [
         },
       }),
     );
-  }),
-  graphql.query("HazardMapsPageQuery", (_req, res, ctx) => {
-    return res(ctx.data(hazardMapMockData));
-  }),
-  graphql.query("FaultModelPageQuery", (_req, res, ctx) => {
-    return res(ctx.data(IFMTextualContentMockData));
-  }),
-  graphql.query("FaultModelPageSolvisQuery", (req, res, ctx) => {
-    const locations = req.variables.location_codes;
-    const id = req.variables.solution_id;
-    if (id === "") {
-      return res(ctx.data(IFMEmptyMockData));
-    }
-    if (locations.length === 0 && id !== "") {
-      return res(ctx.data(IFMAllLocationsMockData));
-    }
-    if (locations.includes("WLG")) {
-      return res(ctx.data(IFMWellington100kmMockData));
-    }
-  }),
-  graphql.query("FaultModelControlsQuery", (_req, res, ctx) => {
-    return res(ctx.data(IFMControlsMockData));
   }),
   graphql.query("ComboRuptureMapPageQuery", (req, res, ctx) => {
     const after = req.variables.after;
@@ -138,5 +113,17 @@ export const handlers = [
   }),
   graphql.query("MultiRuptureMapPageControlsQuery", (_req, res, ctx) => {
     return res(ctx.data(solvisControlsMock));
+  }),
+  graphql.query("TechInfoPageQuery", (_req, res, ctx) => {
+    return res(ctx.data(textual_content_tech_info));
+  }),
+  graphql.query("ScienceReportsPageQuery", (_req, res, ctx) => {
+    return res(ctx.data(textual_content_science_reports));
+  }),
+  graphql.query("DisaggregationsPageQuery", (_req, res, ctx) => {
+    return res(ctx.data(disaggregation_reports));
+  }),
+  graphql.query("HazardMapsPageQuery", (_req, res, ctx) => {
+    return res(ctx.data(hazardMapMockData));
   }),
 ];

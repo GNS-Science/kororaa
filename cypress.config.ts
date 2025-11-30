@@ -7,7 +7,7 @@ export default defineConfig({
     //   // implement node event listeners here
     // },
     baseUrl: "http://localhost:5173",
-    excludeSpecPattern: ["./cypress/e2e/FaultModel.cy.ts"],
+    excludeSpecPattern: [],
     testIsolation: false, // our e2e tests are setup assuming no isolation
   },
 });
