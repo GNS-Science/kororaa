@@ -33,7 +33,7 @@ jobs:
           yarn config set npmScopes.gns-science.npmRegistryServer "https://npm.pkg.github.com"
           yarn config set npmScopes.gns-science.npmAlwaysAuth true
           yarn config set npmScopes.gns-science.npmAuthToken $NPM_AUTH_TOKEN          
-          yarn install --immutable          
+          yarn install --immutable
 
       - name: Code QA
         run: |
