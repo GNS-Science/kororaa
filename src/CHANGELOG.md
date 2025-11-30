@@ -14,6 +14,7 @@ All notable changes to this project will be documented in this file.
 ### Removed
 
 - `FaultModelPage` and associated files
+- removed unused `markdown-to-jsx` dependency
 
 ## v1.2.9 - 2025-07-31
 
