@@ -54,22 +54,22 @@ const TechInfoComponent: React.FC = () => {
   return (
     <PageContainer>
       <Grid container columns={{ sm: 6, md: 8, lg: 12 }}>
-        <Grid item xs={2} />
-        <Grid item xs={8}>
+        <Grid size={{ xs: 2 }} />
+        <Grid size={{ xs: 8 }}>
           <Grid container spacing={2} columns={{ sm: 6, md: 8, lg: 12 }}>
-            <Grid item xs={12}>
+            <Grid size={{ xs: 12 }}>
               <TitleContainer>
                 <Typography variant="h2">Tech Info</Typography>
               </TitleContainer>
             </Grid>
-            <Grid item xs={12}>
+            <Grid size={{ xs: 12 }}>
               <StyledReactMarkdownContainer>
                 <ReactMarkdown>{markdown as string}</ReactMarkdown>
               </StyledReactMarkdownContainer>
             </Grid>
           </Grid>
         </Grid>
-        <Grid item xs={2} />
+        <Grid size={{ xs: 2 }} />
       </Grid>
     </PageContainer>
   );

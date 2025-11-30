@@ -40,7 +40,7 @@ const RangeSliderWithInfoTooltip: React.FC<RangeSliderWithInfoTooltipProps> = ({
         <InfoTooltip content={tooltipContent} format={tooltipFormat} />
       </Typography>
       <Grid container spacing={3} alignItems="center">
-        <Grid item>
+        <Grid>
           <SmallInput
             value={valuesRange[0]}
             size="small"
@@ -48,7 +48,7 @@ const RangeSliderWithInfoTooltip: React.FC<RangeSliderWithInfoTooltipProps> = ({
             inputProps={inputProps}
           />
         </Grid>
-        <Grid item xs>
+        <Grid size="grow">
           <Slider
             value={valuesRange}
             onChange={(_event: Event, newValue: number | number[]) => setValues(newValue as number[])}
@@ -59,7 +59,7 @@ const RangeSliderWithInfoTooltip: React.FC<RangeSliderWithInfoTooltipProps> = ({
             valueLabelFormat={valueLabelFormat}
           />
         </Grid>
-        <Grid item>
+        <Grid>
           <SmallInput
             value={valuesRange[1]}
             size="small"

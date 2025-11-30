@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file.
 
+## v1.2.10 - 2025-11-27
+
+### Changed
+
+- upgraded to yarn 4
+- upgraded toshi-nest to 4.0.0
+- upgraded other dependencies
+- 
+
+### Removed
+
+- `FaultModelPage` and associated files
+
 ## v1.2.9 - 2025-07-31
 
 ### Changed

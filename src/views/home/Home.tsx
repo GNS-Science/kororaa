@@ -58,7 +58,7 @@ const Home: React.FC = () => {
       </Grid>
 
       <Grid container spacing={3} columns={{ sm: 6, md: 8, lg: 12 }}>
-        <Grid item xs={12}>
+        <Grid size={{ xs: 12 }}>
           <LogoCard title="E mahi ana me" text="In collaboration with" logos={partnersLogos} />
         </Grid>
       </Grid>

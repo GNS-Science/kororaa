@@ -11,29 +11,29 @@ on:
 jobs:
   run-tests:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [22]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Node Setup
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 22
           registry-url: https://npm.pkg.github.com/
           scope: "@gns-science"
 
       - name: Yarn setup
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GENERATE_SOURCEMAP: false
         run: |
-          yarn install --frozen-lockfile
+          corepack enable
+          yarn set version berry
+          yarn config set npmScopes.gns-science.npmRegistryServer "https://npm.pkg.github.com"
+          yarn config set npmScopes.gns-science.npmAlwaysAuth true
+          yarn config set npmScopes.gns-science.npmAuthToken $NPM_AUTH_TOKEN          
+          yarn install --immutable          
 
       - name: Code QA
         run: |
