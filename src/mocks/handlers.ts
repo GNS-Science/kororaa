@@ -20,7 +20,6 @@ import { multiRupturePageCrustalGYMCHC100km } from "./mockData/multiRupturePageM
 import { multiRupturePageLocationsNoRuptures } from "./mockData/multiRupturePageMocks/multiRupturePageLocationsNoRuptures";
 import { textual_content_tech_info, textual_content_science_reports } from "./mockData/textMocks";
 import { disaggregation_reports } from "./mockData/disaggregationMocks/disaggregationQuery";
-import { hazardMapMockData } from "./mockData/hazardMocks/HazardMapMockData";
 
 export const handlers = [
   graphql.query("HazardChartsPlotsViewQuery", ({ variables }) => {
@@ -120,28 +119,28 @@ export const handlers = [
   graphql.query("MultiRuptureMapPageControlsQuery", () => {
     return HttpResponse.json({ data: solvisControlsMock });
   }),
-  graphql.query("TechInfoPageQuery", (_req, res, ctx) => {
-    return res(ctx.data(textual_content_tech_info));
+  graphql.query("TechInfoPageQuery", () => {
+    return HttpResponse.json({ data: textual_content_tech_info });
   }),
-  graphql.query("ScienceReportsPageQuery", (_req, res, ctx) => {
-    return res(ctx.data(textual_content_science_reports));
+  graphql.query("ScienceReportsPageQuery", () => {
+    return HttpResponse.json({ data: textual_content_science_reports });
   }),
-  graphql.query("DisaggregationsPageQuery", (_req, res, ctx) => {
-    return res(ctx.data(disaggregation_reports));
+  graphql.query("DisaggregationsPageQuery", () => {
+    return HttpResponse.json({ data: disaggregation_reports });
   }),
-  graphql.query("HazardMapsPageQuery", (_req, res, ctx) => {
-    return res(ctx.data(hazardMapMockData));
+  graphql.query("HazardMapsPageQuery", () => {
+    return HttpResponse.json({ data: hazardMapMockData });
   }),
-  graphql.query("TechInfoPageQuery", (_req, res, ctx) => {
-    return res(ctx.data(textual_content_tech_info));
+  graphql.query("TechInfoPageQuery", () => {
+    return HttpResponse.json({ data: textual_content_tech_info });
   }),
-  graphql.query("ScienceReportsPageQuery", (_req, res, ctx) => {
-    return res(ctx.data(textual_content_science_reports));
+  graphql.query("ScienceReportsPageQuery", () => {
+    return HttpResponse.json({ data: textual_content_science_reports });
   }),
-  graphql.query("DisaggregationsPageQuery", (_req, res, ctx) => {
-    return res(ctx.data(disaggregation_reports));
+  graphql.query("DisaggregationsPageQuery", () => {
+    return HttpResponse.json({ data: disaggregation_reports });
   }),
-  graphql.query("HazardMapsPageQuery", (_req, res, ctx) => {
-    return res(ctx.data(hazardMapMockData));
+  graphql.query("HazardMapsPageQuery", () => {
+    return HttpResponse.json({ data: hazardMapMockData });
   }),
 ];
