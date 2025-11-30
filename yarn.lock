@@ -9009,7 +9009,6 @@ __metadata:
     react-tooltip: "npm:^5.30.0"
     relay-compiler: "npm:^20.1.1"
     remark-gfm: "npm:^4.0.1"
-    resize-observer-polyfill: "npm:^1.5.1"
     typescript: "npm:^5.9.3"
     uuid: "npm:^13.0.0"
     vite: "npm:^7.2.4"

@@ -108,14 +108,10 @@ const ComboRuptureMapControls: React.FC<ComboRuptureMapControlsProps> = ({
 }: ComboRuptureMapControlsProps) => {
   const [faultSystem, setFaultSystem] = useState<string>("Crustal");
   const [locations, setLocations] = useState<string[]>([]);
-  const [locationOptions, setLocationOptions] = useState<string[]>([]);
-  const [locationIdArray, setLocationIdArray] = useState<string[]>([]);
-  const [radiiOptions, setRadiiOptions] = useState<string[]>([]);
   const [parentFaultArray, setParentFaultArray] = useState<string[]>([]);
   const [magnitudeRange, setMagnitudeRange] = useState<number[]>([6, 10]);
   const [rateRange, setRateRange] = useState<number[]>([-20, 0]);
   const [radius, setRadius] = useState<string>("");
-  const [radiusError, setRadiusError] = useState<string | null>(null);
   const [mapViewControlsState, mapViewControlsDispatch] = useReducer(mapViewControlsReducer, {
     showSurfaces: true,
     showAnimation: true,
@@ -129,6 +125,7 @@ const ComboRuptureMapControls: React.FC<ComboRuptureMapControlsProps> = ({
   const [dataFetched, setDataFetched] = useState<boolean>(false);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setDataFetched(false);
   }, [faultSystem, locations, parentFaultArray, magnitudeRange, rateRange, radius, sortBy1, sortBy2]);
 
@@ -205,43 +202,32 @@ const ComboRuptureMapControls: React.FC<ComboRuptureMapControlsProps> = ({
     }
   }, [sortBy1, sortBy2]);
 
-  useEffect(() => {
-    if (locationData) {
-      const locationNameArray: string[] = [];
-      const locationIdArray: string[] = [];
-      locationData.forEach((location) => {
-        if (location?.name !== undefined && location?.name !== null) {
-          locationNameArray.push(location?.name);
-        } else {
-          locationNameArray.push("");
-        }
-      });
-      locations.map((location) => {
-        const locationDataItem = locationData?.find((item) => item?.name === location);
-        locationIdArray.push(
-          locationDataItem && locationDataItem?.location_id !== null && locationDataItem?.location_id !== undefined
-            ? locationDataItem?.location_id
-            : "",
-        );
-      });
-      setLocationOptions(locationNameArray.sort());
-      setLocationIdArray(locationIdArray);
-    }
-  }, [locationData, locations]);
+  let locationOptions: string[] = [];
+  const locationIdArray: string[] = [];
 
-  useEffect(() => {
-    if (radiiData) {
-      setRadiiOptions(radiiData?.map((radius) => (radius ? `${radius / 1000}km` : "")));
-    }
-  }, [radiiData]);
+  if (locationData) {
+    const locationNameArray: string[] = [];
 
-  useEffect(() => {
-    if (locations.length > 0 && radius === "") {
-      setRadiusError("Select a radius option.");
-    } else {
-      setRadiusError(null);
-    }
-  }, [locations, radius]);
+    locationData.forEach((location) => {
+      if (location?.name !== undefined && location?.name !== null) {
+        locationNameArray.push(location?.name);
+      } else {
+        locationNameArray.push("");
+      }
+    });
+    locations.map((location) => {
+      const locationDataItem = locationData?.find((item) => item?.name === location);
+      locationIdArray.push(
+        locationDataItem && locationDataItem?.location_id !== null && locationDataItem?.location_id !== undefined
+          ? locationDataItem?.location_id
+          : "",
+      );
+    });
+    locationOptions = locationNameArray.sort();
+  }
+
+  const radiiOptions = radiiData ? radiiData?.map((radius) => (radius ? `${radius / 1000}km` : "")) : [];
+  const radiusError = locations.length > 0 && radius === "" ? "Select a radius option." : null;
 
   const handleDownload = () => {
     const element = document.getElementById("map");
