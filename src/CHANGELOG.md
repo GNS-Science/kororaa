@@ -2,12 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
-## v1.2.10 - 2025-11-27
+## v1.2.10 - 2025-12-02
 
 ### Changed
 
 - upgraded to yarn 4
-- upgraded toshi-nest to 4.0.0
+- upgraded toshi-nest to 4.0.1
 - upgraded other dependencies
 - adjusted Cypress tests to new mui elements
 
