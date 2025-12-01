@@ -9,7 +9,7 @@ All notable changes to this project will be documented in this file.
 - upgraded to yarn 4
 - upgraded toshi-nest to 4.0.0
 - upgraded other dependencies
--
+- adjusted Cypress tests to new mui elements
 
 ### Removed
 
