@@ -60,11 +60,12 @@ describe("ComboRuptureMapPage", () => {
   it("Displays geojson when selected", () => {
     cy.get('[data-testid="ChevronRightIcon"]').click({ force: true });
     cy.get(
-      '[class="MuiSelect-select MuiSelect-standard MuiInputBase-input MuiInput-input css-1rxz5jq-MuiSelect-select-MuiInputBase-input-MuiInput-input"]',
+      '[class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium MuiAutocomplete-popupIndicator css-2y136s-MuiButtonBase-root-MuiIconButton-root-MuiAutocomplete-popupIndicator"]',
     )
       .first()
       .click({ force: true });
-    cy.get('[data-value="Puysegur"]').click();
+    cy.contains("Alexander").click();
+    cy.realPress("{esc}");
     cy.get('[aria-labelledby="mui-component-select-Locations"]').click({ force: true });
     cy.get('[data-value="Queenstown"]').click({ force: true });
     cy.realPress("{esc}");

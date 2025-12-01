@@ -6,7 +6,8 @@ import reportWebVitals from "./reportWebVitals";
 import { worker } from "./mocks/browser";
 
 if (import.meta.env.VITE_MSW === "test") {
-  worker.start();
+  await worker.start();
+  console.log("worker started");
 }
 
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);

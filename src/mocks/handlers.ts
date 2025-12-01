@@ -1,4 +1,4 @@
-import { graphql, GraphQLHandler, HttpResponse } from "msw";
+import { graphql, HttpResponse } from "msw";
 import {
   wellington400Response,
   wellingtonChristchurchResponse,
@@ -8,10 +8,6 @@ import {
 } from "./mockData/hazardMocks/HazardChartsPlotsViewMockData";
 import { hazardMapMockData } from "./mockData/hazardMocks/HazardMapMockData";
 import { ruptureAnimationMock1 } from "./mockData/ruptureAnimationMockPagination/ruptureAnimationMock1";
-import { ruptureAnimationMock2 } from "./mockData/ruptureAnimationMockPagination/ruptureAnimationMock2";
-import { ruptureAnimationMock3 } from "./mockData/ruptureAnimationMockPagination/ruptureAnimationMock3";
-import { ruptureAnimationMock4 } from "./mockData/ruptureAnimationMockPagination/ruptureAnimationMock4";
-import { ruptureAnimationMock5 } from "./mockData/ruptureAnimationMockPagination/ruptureAnimationMock5";
 import { solvisControlsMock } from "./mockData/solvisControlsMock";
 import { multiRupturePageInitialResponse } from "./mockData/multiRupturePageMocks/multiRupturePageInitialResponse";
 import { multiRupturePageCrustalAllLocations } from "./mockData/multiRupturePageMocks/multiRupturePageCrustalAllLocations";
@@ -90,27 +86,10 @@ export const handlers = [
     if (faultSystem === "HIK" && locationIds.length === 2) {
       return HttpResponse.json({ data: multiRupturePageLocationsNoRuptures });
     }
-    if (faultSystem === "PUY" && locationIds[0] === "ZQN" && radiusKm === 100 && sortBy === null) {
+    if (faultSystem === "CRU" && locationIds[0] === "ZQN" && radiusKm === 100 && sortBy === null) {
       if (after === null) {
         return HttpResponse.json({ data: ruptureAnimationMock1 });
       }
-    }
-  }),
-  // graphql.operation only allows the return of null data, even if the documentation says otherwise
-  // This GraphQLHandler is what graphql.operation would have returned.
-  new GraphQLHandler("all", new RegExp(".*"), "*", ({ variables }) => {
-    const after = variables.after;
-    if (after === "UnVwdHVyZURldGFpbENvbm5lY3Rpb25DdXJzb3I6OQ==") {
-      return HttpResponse.json({ data: ruptureAnimationMock2 });
-    }
-    if (after === "UnVwdHVyZURldGFpbENvbm5lY3Rpb25DdXJzb3I6MTQ=") {
-      return HttpResponse.json({ data: ruptureAnimationMock3 });
-    }
-    if (after === "UnVwdHVyZURldGFpbENvbm5lY3Rpb25DdXJzb3I6MTk=") {
-      return HttpResponse.json({ data: ruptureAnimationMock4 });
-    }
-    if (after === "UnVwdHVyZURldGFpbENvbm5lY3Rpb25DdXJzb3I6MjQ=") {
-      return HttpResponse.json({ data: ruptureAnimationMock5 });
     }
   }),
   graphql.query("ComboRuptureMapPageControlsQuery", () => {
