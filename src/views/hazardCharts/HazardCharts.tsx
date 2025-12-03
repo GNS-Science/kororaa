@@ -41,6 +41,25 @@ interface HazardChartsProps {
   dispatch: React.Dispatch<Partial<HazardPageState>>;
 }
 
+const HazardChartsContainer = styled(Box)(({ theme }) => ({
+  display: "flex",
+  padding: 20,
+  width: "100%",
+  height: "calc(50vw * 0.75)",
+  border: "solid black 1px",
+  [theme.breakpoints.down("md")]: {
+    flexDirection: "column",
+    height: "calc(100vw * 0.75 * 2)",
+  },
+}));
+
+const ChartContainer = styled(Box)(({ theme }) => ({
+  width: "50%",
+  [theme.breakpoints.down("md")]: {
+    width: "100%",
+  },
+}));
+
 const HazardCharts: React.FC<HazardChartsProps> = ({ data, state, dispatch }: HazardChartsProps) => {
   const locationList = useMemo(() => getLocationList(data), [data]);
   const allCurveGroups = useMemo(() => getAllCurveGroups(data), [data]);
@@ -80,25 +99,6 @@ const HazardCharts: React.FC<HazardChartsProps> = ({ data, state, dispatch }: Ha
       return [SA_GMIN, SA_GMAX];
     }
   }, [saCurvesWithColors]);
-
-  const HazardChartsContainer = styled(Box)(({ theme }) => ({
-    display: "flex",
-    padding: 20,
-    width: "100%",
-    height: "calc(50vw * 0.75)",
-    border: "solid black 1px",
-    [theme.breakpoints.down("md")]: {
-      flexDirection: "column",
-      height: "calc(100vw * 0.75 * 2)",
-    },
-  }));
-
-  const ChartContainer = styled(Box)(({ theme }) => ({
-    width: "50%",
-    [theme.breakpoints.down("md")]: {
-      width: "100%",
-    },
-  }));
 
   return (
     <>

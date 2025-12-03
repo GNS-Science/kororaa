@@ -43,20 +43,11 @@ describe("Hazard Curves", () => {
   });
 
   it("Displays field error if invalid location coordinates are entered ", () => {
-    cy.get(
-      '[class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-1x51dt5-MuiInputBase-input-MuiInput-input"]',
-    )
-      .first()
-      .clear()
-      .type("-40, 181");
+    cy.get('[id="lat-lon-input"]').first().clear().type("-40, 181");
 
     cy.get('p[id="lat-lon-component-helper-text"]').should("contain.text", "Invalid lat, lon input");
 
-    cy.get(
-      '[class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-1x51dt5-MuiInputBase-input-MuiInput-input"]',
-    )
-      .first()
-      .clear();
+    cy.get('[id="lat-lon-input"]').first().clear();
   });
 
   it("Displays out of range error when POE over 100 or below 0 is selected", () => {
@@ -113,11 +104,7 @@ describe("Hazard Curves", () => {
     cy.get('[data-testid="ArrowDropDownIcon"]').first().click({ force: true });
     // cy.get("li").contains("Christchurch").click({ force: true });
     cy.get("li").contains("Wellington").click({ force: true });
-    cy.get(
-      '[class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-1x51dt5-MuiInputBase-input-MuiInput-input"]',
-    )
-      .first()
-      .type("-42, 173"); // MSW returns a single curve
+    cy.get('[id="lat-lon-input"]').first().type("-42, 173"); // MSW returns a single curve
 
     // // Change VS30 temporary workaround for API change issue
     // cy.get("div").contains("400").click();
@@ -130,12 +117,7 @@ describe("Hazard Curves", () => {
   });
 
   it("Displays error on chart if some location data is missing", () => {
-    cy.get(
-      '[class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-1x51dt5-MuiInputBase-input-MuiInput-input"]',
-    )
-      .first()
-      .clear()
-      .type("-40, 180");
+    cy.get('[id="lat-lon-input"]').first().clear().type("-40, 180");
     cy.get('[type="submit"]').click({ force: true });
 
     // get the plots view message

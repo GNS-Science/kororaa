@@ -22,7 +22,6 @@ export const ComboRuptureMap: React.FC = () => {
   const [isPending, startTransition] = useTransition();
   const [fullscreen, setFullscreen] = React.useState<boolean>(false);
   const [scrollHeight, setScrollHeight] = useState<number>(0);
-  const [geoJsonError, setGeoJsonError] = useState<string | null>(null);
 
   const initialData = useLazyLoadQuery<ComboRuptureMapPageQuery>(comboRuptureMapPageQuery, {
     first: 5,
@@ -68,13 +67,7 @@ export const ComboRuptureMap: React.FC = () => {
     return () => window.removeEventListener("scroll", updateScrollHeight);
   }, []);
 
-  useEffect(() => {
-    if (!faultSurfacesGeojson && state.faultSystem !== "") {
-      setGeoJsonError("No ruptures satisfy the filter.");
-    } else {
-      setGeoJsonError(null);
-    }
-  }, [faultSurfacesGeojson, state.faultSystem, setGeoJsonError]);
+  const geoJsonError = !faultSurfacesGeojson && state.faultSystem !== "" ? "No ruptures satisfy the filter." : null;
 
   return (
     <>

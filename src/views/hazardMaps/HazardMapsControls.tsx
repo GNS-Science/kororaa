@@ -46,25 +46,19 @@ const HazardMapsControls: React.FC<HazardMapsControlsProps> = ({
   const [statistic, setStatistic] = useState<string>(state.statistic);
   const [vs30, setVs30] = useState<number>(state.vs30);
   const [poe, setPoe] = useState<number>(state.poe);
-  const [colorScale, setColorScale] = useState<string>("inferno");
   const [gridOpacity, setGridOpacity] = useState<number>(100);
   const [dataFetched, setDataFetched] = useState<boolean>(true);
   const [controlsChanged, setControlsChanged] = useState<number>(0);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setControlsChanged(controlsChanged + 1);
     if (controlsChanged >= 1) {
       setDataFetched(false);
     }
   }, [spectralPeriod, statistic, vs30, poe, gridOpacity]);
 
-  useEffect(() => {
-    if (statistic === "cov") {
-      setColorScale("viridis");
-    } else {
-      setColorScale("inferno");
-    }
-  }, [statistic]);
+  const colorScale = statistic === "cov" ? "viridis" : "inferno";
 
   const handleSubmit = () => {
     setDataFetched(true);

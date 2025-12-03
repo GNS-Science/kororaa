@@ -28,6 +28,7 @@ export const InfoTooltip: React.FC<InfoTooltipProps> = ({ content, format }) => 
   };
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     getPosition();
   }, []);
 

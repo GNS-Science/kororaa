@@ -22,15 +22,15 @@ const ModelComponentsPage: React.FC = () => {
   return (
     <PageContainer>
       <Grid container columns={{ sm: 6, md: 8, lg: 12 }}>
-        <Grid item xs={2} />
-        <Grid item xs={8}>
+        <Grid size={{ xs: 2 }} />
+        <Grid size={{ xs: 8 }}>
           <Grid container spacing={2} columns={{ sm: 6, md: 8, lg: 12 }}>
-            <Grid item xs={12}>
+            <Grid size={{ xs: 12 }}>
               <TitleContainer>
                 <Typography variant="h2">Model Components</Typography>
               </TitleContainer>
             </Grid>
-            <Grid item xs={12}>
+            <Grid size={{ xs: 12 }}>
               <Typography variant="body1">
                 Please contact us at <a href="mailto:nshm@gns.cri.nz">nshm@gns.cri.nz</a> for OpenQuake input files and
                 instructions on how to run the NSHM.
@@ -38,7 +38,7 @@ const ModelComponentsPage: React.FC = () => {
             </Grid>
           </Grid>
         </Grid>
-        <Grid item xs={2} />
+        <Grid size={{ xs: 2 }} />
       </Grid>
     </PageContainer>
   );
