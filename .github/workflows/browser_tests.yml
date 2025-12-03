@@ -26,24 +26,8 @@ jobs:
           echo GENERATE_SOURCEMAP=false >> .env
           cat .env
 
-      - name: Node Setup
-        uses: actions/setup-node@v6
-        with:
-          node-version: 22
-          registry-url: https://npm.pkg.github.com/
-          scope: "@gns-science"
-
-      - name: Yarn setup
-        env:
-          NPM_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GENERATE_SOURCEMAP: false
-        run: |
-          corepack enable
-          yarn set version berry
-          yarn config set npmScopes.gns-science.npmRegistryServer "https://npm.pkg.github.com"
-          yarn config set npmScopes.gns-science.npmAlwaysAuth true
-          yarn config set npmScopes.gns-science.npmAuthToken $NPM_AUTH_TOKEN          
-          yarn install --immutable
+      - name: node and yarn
+        uses: ./.github/actions/installYarn
 
       - name: Cypress run
         uses: cypress-io/github-action@v6

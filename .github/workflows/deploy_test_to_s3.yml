@@ -13,29 +13,17 @@ jobs:
     timeout-minutes: 10
     environment: AWS_TEST
 
-    strategy:
-      matrix:
-        node-version: [22]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
-      - name: Node Setup
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ matrix.node-version }}
-          registry-url: https://npm.pkg.github.com/
-          scope: "@gns-science"
+      - name: node and yarn
+        uses: ./.github/actions/installYarn
 
       - name: Yarn Test
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GENERATE_SOURCEMAP: false
         run: |
-          yarn install --frozen-lockfile
           yarn lint
           yarn prettier-check          
           yarn test

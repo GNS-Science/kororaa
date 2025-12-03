@@ -1,0 +1,23 @@
+name: Set up Node and Yarn
+
+runs:
+  using: "composite"
+  steps:
+    - name: Node Setup
+      uses: actions/setup-node@v6
+      with:
+        node-version: 22
+        registry-url: https://npm.pkg.github.com/
+        scope: "@gns-science"
+
+    - name: Yarn setup
+      shell: bash
+      env:
+        GENERATE_SOURCEMAP: false
+      run: |
+        corepack enable
+        yarn set version berry
+        yarn config set npmScopes.gns-science.npmRegistryServer "https://npm.pkg.github.com"
+        yarn config set npmScopes.gns-science.npmAlwaysAuth true
+        yarn config set npmScopes.gns-science.npmAuthToken ${{ github.token }}        
+        yarn install --immutable
