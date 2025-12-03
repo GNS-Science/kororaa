@@ -18,6 +18,7 @@ runs:
           scope: "@gns-science"
 
       - name: Yarn setup
+        shell: bash
         env:
           NPM_AUTH_TOKEN: ${{ inputs.gh-token }}
           GENERATE_SOURCEMAP: false
