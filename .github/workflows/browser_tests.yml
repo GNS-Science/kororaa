@@ -27,7 +27,7 @@ jobs:
           cat .env
 
       - name: node and yarn
-        uses: ./.github/actions/python-install
+        uses: ./.github/actions/installYarn
 
       - name: Cypress run
         uses: cypress-io/github-action@v6
