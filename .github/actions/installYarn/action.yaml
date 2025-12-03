@@ -1,5 +1,11 @@
 name: Set up Node and Yarn
 
+inputs:
+  gh-token:
+    description: The GitHub token
+    required: true
+    type: string
+
 runs:
   using: "composite"
   steps:
@@ -13,7 +19,7 @@ runs:
 
       - name: Yarn setup
         env:
-          NPM_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_AUTH_TOKEN: ${{ inputs.gh-token }}
           GENERATE_SOURCEMAP: false
         run: |
           corepack enable
