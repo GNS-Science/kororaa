@@ -14,7 +14,7 @@ describe("HazardMapsPage", () => {
 
   it("Map initially displays default map tile layer and changes map tile layer when user selects different option", () => {
     cy.get('img[src*="cartocdn"]');
-    cy.get('[class="leaflet-control-layers-toggle"]').trigger('mouseover')
+    cy.get('[class="leaflet-control-layers-toggle"]').trigger("mouseover");
     // double-checking the radio box is a workaround
     // this does work in real life with a single click
     // it also works with a single instruction in javascript as document.getElementsByClassName("leaflet-control-layers-selector")[3].click()
