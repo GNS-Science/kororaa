@@ -21,7 +21,7 @@ runs:
         shell: bash
         env:
           GENERATE_SOURCEMAP: false
-          TOKEN: ${{ inputs.gh-token }} 
+          TOKEN: ${{ github.token }} 
         run: |
           corepack enable
           yarn set version berry
