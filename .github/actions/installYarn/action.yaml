@@ -1,11 +1,5 @@
 name: Set up Node and Yarn
 
-inputs:
-  gh-token:
-    description: The GitHub token
-    required: true
-    type: string
-
 runs:
   using: "composite"
   steps:
@@ -21,11 +15,10 @@ runs:
         shell: bash
         env:
           GENERATE_SOURCEMAP: false
-          TOKEN: ${{ github.token }} 
         run: |
           corepack enable
           yarn set version berry
           yarn config set npmScopes.gns-science.npmRegistryServer "https://npm.pkg.github.com"
           yarn config set npmScopes.gns-science.npmAlwaysAuth true
-          yarn config set npmScopes.gns-science.npmAuthToken $TOKEN         
+          yarn config set npmScopes.gns-science.npmAuthToken ${{ github.token }}        
           yarn install --immutable

@@ -28,8 +28,6 @@ jobs:
 
       - name: node and yarn
         uses: ./.github/actions/installYarn
-        with:
-          gh-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Cypress run
         uses: cypress-io/github-action@v6
