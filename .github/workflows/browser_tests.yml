@@ -52,6 +52,4 @@ jobs:
           record: true
           start: yarn run vite --host
         env:
-          # NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          # GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY}}
