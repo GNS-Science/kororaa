@@ -10,6 +10,7 @@ All notable changes to this project will be documented in this file.
 - upgraded toshi-nest to 4.0.1
 - upgraded other dependencies
 - adjusted Cypress tests to new mui elements
+- fullscreen button is disabled
 
 ### Removed
 
