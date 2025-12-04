@@ -30,7 +30,7 @@ interface PreviewCardProps {
 
 const PreviewCard: React.FC<PreviewCardProps> = ({ title, text, img }: PreviewCardProps) => {
   return (
-    <Grid item xs={4}>
+    <Grid size={{ xs: 4 }}>
       <Card>
         <CardContent>
           <Typography variant="h4">{title}</Typography>
@@ -48,8 +48,8 @@ const PreviewsPage: React.FC = () => {
   return (
     <PageContainer>
       <Grid container columns={{ sm: 6, md: 8, lg: 12 }}>
-        <Grid item xs={2} />
-        <Grid item xs={8}>
+        <Grid size={{ xs: 2 }} />
+        <Grid size={{ xs: 8 }}>
           <Grid container spacing={2} columns={{ sm: 6, md: 8, lg: 12 }}>
             <PreviewTitleContainer>
               <Typography variant="h2">Coming features</Typography>
@@ -79,7 +79,7 @@ const PreviewsPage: React.FC = () => {
             />
           </Grid>
         </Grid>
-        <Grid item xs={2} />
+        <Grid size={{ xs: 2 }} />
       </Grid>
     </PageContainer>
   );

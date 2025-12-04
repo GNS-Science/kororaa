@@ -23,10 +23,10 @@ const AboutPage: React.FC = () => {
   return (
     <PageContainer>
       <Grid container columns={{ sm: 6, md: 8, lg: 12 }}>
-        <Grid item xs={2} />
-        <Grid item xs={8}>
+        <Grid size={{ xs: 2 }} />
+        <Grid size={{ xs: 8 }}>
           <Grid container spacing={2} columns={{ sm: 6, md: 8, lg: 12 }}>
-            <Grid item xs={12}>
+            <Grid size={{ xs: 12 }}>
               <TitleContainer>
                 <Typography variant="h2">About The NSHM</Typography>
                 <Typography variant="body1">
@@ -39,14 +39,14 @@ const AboutPage: React.FC = () => {
               </TitleContainer>
             </Grid>
 
-            <Grid item xs={12}>
+            <Grid size={{ xs: 12 }}>
               <Typography variant="body1">
                 GNS Science is the custodian of the <strong>Aotearoa New Zealand National Seismic Hazard Model</strong>,
                 also known as <strong>Te Tauira Matapae Pūmate Rū i Aotearoa.</strong>
               </Typography>
             </Grid>
 
-            <Grid item xs={12}>
+            <Grid size={{ xs: 12 }}>
               <Typography variant="body1">
                 This web site provides scientists and researchers with access to the NSHM results and data. For
                 background information and educational material please visit the&nbsp;
@@ -61,7 +61,7 @@ const AboutPage: React.FC = () => {
                 .
               </Typography>
             </Grid>
-            <Grid item xs={12}>
+            <Grid size={{ xs: 12 }}>
               <Typography variant="body1">
                 Details on model development and implementation can be found in the&nbsp;
                 <Link underline="hover" component={RouterLink} color="secondary" to="/Resources/ScienceReports">
@@ -70,7 +70,7 @@ const AboutPage: React.FC = () => {
                 &nbsp;page.
               </Typography>
             </Grid>
-            <Grid item xs={12}>
+            <Grid size={{ xs: 12 }}>
               <Typography variant="body1">
                 Planned features for the site can be found in the&nbsp;
                 <Link underline="hover" component={RouterLink} color="secondary" to="/Previews">
@@ -81,7 +81,7 @@ const AboutPage: React.FC = () => {
             </Grid>
           </Grid>
         </Grid>
-        <Grid item xs={2} />
+        <Grid size={{ xs: 2 }} />
       </Grid>
     </PageContainer>
   );

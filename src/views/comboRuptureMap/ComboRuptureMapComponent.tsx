@@ -153,12 +153,14 @@ export const ComboRuptureMapComponent = (props: ComboRuptureMapComponentProps) =
   useEffect(() => {
     if (needsMore && hasNext && mapControlsState.showAnimation) {
       loadNext(5);
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setNeedsMore(false);
     }
   }, [hasNext, needsMore, loadNext, mapControlsState]);
 
   useEffect(() => {
     if (!needsMore && !hasNoMore) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setHasNoMore(false);
     }
   }, [needsMore, hasNoMore]);

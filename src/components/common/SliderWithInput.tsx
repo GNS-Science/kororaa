@@ -43,7 +43,7 @@ export const SliderWithInput: React.FC<SliderWithInputProps> = ({
         </Typography>
       </Tooltip>
       <Grid container spacing={2} alignItems="center">
-        <Grid item xs>
+        <Grid size="grow">
           <Slider
             value={typeof value === "number" ? value : 0}
             step={10}
@@ -53,7 +53,7 @@ export const SliderWithInput: React.FC<SliderWithInputProps> = ({
             max={100}
           />
         </Grid>
-        <Grid item>
+        <Grid>
           <Input
             value={value}
             onChange={handleInputChange}

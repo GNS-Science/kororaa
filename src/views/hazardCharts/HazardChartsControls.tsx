@@ -95,10 +95,12 @@ const HazardChartsControls: React.FC<HazardChartsControlsProps> = ({
 
   useEffect(() => {
     const combinedLocationData = combineLocationData(locations, latLon);
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setLocationData(combinedLocationData);
   }, [locations, latLon]);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setControlsChanged(controlsChanged + 1);
     if (controlsChanged >= 2) {
       setDataFetched(false);

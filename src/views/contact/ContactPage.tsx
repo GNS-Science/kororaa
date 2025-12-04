@@ -41,7 +41,7 @@ export interface MenuCardProps {
 
 const MenuCard: React.FC<MenuCardProps> = ({ title, text, img, url }: MenuCardProps) => {
   return (
-    <Grid item xs={4}>
+    <Grid size={{ xs: 4 }}>
       <Card>
         <CardActionArea component={Link} target="_blank" rel="noopener" href={url}>
           <CardContent>
@@ -57,7 +57,7 @@ const MenuCard: React.FC<MenuCardProps> = ({ title, text, img, url }: MenuCardPr
 
 const EmailCard: React.FC<EmailCardProps> = ({ title, email }: EmailCardProps) => {
   return (
-    <Grid item xs={12}>
+    <Grid size={{ xs: 12 }}>
       <StyledCard>
         <CardContent>
           <Typography variant="h5">{title}</Typography>
@@ -84,10 +84,10 @@ const ContactPage: React.FC = () => {
   return (
     <PageContainer>
       <Grid container columns={{ sm: 6, md: 8, lg: 12 }}>
-        <Grid item xs={2} />
-        <Grid item xs={8}>
+        <Grid size={{ xs: 2 }} />
+        <Grid size={{ xs: 8 }}>
           <Grid container spacing={2} columns={{ sm: 6, md: 8, lg: 12 }}>
-            <Grid item xs={12}>
+            <Grid size={{ xs: 12 }}>
               <TitleContainer>
                 <Typography variant="h2">Contacts</Typography>
                 <Typography variant="body1">
@@ -116,7 +116,7 @@ const ContactPage: React.FC = () => {
             <EmailCard title="Email Address" email="nshm@gns.cri.nz" />
           </Grid>
         </Grid>
-        <Grid item xs={2} />
+        <Grid size={{ xs: 2 }} />
       </Grid>
     </PageContainer>
   );

@@ -7,14 +7,15 @@ on:
       - deploy-test
 
   # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:      
+  workflow_dispatch:
 
 jobs:
   cypress-run:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
+
       - name: create env file
         run: |
           touch .env
@@ -24,19 +25,15 @@ jobs:
           echo VITE_GRAPHQL_API_KEY=$##@! >> .env
           echo GENERATE_SOURCEMAP=false >> .env
           cat .env
-      - name: Node Setup
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          registry-url: https://npm.pkg.github.com/
-          scope: "@gns-science"
+
+      - name: node and yarn
+        uses: ./.github/actions/installYarn
+
       - name: Cypress run
-        uses: cypress-io/github-action@v5
+        uses: cypress-io/github-action@v6
         with:
           wait-on: http://localhost:5173
           record: true
           start: yarn run vite --host
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY}}

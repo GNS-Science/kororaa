@@ -1,4 +1,4 @@
-import { graphql } from "msw";
+import { graphql, HttpResponse } from "msw";
 import {
   wellington400Response,
   wellingtonChristchurchResponse,
@@ -7,50 +7,43 @@ import {
   missingLocationResponse,
 } from "./mockData/hazardMocks/HazardChartsPlotsViewMockData";
 import { hazardMapMockData } from "./mockData/hazardMocks/HazardMapMockData";
-import { IFMAllLocationsMockData } from "./mockData/IFMMocks/IFMAllLocationsMockData";
-import { IFMControlsMockData } from "./mockData/IFMMocks/IFMControlsMockData";
-import { IFMEmptyMockData } from "./mockData/IFMMocks/IFMEmptyMockData";
-import { IFMTextualContentMockData } from "./mockData/IFMMocks/IFMTextualContentMockData";
-import { IFMWellington100kmMockData } from "./mockData/IFMMocks/IFMWellington100kmMockData";
 import { ruptureAnimationMock1 } from "./mockData/ruptureAnimationMockPagination/ruptureAnimationMock1";
-import { ruptureAnimationMock2 } from "./mockData/ruptureAnimationMockPagination/ruptureAnimationMock2";
-import { ruptureAnimationMock3 } from "./mockData/ruptureAnimationMockPagination/ruptureAnimationMock3";
-import { ruptureAnimationMock4 } from "./mockData/ruptureAnimationMockPagination/ruptureAnimationMock4";
-import { ruptureAnimationMock5 } from "./mockData/ruptureAnimationMockPagination/ruptureAnimationMock5";
 import { solvisControlsMock } from "./mockData/solvisControlsMock";
 import { multiRupturePageInitialResponse } from "./mockData/multiRupturePageMocks/multiRupturePageInitialResponse";
 import { multiRupturePageCrustalAllLocations } from "./mockData/multiRupturePageMocks/multiRupturePageCrustalAllLocations";
 import { multiRupturePageCrustalGYM100km } from "./mockData/multiRupturePageMocks/multiRupturePageCrustalGYM100km";
 import { multiRupturePageCrustalGYMCHC100km } from "./mockData/multiRupturePageMocks/multiRupturePageCrustalGYMCHC100km";
 import { multiRupturePageLocationsNoRuptures } from "./mockData/multiRupturePageMocks/multiRupturePageLocationsNoRuptures";
+import { textual_content_tech_info, textual_content_science_reports } from "./mockData/textMocks";
+import { disaggregation_reports } from "./mockData/disaggregationMocks/disaggregationQuery";
 
 export const handlers = [
-  graphql.query("HazardChartsPlotsViewQuery", (req, res, ctx) => {
-    const locations = req.variables.locs;
-    const vs30 = req.variables.vs30s;
+  graphql.query("HazardChartsPlotsViewQuery", ({ variables }) => {
+    const locations = variables.locs;
+    const vs30 = variables.vs30s;
 
     if (vs30.includes(250)) {
-      return res(ctx.data(initialResponse));
+      return HttpResponse.json({ data: initialResponse });
     }
     if (locations.includes("-40~180")) {
-      return res(ctx.data(missingLocationResponse));
+      return HttpResponse.json({ data: missingLocationResponse });
     }
 
     if (locations.includes("-41.3~174.78") && locations.includes("-43.53~172.63") && vs30.includes(400)) {
-      return res(ctx.data(wellingtonChristchurchResponse));
+      return HttpResponse.json({ data: wellingtonChristchurchResponse });
     }
 
     if (locations.includes("-41.3~174.78") && vs30.includes(400)) {
-      return res(ctx.data(wellington400Response));
+      return HttpResponse.json({ data: wellington400Response });
     }
 
     if (locations.includes("-42~173") && vs30.includes(400)) {
-      return res(ctx.data(arbitraryLatLonResponse));
+      return HttpResponse.json({ data: arbitraryLatLonResponse });
     }
   }),
-  graphql.query("HazardChartsPageQuery", (_req, res, ctx) => {
-    return res(
-      ctx.data({
+  graphql.query("HazardChartsPageQuery", () => {
+    return HttpResponse.json({
+      data: {
         textual_content: {
           ok: true,
           content: [
@@ -65,78 +58,68 @@ export const handlers = [
             },
           ],
         },
-      }),
-    );
+      },
+    });
   }),
-  graphql.query("HazardMapsPageQuery", (_req, res, ctx) => {
-    return res(ctx.data(hazardMapMockData));
+  graphql.query("HazardMapsPageQuery", () => {
+    return HttpResponse.json({ data: hazardMapMockData });
   }),
-  graphql.query("FaultModelPageQuery", (_req, res, ctx) => {
-    return res(ctx.data(IFMTextualContentMockData));
-  }),
-  graphql.query("FaultModelPageSolvisQuery", (req, res, ctx) => {
-    const locations = req.variables.location_codes;
-    const id = req.variables.solution_id;
-    if (id === "") {
-      return res(ctx.data(IFMEmptyMockData));
-    }
-    if (locations.length === 0 && id !== "") {
-      return res(ctx.data(IFMAllLocationsMockData));
-    }
-    if (locations.includes("WLG")) {
-      return res(ctx.data(IFMWellington100kmMockData));
-    }
-  }),
-  graphql.query("FaultModelControlsQuery", (_req, res, ctx) => {
-    return res(ctx.data(IFMControlsMockData));
-  }),
-  graphql.query("ComboRuptureMapPageQuery", (req, res, ctx) => {
-    const after = req.variables.after;
-    const faultSystem = req.variables.fault_system;
-    const locationIds = req.variables.location_ids;
-    const radiusKm = req.variables.radius_km;
-    const sortBy = req.variables.sortby;
+  graphql.query("ComboRuptureMapPageQuery", ({ variables }) => {
+    const after = variables.after;
+    const faultSystem = variables.fault_system;
+    const locationIds = variables.location_ids;
+    const radiusKm = variables.radius_km;
+    const sortBy = variables.sortby;
 
     if (faultSystem === "") {
-      return res(ctx.data(multiRupturePageInitialResponse));
+      return HttpResponse.json({ data: multiRupturePageInitialResponse });
     }
     if (faultSystem === "CRU" && locationIds.length === 0) {
-      return res(ctx.data(multiRupturePageCrustalAllLocations));
+      return HttpResponse.json({ data: multiRupturePageCrustalAllLocations });
     }
     if (faultSystem === "CRU" && locationIds[0] === "GMN" && locationIds.length === 1) {
-      return res(ctx.data(multiRupturePageCrustalGYM100km));
+      return HttpResponse.json({ data: multiRupturePageCrustalGYM100km });
     }
     if (faultSystem === "CRU" && locationIds.length === 2) {
-      return res(ctx.data(multiRupturePageCrustalGYMCHC100km));
+      return HttpResponse.json({ data: multiRupturePageCrustalGYMCHC100km });
     }
     if (faultSystem === "HIK" && locationIds.length === 2) {
-      return res(ctx.data(multiRupturePageLocationsNoRuptures));
+      return HttpResponse.json({ data: multiRupturePageLocationsNoRuptures });
     }
-    if (faultSystem === "PUY" && locationIds[0] === "ZQN" && radiusKm === 100 && sortBy === null) {
+    if (faultSystem === "CRU" && locationIds[0] === "ZQN" && radiusKm === 100 && sortBy === null) {
       if (after === null) {
-        return res(ctx.data(ruptureAnimationMock1));
+        return HttpResponse.json({ data: ruptureAnimationMock1 });
       }
     }
   }),
-  graphql.operation((req, res, ctx) => {
-    const after = req.variables.after;
-    if (after === "UnVwdHVyZURldGFpbENvbm5lY3Rpb25DdXJzb3I6OQ==") {
-      return res(ctx.data(ruptureAnimationMock2));
-    }
-    if (after === "UnVwdHVyZURldGFpbENvbm5lY3Rpb25DdXJzb3I6MTQ=") {
-      return res(ctx.data(ruptureAnimationMock3));
-    }
-    if (after === "UnVwdHVyZURldGFpbENvbm5lY3Rpb25DdXJzb3I6MTk=") {
-      return res(ctx.data(ruptureAnimationMock4));
-    }
-    if (after === "UnVwdHVyZURldGFpbENvbm5lY3Rpb25DdXJzb3I6MjQ=") {
-      return res(ctx.data(ruptureAnimationMock5));
-    }
+  graphql.query("ComboRuptureMapPageControlsQuery", () => {
+    return HttpResponse.json({ data: solvisControlsMock });
   }),
-  graphql.query("ComboRuptureMapPageControlsQuery", (_req, res, ctx) => {
-    return res(ctx.data(solvisControlsMock));
+  graphql.query("MultiRuptureMapPageControlsQuery", () => {
+    return HttpResponse.json({ data: solvisControlsMock });
   }),
-  graphql.query("MultiRuptureMapPageControlsQuery", (_req, res, ctx) => {
-    return res(ctx.data(solvisControlsMock));
+  graphql.query("TechInfoPageQuery", () => {
+    return HttpResponse.json({ data: textual_content_tech_info });
+  }),
+  graphql.query("ScienceReportsPageQuery", () => {
+    return HttpResponse.json({ data: textual_content_science_reports });
+  }),
+  graphql.query("DisaggregationsPageQuery", () => {
+    return HttpResponse.json({ data: disaggregation_reports });
+  }),
+  graphql.query("HazardMapsPageQuery", () => {
+    return HttpResponse.json({ data: hazardMapMockData });
+  }),
+  graphql.query("TechInfoPageQuery", () => {
+    return HttpResponse.json({ data: textual_content_tech_info });
+  }),
+  graphql.query("ScienceReportsPageQuery", () => {
+    return HttpResponse.json({ data: textual_content_science_reports });
+  }),
+  graphql.query("DisaggregationsPageQuery", () => {
+    return HttpResponse.json({ data: disaggregation_reports });
+  }),
+  graphql.query("HazardMapsPageQuery", () => {
+    return HttpResponse.json({ data: hazardMapMockData });
   }),
 ];

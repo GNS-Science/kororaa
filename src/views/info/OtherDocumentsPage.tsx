@@ -27,19 +27,19 @@ const OtherDocumentsPage: React.FC = () => {
   return (
     <PageContainer>
       <Grid container columns={{ sm: 6, md: 8, lg: 12 }}>
-        <Grid item xs={2} />
-        <Grid spacing={3} item xs={8}>
+        <Grid size={{ xs: 2 }} />
+        <Grid spacing={3} size={{ xs: 8 }}>
           <Typography variant="h2">Other Documents</Typography>
           <SectionContainer>
             <Grid container spacing={3} columns={{ sm: 6, md: 8, lg: 12 }}>
-              <Grid item xs={12}>
+              <Grid size={{ xs: 12 }}>
                 <StyledCard>
                   <CardContent>
                     <Grid container spacing={1} columns={{ sm: 6, md: 8, lg: 12 }}>
-                      <Grid item xs={10}>
+                      <Grid size={{ xs: 10 }}>
                         <Typography variant="h4">NSHM Project Assurance Review</Typography>
                       </Grid>
-                      <Grid item xs={2}>
+                      <Grid size={{ xs: 2 }}>
                         <Button
                           component={Link}
                           target="_blank"
@@ -66,7 +66,7 @@ const OtherDocumentsPage: React.FC = () => {
             </Grid>
           </SectionContainer>
         </Grid>
-        <Grid item xs={2} />
+        <Grid size={{ xs: 2 }} />
       </Grid>
     </PageContainer>
   );

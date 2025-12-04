@@ -26,7 +26,7 @@ const Footer: React.FC = () => {
   return (
     <FooterContainer>
       <Grid container columns={{ sm: 6, md: 8, lg: 12 }}>
-        <Grid item xs={2}>
+        <Grid size={{ xs: 2 }}>
           <FooterLinkItems>
             <Link underline="hover" component={RouterLink} color="inherit" to="/TechInfo">
               Technical Info
@@ -39,7 +39,7 @@ const Footer: React.FC = () => {
             </Link>
           </FooterLinkItems>
         </Grid>
-        <Grid item xs={8}>
+        <Grid size={{ xs: 8 }}>
           <FooterLinkItems>
             <Typography variant="body1" textAlign="center">
               <em>

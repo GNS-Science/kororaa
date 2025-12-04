@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file.
 
+## v1.2.10 - 2025-12-02
+
+### Changed
+
+- upgraded to yarn 4
+- upgraded toshi-nest to 4.0.1
+- upgraded other dependencies
+- adjusted Cypress tests to new mui elements
+- fullscreen button is disabled
+
+### Removed
+
+- `FaultModelPage` and associated files
+- removed unused `markdown-to-jsx` dependency
+
 ## v1.2.9 - 2025-07-31
 
 ### Changed

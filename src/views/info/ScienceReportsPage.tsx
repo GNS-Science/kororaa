@@ -48,14 +48,14 @@ interface IScienceReportCardProps {
 const ScienceReportCard: React.FC<IScienceReportCardProps> = ({ report }: IScienceReportCardProps) => {
   const file_url = "https://nshm-static-reports.gns.cri.nz/NSHM/ScienceReports/" + report.filename;
   return (
-    <Grid item xs={12}>
+    <Grid size={{ xs: 12 }}>
       <StyledCard>
         <CardContent>
           <Grid container spacing={1} columns={{ sm: 6, md: 8, lg: 12 }}>
-            <Grid item xs={10}>
+            <Grid size={{ xs: 10 }}>
               <Typography variant="h4">{report.title}</Typography>
             </Grid>
-            <Grid item xs={2}>
+            <Grid size={{ xs: 2 }}>
               <Button component={Link} target="_blank" rel="noopener" color="primary" href={file_url}>
                 View report
               </Button>
@@ -85,8 +85,8 @@ const ScienceReportsComponent: React.FC = () => {
   return (
     <PageContainer>
       <Grid container columns={{ sm: 6, md: 8, lg: 12 }}>
-        <Grid item xs={2} />
-        <Grid spacing={3} item xs={8}>
+        <Grid size={{ xs: 2 }} />
+        <Grid spacing={3} size={{ xs: 8 }}>
           <Typography variant="h2">Science Reports</Typography>
           <SectionContainer>
             <Grid container spacing={3} columns={{ sm: 6, md: 8, lg: 12 }}>
@@ -94,7 +94,7 @@ const ScienceReportsComponent: React.FC = () => {
             </Grid>
           </SectionContainer>
         </Grid>
-        <Grid item xs={2} />
+        <Grid size={{ xs: 2 }} />
       </Grid>
     </PageContainer>
   );

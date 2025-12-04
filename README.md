@@ -16,6 +16,8 @@ This will print a link for you to open in the browser.
 The page will reload if you make edits.\
 You will also see any lint errors in the console.
 
+You need an appropriate `.env` file to run `yarn dev`. You can base it on `.env.example`
+
 ### `yarn test`
 
 Launches the test runner in the interactive watch mode.\
@@ -34,3 +36,14 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 ### `yarn relay`
 
 Run this whenever any of the GraphQL queries has been modified.
+
+## Cypress
+
+Ensure that `VITE_MSW=test` is set in `.env` or wherever you manage your environment variables. This will make vite use the mocked graphql handlers in [./src/mocks/handlers.ts](./src/mocks/handlers.ts), replicating how we run cypress on GitHub.
+
+```
+yarn dev --host
+yarn run cypress open
+```
+
+and choose E2E tests.
