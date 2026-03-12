@@ -113,7 +113,7 @@ const ContactPage: React.FC = () => {
               img="images/GNS-home.png"
               url="https://www.gns.cri.nz/"
             />
-            <EmailCard title="Email Address" email="nshm@gns.cri.nz" />
+            <EmailCard title="Email Address" email="nshm@earthsciences.nz" />
           </Grid>
         </Grid>
         <Grid size={{ xs: 2 }} />

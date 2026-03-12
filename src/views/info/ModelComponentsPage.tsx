@@ -32,8 +32,8 @@ const ModelComponentsPage: React.FC = () => {
             </Grid>
             <Grid size={{ xs: 12 }}>
               <Typography variant="body1">
-                Please contact us at <a href="mailto:nshm@gns.cri.nz">nshm@gns.cri.nz</a> for OpenQuake input files and
-                instructions on how to run the NSHM.
+                Please contact us at <a href="mailto:nshm@earthsciences.nz">nshm@earthsciences.nz</a> for OpenQuake
+                input files and instructions on how to run the NSHM.
               </Typography>
             </Grid>
           </Grid>
