@@ -111,7 +111,7 @@ const ContactPage: React.FC = () => {
               title="Earth Sciences New Zealand"
               text="NSHM is among the many research programmes of Earth Sciences New Zealand."
               img="images/GNS-home.png"
-              url="https://www.gns.cri.nz/"
+              url="https://www.earthsciences.nz/"
             />
             <EmailCard title="Email Address" email="nshm@earthsciences.nz" />
           </Grid>
