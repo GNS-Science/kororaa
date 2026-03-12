@@ -97,7 +97,7 @@ const ContactPage: React.FC = () => {
             </Grid>
             <MenuCard
               title="Contact NSHM"
-              text="Web contact form for the NSHM project team at GNS Science."
+              text="Web contact form for the NSHM project team at Earth Sciences New Zealand."
               img="images/NSHM-feedback.png"
               url="https://www.gns.cri.nz/about-us/nshm-feedback/"
             />
@@ -108,8 +108,8 @@ const ContactPage: React.FC = () => {
               url="https://www.gns.cri.nz/research-projects/national-seismic-hazard-model/"
             />
             <MenuCard
-              title="GNS"
-              text="NSHM is among the many research programmes of GNS Science."
+              title="Earth Sciences New Zealand"
+              text="NSHM is among the many research programmes of Earth Sciences New Zealand."
               img="images/GNS-home.png"
               url="https://www.gns.cri.nz/"
             />
