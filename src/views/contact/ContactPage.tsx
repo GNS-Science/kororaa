@@ -43,8 +43,14 @@ export interface MenuCardProps {
 const MenuCard: React.FC<MenuCardProps> = ({ title, text, img, url, objectFit = "cover" }: MenuCardProps) => {
   return (
     <Grid size={{ xs: 4 }}>
-      <Card>
-        <CardActionArea component={Link} target="_blank" rel="noopener" href={url}>
+      <Card sx={{ height: "100%" }}>
+        <CardActionArea
+          component={Link}
+          target="_blank"
+          rel="noopener"
+          href={url}
+          sx={{ height: "100%", display: "flex", flexDirection: "column" }}
+        >
           <CardContent>
             <Typography variant="h5">{title}</Typography>
             <Typography>{text}</Typography>
