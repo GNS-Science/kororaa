@@ -41,8 +41,9 @@ const AboutPage: React.FC = () => {
 
             <Grid size={{ xs: 12 }}>
               <Typography variant="body1">
-                GNS Science is the custodian of the <strong>Aotearoa New Zealand National Seismic Hazard Model</strong>,
-                also known as <strong>Te Tauira Matapae Pūmate Rū i Aotearoa.</strong>
+                Earth Sciences New Zealand is the custodian of the{" "}
+                <strong>Aotearoa New Zealand National Seismic Hazard Model</strong>, also known as{" "}
+                <strong>Te Tauira Matapae Pūmate Rū i Aotearoa.</strong>
               </Typography>
             </Grid>
 
@@ -56,7 +57,7 @@ const AboutPage: React.FC = () => {
                   rel="noopener"
                   href="https://www.gns.cri.nz/research-projects/national-seismic-hazard-model/"
                 >
-                  GNS page
+                  NSHM information page
                 </Link>
                 .
               </Typography>

@@ -2,6 +2,7 @@ import React from "react";
 import { styled } from "@mui/material/styles";
 import Grid from "@mui/material/Grid";
 import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import { graphql } from "react-relay";
 import { useLazyLoadQuery } from "react-relay";
 import { TechInfoPageQuery } from "./__generated__/TechInfoPageQuery.graphql";
@@ -64,7 +65,7 @@ const TechInfoComponent: React.FC = () => {
             </Grid>
             <Grid size={{ xs: 12 }}>
               <StyledReactMarkdownContainer>
-                <ReactMarkdown>{markdown as string}</ReactMarkdown>
+                <ReactMarkdown remarkPlugins={[remarkGfm]}>{markdown as string}</ReactMarkdown>
               </StyledReactMarkdownContainer>
             </Grid>
           </Grid>

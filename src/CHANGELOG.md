@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
+## v1.2.11 - 2026-03-13
+
+### Changed
+
+- update logo to ESNZ
+- change email address and links to ESNZ
+- update about text from GNS to ESNZ
+- fix TechInfo locations table
+
 ## v1.2.10 - 2025-12-02
 
 ### Changed

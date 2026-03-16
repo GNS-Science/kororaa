@@ -29,7 +29,7 @@ const Home: React.FC = () => {
           <em>Te Tauira Matapae Pūmate Rū i Aotearoa • New Zealand National Seismic Hazard Model</em>
         </Typography>
         <Typography variant="h5">
-          <em>a GNS Science led research programme</em>
+          <em>an Earth Sciences New Zealand led research programme</em>
         </Typography>
       </HomeTitleContainer>
 
