@@ -37,9 +37,10 @@ export interface MenuCardProps {
   text: string;
   img: string;
   url: string;
+  objectFit?: string;
 }
 
-const MenuCard: React.FC<MenuCardProps> = ({ title, text, img, url }: MenuCardProps) => {
+const MenuCard: React.FC<MenuCardProps> = ({ title, text, img, url, objectFit = "cover" }: MenuCardProps) => {
   return (
     <Grid size={{ xs: 4 }}>
       <Card>
@@ -48,7 +49,7 @@ const MenuCard: React.FC<MenuCardProps> = ({ title, text, img, url }: MenuCardPr
             <Typography variant="h5">{title}</Typography>
             <Typography>{text}</Typography>
           </CardContent>
-          <CardMedia component="img" image={img} height="225px" sx={{ objectFit: "cover" }} />
+          <CardMedia component="img" image={img} height="225px" sx={{ objectFit }} />
         </CardActionArea>
       </Card>
     </Grid>
@@ -110,8 +111,9 @@ const ContactPage: React.FC = () => {
             <MenuCard
               title="Earth Sciences New Zealand"
               text="NSHM is among the many research programmes of Earth Sciences New Zealand."
-              img="images/GNS-home.png"
+              img="images/ESNZ_logo_small.png"
               url="https://www.earthsciences.nz/"
+              objectFit="contain"
             />
             <EmailCard title="Email Address" email="nshm@earthsciences.nz" />
           </Grid>
