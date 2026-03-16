@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## v1.2.11 - 2026-03-13
+## v1.2.11 - 2026-03-16
 
 ### Changed
 
@@ -10,6 +10,8 @@ All notable changes to this project will be documented in this file.
 - change email address and links to ESNZ
 - update about text from GNS to ESNZ
 - fix TechInfo locations table
+- make all MenuCards the same hight
+- change old GNS images to NSHM logo or ESNZ logo
 
 ## v1.2.10 - 2025-12-02
 
