@@ -9,18 +9,19 @@ export interface MenuCardProps {
   text: string;
   img: string;
   url: string;
+  objectFit?: string;
 }
 
-const MenuCard: React.FC<MenuCardProps> = ({ title, text, img, url }: MenuCardProps) => {
+const MenuCard: React.FC<MenuCardProps> = ({ title, text, img, url, objectFit = "cover" }: MenuCardProps) => {
   return (
     <Grid size={{ xs: 2 }}>
-      <Card>
-        <CardActionArea component={Link} to={url}>
+      <Card sx={{ height: "100%" }}>
+        <CardActionArea component={Link} to={url} sx={{ height: "100%", display: "flex", flexDirection: "column" }}>
           <CardContent>
             <Typography variant="h5">{title}</Typography>
             <Typography>{text}</Typography>
           </CardContent>
-          <CardMedia component="img" height="225px" image={img} sx={{ objectFit: "cover" }} />
+          <CardMedia component="img" height="225px" image={img} sx={{ objectFit }} />
         </CardActionArea>
       </Card>
     </Grid>
