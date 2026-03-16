@@ -1,6 +1,7 @@
 import React from "react";
 import { styled } from "@mui/material/styles";
 import Grid from "@mui/material/Grid";
+import { MenuCardProps } from "../home/MenuCard";
 
 import { FormControlLabel, IconButton } from "@mui/material";
 import EmailIcon from "@mui/icons-material/Email";
@@ -30,14 +31,6 @@ const TitleContainer = styled("div")({
 interface EmailCardProps {
   title: string;
   email: string;
-}
-
-export interface MenuCardProps {
-  title: string;
-  text: string;
-  img: string;
-  url: string;
-  objectFit?: string;
 }
 
 const MenuCard: React.FC<MenuCardProps> = ({ title, text, img, url, objectFit = "cover" }: MenuCardProps) => {
