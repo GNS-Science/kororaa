@@ -112,7 +112,7 @@ const HazardCharts: React.FC<HazardChartsProps> = ({ data, state, dispatch }: Ha
               xLabel="Acceleration (g)"
               yLabel="Annual Probability of Exceedance"
               xLimits={
-                state.hazardXScale === "linear" ? [HAZARD_GMIN, HAZARD_GMAX] : [HAZARD_GMIN_LOG, 5]
+                state.hazardXScale === "linear" ? [HAZARD_GMIN, HAZARD_GMAX] : [HAZARD_GMIN_LOG, HAZARD_GMAX_LOG]
               }
               yLimits={[HAZARD_POEMIN, HAZARD_POEMAX]}
               tooltip={true}
