@@ -122,6 +122,7 @@ const HazardCharts: React.FC<HazardChartsProps> = ({ data, state, dispatch }: Ha
               poe={state.poe}
               uncertainty={state.hazardUncertainty}
               timePeriod={state.timePeriod}
+              numTickX={state.hazardXScale === "linear" ? null : 2}
             />
           </div>
         </ChartContainer>
@@ -148,6 +149,7 @@ const HazardCharts: React.FC<HazardChartsProps> = ({ data, state, dispatch }: Ha
                 poe={state.poe}
                 uncertainty={state.spectralUncertainty}
                 timePeriod={state.timePeriod}
+                numTickX={state.spectraXScale === "linear" ? null : 2}
               />
             </div>
           </ChartContainer>
