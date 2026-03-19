@@ -284,13 +284,13 @@ const NavBar: React.FC = () => {
             <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
               <MainMenu pages={pages} />
             </Box>
-            {/*<CardMedia component="img" height="100" image="/images/ESNZ_logo.png" alt="ESNZ logo" />*/}
+            {/*<CardMedia component="img" height="100" image="/images/ESNZ_logo_black.png" alt="ESNZ logo" />*/}
             <Link
               target="_blank"
               rel="noopener"
               href="https://www.gns.cri.nz/research-projects/national-seismic-hazard-model/"
             >
-              <img src="/images/ESNZ_logo.png" height="80" alt="ESNZ logo" />
+              <img src="/images/ESNZ_logo_white.png" height="80" alt="ESNZ logo" />
             </Link>
           </StyledToolbar>
         </Container>
