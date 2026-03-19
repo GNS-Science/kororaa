@@ -276,7 +276,7 @@ const NavBar: React.FC = () => {
         <Container maxWidth={false}>
           <StyledToolbar disableGutters>
             <RouterLink to="/">
-              <img src="/images/NSHM_logo_white_cropped.png" height="32" alt="NSHM logo" />
+              <img src="/images/NSHM_logos/NSHM_logo_white_cropped.png" height="32" alt="NSHM logo" />
               {/*<img src="/images/NSHM_logo_black.png" height="70" alt="NSHM logo" />*/}
             </RouterLink>
             <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
