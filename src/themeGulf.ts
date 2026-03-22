@@ -8,7 +8,7 @@ const GNS_BLUE = "#072B61";
 // const GULF_GREEN = '#a1d0ea'; //Original Gulf
 // const GULF_BLUE = '#bae0f6';
 // const GULF_BLUE_FADED = '#cfe9f7';
-const GULF_BLUE_FADED_MORE = "#daeaf3";
+// const GULF_BLUE_FADED_MORE = "#daeaf3";
 // const GULF_ORANGE = '#fc6200';
 
 declare module "@mui/material/styles" {
@@ -32,8 +32,8 @@ const theme = createTheme({
       main: OLD_PRIMARY_ORANGE,
     },
     navbar: {
-      main: GULF_BLUE_FADED_MORE,
-      accent: GNS_BLUE, // GULF_GREEN
+      main: GNS_BLUE,
+      accent: OLD_PRIMARY_ORANGE,
     },
     // Used by `getContrastText()` to maximize the contrast between
     // the background and the text.

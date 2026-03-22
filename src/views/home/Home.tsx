@@ -34,7 +34,12 @@ const Home: React.FC = () => {
       </HomeTitleContainer>
 
       <Grid container spacing={3} columns={{ sm: 6, md: 8, lg: 12 }} paddingBottom="2rem">
-        <MenuCard title="About" text="Background Information." img="/images/GNS-home.png" url="/About" />
+        <MenuCard
+          title="About"
+          text="Background Information."
+          img="/images/NSHM_logos/NSHM_Web_logo_blue_crop.jpg"
+          url="/About"
+        />
         <MenuCard
           title="Curves and Spectra"
           text="Site hazard and UHS plots."
