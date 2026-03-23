@@ -13,6 +13,11 @@ All notable changes to this project will be documented in this file.
 - change colour theme to work with new ESNZ logo
 - change "About" image to NSHM logo
 - make home page menu cards same height when resizing browser window
+- larger menu font size
+
+### Removed
+
+ - coming features page
 
 ## v1.2.10 - 2025-12-02
 
