@@ -2,14 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
-## v1.2.11 - 2026-03-13
+## v1.2.11 - [unreleased]
 
 ### Changed
 
-- update logo to ESNZ
+- update logos to ESNZ
 - change email address and links to ESNZ
 - update about text from GNS to ESNZ
 - fix TechInfo locations table
+- change colour theme to work with new ESNZ logo
+- change "About" image to NSHM logo
+- make home page menu cards same height when resizing browser window
 
 ## v1.2.10 - 2025-12-02
 
