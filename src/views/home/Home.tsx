@@ -37,8 +37,10 @@ const Home: React.FC = () => {
         <MenuCard
           title="About"
           text="Background Information."
-          img="/images/NSHM_logos/NSHM_Web_logo_blue_crop.jpg"
+          img="/images/NSHM_logos/NSHM_Update.svg"
           url="/About"
+          objectFit="contain"
+          imgPaddingX={2}
         />
         <MenuCard
           title="Curves and Spectra"
