@@ -26,7 +26,7 @@ import { GA_ID, GA_DEBUG_MODE } from "../../utils/environmentVariables";
 
 const StyledAppBar = styled(AppBar)(({ theme }) => ({
   backgroundColor: theme.palette.navbar.main,
-  height: 100,
+  height: 102,
   alignItems: "center",
   justifyContent: "space-around",
   "&& .Mui-selected": {
