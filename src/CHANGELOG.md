@@ -17,7 +17,7 @@ All notable changes to this project will be documented in this file.
 
 ### Removed
 
- - coming features page
+- coming features page
 
 ## v1.2.10 - 2025-12-02
 
