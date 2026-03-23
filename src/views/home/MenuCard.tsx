@@ -22,8 +22,8 @@ const MenuCard: React.FC<MenuCardProps> = ({
   imgPaddingX,
 }: MenuCardProps) => {
   return (
-    <Grid size={{ xs: 2 }}>
-      <Card>
+    <Grid size={{ xs: 2 }} sx={{ display: "flex" }}>
+      <Card sx={{ width: "100%" }}>
         <CardActionArea component={Link} to={url}>
           <CardContent>
             <Typography variant="h5">{title}</Typography>
