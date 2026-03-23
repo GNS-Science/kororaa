@@ -248,7 +248,6 @@ const NavBar: React.FC = () => {
       name: "Ruptures",
       path: "/RuptureMap",
     },
-    { name: "Coming Features", path: "/Previews" },
     {
       name: "Resources",
       submenu: [
