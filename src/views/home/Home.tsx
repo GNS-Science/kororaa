@@ -57,7 +57,7 @@ const Home: React.FC = () => {
         <MenuCard
           title="Science Reports"
           text="Model reports and datasets."
-          img="/info.jpg"
+          img="/images/open_books.jpg"
           url="/Resources/ScienceReports"
         />
       </Grid>
