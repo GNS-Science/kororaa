@@ -13,8 +13,8 @@ export const partnersLogos: PartnersLogo[] = [
     path: "aurecon.jpg",
   },
   {
-    name: "EQC",
-    path: "eqc.png",
+    name: "NHC",
+    path: "nhc-logo.svg",
   },
   {
     name: "Geoscience Australia",
@@ -27,10 +27,6 @@ export const partnersLogos: PartnersLogo[] = [
   {
     name: "GFZ",
     path: "gfz.png",
-  },
-  {
-    name: "Golder",
-    path: "golder.jpg",
   },
   {
     name: "IU",

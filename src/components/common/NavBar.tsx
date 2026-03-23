@@ -26,8 +26,7 @@ import { GA_ID, GA_DEBUG_MODE } from "../../utils/environmentVariables";
 
 const StyledAppBar = styled(AppBar)(({ theme }) => ({
   backgroundColor: theme.palette.navbar.main,
-  height: 100,
-  borderBottom: `5px solid ${theme.palette.navbar.accent}`,
+  height: 102,
   alignItems: "center",
   justifyContent: "space-around",
   "&& .Mui-selected": {
@@ -176,7 +175,7 @@ const FluidMenuItem: React.FC<FluidMenuProps> = ({ page }: FluidMenuProps) => {
   if (page.path) {
     return (
       <MenuItem selected={page.path === location.pathname} key={page.name} component={RouterLink} to={page.path}>
-        <Typography variant="h5" textAlign="center" sx={{ color: "white" }}>
+        <Typography variant="h5" textAlign="center" sx={{ color: "white" }} style={{ fontSize: "1.4rem" }}>
           {page.name}
         </Typography>
       </MenuItem>
@@ -191,7 +190,7 @@ const FluidMenuItem: React.FC<FluidMenuProps> = ({ page }: FluidMenuProps) => {
         component={Button}
         selected={page.submenu && page.submenu.filter((page) => page.path === location.pathname).length > 0}
       >
-        <Typography variant="h5" textAlign="center" sx={{ color: "white" }}>
+        <Typography variant="h5" textAlign="center" sx={{ color: "white" }} style={{ fontSize: "1.4rem" }}>
           {page.name}
         </Typography>
       </MenuItem>
@@ -249,7 +248,6 @@ const NavBar: React.FC = () => {
       name: "Ruptures",
       path: "/RuptureMap",
     },
-    { name: "Coming Features", path: "/Previews" },
     {
       name: "Resources",
       submenu: [
@@ -282,7 +280,7 @@ const NavBar: React.FC = () => {
             <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
               <HamburgerMenu pages={pages} />
             </Box>
-            <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" }, ml: 2 }}>
+            <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" }, ml: 8 }}>
               <MainMenu pages={pages} />
             </Box>
             {/*<CardMedia component="img" height="100" image="/images/ESNZ_logo_black.png" alt="ESNZ logo" />*/}
