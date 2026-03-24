@@ -26,7 +26,8 @@ import { GA_ID, GA_DEBUG_MODE } from "../../utils/environmentVariables";
 
 const StyledAppBar = styled(AppBar)(({ theme }) => ({
   backgroundColor: theme.palette.navbar.main,
-  height: 102,
+  height: 70,
+  borderBottom: `5px solid ${theme.palette.navbar.accent}`,
   alignItems: "center",
   justifyContent: "space-around",
   "&& .Mui-selected": {
@@ -175,7 +176,7 @@ const FluidMenuItem: React.FC<FluidMenuProps> = ({ page }: FluidMenuProps) => {
   if (page.path) {
     return (
       <MenuItem selected={page.path === location.pathname} key={page.name} component={RouterLink} to={page.path}>
-        <Typography variant="h5" textAlign="center" sx={{ color: "white" }} style={{ fontSize: "1.4rem" }}>
+        <Typography variant="h5" textAlign="center" sx={{ color: "white" }} style={{ fontSize: "1.2rem" }}>
           {page.name}
         </Typography>
       </MenuItem>
@@ -190,7 +191,7 @@ const FluidMenuItem: React.FC<FluidMenuProps> = ({ page }: FluidMenuProps) => {
         component={Button}
         selected={page.submenu && page.submenu.filter((page) => page.path === location.pathname).length > 0}
       >
-        <Typography variant="h5" textAlign="center" sx={{ color: "white" }} style={{ fontSize: "1.4rem" }}>
+        <Typography variant="h5" textAlign="center" sx={{ color: "white" }} style={{ fontSize: "1.2rem" }}>
           {page.name}
         </Typography>
       </MenuItem>
