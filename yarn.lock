@@ -923,9 +923,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@gns-science/toshi-nest@npm:^4.1.1":
-  version: 4.1.1
-  resolution: "@gns-science/toshi-nest@npm:4.1.1::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40GNS-Science%2Ftoshi-nest%2F4.1.1%2Fe4e633127f488860072be325cb23731d664dc6fd"
+"@gns-science/toshi-nest@npm:^4.1.2":
+  version: 4.1.2
+  resolution: "@gns-science/toshi-nest@npm:4.1.2::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40GNS-Science%2Ftoshi-nest%2F4.1.2%2Fedc0975ce3688862adb2173fd3d0e8d3c994dd1e"
   dependencies:
     "@emotion/react": "npm:^11.14.0"
     "@emotion/styled": "npm:^11.14.1"
@@ -956,7 +956,7 @@ __metadata:
     react-leaflet-fullscreen-plugin: "npm:^1.0.1"
     react-plotly.js: "npm:^2.6.0"
     react-spring: "npm:^10.0.3"
-  checksum: 10c0/59b55359a62473f5c30241e4560931f860b4486b69b5be4c45b0a01ed641f0784c9a8b30d2a644e7d3ef920027e21ad74585164293ef5611dbe4618018e3d2f8
+  checksum: 10c0/b12ccaeda52d7a612fdba9905bbde37fbf36e0b33c608ce94a7c754539c8627bbf0c7faabf357b46c10ac660907a91a33c233bff822bce0976e6fd2fb5c827c7
   languageName: node
   linkType: hard
 
@@ -8211,7 +8211,7 @@ __metadata:
   dependencies:
     "@babel/plugin-transform-private-property-in-object": "npm:^7.27.1"
     "@eslint/compat": "npm:^2.0.0"
-    "@gns-science/toshi-nest": "npm:^4.1.1"
+    "@gns-science/toshi-nest": "npm:^4.1.2"
     "@originjs/vite-plugin-commonjs": "npm:^1.0.3"
     "@testing-library/dom": "npm:^10.4.1"
     "@testing-library/jest-dom": "npm:^6.9.1"

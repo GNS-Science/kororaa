@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## v1.2.12 - 2026-04-01
+
+### Changed
+- Scientific notation on hazard curve y-axis
+- Space y-axis label on hazard chart further to left
+
 ## v1.2.11 - 2026-03-24
 
 ### Changed
