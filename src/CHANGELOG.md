@@ -2,6 +2,30 @@
 
 All notable changes to this project will be documented in this file.
 
+## v1.2.12 - 2026-04-01
+
+### Changed
+
+- Scientific notation on hazard curve y-axis
+- Space y-axis label on hazard chart further to left
+
+## v1.2.11 - 2026-03-24
+
+### Changed
+
+- update logos to ESNZ
+- change email address and links to ESNZ
+- update about text from GNS to ESNZ
+- fix TechInfo locations table
+- change colour theme to work with new ESNZ logo
+- change "About" image to NSHM logo
+- make home page menu cards same height when resizing browser window
+- larger menu font size
+
+### Removed
+
+- coming features page
+
 ## v1.2.10 - 2025-12-02
 
 ### Changed

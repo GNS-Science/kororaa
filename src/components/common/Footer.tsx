@@ -7,7 +7,7 @@ import { HAZARD_MODEL } from "../../utils/environmentVariables";
 const FooterContainer = styled("footer")(({ theme }) => ({
   width: "100%",
   justifyContent: "space-between",
-  borderTop: `5px solid ${theme.palette.navbar.accent}`,
+  borderTop: `5px solid ${theme.palette.navbar.main}`,
   [theme.breakpoints.down("md")]: {
     flexDirection: "column",
     justifyContent: "center",

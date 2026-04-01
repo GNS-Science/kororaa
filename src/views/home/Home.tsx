@@ -29,12 +29,19 @@ const Home: React.FC = () => {
           <em>Te Tauira Matapae Pūmate Rū i Aotearoa • New Zealand National Seismic Hazard Model</em>
         </Typography>
         <Typography variant="h5">
-          <em>a GNS Science led research programme</em>
+          <em>an Earth Sciences New Zealand led research programme</em>
         </Typography>
       </HomeTitleContainer>
 
       <Grid container spacing={3} columns={{ sm: 6, md: 8, lg: 12 }} paddingBottom="2rem">
-        <MenuCard title="About" text="Background Information." img="/images/GNS-home.png" url="/About" />
+        <MenuCard
+          title="About"
+          text="Background Information."
+          img="/images/NSHM_logos/NSHM_Update.svg"
+          url="/About"
+          objectFit="contain"
+          imgPaddingX={2}
+        />
         <MenuCard
           title="Curves and Spectra"
           text="Site hazard and UHS plots."
@@ -52,7 +59,7 @@ const Home: React.FC = () => {
         <MenuCard
           title="Science Reports"
           text="Model reports and datasets."
-          img="/info.jpg"
+          img="/images/open_books.jpg"
           url="/Resources/ScienceReports"
         />
       </Grid>

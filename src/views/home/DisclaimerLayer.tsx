@@ -11,7 +11,7 @@ const StyledModal = styled(Modal)({
 const Paper = styled("div")(({ theme }) => ({
   position: "absolute",
   width: "60%",
-  backgroundColor: theme.palette.navbar.main,
+  backgroundColor: theme.palette.navbar.accent,
   padding: theme.spacing(2, 4, 5),
   border: "none",
   "@media (max-width: 600px)": {
@@ -46,9 +46,9 @@ const DisclaimerLayer: React.FC<DisclaimerLayerProps> = ({ children }: Disclaime
             Disclaimer
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            This output has been prepared by the Institute of Geological and Nuclear Sciences Limited (GNS Science). GNS
-            Science accepts no responsibility for any use of or reliance on any contents of this output by any person,
-            on any ground, for any loss, damage or expense arising from such use or reliance.
+            This output has been prepared by the New Zealand Institute for Earth Science Limited (Earth Sciences New
+            Zealand). Earth Sciences New Zealand accepts no responsibility for any use of or reliance on any contents of
+            this output by any person, on any ground, for any loss, damage or expense arising from such use or reliance.
           </Typography>
           <Typography id="modal-modal-description2" sx={{ mt: 2 }}>
             This site provides only seismic hazard results. Please see&nbsp;

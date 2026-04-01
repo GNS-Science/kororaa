@@ -15,7 +15,6 @@ import NavBar from "./components/common/NavBar";
 import Footer from "./components/common/Footer";
 import Home from "./views/home/Home";
 // import InfoPage from './views/info/Info';
-import PreviewsPage from "./views/preview/PreviewsPage";
 
 import DisclaimerLayer from "./views/home/DisclaimerLayer";
 import HazardChartsPage from "./views/hazardCharts/HazardChartsPage";
@@ -66,7 +65,6 @@ function App(props: { environment?: Environment }) {
                         </React.Suspense>
                       }
                     />
-                    <Route path="/Previews" element={<PreviewsPage />} />
                     <Route path="/About" element={<AboutPage />} />
                     <Route path="/TechInfo" element={<TechInfoPage />} />
                     <Route path="/Contacts" element={<ContactPage />} />

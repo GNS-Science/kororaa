@@ -29,7 +29,6 @@ describe("Home Page", () => {
   it("Displays the nav bar", () => {
     cy.get("header").contains("Hazard");
     cy.get("header").contains("Ruptures");
-    cy.get("header").contains("Coming Features");
     cy.get("header").contains("Resources");
     cy.get("header").contains("Help");
   });
@@ -103,12 +102,6 @@ describe("NavBarLinks", () => {
     cy.get('[role="menuitem"]').contains("Ruptures").click({ force: true });
     cy.url().should("include", "/RuptureMap");
     cy.get("h4").contains("Rupture Explorer").should("exist");
-  });
-
-  it("Coming Features Nav Link works", () => {
-    cy.get("header").contains("Coming Features").click({ force: true });
-    cy.url().should("include", "/Previews");
-    cy.get("h4").contains("Public API").should("exist");
   });
 
   it("Science Reports Link works", () => {

@@ -26,7 +26,7 @@ import { GA_ID, GA_DEBUG_MODE } from "../../utils/environmentVariables";
 
 const StyledAppBar = styled(AppBar)(({ theme }) => ({
   backgroundColor: theme.palette.navbar.main,
-  height: 100,
+  height: 70,
   borderBottom: `5px solid ${theme.palette.navbar.accent}`,
   alignItems: "center",
   justifyContent: "space-around",
@@ -152,6 +152,7 @@ const HamburgerMenu: React.FC<MenuProps> = ({ pages }: MenuProps) => {
   return (
     <>
       <IconButton
+        sx={{ color: "white" }}
         size="large"
         aria-label="hamburger menu"
         aria-controls="menu-appbar"
@@ -175,7 +176,7 @@ const FluidMenuItem: React.FC<FluidMenuProps> = ({ page }: FluidMenuProps) => {
   if (page.path) {
     return (
       <MenuItem selected={page.path === location.pathname} key={page.name} component={RouterLink} to={page.path}>
-        <Typography variant="h5" textAlign="center">
+        <Typography variant="h5" textAlign="center" sx={{ color: "white" }} style={{ fontSize: "1.2rem" }}>
           {page.name}
         </Typography>
       </MenuItem>
@@ -190,7 +191,7 @@ const FluidMenuItem: React.FC<FluidMenuProps> = ({ page }: FluidMenuProps) => {
         component={Button}
         selected={page.submenu && page.submenu.filter((page) => page.path === location.pathname).length > 0}
       >
-        <Typography variant="h5" textAlign="center">
+        <Typography variant="h5" textAlign="center" sx={{ color: "white" }} style={{ fontSize: "1.2rem" }}>
           {page.name}
         </Typography>
       </MenuItem>
@@ -248,7 +249,6 @@ const NavBar: React.FC = () => {
       name: "Ruptures",
       path: "/RuptureMap",
     },
-    { name: "Coming Features", path: "/Previews" },
     {
       name: "Resources",
       submenu: [
@@ -275,22 +275,22 @@ const NavBar: React.FC = () => {
         <Container maxWidth={false}>
           <StyledToolbar disableGutters>
             <RouterLink to="/">
-              <img src="/images/NSHM_logo_black_cropped_blue.png" height="40" alt="NSHM logo" />
+              <img src="/images/NSHM_logos/NSHM_logo_white_cropped.png" height="32" alt="NSHM logo" />
               {/*<img src="/images/NSHM_logo_black.png" height="70" alt="NSHM logo" />*/}
             </RouterLink>
             <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
               <HamburgerMenu pages={pages} />
             </Box>
-            <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+            <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" }, ml: 8 }}>
               <MainMenu pages={pages} />
             </Box>
-            {/*<CardMedia component="img" height="100" image="/images/2GNS_logo_HORZ.png" alt="GNS logo" />*/}
+            {/*<CardMedia component="img" height="100" image="/images/ESNZ_logo_black.png" alt="ESNZ logo" />*/}
             <Link
               target="_blank"
               rel="noopener"
               href="https://www.gns.cri.nz/research-projects/national-seismic-hazard-model/"
             >
-              <img src="/images/2GNS_logo_HORZ.png" height="80" alt="GNS logo" />
+              <img src="/images/ESNZ_logos/Single Colour Logo_Main_White.png" height="65" alt="ESNZ logo" />
             </Link>
           </StyledToolbar>
         </Container>

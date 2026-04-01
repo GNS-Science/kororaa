@@ -32,8 +32,8 @@ const theme = createTheme({
       main: OLD_PRIMARY_ORANGE,
     },
     navbar: {
-      main: GULF_BLUE_FADED_MORE,
-      accent: GNS_BLUE, // GULF_GREEN
+      main: GNS_BLUE,
+      accent: GULF_BLUE_FADED_MORE,
     },
     // Used by `getContrastText()` to maximize the contrast between
     // the background and the text.
