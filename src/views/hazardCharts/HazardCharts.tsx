@@ -123,7 +123,7 @@ const HazardCharts: React.FC<HazardChartsProps> = ({ data, state, dispatch }: Ha
               uncertainty={state.hazardUncertainty}
               timePeriod={state.timePeriod}
               numTickX={state.hazardXScale === "linear" ? null : 2}
-              yTickFormat={(v) => v.valueOf().toExponential(1)}
+              yTickFormat={(v: number | { valueOf(): number }) => v.valueOf().toExponential(1)}
             />
           </div>
         </ChartContainer>
