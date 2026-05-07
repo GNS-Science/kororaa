@@ -19,7 +19,9 @@ import {
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useLocation } from "react-router-dom";
 import MenuIcon from "@mui/icons-material/Menu";
-import ReactGA from "react-ga4";
+import ReactGAMod from "react-ga4";
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const ReactGA = ((ReactGAMod as any).default ?? ReactGAMod) as typeof ReactGAMod;
 import { useDetectAdBlock } from "adblock-detect-react";
 import usePageTracking from "../../utils/usePageTracking";
 import { GA_ID, GA_DEBUG_MODE } from "../../utils/environmentVariables";
