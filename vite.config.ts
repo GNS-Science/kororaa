@@ -1,7 +1,6 @@
 import { defineConfig } from "vitest/config";
 import react from "@vitejs/plugin-react";
 import relay from "vite-plugin-relay";
-import { esbuildCommonjs } from "@originjs/vite-plugin-commonjs";
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -32,19 +31,8 @@ export default defineConfig({
       transformMixedEsModules: true,
     },
   },
-  assetsInclude: ["**/*.md", "**/*.css"],
+  assetsInclude: ["**/*.md"],
   optimizeDeps: {
-    include: ["@gns-science/toshi-nest", "react-leaflet-fullscreen-plugin", "leaflet"],
-    esbuildOptions: {
-      plugins: [
-        esbuildCommonjs([
-          "react-relay",
-          "@gns-science/toshi-nest",
-          "d3-array",
-          "react-leaflet-fullscreen-plugin",
-          "leaflet",
-        ]),
-      ],
-    },
+    include: ["@gns-science/toshi-nest", "react-leaflet-fullscreen-plugin", "leaflet", "react-relay", "relay-runtime"],
   },
 });
