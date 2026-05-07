@@ -112,6 +112,7 @@
     "workerDirectory": "public"
   },
   "resolutions": {
+    "ajv": "8.20.0",
     "headers-polyfill": "3.2.5",
     "esbuild": "0.28.0",
     "flatted": "3.4.2",
