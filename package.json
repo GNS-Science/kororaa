@@ -112,7 +112,16 @@
     "workerDirectory": "public"
   },
   "resolutions": {
-    "headers-polyfill": "3.2.5"
+    "headers-polyfill": "3.2.5",
+    "@isaacs/brace-expansion": "5.0.1",
+    "handlebars": "4.7.9",
+    "ip-address": "10.1.1",
+    "mdast-util-to-hast": "13.2.1",
+    "picomatch": "4.0.4",
+    "postcss": "8.5.12",
+    "protocol-buffers-schema": "3.6.1",
+    "tar": "7.5.13",
+    "yaml": "2.8.3"
   },
   "packageManager": "yarn@4.14.1"
 }
