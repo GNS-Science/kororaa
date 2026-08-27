@@ -49,12 +49,14 @@ export const InfoTooltip: React.FC<InfoTooltipProps> = ({ content, format }) => 
         <InfoIcon />
       </StyledIconButton>
       <Dialog
-        PaperProps={{
-          style: {
-            position: "absolute",
-            top: y + "px",
-            left: x + "px",
-            maxHeight: "70vh",
+        slotProps={{
+          paper: {
+            style: {
+              position: "absolute",
+              top: y + "px",
+              left: x + "px",
+              maxHeight: "70vh",
+            },
           },
         }}
         open={open}
