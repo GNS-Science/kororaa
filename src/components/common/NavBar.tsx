@@ -10,6 +10,7 @@ import {
   IconButton,
   Box,
   Menu,
+  MenuList,
   MenuItem,
   Button,
   Accordion,
@@ -191,6 +192,7 @@ const FluidMenuItem: React.FC<FluidMenuProps> = ({ page }: FluidMenuProps) => {
         key={page.name}
         onClick={handleOpenNavMenu}
         component={Button}
+        nativeButton
         selected={page.submenu && page.submenu.filter((page) => page.path === location.pathname).length > 0}
       >
         <Typography variant="h5" sx={{ textAlign: "center", color: "white" }} style={{ fontSize: "1.2rem" }}>
@@ -211,11 +213,11 @@ const FluidMenuItem: React.FC<FluidMenuProps> = ({ page }: FluidMenuProps) => {
 
 const MainMenu: React.FC<MenuProps> = ({ pages }: MenuProps) => {
   return (
-    <>
+    <MenuList sx={{ display: "flex", flexDirection: "row", padding: 0 }}>
       {pages.map((page) => (
         <FluidMenuItem key={page.name} page={page} />
       ))}
-    </>
+    </MenuList>
   );
 };
 
