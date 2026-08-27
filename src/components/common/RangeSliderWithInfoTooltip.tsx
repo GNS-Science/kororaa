@@ -39,7 +39,7 @@ const RangeSliderWithInfoTooltip: React.FC<RangeSliderWithInfoTooltipProps> = ({
         {label}
         <InfoTooltip content={tooltipContent} format={tooltipFormat} />
       </Typography>
-      <Grid container spacing={3} alignItems="center">
+      <Grid container spacing={3} sx={{ alignItems: "center" }}>
         <Grid>
           <SmallInput
             value={valuesRange[0]}
