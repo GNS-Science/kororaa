@@ -33,7 +33,7 @@ const Home: React.FC = () => {
         </Typography>
       </HomeTitleContainer>
 
-      <Grid container spacing={3} columns={{ sm: 6, md: 8, lg: 12 }} paddingBottom="2rem">
+      <Grid container spacing={3} columns={{ sm: 6, md: 8, lg: 12 }} sx={{ paddingBottom: "2rem" }}>
         <MenuCard
           title="About"
           text="Background Information."

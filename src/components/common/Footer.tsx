@@ -41,7 +41,7 @@ const Footer: React.FC = () => {
         </Grid>
         <Grid size={{ xs: 8 }}>
           <FooterLinkItems>
-            <Typography variant="body1" textAlign="center">
+            <Typography variant="body1" sx={{ textAlign: "center" }}>
               <em>
                 This site provides only seismic hazard results.
                 <br />
