@@ -42,7 +42,7 @@ export const SliderWithInput: React.FC<SliderWithInputProps> = ({
           {label}
         </Typography>
       </Tooltip>
-      <Grid container spacing={2} alignItems="center">
+      <Grid container spacing={2} sx={{ alignItems: "center" }}>
         <Grid size="grow">
           <Slider
             value={typeof value === "number" ? value : 0}
