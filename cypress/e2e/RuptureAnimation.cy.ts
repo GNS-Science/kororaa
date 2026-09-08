@@ -30,7 +30,7 @@ describe("ComboRuptureMapPage", () => {
   });
 
   it("Displays geojson for selected location", () => {
-    cy.get('[aria-labelledby="mui-component-select-Locations"]').click({ force: true });
+    cy.get('[id="mui-component-select-Locations"]').click({ force: true });
     cy.get('[data-value="Greymouth"]').click({ force: true });
     cy.realPress("{esc}");
     cy.get('[id="mui-component-select-Radius"]').click({ force: true });
@@ -40,7 +40,7 @@ describe("ComboRuptureMapPage", () => {
   });
 
   it("Displays geojson for two selected locations", () => {
-    cy.get('[aria-labelledby="mui-component-select-Locations"]').click({ force: true });
+    cy.get('[id="mui-component-select-Locations"]').click({ force: true });
     cy.get('[data-value="Christchurch"]').click({ force: true });
     cy.realPress("{esc}");
 
@@ -66,7 +66,7 @@ describe("ComboRuptureMapPage", () => {
       .click({ force: true });
     cy.contains("Alexander").click();
     cy.realPress("{esc}");
-    cy.get('[aria-labelledby="mui-component-select-Locations"]').click({ force: true });
+    cy.get('[id="mui-component-select-Locations"]').click({ force: true });
     cy.get('[data-value="Queenstown"]').click({ force: true });
     cy.realPress("{esc}");
     cy.get('[id="mui-component-select-Radius"]').click({ force: true });
