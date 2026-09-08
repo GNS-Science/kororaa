@@ -66,7 +66,7 @@ const ModelVersionsComponent: React.FC = () => {
                 </Typography>
               </TitleContainer>
               <Typography variant="body1">
-                <strong>THe current model version is {HAZARD_MODEL}</strong>
+                <strong>The current model version is {HAZARD_MODEL}</strong>
               </Typography>
             </Grid>
             <Grid size={{ xs: 12 }}>
