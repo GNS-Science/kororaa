@@ -1,15 +1,10 @@
-import { HAZARD_MODEL } from "../../utils/environmentVariables";
+import { getCsvMetadataRows } from "../../services/csvMetadata/csvMetadata.service";
 export interface ColorScale {
   levels: number[];
   hexrgbs: (string | undefined)[];
 }
 
 export const getHazardMapCSVData = (data: string[], vs30: number, imt: string, poe: string, statistic: string) => {
-  const datetimeAndVersion = [
-    `date-time: ${new Date().toLocaleString("en-GB", { timeZone: "UTC" })}, (UTC)`,
-    `NSHM model version: ${HAZARD_MODEL}`,
-  ];
-
   const csvData: (number | string)[][] = [
     [`vs30=${vs30}`, `spectral period=${imt}`, `Poe=${poe}`, `Statistic=${statistic}`],
     ["lon", "lat", "shaking intensity(g)"],
@@ -26,7 +21,7 @@ export const getHazardMapCSVData = (data: string[], vs30: number, imt: string, p
       csvData.push([feature.properties.loc[0], feature.properties.loc[1], feature.properties.value.toFixed(2)]);
     });
   });
-  csvData.unshift(datetimeAndVersion);
+  csvData.unshift(...getCsvMetadataRows());
   return csvData;
 };
 

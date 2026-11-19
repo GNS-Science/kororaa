@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { styled } from "@mui/material/styles";
 import { Link, Button, Modal, Typography } from "@mui/material";
+import { CCLicenceIcons, CCLicenceLink } from "../../components/common/CCLicence";
+import { CC_BY_NAME, LICENSOR } from "../../constants/licence";
 
 const StyledModal = styled(Modal)({
   display: "flex",
@@ -39,7 +41,7 @@ const DisclaimerLayer: React.FC<DisclaimerLayerProps> = ({ children }: Disclaime
       <StyledModal
         open={open}
         aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description modal-modal-description2"
+        aria-describedby="modal-modal-description modal-modal-description2 modal-modal-description3"
       >
         <Paper>
           <Typography id="modal-modal-title" variant="h5" sx={{ mt: 2 }}>
@@ -61,6 +63,13 @@ const DisclaimerLayer: React.FC<DisclaimerLayerProps> = ({ children }: Disclaime
             >
               MBIE for information related to engineering design and the NSHM.
             </Link>
+          </Typography>
+          <Typography id="modal-modal-description3" sx={{ mt: 2 }}>
+            <CCLicenceIcons /> The NZ NSHM model and results are &copy; {LICENSOR} and are released under the{" "}
+            <CCLicenceLink underline="hover" color="inherit">
+              {CC_BY_NAME} licence (CC BY 4.0)
+            </CCLicenceLink>
+            . You are free to share and adapt them, provided you give appropriate credit to {LICENSOR}.
           </Typography>
           <Button onClick={handleAccept}>Accept</Button>
         </Paper>

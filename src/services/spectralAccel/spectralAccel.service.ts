@@ -1,3 +1,4 @@
+import { getCsvMetadataRows } from "../csvMetadata/csvMetadata.service";
 import * as mathjs from "mathjs";
 
 import { hazardPageOptions } from "../../views/hazardCharts/constants/hazardPageOptions";
@@ -11,7 +12,6 @@ import {
   LOWER2,
   UPPER1,
   UPPER2,
-  HAZARD_MODEL,
 } from "../../utils/environmentVariables";
 
 export interface UncertaintyCurve {
@@ -204,10 +204,6 @@ export const getSpectralCSVData = (
   poe: number | undefined,
   timePeriod: number,
 ): string[][] => {
-  const datetimeAndVersion = [
-    `date-time: ${new Date().toLocaleString("en-GB", { timeZone: "UTC" })}, (UTC)`,
-    `NSHM model version: ${HAZARD_MODEL}`,
-  ];
   const saHeaderArray = ["lat", "lon", "vs30", `PoE (% in ${timePeriod} years)`, "statistic", ...HAZARD_IMTS];
   const csvData: string[][] = [];
   Object.fromEntries(
@@ -232,7 +228,7 @@ export const getSpectralCSVData = (
     }),
   );
   csvData.unshift(saHeaderArray);
-  csvData.unshift(datetimeAndVersion);
+  csvData.unshift(...getCsvMetadataRows());
   return csvData;
 };
 

@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
+## Unreleased
+
+### Added
+
+- CC BY 4.0 licence (© Earth Sciences New Zealand) in the site footer, the disclaimer and the About page
+- Citation for the NSHM on the About page
+- Licence row in downloaded CSV files (hazard curves, UHS and hazard maps). **Note:** the column headings are now on
+  the third row (fourth for hazard maps), so scripts that skip a fixed number of header lines need updating
+
 ## v1.2.14 - 2026-09-08
 
 ### Changed
