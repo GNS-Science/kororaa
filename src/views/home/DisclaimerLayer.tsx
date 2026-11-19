@@ -69,7 +69,8 @@ const DisclaimerLayer: React.FC<DisclaimerLayerProps> = ({ children }: Disclaime
             <CCLicenceLink underline="hover" color="inherit">
               {CC_BY_NAME} licence (CC BY 4.0)
             </CCLicenceLink>
-            . You are free to share and adapt them, provided you give appropriate credit to {LICENSOR}.
+            . You are free to share and adapt them, provided you give appropriate credit to {LICENSOR}, provide a link
+            to the licence, and indicate if changes were made.
           </Typography>
           <Button onClick={handleAccept}>Accept</Button>
         </Paper>
