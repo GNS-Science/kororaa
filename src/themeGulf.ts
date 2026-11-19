@@ -3,7 +3,8 @@ import { createTheme } from "@mui/material/styles";
 const OLD_PRIMARY_ORANGE = "#e97826";
 // const OLD_SECONDARY_GREY = '#7f7f7f';
 // const OLD_GREY = '#d9d9d9';
-const GNS_BLUE = "#072B61";
+// const GNS_BLUE = "#072B61";
+const ESNZ_DARK_BLUE = "#062D51";
 // const GNS_KHAKI = '#a71930';
 // const GULF_GREEN = '#a1d0ea'; //Original Gulf
 // const GULF_BLUE = '#bae0f6';
@@ -32,7 +33,7 @@ const theme = createTheme({
       main: OLD_PRIMARY_ORANGE,
     },
     navbar: {
-      main: GNS_BLUE,
+      main: ESNZ_DARK_BLUE,
       accent: GULF_BLUE_FADED_MORE,
     },
     // Used by `getContrastText()` to maximize the contrast between
@@ -54,7 +55,7 @@ theme.typography.h1 = {
   // [theme.breakpoints.down('xl')]: {
   //   fontSize: '2.074rem',
   // },
-  color: GNS_BLUE,
+  color: ESNZ_DARK_BLUE,
   [theme.breakpoints.down("xl")]: {
     fontSize: "1.802rem",
   },
@@ -65,7 +66,7 @@ theme.typography.h1 = {
 
 theme.typography.h2 = {
   fontSize: "2.074rem",
-  color: GNS_BLUE,
+  color: ESNZ_DARK_BLUE,
   [theme.breakpoints.down("md")]: {
     fontSize: "1.602rem",
   },
@@ -76,7 +77,7 @@ theme.typography.h2 = {
 
 theme.typography.h3 = {
   fontSize: "1.728rem",
-  color: GNS_BLUE,
+  color: ESNZ_DARK_BLUE,
   [theme.breakpoints.down("md")]: {
     fontSize: "1.424rem",
   },
@@ -87,7 +88,7 @@ theme.typography.h3 = {
 
 theme.typography.h4 = {
   fontSize: "1.44rem",
-  color: GNS_BLUE,
+  color: ESNZ_DARK_BLUE,
   [theme.breakpoints.down("md")]: {
     fontSize: "1.266rem",
   },
@@ -98,7 +99,7 @@ theme.typography.h4 = {
 
 theme.typography.h5 = {
   fontSize: "1.2rem",
-  color: GNS_BLUE,
+  color: ESNZ_DARK_BLUE,
   [theme.breakpoints.down("xl")]: {
     fontSize: "1.1rem",
   },

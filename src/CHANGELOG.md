@@ -11,6 +11,13 @@ All notable changes to this project will be documented in this file.
 - Licence row in downloaded CSV files (hazard curves, UHS and hazard maps). **Note:** the column headings are now on
   the third row (fourth for hazard maps), so scripts that skip a fixed number of header lines need updating
 
+### Changed
+
+- New Earth Sciences New Zealand logo in the header, favicon and Apple touch icon (also fixes the broken Apple touch
+  icon path)
+- Remove NIWA from the partner logos, as NIWA is now part of Earth Sciences New Zealand
+- Header background and headings use ESNZ Dark Blue (#062D51)
+
 ## v1.2.14 - 2026-09-08
 
 ### Changed
