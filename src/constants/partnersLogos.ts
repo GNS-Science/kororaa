@@ -45,10 +45,6 @@ export const partnersLogos: PartnersLogo[] = [
     path: "missouriST.png",
   },
   {
-    name: "NIWA",
-    path: "niwa.jpg",
-  },
-  {
     name: "SCEC",
     path: "scec.png",
   },

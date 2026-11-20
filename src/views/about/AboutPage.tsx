@@ -4,6 +4,8 @@ import { Typography, Grid } from "@mui/material";
 
 import { Link } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
+import { CCLicenceIcons, CCLicenceLink } from "../../components/common/CCLicence";
+import { CC_BY_NAME, CITATION, LICENSOR } from "../../constants/licence";
 
 const PageContainer = styled("div")({
   justifyContent: "center",
@@ -78,6 +80,28 @@ const AboutPage: React.FC = () => {
                   Coming Features
                 </Link>
                 &nbsp;page.
+              </Typography>
+            </Grid>
+            <Grid size={{ xs: 12 }} data-testid="about-licence">
+              <Typography variant="h4" sx={{ mt: 2 }}>
+                Licence
+              </Typography>
+              <Typography variant="body1">
+                <CCLicenceIcons /> The NZ NSHM model and results are &copy; {LICENSOR} and are released under the{" "}
+                <CCLicenceLink color="secondary">{CC_BY_NAME} licence (CC BY 4.0)</CCLicenceLink>. You are free to share
+                (copy and redistribute) and adapt (remix, transform and build upon) the model and results for any
+                purpose, including commercially, provided you give appropriate credit to {LICENSOR}, provide a link to
+                the licence, and indicate if changes were made.
+              </Typography>
+              <Typography variant="body1" sx={{ mt: 2 }}>
+                Please cite the NSHM as:
+              </Typography>
+              <Typography variant="body1" component="blockquote" sx={{ ml: 2, pl: 2 }} data-testid="about-citation">
+                {CITATION.authors} ({CITATION.year}). {CITATION.title}. <em>{CITATION.journal}</em>, {CITATION.volume}(
+                {CITATION.issue}), {CITATION.pages}.{" "}
+                <Link color="secondary" target="_blank" rel="noopener" href={`https://doi.org/${CITATION.doi}`}>
+                  https://doi.org/{CITATION.doi}
+                </Link>
               </Typography>
             </Grid>
           </Grid>

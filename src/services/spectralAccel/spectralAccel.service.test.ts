@@ -1,7 +1,7 @@
 import colormap from "colormap";
 
 import { expected as calculateSpectralAccelCurveExpected } from "./testCases/calculateSpectralAccelCurveTestCase";
-import { getSpectralAccelCurve, UncertaintyChartData } from "./spectralAccel.service";
+import { getSpectralAccelCurve, getSpectralCSVData, UncertaintyChartData } from "./spectralAccel.service";
 import { hazardPlotsViewQueryMockData } from "./testCases/hazardPlotViewsQueryMockData";
 import { addColorsToCurves } from "../../views/hazardCharts/hazardPage.service";
 import { HAZARD_COLOR_MAP } from "../../utils/environmentVariables";
@@ -69,4 +69,25 @@ test("addColorsToCurves function adds strokColor property to each curve", () => 
     },
   };
   expect(addColorsToCurves(data)).toEqual(expected);
+});
+
+test("getSpectralCSVData starts with the date-time/version row, then the licence row, then the column headings", () => {
+  const curves: UncertaintyChartData = {
+    "400m/s -41.300,174.780": {
+      mean: {
+        data: [
+          [0, 0.5],
+          [0.1, 0.6],
+        ],
+      },
+    },
+  };
+  const csv = getSpectralCSVData(curves, 0.1, 50);
+  expect(csv[0][0]).toMatch(/^date-time: /);
+  expect(csv[1]).toEqual([
+    "licence: CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/)",
+    "© Earth Sciences New Zealand",
+  ]);
+  expect(csv[2].slice(0, 5)).toEqual(["lat", "lon", "vs30", "PoE (% in 50 years)", "statistic"]);
+  expect(csv[3].slice(0, 4)).toEqual(["-41.300", "174.780", "400", "10"]);
 });

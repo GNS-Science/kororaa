@@ -3,6 +3,8 @@ import { styled } from "@mui/material/styles";
 import { Link, Grid, Typography } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 import { HAZARD_MODEL } from "../../utils/environmentVariables";
+import { CCLicenceIcons, CCLicenceLink } from "./CCLicence";
+import { LICENSOR } from "../../constants/licence";
 
 const FooterContainer = styled("footer")(({ theme }) => ({
   width: "100%",
@@ -58,6 +60,15 @@ const Footer: React.FC = () => {
                 <br />
                 You are viewing version {HAZARD_MODEL}.
               </em>
+            </Typography>
+          </FooterLinkItems>
+        </Grid>
+        <Grid size={{ xs: 2 }}>
+          <FooterLinkItems sx={{ alignItems: "center", textAlign: "center" }} data-testid="footer-licence">
+            <CCLicenceIcons />
+            <Typography variant="body2">
+              The NZ NSHM model and results are &copy; {LICENSOR}, licensed under{" "}
+              <CCLicenceLink underline="hover" color="inherit" />.
             </Typography>
           </FooterLinkItems>
         </Grid>

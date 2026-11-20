@@ -294,7 +294,11 @@ const NavBar: React.FC = () => {
               rel="noopener"
               href="https://www.gns.cri.nz/research-projects/national-seismic-hazard-model/"
             >
-              <img src="/images/ESNZ_logos/Single Colour Logo_Main_White.png" height="65" alt="ESNZ logo" />
+              <img
+                src="/images/ESNZ_logos/ESNZ_Logo_Reduced_White.svg"
+                height="36"
+                alt="Earth Sciences New Zealand logo"
+              />
             </Link>
           </StyledToolbar>
         </Container>

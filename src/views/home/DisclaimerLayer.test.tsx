@@ -43,6 +43,16 @@ describe("For <DisclaimerLayer />: ", () => {
     expect(screen.getByRole("button")).toContainHTML("Accept");
   });
 
+  test("Should show the CC BY 4.0 licence and licensor", () => {
+    render(<Wrapper />);
+
+    const licenceLinks = screen
+      .getAllByRole("link")
+      .filter((link) => link.getAttribute("href") === "https://creativecommons.org/licenses/by/4.0/");
+    expect(licenceLinks).toHaveLength(2);
+    expect(screen.getByText(/© Earth Sciences New Zealand and are released under the/)).toBeInTheDocument();
+  });
+
   test("Children being rendered in the background", () => {
     render(<Wrapper />);
 
